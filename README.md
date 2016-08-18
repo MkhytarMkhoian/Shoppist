@@ -14,7 +14,6 @@ Latest version
 ---
 
 - Version 1.2.5
-- 
 
 
 
