@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_sort"
+        android:icon="@drawable/ic_sort_white"
+        android:title="@string/action_sort"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/sort_by_name"
+                android:title="@string/sort_by_name" />
+            <item
+                android:id="@+id/sort_by_priority"
+                android:title="@string/sort_by_priority" />
+            <item
+                android:id="@+id/sort_by_category"
+                android:title="@string/sort_by_category" />
+            <item
+                android:id="@+id/sort_by_time_created"
+                android:title="@string/sort_by_time_created" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/action_menu"
+        android:icon="@drawable/ic_menu_white"
+        android:title="@null"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/menu_check_all"
+                android:title="@string/action_check_all" />
+            <item
+                android:id="@+id/action_strike_out_all"
+                android:title="@string/action_strike_out_all" />
+            <item
+                android:id="@+id/action_return_all_to_list"
+                android:title="@string/action_return_all_to_list" />
+            <item
+                android:id="@+id/menu_expand_all"
+                android:title="@string/expand_all" />
+            <item
+                android:id="@+id/menu_collapse_all"
+                android:title="@string/collapse_all" />
+            <item
+                android:id="@+id/action_sort_manual_mode"
+                android:title="@string/sort_manually_mode" />
+            <item
+                android:id="@+id/action_synchronization"
+                android:title="@string/synchronization"
+                android:visible="false" />
+            <item
+                android:id="@+id/action_settings"
+                android:title="@string/title_activity_settings" />
+        </menu>
+    </item>
+</menu>

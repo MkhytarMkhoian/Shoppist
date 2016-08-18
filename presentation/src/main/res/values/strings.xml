@@ -1,0 +1,1027 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fsv.transition.search.layout" translatable="false">fsv_transition_search_layout</string>
+    <string name="parse_app_id" translatable="false">mVyCKSleS4PXU15I6WWmEyS2APxcf3zWhLjdsLSO</string>
+    <string name="parse_client_key" translatable="false">wD24GdlGgN4DVRKSaF5xCAmUP7SPWaemmOG9qgdQ</string>
+    <string name="app_email" translatable="false">shoppist.justplay1@gmail.com</string>
+    <string name="shoppist_widget" translatable="false">Shoppist Widget</string>
+    <string name="app_name" translatable="false">Shoppist</string>
+
+    <string name="title_activity_settings">Settings</string>
+    <string name="close">Close</string>
+    <string name="open">Open</string>
+    <string name="title_activity_shopping_lists">Shopping Lists</string>
+    <string name="title_activity_help">Help</string>
+    <string name="title_activity_category">Categories</string>
+    <string name="title_activity_add_category">Add category</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_add_list">Add list</string>
+    <string name="add_list_item">Add list item</string>
+    <string name="title_activity_account">Account</string>
+
+    <!-- Settings Activity -->
+    <string name="category_general">General</string>
+    <string name="category_account">Account</string>
+    <string name="category_system">System</string>
+    <string name="category_about_app">About</string>
+    <string name="category_notification">Notifications</string>
+
+    <string name="notification_onn">Enable</string>
+    <string name="notification_sound">Sound</string>
+    <string name="notification_vibration">Vibration</string>
+
+    <string name="lockscreen">Keep Screen On</string>
+    <string name="lockscreen_summary">Check if you need to keep the screen turned on</string>
+    <string name="account_log_out">Logout</string>
+    <string name="app_version">App</string>
+    <string name="feedback">Feedback</string>
+
+    <string name="theme">Theme</string>
+    <string name="select_color_theme">Select color theme</string>
+    <string name="image_description">image</string>
+    <string name="shopping_lists">Shopping lists</string>
+    <string name="categories">Categories</string>
+    <string name="empty_list_text">List is empty</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="no_description">No description</string>
+    <string name="small">Small</string>
+    <string name="medium">Medium</string>
+    <string name="large">Large</string>
+    <string name="name">Name</string>
+    <string name="list_name_is_required">List name is required</string>
+    <string name="no_priority">No priority</string>
+    <string name="low">Low priority</string>
+    <string name="medium_priority">Medium priority</string>
+    <string name="high">High priority</string>
+    <string name="new_list_added">New list added</string>
+    <string name="list_updated">List updated</string>
+    <string name="goods_added">Goods added</string>
+    <string name="list_item_updated">List item updated</string>
+
+    <string name="sort_by_category">Sort by category</string>
+    <string name="sort_by_priority">Sort by priority</string>
+    <string name="sort_by_name">Sort by name</string>
+    <string name="sort_by_time_created">Sort by time created</string>
+    <string name="search">Search</string>
+    <string name="action_sort">Sort</string>
+    <string name="action_check_all">Select all</string>
+    <string name="action_uncheck_all">Unselect all</string>
+    <string name="action_send_list">Send list</string>
+    <string name="action_share">Share</string>
+    <string name="action_move">Move to</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+    <string name="synchronization">Synchronization</string>
+    <string name="priority">Priority</string>
+    <string name="category">Category</string>
+    <string name="quantity">Quantity</string>
+    <string name="price">Price</string>
+    <string name="unit">Unit</string>
+    <string name="units">Units</string>
+    <string name="create">Create</string>
+    <string name="full_unit_name_is_required">Full unit name is required</string>
+    <string name="short_unit_name_is_required">Short unit name is required</string>
+    <string name="full_unit_name">Full name</string>
+    <string name="short_unit_name">Short name</string>
+    <string name="currency_name_is_required">Currency name is required</string>
+    <string name="new_unit">New unit</string>
+    <string name="new_currency">New currency</string>
+    <string name="price_is_required">Price is required</string>
+    <string name="quantity_is_required">Quantity is required</string>
+    <string name="category_name">Category name</string>
+    <string name="new_color">New color</string>
+    <string name="category_name_is_required">Category name is required</string>
+    <string name="action_enable">Enable</string>
+    <string name="action_disable">Disable</string>
+    <string name="user_name_is_required">User name is required</string>
+    <string name="password_is_required">Password is required</string>
+    <string name="new_category_added">New category added</string>
+    <string name="category_is_updated">category is updated</string>
+    <string name="color">Color</string>
+    <string name="login_info">Use one account together with loved ones on phones to share lists and shopping together.</string>
+    <string name="action_copy">Copy to</string>
+    <string name="action_reset_categories">Reset categories</string>
+    <string name="reset">Reset</string>
+    <string name="error">Error</string>
+    <string name="this_name_already_used">This name already used</string>
+    <string name="this_color_already_used">This color already used</string>
+    <string name="shopping_cart">Shopping cart</string>
+    <string name="currency">Currency</string>
+    <string name="choose">Choose</string>
+    <string name="please_wait">Please wait</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="date_and_time">Date and Time</string>
+    <string name="reminder">Reminder</string>
+    <string name="recognition_not_present">Recogniser not present</string>
+    <string name="send_to">Send to</string>
+    <string name="confirm_to_delete">Confirm Before Deleting</string>
+    <string name="confirm_to_delete_summary">Show confirmation dialog before delete list item</string>
+    <string name="shopping_list">Shopping list</string>
+    <string name="send_mail_using">Send Mail Using:</string>
+    <string name="delete_the_item">Delete the item?</string>
+    <string name="delete_the_list">Delete the list?</string>
+    <string name="delete_the_category">Delete the category?</string>
+    <string name="select_with_animation">Select With Animation</string>
+    <string name="delete_with_animation">Delete With Animation</string>
+    <string name="add">Add</string>
+    <string name="add_user">Add user</string>
+
+    <string name="help_create_new_list">Create new list</string>
+    <string name="help_enter_list_name">Enter list name and click done button</string>
+    <string name="help_fill_list_name">or long click on done button to save the list and add another list</string>
+
+    <string name="help_create_new_list_item">Add new product</string>
+    <string name="help_enter_name_list_item">Enter the product name</string>
+    <string name="help_list_item_parameters">Fill in other parameters(if needed)</string>
+    <string name="help_list_item_done_click">Click done button to save product and return to list</string>
+    <string name="help_list_item_done_long_click">or long click on done button to save the product and add another product</string>
+    <string name="help_list_usability">1) Tap to select item \n2) Long tap to select item \n3) Tap to show note</string>
+    <string name="help_swipe_to_buy">Swipe item to buy, or delete from shopping cart</string>
+    <string name="help_swipe_to_refresh">Swipe to refresh the list</string>
+
+    <string name="help_create_new_category">Create new category</string>
+    <string name="help_fill_category_info">Enter a name of the category, select the color and click done button</string>
+    <string name="help_fill_category_info2">or long click on done button to save the category and add another category</string>
+    <string name="help_short_and_long_tap_to_select_item">1) Tap to select item \n2) Long tap to select item</string>
+    <string name="help_long_tap_to_select_item">Long tap to select item</string>
+    <string name="help_tap_to_edit_item">Tap to edit item</string>
+
+    <!-- Login Activity -->
+    <string name="log_in">Log in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="unknown_person">Unknown</string>
+    <string name="plus_generic_error">Sign in with Google is not available.</string>
+    <string name="sign_out_button_name">Sign out</string>
+    <string name="sign_in_error_status">Error signing in.</string>
+
+    <string name="logo_content_description">Logo</string>
+    <string name="parse_ui_progress_dialog_text">Loading&#8230;</string>
+    <string name="loading_data">Loading data&#8230;</string>
+    <string name="sync_data">Sync data&#8230;</string>
+    <string name="username_input_hint_floating_label">Username</string>
+    <string name="username_input_hint">Username or email</string>
+    <string name="password_input_hint">Password</string>
+    <string name="forgot_password_button_label"><u>Forgot password</u></string>
+    <string name="facebook_login_button_label">Log in with Facebook</string>
+    <string name="email_input_hint">Email</string>
+    <string name="confirm_password_input_hint">Re-enter password</string>
+    <string name="create_account_button_label">Create account</string>
+    <string name="no_password">Please enter your password</string>
+    <string name="parse_login_invalid_credentials_toast">The username and password you entered don\'t match</string>
+    <string name="parse_login_failed_unknown_toast">Could not log in, please try again later</string>
+
+    <plurals name="password_too_short_toast">
+        <item quantity="one">Password must be at least %d character long</item>
+        <item quantity="other">Password must be at least %d characters long</item>
+    </plurals>
+
+    <string name="username_taken_toast">Username is already taken, please choose a different one</string>
+    <string name="reenter_password_toast">Please re-enter your password</string>
+    <string name="mismatch_confirm_password_toast">Passwords don\'t match, please try again</string>
+    <string name="no_email">Please enter your email</string>
+    <string name="invalid_email">Email is invalid, please correct it and try again</string>
+    <string name="com_parse_ui_email_taken_toast">Email is already taken, please reset your password instead</string>
+    <string name="com_parse_ui_no_name_toast">Please enter your name</string>
+    <string name="com_parse_ui_signup_failed_unknown_toast">Could not sign up, please try again later</string>
+    <string name="com_parse_ui_login_help_instructions">Enter your email to recover your password</string>
+    <string name="com_parse_ui_login_help_email_input_hint">Email</string>
+    <string name="com_parse_ui_login_help_submit_button_label">Submit</string>
+    <string name="com_parse_ui_login_help_login_again_button_label">Back to Login</string>
+    <string name="com_parse_ui_login_help_submit_failed_unknown">Failed to request password reset, please try again</string>
+    <string name="com_parse_ui_login_help_email_sent">Please check your email for instructions on how to access your account</string>
+
+    <string name="select_lists">Select lists</string>
+    <string name="pro_account_info">Sync and share all of your lists with friends and family instantly for coordinated shopping. \n Never lose your lists, automatically backup your lists to the cloud and restore on any device that has the app installed.</string>
+    <string name="account_sync_automatically">Automatic Synchronization</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="delete">Delete</string>
+    <string name="sync">Sync</string>
+    <string name="server_is_overloaded">Server is overloaded, please try again later</string>
+    <string name="user_not_found">User not found</string>
+    <string name="error_no_network_connection">Cannot load data, please check your network connection.</string>
+    <string name="rate_info">We are happy to see that you enjoy using Shoppist. It\'d be really helpful if you reted us in Google Play. \n\nIt takes just a minute. \nThanks for your support!</string>
+    <string name="rate">Rate</string>
+    <string name="no">No</string>
+    <string name="no_later">No Later</string>
+    <string name="rate_shoppist">Rate Shoppist</string>
+    <string name="skip">Skip</string>
+    <string name="note">Note</string>
+    <string name="discolor_purchased_goods">Discolor The Purchased Goods</string>
+    <string name="discolor_purchased_goods_summary">Discolor the purchased goods in shopping cart</string>
+    <string name="calculate_price">Calculate price of goods</string>
+    <string name="calculate_price_summary">Calculate the price of goods by quantity</string>
+    <string name="goods">Goods</string>
+    <string name="action_strike_out_all">Strike out all</string>
+    <string name="action_return_all_to_list">Return all to list</string>
+    <string name="action_strike_out">Strike out</string>
+    <string name="action_return_to_list">Return to list</string>
+    <string name="version">Version: </string>
+    <string name="show_goods_header">Show Goods Header</string>
+    <string name="sort_manually_mode">Sort manually mode</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="days_ago">" days ago"</string>
+    <string name="close_manual_sort_mode_with_back_btn_symmary">Turn off manual sort mode when tap on back button</string>
+    <string name="closing_manual_sort_mode">Closing Manual Sort Mode</string>
+    <string name="edit_currency">Edit currency</string>
+    <string name="edit_unit">Edit unit</string>
+    <string name="edit_goods">Edit goods</string>
+    <string name="goods_name_is_required">Goods name is required</string>
+    <string name="delete_goods">Delete the goods?</string>
+    <string name="new_goods">New goods</string>
+    <string name="change_category">Change category</string>
+    <string name="expand_all">Expand all</string>
+    <string name="collapse_all">Collapse all</string>
+    <string name="left_swipe_action">Left Swipe Action</string>
+    <string name="right_swipe_action">Right Swipe Action</string>
+    <string name="move_item_to_cart">Move item to Cart</string>
+    <string name="delete_item">Delete item</string>
+    <string name="edit_item">Edit item</string>
+    <string name="shopping">Shopping</string>
+    <string name="work">Work</string>
+    <string name="select_list">Select List</string>
+    <string name="select_list_dialog">Select List Dialog</string>
+    <string name="add_new_item">Add New Item</string>
+    <string name="select_sort">Select sort</string>
+    <string name="select_item">Select item</string>
+    <string name="long_item_click_action">Long Item Click Action</string>
+    <string name="choose_actions">Choose Actions</string>
+    <string name="history">History</string>
+    <string name="tap_to_sing_up_or_login">Tap to sing up or login</string>
+    <string name="system">System</string>
+    <string name="buy">Buy</string>
+    <string name="shoppist_pro">Shoppist Pro</string>
+    <string name="notifications">Notifications</string>
+    <string name="clear_all">Clear all</string>
+    <string name="status_not_done">Not done</string>
+    <string name="status_done">Done</string>
+    <string name="status_updated">Updated</string>
+    <string name="status_deleted">Deleted</string>
+    <string name="status_new">New</string>
+    <string name="status_bought">Bought</string>
+    <string name="status_not_bought">Not bought</string>
+    <string name="snooze">Snooze</string>
+    <string name="action_reset_goods">Reset goods</string>
+    <string name="update">Update</string>
+    <string name="select">Select</string>
+    <string name="change_unit">Change unit</string>
+    <string name="clear">Clear</string>
+    <string name="voice_search">Voice search</string>
+    <string name="add_button_click_action">Add Button Click Action</string>
+    <string name="quick_mode">Quick mode</string>
+    <string name="standart_mode">Standart mode</string>
+    <string name="available_delete_notification">Notify About Deleted Items</string>
+    <string name="available_new_notification">Notify About New Items</string>
+    <string name="available_update_notification">Notify About Updated Items</string>
+    <string name="available_not_bought_notification">Notify About Not Bought Goods</string>
+    <string name="subscription">Subscription</string>
+    <string name="billing_not_supported">In-App billing is not supported.\n\nProbable reasons:\n1. Google Play is not installed or is not updated\n2. The app is running in emulator\n3. Bug in the library</string>
+    <string name="for_month">For Month</string>
+    <string name="delete_account_message">All data on server and device will be deleted. Are you sure?</string>
+
+
+
+    <string-array name="priority">
+        <item>No priority</item>
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+
+    <string-array name="reminder">
+        <item>Not repeat</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Weekdays</item>
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
+
+    <string-array name="currency">
+        <item>No currency ! no_currency</item>
+        <item>USA ! 1</item>
+        <item>EUR ! 2</item>
+        <item>UAH ! 3</item>
+        <item>RUB ! 4</item>
+    </string-array>
+
+    <string-array name="units">
+        <item>No unit/No unit ! no_unit</item>
+        <item>Kilogram/Kg ! 1</item>
+        <item>Liter/L ! 2</item>
+        <item>Gram/g ! 3</item>
+        <item>Milligram/Mg ! 4</item>
+        <item>Pound/lb ! 5</item>
+        <item>Ounce/oz ! 6</item>
+        <item>Ton/t ! 7</item>
+        <item>Gallon/gal ! 8</item>
+    </string-array>
+
+    <integer-array name="categories_colors">
+        <item>@color/purple_color</item>
+        <item>@color/brown_color</item>
+        <item>@color/lite_blue_color</item>
+        <item>@color/red_color</item>
+        <item>@color/menu_color</item>
+        <item>@color/green_color</item>
+        <item>@color/orange_color</item>
+        <item>@color/blue_color</item>
+        <item>@color/pink_color</item>
+        <item>@color/yellow_box_color</item>
+        <item>@color/blue_box_color</item>
+        <item>@color/deep_purple_a100</item>
+        <item>@color/pink_box_color</item>
+        <item>@color/dark_blue_box_color</item>
+        <item>@color/green_800</item>
+        <item>@color/blue_grey_500</item>
+        <item>@color/lime_500</item>
+        <item>@color/cyan_500</item>
+        <item>@color/grey_600</item>
+        <item>@color/amber_500</item>
+        <item>@color/deep_orange_500</item>
+        <item>@color/pink_a700</item>
+        <item>@color/brown_300</item>
+    </integer-array>
+
+    <integer-array name="color_theme">
+        <item>@color/pink_500</item>
+        <item>@color/purple_500</item>
+        <item>@color/deep_purple_500</item>
+        <item>@color/indigo_500</item>
+        <item>@color/blue_500</item>
+        <item>@color/light_blue_500</item>
+        <item>@color/teal_500</item>
+        <item>@color/green_500</item>
+        <item>@color/light_green_500</item>
+        <item>@color/deep_orange_500</item>
+        <item>@color/brown_500</item>
+        <item>@color/blue_grey_500</item>
+        <item>@color/red_color</item>
+        <item>@color/orange_500</item>
+    </integer-array>
+
+    <integer-array name="color_status_bar">
+        <item>@color/pink_600</item>
+        <item>@color/purple_600</item>
+        <item>@color/deep_purple_600</item>
+        <item>@color/indigo_600</item>
+        <item>@color/blue_600</item>
+        <item>@color/light_blue_600</item>
+        <item>@color/teal_600</item>
+        <item>@color/green_600</item>
+        <item>@color/light_green_600</item>
+        <item>@color/deep_orange_600</item>
+        <item>@color/brown_600</item>
+        <item>@color/menu_color</item>
+        <item>@color/red_800</item>
+        <item>@color/orange_600</item>
+    </integer-array>
+
+    <string-array name="categories">
+        <item>No category ! 1</item>
+        <item>Vegetables, Mushrooms ! 2</item>
+        <item>Fruits, Berries ! 3</item>
+        <item>Dairy &amp; Eggs ! 4</item>
+        <item>Meat products ! 5</item>
+        <item>Seafood ! 6</item>
+        <item>Frozen Foods &amp; Ice Cream ! 7</item>
+        <item>Breakfast Foods ! 8</item>
+        <item>Beverages ! 9</item>
+        <item>Bread &amp; Bakery ! 10</item>
+        <item>Confection ! 11</item>
+        <item>Canned Goods ! 12</item>
+        <item>Sauces, Spices &amp; Condiments ! 13</item>
+        <item>Snacks &amp; Chips ! 14</item>
+        <item>Oil, Vinegar &amp; Salad Dressing ! 15</item>
+        <item>Soups, Grains &amp; Rice ! 16</item>
+        <item>Pasta &amp; Noodles ! 17</item>
+        <item>Household &amp; Cleaning Supplies ! 18</item>
+        <item>Infant &amp; Child care ! 19</item>
+        <item>Health &amp; Beauty ! 20</item>
+        <item>Pet Supplies ! 21</item>
+        <item>Office &amp; School Supplies ! 22</item>
+        <item>Wine &amp; Spirits ! 23</item>
+    </string-array>
+
+    <string-array name="products">
+        <item>Apricots ! 3</item>
+        <item>Apricots canned ! 3</item>
+        <item>Quince ! 3</item>
+        <item>Pineapples ! 3</item>
+        <item>Pineapples canned ! 3</item>
+        <item>Oranges ! 3</item>
+        <item>Watermelon ! 3</item>
+        <item>Bananas ! 3</item>
+        <item>Grapes ! 3</item>
+        <item>Cherry ! 3</item>
+        <item>Grenade ! 3</item>
+        <item>Grapefruit ! 3</item>
+        <item>Pears ! 3</item>
+        <item>Guava ! 3</item>
+        <item>Blackberry ! 3</item>
+        <item>Raisins ! 3</item>
+        <item>Figs ! 3</item>
+        <item>Kiwi ! 3</item>
+        <item>Strawberries ! 3</item>
+        <item>Cranberries ! 3</item>
+        <item>Coconut ! 3</item>
+        <item>Dried apricots ! 3</item>
+        <item>Lime ! 3</item>
+        <item>Lemons ! 3</item>
+        <item>Raspberries ! 3</item>
+        <item>Mango ! 3</item>
+        <item>Tangerines ! 3</item>
+        <item>Passion fruit ! 3</item>
+        <item>Papaya ! 3</item>
+        <item>Peaches ! 3</item>
+        <item>Pomelo fruit ! 3</item>
+        <item>Persimmon ! 3</item>
+        <item>Blueberries ! 3</item>
+        <item>Prunes ! 3</item>
+        <item>Cherries ! 3</item>
+        <item>Apples ! 3</item>
+        <item>Plums ! 3</item>
+        <item>Dried cranberries ! 3</item>
+        <item>Dried bananas ! 3</item>
+        <item>Dried tangerine ! 3</item>
+        <item>Dried apples ! 3</item>
+        <item>Currant ! 3</item>
+        <item>Nectarine ! 3</item>
+        <item>Almonds ! 3</item>
+        <item>Sesame ! 3</item>
+        <item>Peanuts ! 3</item>
+        <item>Hazelnut ! 3</item>
+
+        <item>Avocado ! 2</item>
+        <item>Basil ! 2</item>
+        <item>Eggplant ! 2</item>
+        <item>White Beans ! 2</item>
+        <item>White mushrooms ! 2</item>
+        <item>Mung beans ! 2</item>
+        <item>Brazil Nuts ! 2</item>
+        <item>Brusselskaya cabbage ! 2</item>
+        <item>Dried peas ! 2</item>
+        <item>Walnut ! 2</item>
+        <item>Mushrooms ! 2</item>
+        <item>Melon ! 2</item>
+        <item>Ginger ! 2</item>
+        <item>Squash ! 2</item>
+        <item>Potatoes ! 2</item>
+        <item>Pine nut ! 2</item>
+        <item>Corn ! 2</item>
+        <item>Bow ! 2</item>
+        <item>Carrots ! 2</item>
+        <item>Nutmeg ! 2</item>
+        <item>Mixed vegetables ! 2</item>
+        <item>Cucumber ! 2</item>
+        <item>Hot peppers ! 2</item>
+        <item>Sweet pepper ! 2</item>
+        <item>Chili ! 2</item>
+        <item>Parsley ! 2</item>
+        <item>Tomatoes ! 2</item>
+        <item>Cherry tomatoes ! 2</item>
+        <item>Radishes ! 2</item>
+        <item>Turnip ! 2</item>
+        <item>Beet ! 2</item>
+        <item>Celery ! 2</item>
+        <item>White asparagus ! 2</item>
+        <item>Asparagus green ! 2</item>
+        <item>Pumpkin ! 2</item>
+        <item>Beans ! 2</item>
+        <item>Garlic ! 2</item>
+        <item>Celery root ! 2</item>
+        <item>Salad ! 2</item>
+        <item>Truffle ! 2</item>
+        <item>Champignons ! 2</item>
+        <item>Jerusalem artichoke ! 2</item>
+        <item>Chanterelles ! 2</item>
+        <item>Lettuce ! 2</item>
+        <item>Pickled cucumbers ! 2</item>
+        <item>Canned pickled cucumbers ! 2</item>
+
+        <item>Yogurt ! 4</item>
+        <item>Kefir ! 4</item>
+        <item>Goat milk ! 4</item>
+        <item>Oil ! 4</item>
+        <item>Milk ! 4</item>
+        <item>Milk fat-free ! 4</item>
+        <item>Milkshake ! 4</item>
+        <item>Ryazhenka ! 4</item>
+        <item>Condensed milk ! 4</item>
+        <item>Cream ! 4</item>
+        <item>Butter ! 4</item>
+        <item>Sour cream ! 4</item>
+        <item>Powdered milk ! 4</item>
+        <item>Cheese ! 4</item>
+        <item>White cheese ! 4</item>
+        <item>Mozzarella cheese ! 4</item>
+        <item>Parmesan cheese ! 4</item>
+        <item>Processed cheese ! 4</item>
+        <item>Moldy cheese ! 4</item>
+        <item>Cottage cheese ! 4</item>
+        <item>Grated cheese ! 4</item>
+        <item>Eggs ! 4</item>
+        <item>Chicken eggs ! 4</item>
+        <item>Pasteurized milk ! 4</item>
+        <item>Whipped cream ! 4</item>
+        <item>Boiled condensed milk ! 4</item>
+        <item>Margarine ! 4</item>
+
+        <item>Mutton ! 5</item>
+        <item>Leg of lamb ! 5</item>
+        <item>Mutton shoulder blade ! 5</item>
+        <item>Mutton loin ! 5</item>
+        <item>Basturma ! 5</item>
+        <item>Bacon ! 5</item>
+        <item>Beef ! 5</item>
+        <item>Beef tenderloin ! 5</item>
+        <item>Beef brisket ! 5</item>
+        <item>Neat\'s tongue ! 5</item>
+        <item>Beef fillet ! 5</item>
+        <item>Brisket ! 5</item>
+        <item>Turkey ! 5</item>
+        <item>Sausage ! 5</item>
+        <item>Cooked sausage ! 5</item>
+        <item>Cooked smoked sausage ! 5</item>
+        <item>Sausage doctorate ! 5</item>
+        <item>Sausage salami ! 5</item>
+        <item>Smoked sausage ! 5</item>
+        <item>Wienerwurst ! 5</item>
+        <item>Smoked bacon ! 5</item>
+        <item>Cutlets ! 5</item>
+        <item>Beef cutlets ! 5</item>
+        <item>Cutlets home ! 5</item>
+        <item>Chicken cutlets ! 5</item>
+        <item>Pork cutlets ! 5</item>
+        <item>Chicken fillet ! 5</item>
+        <item>Chicken thighs ! 5</item>
+        <item>Chicken breasts ! 5</item>
+        <item>chicken wings ! 5</item>
+        <item>Chicken nuggets ! 5</item>
+        <item>Chicken legs ! 5</item>
+        <item>Chicken ! 5</item>
+        <item>Meatloaf ! 5</item>
+        <item>Meat ! 5</item>
+        <item>Hunting sausages ! 5</item>
+        <item>Beef liver ! 5</item>
+        <item>Chicken liver ! 5</item>
+        <item>Pork ! 5</item>
+        <item>Pork tenderloin ! 5</item>
+        <item>Pork belly ! 5</item>
+        <item>Pork loin ! 5</item>
+        <item>Pork shoulder blade ! 5</item>
+        <item>Veal ! 5</item>
+        <item>Forcemeat ! 5</item>
+        <item>Minced beef ! 5</item>
+        <item>Minced chicken ! 5</item>
+        <item>Minced pork ! 5</item>
+        <item>Meatballs ! 5</item>
+        <item>Shashlik ! 5</item>
+        <item>Schnitzel ! 5</item>
+        <item>Goose ! 5</item>
+        <item>Duck ! 5</item>
+        <item>Steak ! 5</item>
+        <item>Ham ! 5</item>
+        <item>Frankfurters ! 5</item>
+
+        <item>Anchovies ! 6</item>
+        <item>Caviar overseas ! 6</item>
+        <item>Caviar aubergine ! 6</item>
+        <item>Caviar squash ! 6</item>
+        <item>Squid ! 6</item>
+        <item>Flounder ! 6</item>
+        <item>Mullet ! 6</item>
+        <item>Smoked salmon ! 6</item>
+        <item>Crab ! 6</item>
+        <item>Crab sticks ! 6</item>
+        <item>Red caviar ! 6</item>
+        <item>Shrimps ! 6</item>
+        <item>Lobster ! 6</item>
+        <item>Salmon ! 6</item>
+        <item>Mussels ! 6</item>
+        <item>Mintai ! 6</item>
+        <item>Laminaria ! 6</item>
+        <item>Sea bass ! 6</item>
+        <item>Octopus ! 6</item>
+        <item>Halibut ! 6</item>
+        <item>Cancer ! 6</item>
+        <item>Fish ! 6</item>
+        <item>Sardine ! 6</item>
+        <item>Mackerel ! 6</item>
+        <item>Salmon steak ! 6</item>
+        <item>Tuna steak ! 6</item>
+        <item>Zander ! 6</item>
+        <item>Tuna ! 6</item>
+        <item>Eel ! 6</item>
+        <item>Oysters ! 6</item>
+        <item>Trout ! 6</item>
+        <item>Black caviar ! 6</item>
+
+        <item>Frozen brussels sprouts ! 7</item>
+        <item>Frozen cherries ! 7</item>
+        <item>Frozen strawberry ! 7</item>
+        <item>Frozen mushrooms ! 7</item>
+        <item>Frozen shrimp ! 7</item>
+        <item>Frozen seafood ! 7</item>
+        <item>Frozen vegetables ! 7</item>
+        <item>Pelmeni ! 7</item>
+        <item>Ice cream ! 7</item>
+
+        <item>Absinthe ! 23</item>
+        <item>Amaretto ! 23</item>
+        <item>Near beer ! 23</item>
+        <item>White wine ! 23</item>
+        <item>Brandy ! 23</item>
+        <item>Bourbon ! 23</item>
+        <item>Vermouth ! 23</item>
+        <item>Wine ! 23</item>
+        <item>Whiskey ! 23</item>
+        <item>Vodka ! 23</item>
+        <item>Mulled wine ! 23</item>
+        <item>Gin ! 23</item>
+        <item>Irish whiskey ! 23</item>
+        <item>Cognac ! 23</item>
+        <item>Red wine ! 23</item>
+        <item>Liquor ! 23</item>
+        <item>Orange liqueur ! 23</item>
+        <item>Cherry liqueur ! 23</item>
+        <item>Herbal liqueur ! 23</item>
+        <item>Fruit liqueur ! 23</item>
+        <item>Tincture ! 23</item>
+        <item>Tincture of pepper ! 23</item>
+        <item>Beer ! 23</item>
+        <item>Wheat beer ! 23</item>
+        <item>Beer light ! 23</item>
+        <item>Beer dark ! 23</item>
+        <item>Semi-sweet white wine ! 23</item>
+        <item>Semi-sweet red wine ! 23</item>
+        <item>Semi-sweet rose wine ! 23</item>
+        <item>Semi-sweet champagne ! 23</item>
+        <item>Semi-dry white wine ! 23</item>
+        <item>Semi-dry red wine ! 23</item>
+        <item>Semi-dry rose wine ! 23</item>
+        <item>Semi-dry champagne ! 23</item>
+        <item>Port wine ! 23</item>
+        <item>Rose wine ! 23</item>
+        <item>Rum ! 23</item>
+        <item>Sake ! 23</item>
+        <item>Sambuca ! 23</item>
+        <item>Cider ! 23</item>
+        <item>Scotch ! 23</item>
+        <item>Sweet white wine ! 23</item>
+        <item>Sweet red wine ! 23</item>
+        <item>Sweet pink wine ! 23</item>
+        <item>Sweet champagne ! 23</item>
+        <item>Dry white wine ! 23</item>
+        <item>Dry red wine ! 23</item>
+        <item>Dry rose wine ! 23</item>
+        <item>Dry champagne ! 23</item>
+        <item>Tequila ! 23</item>
+        <item>Champagne ! 23</item>
+        <item>Scotch whiskey ! 23</item>
+        <item>Campari ! 23</item>
+
+        <item>Pineapple juice ! 9</item>
+        <item>Orange juice ! 9</item>
+        <item>Grape juice ! 9</item>
+        <item>Water ! 9</item>
+        <item>Sparkling water ! 9</item>
+        <item>Grapefruit juice ! 9</item>
+        <item>Cocoa ! 9</item>
+        <item>Kvass ! 9</item>
+        <item>Strawberry juice ! 9</item>
+        <item>Cranberry juice ! 9</item>
+        <item>Cola ! 9</item>
+        <item>Coffee ! 9</item>
+        <item>Decaffeinated coffee ! 9</item>
+        <item>Coffee beans ! 9</item>
+        <item>Lemonade ! 9</item>
+        <item>Lemon juice ! 9</item>
+        <item>Carrot juice ! 9</item>
+        <item>Ground coffee ! 9</item>
+        <item>Fruit-drink ! 9</item>
+        <item>Tomato juice ! 9</item>
+        <item>Estragon ! 9</item>
+        <item>Not aerated water ! 9</item>
+        <item>Syrup ! 9</item>
+        <item>Juice ! 9</item>
+        <item>Mango juice ! 9</item>
+        <item>Sprite ! 9</item>
+        <item>Herbal tea ! 9</item>
+        <item>Fanta ! 9</item>
+        <item>Tea ! 9</item>
+        <item>Tea bags ! 9</item>
+        <item>Black tea ! 9</item>
+        <item>Energy drink ! 9</item>
+        <item>Apple juice ! 9</item>
+        <item>Vegetable juice ! 9</item>
+        <item>Peach juice ! 9</item>
+        <item>Green tea ! 9</item>
+
+        <item>Green olives ! 12</item>
+        <item>Green pea ! 12</item>
+        <item>Pickled ginger ! 12</item>
+        <item>Canned for cats ! 12</item>
+        <item>Canned for dogs ! 12</item>
+        <item>Olives ! 12</item>
+        <item>Pitted black olives ! 12</item>
+        <item>Pate ! 12</item>
+        <item>Pickles ! 12</item>
+        <item>Sardines in tomato sauce ! 12</item>
+        <item>Spinach ! 12</item>
+
+        <item>Adzhika ! 13</item>
+        <item>Basil spice ! 13</item>
+        <item>Mustard ! 13</item>
+        <item>Grainy mustard ! 13</item>
+        <item>Mustard with horseradish ! 13</item>
+        <item>Ginger powder ! 13</item>
+        <item>Coriander ! 13</item>
+        <item>Cinnamon ! 13</item>
+        <item>Bay leaves ! 13</item>
+        <item>Marjoram ! 13</item>
+        <item>Dried marjoram ! 13</item>
+        <item>Marinade ! 13</item>
+        <item>Paprika ! 13</item>
+        <item>Pepper ! 13</item>
+        <item>Pepper white peas ! 13</item>
+        <item>White pepper powder ! 13</item>
+        <item>Allspice ! 13</item>
+        <item>Pepper red peas ! 13</item>
+        <item>Pepper red ground ! 13</item>
+        <item>Black pepper peas ! 13</item>
+        <item>Ground black pepper ! 13</item>
+        <item>Dried parsley ! 13</item>
+        <item>Horseradish ! 13</item>
+        <item>Seasoning ! 13</item>
+        <item>Seasoning for pilaf ! 13</item>
+        <item>Seasoning for meat ! 13</item>
+        <item>Seasonings for chicken ! 13</item>
+        <item>Curried ! 13</item>
+        <item>Powder ! 13</item>
+        <item>Salt ! 13</item>
+        <item>Iodised salt ! 13</item>
+        <item>Salt large ! 13</item>
+        <item>Salt fine ! 13</item>
+        <item>Sea salt ! 13</item>
+        <item>Sauce ! 13</item>
+        <item>Sauce for salad ! 13</item>
+        <item>Barbecue Sauce ! 13</item>
+        <item>Spaghetti sauce ! 13</item>
+        <item>Pesto ! 13</item>
+        <item>Salsa ! 13</item>
+        <item>Tartar sauce ! 13</item>
+        <item>Cumin ! 13</item>
+        <item>Tomato paste ! 13</item>
+        <item>Saffron ! 13</item>
+        <item>Vanillin ! 13</item>
+        <item>vanilla ! 13</item>
+        <item>Vanilla sugar ! 13</item>
+        <item>Vanilla extract ! 13</item>
+        <item>Licorice ! 13</item>
+        <item>Oregano leaves ! 13</item>
+        <item>Rosemary ! 13</item>
+        <item>Powdered sugar ! 13</item>
+        <item>Dill ! 13</item>
+        <item>Sorrel ! 13</item>
+        <item>Sage ! 13</item>
+        <item>Mint ! 13</item>
+        <item>Ketchup ! 13</item>
+        <item>Sugar ! 13</item>
+        <item>Refined sugar ! 13</item>
+        <item>Sugar cane ! 13</item>
+
+        <item>Antihistamines ! 20</item>
+        <item>Antiperspirant ! 20</item>
+        <item>Liquid soap ! 20</item>
+        <item>Brilliant green ! 20</item>
+        <item>Dental floss ! 20</item>
+        <item>Toothpaste ! 20</item>
+        <item>Toothbrush ! 20</item>
+        <item>Toothpicks ! 20</item>
+        <item>Shaving gel ! 20</item>
+        <item>Shower gel ! 20</item>
+        <item>Body wash ! 20</item>
+        <item>Vitamins ! 20</item>
+        <item>After shave balm ! 20</item>
+        <item>Bandage ! 20</item>
+        <item>Shaver ! 20</item>
+        <item>Wadding ! 20</item>
+        <item>Cotton swabs ! 20</item>
+        <item>Wipes ! 20</item>
+        <item>Deodorant ! 20</item>
+        <item>Insulin ! 20</item>
+        <item>Iodine ! 20</item>
+        <item>Shampoo ! 20</item>
+        <item>Ink ! 20</item>
+        <item>Tampons ! 20</item>
+        <item>Condoms ! 20</item>
+        <item>Pomade ! 20</item>
+        <item>Soap ! 20</item>
+        <item>Hand soap ! 20</item>
+        <item>Razor blades ! 20</item>
+        <item>Face lotion ! 20</item>
+        <item>Foot lotion ! 20</item>
+        <item>Hand lotion ! 20</item>
+        <item>Body lotion ! 20</item>
+        <item>Mouthwash ! 20</item>
+        <item>Paracetamol ! 20</item>
+        <item>Shaving foam ! 20</item>
+        <item>Gaskets ! 20</item>
+        <item>Plaster ! 20</item>
+
+        <item>Infant formula ! 19</item>
+        <item>Baby wipes ! 19</item>
+        <item>Baby shampoo ! 19</item>
+        <item>Vegetable baby puree ! 19</item>
+        <item>Diapers ! 19</item>
+
+        <item>Batteries ! 18</item>
+        <item>Foil ! 18</item>
+        <item>Toilet paper ! 18</item>
+        <item>Washing powder ! 18</item>
+        <item>Powder for dishwashers ! 18</item>
+        <item>Remover ! 18</item>
+        <item>Means for washing of bath ! 18</item>
+        <item>Dishwashing toilet ! 18</item>
+        <item>Napkins ! 18</item>
+        <item>Air freshener ! 18</item>
+        <item>Fabric softener ! 18</item>
+        <item>Detergent ! 18</item>
+        <item>Garbage bags ! 18</item>
+        <item>Bleach ! 18</item>
+
+        <item>Paper ! 22</item>
+        <item>Notebook ! 22</item>
+        <item>Exercise book ! 22</item>
+        <item>Stickers ! 22</item>
+        <item>Handle ! 22</item>
+        <item>Transparent file ! 22</item>
+        <item>Folder ! 22</item>
+        <item>Scissors ! 22</item>
+        <item>Buttons ! 22</item>
+        <item>Pencils ! 22</item>
+        <item>Diary ! 22</item>
+        <item>Jotter ! 22</item>
+        <item>Glue ! 22</item>
+        <item>Envelopes ! 22</item>
+        <item>Ruler ! 22</item>
+        <item>Marker ! 22</item>
+        <item>Desktop organizer ! 22</item>
+        <item>Pencil-case ! 22</item>
+        <item>Staples ! 22</item>
+        <item>Self-binder ! 22</item>
+        <item>Clips ! 22</item>
+        <item>Sharpener ! 22</item>
+        <item>Markers ! 22</item>
+
+        <item>Artichokes ! 10</item>
+        <item>Baguette ! 10</item>
+        <item>Baguette with onions ! 10</item>
+        <item>Baguette with garlic ! 10</item>
+        <item>Loaf ! 10</item>
+        <item>Cakes for pizza ! 10</item>
+        <item>Cakes for the cake ! 10</item>
+        <item>Yeast bread ! 10</item>
+        <item>White bread ! 10</item>
+        <item>Bagels ! 10</item>
+        <item>Bun sandwich ! 10</item>
+        <item>Cinnamon rolls ! 10</item>
+        <item>Buns ! 10</item>
+        <item>Corn bread ! 10</item>
+        <item>Cake ! 10</item>
+        <item>Crackers ! 10</item>
+        <item>Croissants ! 10</item>
+        <item>Muffins ! 10</item>
+        <item>Puff ! 10</item>
+        <item>Straw ! 10</item>
+        <item>Bread ! 10</item>
+        <item>Bread for toasting ! 10</item>
+        <item>Black bread ! 10</item>
+        <item>Dough ! 10</item>
+        <item>Pie ! 10</item>
+        <item>Doughnuts ! 10</item>
+        <item>Roll ! 10</item>
+
+        <item>Orange jam ! 11</item>
+        <item>Meringue ! 11</item>
+        <item>White chocolate ! 11</item>
+        <item>Lingonberry jam ! 11</item>
+        <item>Jam ! 11</item>
+        <item>Jelly ! 11</item>
+        <item>Caramel syrup ! 11</item>
+        <item>Strawberry jam ! 11</item>
+        <item>Strawberry syrup ! 11</item>
+        <item>Oatmeal cookies ! 11</item>
+        <item>Sprinkling baking ! 11</item>
+        <item>Pudding ! 11</item>
+        <item>Candied fruit ! 11</item>
+        <item>Sherbet ! 11</item>
+        <item>Cookies ! 11</item>
+        <item>Pastry cream ! 11</item>
+        <item>Zephyr ! 11</item>
+        <item>Waffles ! 11</item>
+        <item>Glaze ! 11</item>
+        <item>Marmalade ! 11</item>
+        <item>Candy ! 11</item>
+        <item>Candied fruit jelly ! 11</item>
+        <item>Milk chocolate ! 11</item>
+        <item>Honey ! 11</item>
+        <item>Chocolate ! 11</item>
+        <item>Chocolate paste ! 11</item>
+        <item>Chocolate candies ! 11</item>
+        <item>Bar of chocolate ! 11</item>
+        <item>Biscuits ! 11</item>
+        <item>Marzipan ! 11</item>
+
+        <item>Energy bar ! 14</item>
+        <item>Chips ! 14</item>
+        <item>Pistachios ! 14</item>
+        <item>Rusks ! 14</item>
+        <item>Popcorn ! 14</item>
+        <item>Nuts ! 14</item>
+
+        <item>Peanut butter ! 15</item>
+        <item>Wine vinegar ! 15</item>
+        <item>Mayonnaise ! 15</item>
+        <item>Mayonnaise olive ! 15</item>
+        <item>Sunflower oil ! 15</item>
+        <item>Soy sauce ! 15</item>
+        <item>Vinegar ! 15</item>
+        <item>Acetic acid ! 15</item>
+        <item>Apple cider vinegar ! 15</item>
+        <item>Balsamic vinegar ! 15</item>
+        <item>Olive oil ! 15</item>
+
+        <item>Soup ! 16</item>
+        <item>Proso millet ! 16</item>
+        <item>Millet ! 16</item>
+        <item>Grits ! 16</item>
+        <item>Buckwheat ! 16</item>
+        <item>Buckwheat flour ! 16</item>
+        <item>White rice ! 16</item>
+        <item>Brown rice ! 16</item>
+        <item>Flour ! 16</item>
+        <item>Wheat flour ! 16</item>
+        <item>Meal ! 16</item>
+        <item>Pearl barley ! 16</item>
+        <item>Rice ! 16</item>
+        <item>Groats ! 16</item>
+        <item>Semolina ! 16</item>
+        <item>Oat flour ! 16</item>
+
+        <item>Noodles ! 17</item>
+        <item>Pasta ! 17</item>
+        <item>Vermicelli ! 17</item>
+        <item>Spaghetti ! 17</item>
+
+        <item>Forage for cats ! 21</item>
+        <item>Forage for dogs ! 21</item>
+
+        <item>Muesli ! 8</item>
+        <item>Oatmeal ! 8</item>
+        <item>Rolled oats ! 8</item>
+        <item>Wheat flakes ! 8</item>
+        <item>Flakes ! 8</item>
+        <item>Corn sticks ! 8</item>
+        <item>Cornflakes ! 8</item>
+        <item>Porridge ! 8</item>
+
+        <item>Chestnut ! 1</item>
+        <item>Tights ! 1</item>
+        <item>Disposable tableware ! 1</item>
+        <item>Plastic forks ! 1</item>
+        <item>Plastic cups ! 1</item>
+        <item>Shells ! 1</item>
+        <item>Candles for cake ! 1</item>
+        <item>Ducts ! 1</item>
+        <item>Rag ! 1</item>
+        <item>Socks ! 1</item>
+        <item>Capsule ! 1</item>
+        <item>Paper cups ! 1</item>
+        <item>Paper plates ! 1</item>
+        <item>Toys ! 1</item>
+        <item>Goulash ! 1</item>
+        <item>Nectar ! 1</item>
+        <item>Fat ! 1</item>
+        <item>Sushi ! 1</item>
+        <item>Sandwiches ! 1</item>
+        <item>Chiburekki ! 1</item>
+        <item>Strudel ! 1</item>
+        <item>Pizza ! 1</item>
+        <item>Pancakes ! 1</item>
+        <item>Pancakes with meat ! 1</item>
+        <item>Pancakes with cottage ! 1</item>
+        <item>Pancakes with fruit ! 1</item>
+        <item>Pancakes with berries ! 1</item>
+        <item>Dumplings ! 1</item>
+        <item>Dumplings with cherries ! 1</item>
+        <item>Dumplings with potatoes ! 1</item>
+        <item>Dumplings with cottage ! 1</item>
+        <item>Clove ! 1</item>
+        <item>Yeast ! 1</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- For notification -->
+    <plurals name="added_currencies">
+        <item quantity="one">Добавлена %1$d валюта</item>
+        <item quantity="other">Добавлено %1$d валют</item>
+        <item quantity="few">Добавлено %1$d валют</item>
+        <item quantity="many">Добавлено %1$d валют</item>
+    </plurals>
+    <plurals name="update_currencies">
+        <item quantity="one">Обновлена %1$d валюта</item>
+        <item quantity="other">Обновлено %1$d валют</item>
+        <item quantity="few">Обновлено %1$d валют</item>
+        <item quantity="many">Обновлено %1$d валют</item>
+    </plurals>
+    <plurals name="delete_currencies">
+        <item quantity="one">Удалена %1$d валюта</item>
+        <item quantity="other">Удалено %1$d валют</item>
+        <item quantity="few">Удалено %1$d валют</item>
+        <item quantity="many">Удалено %1$d валют</item>
+    </plurals>
+
+    <plurals name="added_categories">
+        <item quantity="one">Добавлена %1$d категория</item>
+        <item quantity="other">Добавлено %1$d категорий</item>
+        <item quantity="few">Добавлено %1$d категорий</item>
+        <item quantity="many">Добавлено %1$d категорий</item>
+    </plurals>
+    <plurals name="update_categories">
+        <item quantity="one">Обновлена %1$d категория</item>
+        <item quantity="other">Обновлено %1$d категорий</item>
+        <item quantity="few">Обновлено %1$d категорий</item>
+        <item quantity="many">Обновлено %1$d категорий</item>
+    </plurals>
+    <plurals name="delete_categories">
+        <item quantity="one">Удалена %1$d категория</item>
+        <item quantity="other">Удалено %1$d категорий</item>
+        <item quantity="few">Удалено %1$d категорий</item>
+        <item quantity="many">Удалено %1$d категорий</item>
+    </plurals>
+
+    <plurals name="added_units">
+        <item quantity="one">Добавлена %1$d единица измерения</item>
+        <item quantity="other">Добавлено %1$d единиц измерения</item>
+        <item quantity="few">Добавлено %1$d единиц измерения</item>
+        <item quantity="many">Добавлено %1$d единиц измерения</item>
+    </plurals>
+    <plurals name="update_units">
+        <item quantity="one">Обновлена %1$d единица измерения</item>
+        <item quantity="other">Обновлено %1$d единиц измерения</item>
+        <item quantity="few">Обновлено %1$d единиц измерения</item>
+        <item quantity="many">Обновлено %1$d единиц измерения</item>
+    </plurals>
+    <plurals name="delete_units">
+        <item quantity="one">Удалена %1$d единица измерения</item>
+        <item quantity="other">Удалено %1$d единиц измерения</item>
+        <item quantity="few">Удалено %1$d единиц измерения</item>
+        <item quantity="many">Удалено %1$d единиц измерения</item>
+    </plurals>
+
+    <plurals name="added_goods">
+        <item quantity="one">Добавлен %1$d товар в каталог</item>
+        <item quantity="other">Добавлено %1$d товаров в каталог</item>
+        <item quantity="few">Добавлено %1$d товаров в каталог</item>
+        <item quantity="many">Добавлено %1$d товаров в каталог</item>
+    </plurals>
+    <plurals name="update_goods">
+        <item quantity="one">Обновлен %1$d товар из каталога</item>
+        <item quantity="other">Обновлено %1$d товаров из каталога</item>
+        <item quantity="few">Обновлено %1$d товаров из каталога</item>
+        <item quantity="many">Обновлено %1$d товаров из каталога</item>
+    </plurals>
+    <plurals name="delete_goods">
+        <item quantity="one">Удален %1$d товар из каталога</item>
+        <item quantity="other">Удалено %1$d товаров из каталога</item>
+        <item quantity="few">Удалено %1$d товаров из каталога</item>
+        <item quantity="many">Удалено %1$d товаров из каталога</item>
+    </plurals>
+
+    <plurals name="added_shopping_lists">
+        <item quantity="one">Добавлен %1$d список покупок</item>
+        <item quantity="other">Добавлено %1$d списков покупок</item>
+        <item quantity="few">Добавлено %1$d списков покупок</item>
+        <item quantity="many">Добавлено %1$d списков покупок</item>
+    </plurals>
+    <plurals name="update_shopping_lists">
+        <item quantity="one">Обновлен %1$d список покупок</item>
+        <item quantity="other">Обновлено %1$d списков покупок</item>
+        <item quantity="few">Обновлено %1$d списков покупок</item>
+        <item quantity="many">Обновлено %1$d списков покупок</item>
+    </plurals>
+    <plurals name="delete_shopping_lists">
+        <item quantity="one">Удален %1$d список покупок</item>
+        <item quantity="other">Удалено %1$d списков покупок</item>
+        <item quantity="few">Удалено %1$d списков покупок</item>
+        <item quantity="many">Удалено %1$d списков покупок</item>
+    </plurals>
+
+    <plurals name="added_shopping_list_items">
+        <item quantity="one">%1$d товар добавлен в список покупок</item>
+        <item quantity="other">%1$d товаров добавлено в список покупок</item>
+        <item quantity="few">%1$d товаров добавлено в список покупок</item>
+        <item quantity="many">%1$d товаров добавлено в список покупок</item>
+    </plurals>
+    <plurals name="update_shopping_list_items">
+        <item quantity="one">%1$d товар обновлен в списке покупок</item>
+        <item quantity="other">%1$d товаров обновлено в списке покупок</item>
+        <item quantity="few">%1$d товаров обновлено в списке покупок</item>
+        <item quantity="many">%1$d товаров обновлено в списке покупок</item>
+    </plurals>
+    <plurals name="delete_shopping_list_items">
+        <item quantity="one">%1$d товар удален из списка покупок</item>
+        <item quantity="other">%1$d товаров удалено из списка покупок</item>
+        <item quantity="few">%1$d товаров удалено из списка покупок</item>
+        <item quantity="many">%1$d товаров удалено из списка покупок</item>
+    </plurals>
+    <plurals name="bought_goods">
+        <item quantity="one">%1$d товар был куплен</item>
+        <item quantity="other">%1$d товаров было куплено</item>
+        <item quantity="few">%1$d товаров было куплено</item>
+        <item quantity="many">%1$d товаров было куплено</item>
+    </plurals>
+    <plurals name="not_bought_goods">
+        <item quantity="one">%1$d товар изменил статус на "не куплено"</item>
+        <item quantity="other">%1$d товаров изменило статус на "не куплено"</item>
+        <item quantity="few">%1$d товаров изменило статус на "не куплено"</item>
+        <item quantity="many">%1$d товаров изменило статус на "не куплено"</item>
+    </plurals>
+
+    <string-array name="priority">
+        <item>Нет приоритета</item>
+        <item>Низкий</item>
+        <item>Средний</item>
+        <item>Высокий</item>
+    </string-array>
+
+    <string-array name="units">
+        <item>Без ед. измерения/Без ед. измерения ! no_unit</item>
+        <item>Килограмм/Кг ! 1</item>
+        <item>Литр/Л ! 2</item>
+        <item>Грамм/г ! 3</item>
+        <item>Миллиграмм/Мг ! 4</item>
+        <item>фунт/Ф ! 5</item>
+        <item>Унция/ун ! 6</item>
+        <item>Тонна/т ! 7</item>
+        <item>Галлон/гал ! 8</item>
+    </string-array>
+
+    <string-array name="currency">
+        <item>Без валюты ! no_currency</item>
+        <item>USA ! 1</item>
+        <item>EUR ! 2</item>
+        <item>UAH ! 3</item>
+        <item>RUB ! 4</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>Без категории ! 1</item>
+        <item>Овощи, Грибы ! 2</item>
+        <item>Фрукты, Ягоды ! 3</item>
+        <item>Молочные и Яйца ! 4</item>
+        <item>Мясные продукты ! 5</item>
+        <item>Морепродукты ! 6</item>
+        <item>Замороженные продукты и Мороженое ! 7</item>
+        <item>Продукты к завтраку ! 8</item>
+        <item>Напитки ! 9</item>
+        <item>Хлеб и Хлебобулочные изделия ! 10</item>
+        <item>Сладости ! 11</item>
+        <item>Консервы ! 12</item>
+        <item>Соусы, Специи и Приправы ! 13</item>
+        <item>Закуски, Чипсы ! 14</item>
+        <item>Масло, Уксус и Заправка салата ! 15</item>
+        <item>Супы, Зерновые и Рис ! 16</item>
+        <item>Макаронные изделия и Лапша ! 17</item>
+        <item>Товары для дома и чистки ! 18</item>
+        <item>Младенческая и по уходу за детьми ! 19</item>
+        <item>Красота и здоровье ! 20</item>
+        <item>Для питомцев ! 21</item>
+        <item>Офисные и школьные принадлежности ! 22</item>
+        <item>Алкогольные напитки ! 23</item>
+    </string-array>
+
+    <string-array name="products">
+        <item>Абрикосы ! 3</item>
+        <item>Абрикосы консервированные ! 3</item>
+        <item>Айва ! 3</item>
+        <item>Ананасы ! 3</item>
+        <item>Ананасы консервированные ! 3</item>
+        <item>Апельсины ! 3</item>
+        <item>Арбуз ! 3</item>
+        <item>Бананы ! 3</item>
+        <item>Виноград ! 3</item>
+        <item>Вишня ! 3</item>
+        <item>Граната ! 3</item>
+        <item>Грейпфрут ! 3</item>
+        <item>Груши ! 3</item>
+        <item>Гуава ! 3</item>
+        <item>Ежевика ! 3</item>
+        <item>Изюм ! 3</item>
+        <item>Инжир ! 3</item>
+        <item>Киви ! 3</item>
+        <item>Клубника ! 3</item>
+        <item>Клюква ! 3</item>
+        <item>Кокос ! 3</item>
+        <item>Курага ! 3</item>
+        <item>Лайм ! 3</item>
+        <item>Лимоны ! 3</item>
+        <item>Малина ! 3</item>
+        <item>Манго ! 3</item>
+        <item>Мандарины ! 3</item>
+        <item>Маракуйя ! 3</item>
+        <item>Папайя ! 3</item>
+        <item>Персики ! 3</item>
+        <item>Помело ! 3</item>
+        <item>Хурма ! 3</item>
+        <item>Черника ! 3</item>
+        <item>Чернослив ! 3</item>
+        <item>Черешня ! 3</item>
+        <item>Яблоки ! 3</item>
+        <item>Сливы ! 3</item>
+        <item>Сушеная клюква ! 3</item>
+        <item>Сушеные бананы ! 3</item>
+        <item>Сушеные мандарины ! 3</item>
+        <item>Сушеные яблоки ! 3</item>
+        <item>Смородина ! 3</item>
+        <item>Нектарин ! 3</item>
+        <item>Миндаль ! 3</item>
+        <item>Кунжут ! 3</item>
+        <item>Арахис ! 3</item>
+        <item>Фундук ! 3</item>
+
+        <item>Авокадо ! 2</item>
+        <item>Базилик ! 2</item>
+        <item>Баклажаны ! 2</item>
+        <item>Белая фасоль ! 2</item>
+        <item>Белые грибы ! 2</item>
+        <item>Бобы ! 2</item>
+        <item>Бобы мунг ! 2</item>
+        <item>Бразильский орех ! 2</item>
+        <item>Бруссельская капуста ! 2</item>
+        <item>Горох сушеный ! 2</item>
+        <item>Грецкий орех ! 2</item>
+        <item>Грибы  ! 2</item>
+        <item>Дыня ! 2</item>
+        <item>Имбирь ! 2</item>
+        <item>Кабачки ! 2</item>
+        <item>Картофель ! 2</item>
+        <item>Кедровый орех ! 2</item>
+        <item>Кукуруза ! 2</item>
+        <item>Лук ! 2</item>
+        <item>Морковь ! 2</item>
+        <item>Мускатный орех ! 2</item>
+        <item>Овощная смесь ! 2</item>
+        <item>Огурцы ! 2</item>
+        <item>Орехи ! 2</item>
+        <item>Перец острый ! 2</item>
+        <item>Перец сладкий ! 2</item>
+        <item>Перец чили ! 2</item>
+        <item>Петрушка ! 2</item>
+        <item>Помидоры ! 2</item>
+        <item>Помидоры черри ! 2</item>
+        <item>Редис ! 2</item>
+        <item>Репа ! 2</item>
+        <item>Свекла ! 2</item>
+        <item>Сельдерей ! 2</item>
+        <item>Спаржа белая ! 2</item>
+        <item>Спаржа зеленая ! 2</item>
+        <item>Тыква ! 2</item>
+        <item>Фасоль ! 2</item>
+        <item>Чеснок ! 2</item>
+        <item>Корень сельдерея ! 2</item>
+        <item>Салат ! 2</item>
+        <item>Трюфель ! 2</item>
+        <item>Шампиньоны ! 2</item>
+        <item>Топинамбур ! 2</item>
+        <item>Лисички ! 2</item>
+        <item>Листовой салат ! 2</item>
+        <item>Огурцы маринованые ! 2</item>
+        <item>Огурцы соленые ! 2</item>
+
+        <item>Йогурт ! 4</item>
+        <item>Кефир ! 4</item>
+        <item>Козье молоко ! 4</item>
+        <item>Масло ! 4</item>
+        <item>Молоко ! 4</item>
+        <item>Молоко нежирное ! 4</item>
+        <item>Молочный коктейль ! 4</item>
+        <item>Ряженка ! 4</item>
+        <item>Сгущенное молоко ! 4</item>
+        <item>Сливки ! 4</item>
+        <item>Сливочное масло ! 4</item>
+        <item>Сметана ! 4</item>
+        <item>Сухое молоко ! 4</item>
+        <item>Сыр ! 4</item>
+        <item>Сыр брынза ! 4</item>
+        <item>Сыр моцарелла ! 4</item>
+        <item>Сыр пармезан ! 4</item>
+        <item>Сыр плавленый ! 4</item>
+        <item>Сыр с плесенью ! 4</item>
+        <item>Творог ! 4</item>
+        <item>Тертый сыр ! 4</item>
+        <item>Яйца ! 4</item>
+        <item>Яйца куриные ! 4</item>
+        <item>Пастеризованное молоко ! 4</item>
+        <item>Взбитые сливки ! 4</item>
+        <item>Вареная сгущенка ! 4</item>
+        <item>Маргарин ! 4</item>
+
+        <item>Баранина ! 5</item>
+        <item>Баранья нога ! 5</item>
+        <item>Баранья лопатка ! 5</item>
+        <item>Баранья корейка ! 5</item>
+        <item>Бастурма ! 5</item>
+        <item>Бекон ! 5</item>
+        <item>Говядина ! 5</item>
+        <item>Говяжья вырезка ! 5</item>
+        <item>Говяжья грудинка ! 5</item>
+        <item>Говяжый язык ! 5</item>
+        <item>Говжье филе ! 5</item>
+        <item>Грудинка ! 5</item>
+        <item>Индейка ! 5</item>
+        <item>Колбаса ! 5</item>
+        <item>Колбаса вареная ! 5</item>
+        <item>Колбаса варено-копченая ! 5</item>
+        <item>Колбаса докторская ! 5</item>
+        <item>Колбаса салями ! 5</item>
+        <item>Колбаса сырокопченая ! 5</item>
+        <item>Копченые колбаски ! 5</item>
+        <item>Копченый бекон ! 5</item>
+        <item>Котлеты ! 5</item>
+        <item>Котлеты говяжьи ! 5</item>
+        <item>Котлеты домашние ! 5</item>
+        <item>Котлеты куриные ! 5</item>
+        <item>Котлеты свиные ! 5</item>
+        <item>Куриное филе ! 5</item>
+        <item>Куриные бедра ! 5</item>
+        <item>Куриные грудки ! 5</item>
+        <item>Куриные крылышка ! 5</item>
+        <item>Куриные наггетсы ! 5</item>
+        <item>Куриные окорочка ! 5</item>
+        <item>Курица ! 5</item>
+        <item>Мясной рулет ! 5</item>
+        <item>Мясо ! 5</item>
+        <item>Охотничьи колбаски ! 5</item>
+        <item>Печень говяжья ! 5</item>
+        <item>Печень курина ! 5</item>
+        <item>Свинина ! 5</item>
+        <item>Свинина вырезка ! 5</item>
+        <item>Свинина грудинка ! 5</item>
+        <item>Свинина корейка ! 5</item>
+        <item>Свинина лопатка ! 5</item>
+        <item>Телятина ! 5</item>
+        <item>Фарш ! 5</item>
+        <item>Фарш говяжий ! 5</item>
+        <item>Фарш куриный ! 5</item>
+        <item>Фарш свиной ! 5</item>
+        <item>Фрикадельки ! 5</item>
+        <item>Шашлык ! 5</item>
+        <item>Шницель ! 5</item>
+        <item>Гусь ! 5</item>
+        <item>Утка ! 5</item>
+        <item>Стейк ! 5</item>
+        <item>Ветчина ! 5</item>
+        <item>Сосиски ! 5</item>
+
+        <item>Анчоусы ! 6</item>
+        <item>Икра заморская ! 6</item>
+        <item>Икра баклажанная ! 6</item>
+        <item>Икра кабачковая ! 6</item>
+        <item>Кальмар ! 6</item>
+        <item>Камбала ! 6</item>
+        <item>Кефаль ! 6</item>
+        <item>Копченый лосось ! 6</item>
+        <item>Краб ! 6</item>
+        <item>Крабовые палочки ! 6</item>
+        <item>Красная икра ! 6</item>
+        <item>Креветки ! 6</item>
+        <item>Лобстер ! 6</item>
+        <item>Лосось ! 6</item>
+        <item>Мидии ! 6</item>
+        <item>Минтай ! 6</item>
+        <item>Морская капуста ! 6</item>
+        <item>Морской окунь ! 6</item>
+        <item>Осьминог ! 6</item>
+        <item>Палтус ! 6</item>
+        <item>Рак ! 6</item>
+        <item>Рыба ! 6</item>
+        <item>Сардина ! 6</item>
+        <item>Семга ! 6</item>
+        <item>Скумбрия ! 6</item>
+        <item>Стейк из лосося ! 6</item>
+        <item>Стейк из тунца ! 6</item>
+        <item>Судак ! 6</item>
+        <item>Тунец ! 6</item>
+        <item>Угорь ! 6</item>
+        <item>Устрицы ! 6</item>
+        <item>Форель ! 6</item>
+        <item>Черная икра ! 6</item>
+        <item>Омар ! 6</item>
+
+        <item>Замороженная брюссельская капуста ! 6</item>
+        <item>Замороженная вишня ! 6</item>
+        <item>Замороженная клубника ! 6</item>
+        <item>Замороженные грибы ! 6</item>
+        <item>Замороженные креветки ! 6</item>
+        <item>Замороженные морепродукты ! 6</item>
+        <item>Замороженные овощи ! 6</item>
+        <item>Пельмени ! 6</item>
+        <item>Мороженое ! 6</item>
+
+        <item>Абсент ! 23</item>
+        <item>Амаретто ! 23</item>
+        <item>Безалкогольное пиво ! 23</item>
+        <item>Белое вино ! 23</item>
+        <item>Бренди ! 23</item>
+        <item>Бурбон ! 23</item>
+        <item>Вермут ! 23</item>
+        <item>Вино ! 23</item>
+        <item>Виски ! 23</item>
+        <item>Водка ! 23</item>
+        <item>Глинтвейн ! 23</item>
+        <item>Джин ! 23</item>
+        <item>Ирландский виски ! 23</item>
+        <item>Коньяк ! 23</item>
+        <item>Красное вино ! 23</item>
+        <item>Ликер ! 23</item>
+        <item>Ликер апельсиновый ! 23</item>
+        <item>Ликер вишневый ! 23</item>
+        <item>Ликер травяной ! 23</item>
+        <item>Ликер фруктовый ! 23</item>
+        <item>Настойка ! 23</item>
+        <item>Настойка перцовая ! 23</item>
+        <item>Пиво ! 23</item>
+        <item>Пиво пшеничное ! 23</item>
+        <item>Пиво светлое ! 23</item>
+        <item>Пиво темное ! 23</item>
+        <item>Полусладкое белое вино ! 23</item>
+        <item>Полусладкое красное вино ! 23</item>
+        <item>Полусладкое розовое вино ! 23</item>
+        <item>Полусладкое шампанское ! 23</item>
+        <item>Полусухое белое вино ! 23</item>
+        <item>Полусухое красное вино ! 23</item>
+        <item>Полусухое розовое вино ! 23</item>
+        <item>Полусухое шампанское ! 23</item>
+        <item>Портвейн ! 23</item>
+        <item>Розовое вино ! 23</item>
+        <item>Ром ! 23</item>
+        <item>Саке ! 23</item>
+        <item>Самбука ! 23</item>
+        <item>Сидр ! 23</item>
+        <item>Скотч ! 23</item>
+        <item>Сладкое белое вино ! 23</item>
+        <item>Сладкое красное вино ! 23</item>
+        <item>Сладкое розовое вино ! 23</item>
+        <item>Сладкое шампанское ! 23</item>
+        <item>Сухое белое вино ! 23</item>
+        <item>Сухое красное вино ! 23</item>
+        <item>Сухое розовое вино ! 23</item>
+        <item>Сухое шампанское ! 23</item>
+        <item>Текила ! 23</item>
+        <item>Шампанское ! 23</item>
+        <item>Шотландский виски ! 23</item>
+        <item>Кампари ! 23</item>
+
+        <item>Ананасовый сок ! 9</item>
+        <item>Апельсиновый сок ! 9</item>
+        <item>Виноградный сок ! 9</item>
+        <item>Вода ! 9</item>
+        <item>Газированная вода ! 9</item>
+        <item>Грейпфрутовый сок ! 9</item>
+        <item>Какао ! 9</item>
+        <item>Квас ! 9</item>
+        <item>Клубничный сок ! 9</item>
+        <item>Клюквенный сок ! 9</item>
+        <item>Кола ! 9</item>
+        <item>Кофе ! 9</item>
+        <item>Кофе без кофеина ! 9</item>
+        <item>Кофе в зернах ! 9</item>
+        <item>Лимонад ! 9</item>
+        <item>Лимонный сок ! 9</item>
+        <item>Морковный сок ! 9</item>
+        <item>Молотый кофе ! 9</item>
+        <item>Морс ! 9</item>
+        <item>Томатный сок ! 9</item>
+        <item>Тархун ! 9</item>
+        <item>Негазированная вода ! 9</item>
+        <item>Сироп ! 9</item>
+        <item>Сок ! 9</item>
+        <item>Сок манго ! 9</item>
+        <item>Спрайт ! 9</item>
+        <item>Травяной чай ! 9</item>
+        <item>Фанта ! 9</item>
+        <item>Чай ! 9</item>
+        <item>Чай в пакетиках ! 9</item>
+        <item>Черный чай ! 9</item>
+        <item>Энергетик ! 9</item>
+        <item>Яблочный сок ! 9</item>
+        <item>Овощной сок ! 9</item>
+        <item>Персиковый сок ! 9</item>
+        <item>Зеленый чай ! 9</item>
+
+        <item>Зеленые оливки ! 12</item>
+        <item>Зеленый горошек ! 12</item>
+        <item>Имбирь маринованный ! 12</item>
+        <item>Консервы для кошек ! 12</item>
+        <item>Консервы для собак ! 12</item>
+        <item>Маслины ! 12</item>
+        <item>Маслины без косточек ! 12</item>
+        <item>Оливки ! 12</item>
+        <item>Оливки без косточет ! 12</item>
+        <item>Паштет ! 12</item>
+        <item>Корнишоны ! 12</item>
+        <item>Сардины в томатном соусе ! 12</item>
+        <item>Шпинат ! 12</item>
+
+        <item>Аджика ! 13</item>
+        <item>Базилик специя ! 13</item>
+        <item>Горчица ! 13</item>
+        <item>Горчица зернистая ! 13</item>
+        <item>Горчица с хреном ! 13</item>
+        <item>Имбирь молотый ! 13</item>
+        <item>Кориандр ! 13</item>
+        <item>Корица ! 13</item>
+        <item>Лавровый лист ! 13</item>
+        <item>Майоран ! 13</item>
+        <item>Майоран сушеный ! 13</item>
+        <item>Маринад ! 13</item>
+        <item>Паприка ! 13</item>
+        <item>Перец ! 13</item>
+        <item>Перец белый горошком ! 13</item>
+        <item>Перец белый молотый ! 13</item>
+        <item>Перец душистый ! 13</item>
+        <item>Перец красный горошком ! 13</item>
+        <item>Перец красный молотый ! 13</item>
+        <item>Перец черный горошком ! 13</item>
+        <item>Перец черный молотый ! 13</item>
+        <item>Петрушка сушеная ! 13</item>
+        <item>Хрен ! 13</item>
+        <item>Приправа ! 13</item>
+        <item>Приправа для плова ! 13</item>
+        <item>Приправа для мяса ! 13</item>
+        <item>Приправа для курицы ! 13</item>
+        <item>Приправа карри ! 13</item>
+        <item>Присипка ! 13</item>
+        <item>Соль ! 13</item>
+        <item>Соль йодированная ! 13</item>
+        <item>Соль крупная ! 13</item>
+        <item>Соль мелкая ! 13</item>
+        <item>Соль морская ! 13</item>
+        <item>Соус ! 13</item>
+        <item>Соус для салата ! 13</item>
+        <item>Соус для шашлыка ! 13</item>
+        <item>Соус для спагетти ! 13</item>
+        <item>Соус песто ! 13</item>
+        <item>Соус сальса ! 13</item>
+        <item>Соус тартар ! 13</item>
+        <item>Тмин ! 13</item>
+        <item>Томатная паста ! 13</item>
+        <item>Шафран ! 13</item>
+        <item>Ванилин ! 13</item>
+        <item>Ваниль ! 13</item>
+        <item>Ванильный сахар ! 13</item>
+        <item>Ванильный экстракт ! 13</item>
+        <item>Лакрица ! 13</item>
+        <item>Листья орегано ! 13</item>
+        <item>Розмарин ! 13</item>
+        <item>Сахарная пудра ! 13</item>
+        <item>Укроп ! 13</item>
+        <item>Щавель ! 13</item>
+        <item>Шалфей ! 13</item>
+        <item>Мята ! 13</item>
+        <item>Кетчуп ! 13</item>
+        <item>Сахар ! 13</item>
+        <item>Сахар рафинад ! 13</item>
+        <item>Сахар тростниковый ! 13</item>
+
+        <item>Антигистамины ! 20</item>
+        <item>Антиперспирант ! 20</item>
+        <item>Жидкое мыло ! 20</item>
+        <item>Зеленка ! 20</item>
+        <item>Зубная нить ! 20</item>
+        <item>Зубная паста ! 20</item>
+        <item>Зубная щетка ! 20</item>
+        <item>Зубочистки ! 20</item>
+        <item>Гель для бритья ! 20</item>
+        <item>Гель для душа ! 20</item>
+        <item>Гель для тела ! 20</item>
+        <item>Витамины ! 20</item>
+        <item>Бальзам после бритья ! 20</item>
+        <item>Бинт ! 20</item>
+        <item>Бритва ! 20</item>
+        <item>Вата ! 20</item>
+        <item>Ватные палочки ! 20</item>
+        <item>Влажные салфетки ! 20</item>
+        <item>Дезодорант ! 20</item>
+        <item>Инсулин ! 20</item>
+        <item>Йод ! 20</item>
+        <item>Шампунь ! 20</item>
+        <item>Тушь ! 20</item>
+        <item>Тампоны ! 20</item>
+        <item>Презервативы ! 20</item>
+        <item>Помада ! 20</item>
+        <item>Мыло ! 20</item>
+        <item>Мыло для рук ! 20</item>
+        <item>Лезвия для бритвы ! 20</item>
+        <item>Лосьон для лица ! 20</item>
+        <item>Лосьон для ног ! 20</item>
+        <item>Лосьон для рук ! 20</item>
+        <item>Лосьон для тела ! 20</item>
+        <item>Ополаскиватель для рта ! 20</item>
+        <item>Парацетамол ! 20</item>
+        <item>Пена для бритья ! 20</item>
+        <item>Прокладки ! 20</item>
+        <item>Пластырь ! 20</item>
+
+        <item>Детская смесь ! 19</item>
+        <item>Детские салфетки ! 19</item>
+        <item>Детский шампунь ! 19</item>
+        <item>Овощное детское пюре ! 19</item>
+        <item>Подгузники ! 19</item>
+
+        <item>Батарейки ! 18</item>
+        <item>Фольга ! 18</item>
+        <item>Туалетная бумага ! 18</item>
+        <item>Стиральный порошок ! 18</item>
+        <item>Порошок ! 18</item>
+        <item>Порошок для посудомоечный машин ! 18</item>
+        <item>Пятновыводитель ! 18</item>
+        <item>Средство для мытья ванны ! 18</item>
+        <item>Средство для мытья туалета ! 18</item>
+        <item>Салфетки ! 18</item>
+        <item>Освежитель воздуха ! 18</item>
+        <item>Кондиционер для белья ! 18</item>
+        <item>Моющее средство ! 18</item>
+        <item>Мусорные мешки ! 18</item>
+        <item>Отбеливатель ! 18</item>
+
+        <item>Бумага ! 22</item>
+        <item>Блокнот ! 22</item>
+        <item>Тетрадь ! 22</item>
+        <item>Стикеры ! 22</item>
+        <item>Ручка ! 22</item>
+        <item>Прозрачный файл ! 22</item>
+        <item>Папка ! 22</item>
+        <item>Ножницы ! 22</item>
+        <item>Кнопки ! 22</item>
+        <item>Карандаши ! 22</item>
+        <item>Ежедневник ! 22</item>
+        <item>Записная книжка ! 22</item>
+        <item>Клей ! 22</item>
+        <item>Конверты ! 22</item>
+        <item>Линейка ! 22</item>
+        <item>Маркер ! 22</item>
+        <item>Настольный органайзер ! 22</item>
+        <item>Пенал ! 22</item>
+        <item>Скобы для степлера ! 22</item>
+        <item>Скоросшиватель ! 22</item>
+        <item>Скрепки ! 22</item>
+        <item>Точилка ! 22</item>
+        <item>Фломастеры ! 22</item>
+
+        <item>Артишоки ! 10</item>
+        <item>Багет ! 10</item>
+        <item>Багет с луком ! 10</item>
+        <item>Багет с чесноком ! 10</item>
+        <item>Батон ! 10</item>
+        <item>Коржи для пиццы ! 10</item>
+        <item>Коржи для торта ! 10</item>
+        <item>Дрожжевой хлеб ! 10</item>
+        <item>Белый хлеб ! 10</item>
+        <item>Бублики ! 10</item>
+        <item>Булочки для сэндвичей ! 10</item>
+        <item>Булочка с корицей ! 10</item>
+        <item>Булочки ! 10</item>
+        <item>Зерновой хлеб ! 10</item>
+        <item>Кекс ! 10</item>
+        <item>Крекеры ! 10</item>
+        <item>Круассаны ! 10</item>
+        <item>Маффины ! 10</item>
+        <item>Слойка ! 10</item>
+        <item>Соломка ! 10</item>
+        <item>Хлеб ! 10</item>
+        <item>Хлеб для тостов ! 10</item>
+        <item>Хлеб черный ! 10</item>
+        <item>Тесто ! 10</item>
+        <item>Пирог ! 10</item>
+        <item>Пончики ! 10</item>
+        <item>Рулет ! 10</item>
+
+        <item>Апельсиновое варенье ! 11</item>
+        <item>Безе ! 11</item>
+        <item>Белый шоколад ! 11</item>
+        <item>Брусничное варенье ! 11</item>
+        <item>Варенье ! 11</item>
+        <item>Желе ! 11</item>
+        <item>Карамельный сироп ! 11</item>
+        <item>Клубничный джем ! 11</item>
+        <item>Клубничный сироп ! 11</item>
+        <item>Овсяное печенье ! 11</item>
+        <item>Посыпка для выпечки ! 11</item>
+        <item>Пудинг ! 11</item>
+        <item>Цукаты ! 11</item>
+        <item>Щербет ! 11</item>
+        <item>Печенье ! 11</item>
+        <item>Кондитерский крем ! 11</item>
+        <item>Зефир ! 11</item>
+        <item>Вафли ! 11</item>
+        <item>Глазурь ! 11</item>
+        <item>Джем ! 11</item>
+        <item>Конфеты ! 11</item>
+        <item>Мармелад ! 11</item>
+        <item>Молочний шоколад ! 11</item>
+        <item>Мед ! 11</item>
+        <item>Шоколад ! 11</item>
+        <item>Шоколадная паста ! 11</item>
+        <item>Шоколадные конфеты ! 11</item>
+        <item>Шоколадный батончик ! 11</item>
+        <item>Бисквитное печенье ! 11</item>
+        <item>Марципан ! 11</item>
+
+        <item>Батончик энергетический ! 14</item>
+        <item>Чипсы ! 14</item>
+        <item>Фисташки ! 14</item>
+        <item>Торт ! 14</item>
+        <item>Сухарики ! 14</item>
+        <item>Попкорн ! 14</item>
+        <item>Орешки ! 14</item>
+
+        <item>Арахисовое масло ! 15</item>
+        <item>Винный уксус ! 15</item>
+        <item>Майонез ! 15</item>
+        <item>Майонез провансаль ! 15</item>
+        <item>Майонез оливковый ! 15</item>
+        <item>Подсолнечное масло ! 15</item>
+        <item>Соевый соус ! 15</item>
+        <item>Уксус ! 15</item>
+        <item>Уксусная кислота ! 15</item>
+        <item>Яблочный уксус ! 15</item>
+        <item>Бальзамический уксус ! 15</item>
+        <item>Оливковое масло ! 15</item>
+
+        <item>Суп ! 16</item>
+        <item>Просо ! 16</item>
+        <item>Пшено ! 16</item>
+        <item>Овсяная крупа ! 16</item>
+        <item>Гречка ! 16</item>
+        <item>Гречневая мука ! 16</item>
+        <item>Белый рис ! 16</item>
+        <item>Коричневый рис ! 16</item>
+        <item>Мука ! 16</item>
+        <item>Мука пшеничная ! 16</item>
+        <item>Мука грубого помола ! 16</item>
+        <item>Перловая крупа ! 16</item>
+        <item>Рис ! 16</item>
+        <item>Крупа ! 16</item>
+        <item>Манная крупа ! 16</item>
+        <item>Овсяная мука ! 16</item>
+
+        <item>Лапша ! 17</item>
+        <item>Макароны ! 17</item>
+        <item>Вермишель ! 17</item>
+        <item>Спагетти ! 17</item>
+
+        <item>Корм для кошек ! 21</item>
+        <item>Корм для собак ! 21</item>
+
+        <item>Мюсли ! 8</item>
+        <item>Овсяная каша ! 8</item>
+        <item>Овсяные хлопья ! 8</item>
+        <item>Пшеничные хлопья ! 8</item>
+        <item>Хлопья ! 8</item>
+        <item>Кукурузные палочки ! 8</item>
+        <item>Кукурузные хлопья ! 8</item>
+        <item>Каша ! 8</item>
+
+        <item>Каштан ! 1</item>
+        <item>Колготки ! 1</item>
+        <item>Одноразовая посуда ! 1</item>
+        <item>Пластиковые вилки ! 1</item>
+        <item>Пластиковые стаканчики ! 1</item>
+        <item>Ракушки ! 1</item>
+        <item>Свечи для торта ! 1</item>
+        <item>Трубочки ! 1</item>
+        <item>Тряпка ! 1</item>
+        <item>Носки ! 1</item>
+        <item>Капсула ! 1</item>
+        <item>Бумажные стаканчики ! 1</item>
+        <item>Бумажные тарелки ! 1</item>
+        <item>Игрушки ! 1</item>
+        <item>Гуляш ! 1</item>
+        <item>Нектар ! 1</item>
+        <item>Сало ! 1</item>
+        <item>Суши ! 1</item>
+        <item>Сэндвичи ! 1</item>
+        <item>Чебуреки ! 1</item>
+        <item>Штрудель ! 1</item>
+        <item>Пицца ! 1</item>
+        <item>Блинчики ! 1</item>
+        <item>Блинчики с мясом ! 1</item>
+        <item>Блинчики с творогом ! 1</item>
+        <item>Блинчики с фруктами ! 1</item>
+        <item>Блинчики с ягодами ! 1</item>
+        <item>Вареники ! 1</item>
+        <item>Вареники с вишней ! 1</item>
+        <item>Вареники с картофелем ! 1</item>
+        <item>Вареники с творогом ! 1</item>
+        <item>Гвоздика ! 1</item>
+        <item>Дрожжи ! 1</item>
+    </string-array>
+</resources>

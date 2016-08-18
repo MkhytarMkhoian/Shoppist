@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<sync-adapter
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:contentAuthority="com.justplay1.shoppist.shopping_list_db"
-    android:accountType="com.justplay1.shoppist.account"
-    android:userVisible="true"/>

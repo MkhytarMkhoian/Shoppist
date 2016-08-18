@@ -5,5 +5,5 @@
 /build
 /captures
 /gradle.properties
-/shoppist_keystore.jks
+/buildsystem/shoppist_keystore.jks
 /.idea/

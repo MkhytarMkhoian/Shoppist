@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.justplay1.shoppist.view.component.ColorCheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeightSmall"
+    android:checkMark="?android:attr/listChoiceIndicatorSingle"
+    android:gravity="center_vertical"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:textAppearance="?android:attr/textAppearanceListItemSmall" />
