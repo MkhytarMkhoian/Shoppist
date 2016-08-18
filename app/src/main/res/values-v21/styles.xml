@@ -1,0 +1,53 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="ShoppingList.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@color/action_mode_toolbar_color</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_back_white</item>
+        <item name="actionModeStyle">@style/ShoppingList.ActionMode</item>
+    </style>
+
+    <style name="TranslucentStatusBar" parent="ShoppingList.AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="ShoppingList.noAnimTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@color/action_mode_toolbar_color</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_back_white</item>
+        <item name="actionModeStyle">@style/ShoppingList.ActionMode</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+    <style name="ShoppingList.Dialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
+    <style name="ShoppingList.PopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@color/white</item>
+    </style>
+
+    <!-- ActionMode styles. -->
+    <style name="ShoppingList.ActionMode" parent="Widget.AppCompat.ActionBar">
+        <item name="titleTextStyle">@style/ShoppingList.ActionModeTitleText</item>
+        <item name="subtitleTextStyle">@style/ShoppingList.ActionModeSubTitleText</item>
+        <item name="background">@color/action_mode_toolbar_color</item>
+    </style>
+
+    <style name="ShoppingList.ActionModeTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ShoppingList.ActionModeSubTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+</resources>

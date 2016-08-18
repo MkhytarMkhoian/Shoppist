@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/notifications"
+        android:icon="@drawable/ic_notifications"
+        android:title="@string/notifications"
+        app:actionLayout="@layout/notification_badge" />
+
+    <item
+        android:id="@+id/history_button"
+        android:icon="@drawable/ic_category"
+        android:title="@string/history"
+        android:visible="false" />
+
+    <item android:title="@string/shopping">
+        <menu>
+            <item
+                android:id="@+id/goods_button"
+                android:icon="@drawable/ic_goods"
+                android:title="@string/goods" />
+            <item
+                android:id="@+id/category_button"
+                android:icon="@drawable/ic_category"
+                android:title="@string/categories" />
+
+            <item
+                android:id="@+id/units_button"
+                android:icon="@drawable/ic_units"
+                android:title="@string/units" />
+
+            <item
+                android:id="@+id/currencies_button"
+                android:icon="@drawable/ic_currency"
+                android:title="@string/currency" />
+        </menu>
+    </item>
+
+    <group
+        android:id="@+id/system"
+        android:menuCategory="system">
+        <item
+            android:id="@+id/feedback_button"
+            android:icon="@drawable/ic_email"
+            android:title="@string/feedback" />
+        <item
+            android:id="@+id/settings_button"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/title_activity_settings" />
+        <item
+            android:id="@+id/help_button"
+            android:icon="@drawable/ic_help"
+            android:title="@string/title_activity_help" />
+    </group>
+
+</menu>

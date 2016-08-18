@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:id="@+id/nScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v7.widget.GridLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            app:columnCount="4"
+            app:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_columnSpan="4"
+                app:layout_row="0"
+                app:layout_rowSpan="1">
+
+                <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+                    android:id="@+id/name_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:inputType="textCapSentences"
+                    android:completionThreshold="1"
+                    android:hint="@string/name"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelText="@string/name"
+                    app:met_maxCharacters="40"
+                    app:met_primaryColor="?colorAccent" />
+
+                <ImageButton
+                    android:id="@+id/menu_voice_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/list_view_selector"
+                    android:src="@drawable/ic_mic" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/category_label"
+                android:text="@string/category"
+                android:textSize="14sp"
+                app:layout_columnSpan="4"
+                app:layout_row="0"
+                app:layout_rowSpan="1" />
+
+            <com.justplay1.shoppist.ui.views.spinner.CategorySpinnerView
+                android:id="@+id/category_spinner_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_columnSpan="4"
+                app:layout_row="0"
+                app:layout_rowSpan="1" />
+
+            <TextView
+                android:id="@+id/priority_label"
+                android:layout_marginTop="10dp"
+                android:text="@string/priority"
+                android:textSize="14sp"
+                app:layout_columnSpan="4"
+                app:layout_row="0"
+                app:layout_rowSpan="1" />
+
+            <Spinner
+                android:id="@+id/priority"
+                app:layout_columnSpan="4"
+                app:layout_row="0"
+                app:layout_rowSpan="1" />
+
+            <ImageButton
+                android:id="@+id/decrement_quantity_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/add_button_selector"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_minus_white"
+                app:layout_columnSpan="1"
+                app:layout_gravity="center_vertical"
+                app:layout_row="4"
+                app:layout_rowSpan="1" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/quantity_edit"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/quantity"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                app:layout_columnSpan="2"
+                app:layout_gravity="center_vertical"
+                app:layout_row="5"
+                app:layout_rowSpan="1"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="@string/quantity"
+                app:met_maxCharacters="10"
+                app:met_primaryColor="?colorAccent" />
+
+            <ImageButton
+                android:id="@+id/increment_quantity_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/add_button_selector"
+                android:clickable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_add_white_24dp"
+                app:layout_columnSpan="1"
+                app:layout_gravity="center_vertical"
+                app:layout_row="5"
+                app:layout_rowSpan="1" />
+
+            <TextView
+                android:id="@+id/unit_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/unit"
+                android:textSize="14sp"
+                app:layout_columnSpan="4"
+                app:layout_row="0"
+                app:layout_rowSpan="1" />
+
+            <com.justplay1.shoppist.ui.views.spinner.UnitsSpinnerView
+                android:id="@+id/units_spinner_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_columnSpan="4"
+                app:layout_row="0"
+                app:layout_rowSpan="1" />
+
+            <ImageButton
+                android:id="@+id/decrement_price_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/add_button_selector"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_minus_white"
+                app:layout_columnSpan="1"
+                app:layout_gravity="center_vertical"
+                app:layout_row="0"
+                app:layout_rowSpan="1" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/price_edit"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/price"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                app:layout_columnSpan="2"
+                app:layout_row="0"
+                app:layout_rowSpan="1"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="@string/price"
+                app:met_maxCharacters="10"
+                app:met_primaryColor="?colorAccent" />
+
+            <ImageButton
+                android:id="@+id/increment_price_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/add_button_selector"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_add_white_24dp"
+                app:layout_columnSpan="1"
+                app:layout_gravity="center_vertical"
+                app:layout_row="0"
+                app:layout_rowSpan="1" />
+
+            <TextView
+                android:id="@+id/currency_label"
+                android:text="@string/currency"
+                android:textSize="14sp"
+                app:layout_columnSpan="4"
+                app:layout_row="0"
+                app:layout_rowSpan="1" />
+
+            <com.justplay1.shoppist.ui.views.spinner.CurrencySpinnerView
+                android:id="@+id/currency_spinner_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_columnSpan="4"
+                app:layout_row="0"
+                app:layout_rowSpan="1" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/description_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/note"
+                app:layout_columnSpan="4"
+                app:layout_row="0"
+                app:layout_rowSpan="1"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="@string/note"
+                app:met_maxCharacters="200"
+                app:met_primaryColor="?colorAccent" />
+        </android.support.v7.widget.GridLayout>
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/done_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_check_white"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:layout_anchor="@id/main_content"
+        app:layout_anchorGravity="bottom|right|end"
+        app:pressedTranslationZ="12dp" />
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="6dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/add_button_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/help_create_new_category" />
+
+            <ImageView
+                android:id="@+id/add_button_image"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/add_button" />
+
+            <TextView
+                android:id="@+id/add_category_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/help_fill_category_info" />
+
+            <ImageView
+                android:id="@+id/add_category_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/help_image_margin_right"
+                android:layout_marginRight="@dimen/help_image_margin_right"
+                android:src="@drawable/add_category" />
+
+            <TextView
+                android:id="@+id/add_category_long_click_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/help_fill_category_info2" />
+
+            <ImageView
+                android:id="@+id/add_category_long_click_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/help_image_margin_right"
+                android:layout_marginRight="@dimen/help_image_margin_right"
+                android:src="@drawable/add_category_long_click" />
+
+            <TextView
+                android:id="@+id/select_category_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/help_short_and_long_tap_to_select_item" />
+
+            <ImageView
+                android:id="@+id/select_category_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/help_image_margin_right"
+                android:layout_marginRight="@dimen/help_image_margin_right"
+                android:src="@drawable/categories_select" />
+
+            <TextView
+                android:id="@+id/edit_item_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/help_tap_to_edit_item" />
+
+            <ImageView
+                android:id="@+id/edit_item_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/help_image_margin_right"
+                android:layout_marginRight="@dimen/help_image_margin_right"
+                android:src="@drawable/edit_category" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_delete"
+        android:title="@string/action_delete"
+        android:icon="@drawable/ic_delete_white"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_menu"
+        android:title="@null"
+        android:icon="@drawable/ic_menu_white"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/action_enable"
+                android:title="@string/action_enable" />
+            <item
+                android:id="@+id/action_disable"
+                android:title="@string/action_disable" />
+            <item
+                android:id="@+id/menu_check_all"
+                android:title="@string/action_check_all" />
+            <item
+                android:id="@+id/menu_uncheck_all"
+                android:title="@string/action_uncheck_all" />
+        </menu>
+    </item>
+</menu>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr format="reference" name="floatingSearchViewStyle"/>
+
+    <declare-styleable name="FloatingSearchView">
+        <attr name="fsv_searchBarWidth" format="dimension|reference"/>
+        <attr name="fsv_menu" format="reference"/>
+        <attr name="fsv_contentBackgroundColor" format="color|reference"/>
+        <attr name="fsv_cornerRadius" format="dimension|reference"/>
+        <attr name="fsv_icon" format="reference"/>
+        <attr name="logo"/>
+        <attr name="contentInsetStart"/>
+        <attr name="contentInsetEnd"/>
+        <attr name="android:divider"/>
+        <attr name="android:dividerHeight"/>
+        <attr name="android:hint"/>
+        <attr name="popupTheme"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundedImageView">
+        <attr name="corner_radius" format="dimension" />
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="mutate_background" format="boolean" />
+        <attr name="oval" format="boolean" />
+        <attr name="android:scaleType" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorPickerPreference">
+        <attr name="cal_numColumns" format="integer" />
+    </declare-styleable>
+
+</resources>

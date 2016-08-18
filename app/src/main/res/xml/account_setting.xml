@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.jenzz.materialpreference.Preference
+        android:key="account_log_out"
+        android:title="@string/account_log_out" />
+    <com.jenzz.materialpreference.Preference
+        android:key="account_delete"
+        android:title="@string/delete_account" />
+    <com.jenzz.materialpreference.Preference
+        android:key="account_sync"
+        android:title="@string/sync" />
+</PreferenceScreen>

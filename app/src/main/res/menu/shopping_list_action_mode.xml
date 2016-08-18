@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_edit"
+        android:title="@string/action_edit"
+        android:icon="@drawable/ic_edit_white"
+        app:showAsAction="always" />
+
+
+    <item
+        android:id="@+id/menu_delete"
+        android:title="@string/action_delete"
+        android:icon="@drawable/ic_delete_white"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_menu"
+        android:title="@null"
+        android:icon="@drawable/ic_menu_white"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/action_move"
+                android:title="@string/action_move" />
+            <item
+                android:id="@+id/action_copy"
+                android:title="@string/action_copy" />
+            <item
+                android:id="@+id/action_email_share"
+                android:title="@string/action_send_list" />
+            <item
+                android:visible="false"
+                android:id="@+id/action_share"
+                android:title="@string/action_share" />
+            <item
+                android:id="@+id/menu_check_all"
+                android:title="@string/action_check_all" />
+            <item
+                android:id="@+id/menu_uncheck_all"
+                android:title="@string/action_uncheck_all" />
+            <item
+                android:id="@+id/action_strike_out"
+                android:title="@string/action_strike_out" />
+            <item
+                android:id="@+id/action_return_to_list"
+                android:title="@string/action_return_to_list" />
+        </menu>
+    </item>
+</menu>
