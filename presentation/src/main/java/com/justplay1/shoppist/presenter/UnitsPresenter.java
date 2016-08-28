@@ -36,22 +36,25 @@ public class UnitsPresenter extends BaseRxPresenter<UnitsView> {
         this.mSoftDeleteUnits = softDeleteUnits;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle bundle) {
-
-    }
-
     public void init() {
         loadData();
     }
 
     public void loadData() {
+        showLoading();
         mSubscriptions.add(mGetUnits.get()
                 .map(mDataMapper::transformToViewModel)
                 .subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
                     @Override
                     public void onNext(List<UnitViewModel> currencyViewModels) {
+                        hideLoading();
                         showData(currencyViewModels);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        hideLoading();
+                        e.printStackTrace();
                     }
                 }));
     }
@@ -77,6 +80,18 @@ public class UnitsPresenter extends BaseRxPresenter<UnitsView> {
     private void showData(List<UnitViewModel> data) {
         if (isViewAttached()) {
             getView().showData(data);
+        }
+    }
+
+    private void showLoading() {
+        if (isViewAttached()) {
+            getView().showLoading();
+        }
+    }
+
+    private void hideLoading() {
+        if (isViewAttached()) {
+            getView().hideLoading();
         }
     }
 }

@@ -66,21 +66,6 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
         this.mUnitsDataModelMapper = unitsDataModelMapper;
     }
 
-    @Override
-    public void onCreate(Bundle arguments, Bundle savedInstanceState) {
-        super.onCreate(arguments, savedInstanceState);
-    }
-
-    @Override
-    public boolean isManualSortEnable() {
-        return false;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle bundle) {
-
-    }
-
     public void init() {
         loadData();
     }
@@ -142,11 +127,16 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
         }));
     }
 
+    @Override
+    public boolean isManualSortEnable() {
+        return false;
+    }
+
     @SuppressWarnings("ResourceType")
     private Observable<List<Pair<HeaderViewModel, List<ProductViewModel>>>> loadGoods() {
         return mGetGoods.get()
                 .map(mGoodsModelDataMapper::transformToViewModel)
-                .map(goods -> sort(goods, mPreferences.getSortForCategories(), mPreferences.isManualSortEnableForCategories()));
+                .map(goods -> sort(goods, mPreferences.getSortForCategories()));
     }
 
     private Observable<UnitViewModel> loadDefaultUnit() {

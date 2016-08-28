@@ -6,6 +6,7 @@ import com.justplay1.shoppist.di.modules.RepositoryModule;
 import com.justplay1.shoppist.di.scope.PerActivity;
 import com.justplay1.shoppist.view.fragments.AddCategoryFragment;
 import com.justplay1.shoppist.view.fragments.CategoryFragment;
+import com.justplay1.shoppist.view.fragments.dialog.SelectCategoryDialogFragment;
 
 import dagger.Component;
 
@@ -19,4 +20,6 @@ public interface CategoryComponent extends ActivityComponent {
     void inject(CategoryFragment fragment);
 
     void inject(AddCategoryFragment fragment);
+
+    void inject(SelectCategoryDialogFragment fragment);
 }

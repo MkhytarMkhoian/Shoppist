@@ -23,7 +23,6 @@ import java.util.Map;
  */
 public class MainSettingFragment extends PreferenceFragment implements ColorThemeUpdater, AdapterView.OnItemClickListener {
 
-    private boolean disableAccount;
     private MainSettingFragmentInteractionListener mListener;
 
     @Override
@@ -54,11 +53,6 @@ public class MainSettingFragment extends PreferenceFragment implements ColorThem
             data.add(m);
         }
 
-        if (!disableAccount) {
-            m = new HashMap<>();
-            m.put(titleId, getString(R.string.category_account));
-            data.add(m);
-        }
         String[] from = {titleId};
         int[] to = {android.R.id.text1};
 

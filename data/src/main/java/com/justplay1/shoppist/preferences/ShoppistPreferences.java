@@ -217,7 +217,7 @@ public class ShoppistPreferences {
         editor.apply();
     }
 
-    public int getSortForShoppingLists() {
+    public int getSortForLists() {
         return mSortForShoppingLists;
     }
 
@@ -228,7 +228,7 @@ public class ShoppistPreferences {
         editor.apply();
     }
 
-    public int getSortForShoppingListItems() {
+    public int getSortForListItems() {
         return mSortForShoppingListItems;
     }
 
@@ -436,7 +436,7 @@ public class ShoppistPreferences {
         editor.commit();
     }
 
-    public boolean isManualSortEnableForShoppingLists() {
+    public boolean isManualSortEnableForLists() {
         return isManualSortEnableForShoppingLists;
     }
 

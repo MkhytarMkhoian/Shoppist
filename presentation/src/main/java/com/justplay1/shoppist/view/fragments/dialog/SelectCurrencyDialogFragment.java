@@ -7,7 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.components.CurrencyComponent;
+import com.justplay1.shoppist.di.components.DaggerCurrencyComponent;
+import com.justplay1.shoppist.di.modules.ActivityModule;
+import com.justplay1.shoppist.di.modules.CurrencyModule;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.presenter.SelectCurrencyPresenter;
 import com.justplay1.shoppist.view.SelectCurrencyView;
@@ -24,10 +29,7 @@ public class SelectCurrencyDialogFragment extends BaseSelectItemDialogFragment<C
 
     @Inject
     SelectCurrencyPresenter mPresenter;
-
-    public SelectCurrencyDialogFragment() {
-        // Empty constructor required for DialogFragment
-    }
+    private CurrencyComponent mComponent;
 
     public static SelectCurrencyDialogFragment newInstance(CurrencyViewModel currency) {
         Bundle args = new Bundle();
@@ -35,6 +37,17 @@ public class SelectCurrencyDialogFragment extends BaseSelectItemDialogFragment<C
         SelectCurrencyDialogFragment fragment = new SelectCurrencyDialogFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    protected void injectDependencies() {
+        super.injectDependencies();
+        mComponent = DaggerCurrencyComponent.builder()
+                .appComponent(App.get().getAppComponent())
+                .activityModule(new ActivityModule(getActivity()))
+                .currencyModule(new CurrencyModule())
+                .build();
+        mComponent.inject(this);
     }
 
     @Override
@@ -71,8 +84,8 @@ public class SelectCurrencyDialogFragment extends BaseSelectItemDialogFragment<C
     }
 
     @Override
-    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_select_currency_dialog, container);
+    protected int getLayoutId() {
+        return R.layout.fragment_select_currency_dialog;
     }
 
     @Override

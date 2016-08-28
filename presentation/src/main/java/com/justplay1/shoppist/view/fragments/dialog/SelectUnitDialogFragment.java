@@ -7,7 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.components.DaggerUnitsComponent;
+import com.justplay1.shoppist.di.components.UnitsComponent;
+import com.justplay1.shoppist.di.modules.ActivityModule;
+import com.justplay1.shoppist.di.modules.UnitsModule;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.presenter.SelectUnitPresenter;
 import com.justplay1.shoppist.view.SelectUnitView;
@@ -24,10 +29,7 @@ public class SelectUnitDialogFragment extends BaseSelectItemDialogFragment<UnitV
 
     @Inject
     SelectUnitPresenter mPresenter;
-
-    public SelectUnitDialogFragment() {
-        // Empty constructor required for DialogFragment
-    }
+    private UnitsComponent mComponent;
 
     public static SelectUnitDialogFragment newInstance() {
         return newInstance(null);
@@ -39,6 +41,17 @@ public class SelectUnitDialogFragment extends BaseSelectItemDialogFragment<UnitV
         SelectUnitDialogFragment fragment = new SelectUnitDialogFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    protected void injectDependencies() {
+        super.injectDependencies();
+        mComponent = DaggerUnitsComponent.builder()
+                .appComponent(App.get().getAppComponent())
+                .activityModule(new ActivityModule(getActivity()))
+                .unitsModule(new UnitsModule())
+                .build();
+        mComponent.inject(this);
     }
 
     @Override
@@ -68,8 +81,8 @@ public class SelectUnitDialogFragment extends BaseSelectItemDialogFragment<UnitV
     }
 
     @Override
-    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_select_unit_dialog, container);
+    protected int getLayoutId() {
+        return R.layout.fragment_select_unit_dialog;
     }
 
     @Override

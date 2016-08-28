@@ -1,6 +1,7 @@
 package com.justplay1.shoppist.view.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +52,7 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
                 unit.setChecked(isItemChecked(unit.getId()));
 
                 holder.name.setText(String.format("%s (%s)", unit.getName(), unit.getShortName()));
-                int normalStateColor = mContext.getResources().getColor(R.color.blue_grey_500);
+                int normalStateColor = ContextCompat.getColor(mContext, R.color.blue_grey_500);
 
                 holder.selectBox.setNormalStateColor(normalStateColor);
                 holder.selectBox.setHolder(holder);
@@ -67,10 +68,6 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
 
         public UnitItemViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
             super(itemView, clickListener);
-        }
-
-        public UnitItemViewHolder(View itemView) {
-            super(itemView);
         }
 
         @Override

@@ -65,9 +65,9 @@ public class Navigator {
         }
     }
 
-    public void navigateToShoppingListItemsScreen(Activity activity) {
+    public void navigateToListItemsScreen(Activity activity, String parentId) {
         if (activity != null) {
-            Intent intentToLaunch = ListItemActivity.getCallingIntent(activity);
+            Intent intentToLaunch = ListItemActivity.getCallingIntent(activity, parentId);
             activity.startActivity(intentToLaunch);
             startActivityAnimation(activity);
         }

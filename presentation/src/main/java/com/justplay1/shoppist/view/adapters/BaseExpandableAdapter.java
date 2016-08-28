@@ -2,6 +2,7 @@ package com.justplay1.shoppist.view.adapters;
 
 import android.content.Context;
 import android.support.annotation.ColorInt;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,7 +16,6 @@ import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ItemType;
 import com.justplay1.shoppist.models.Priority;
 import com.justplay1.shoppist.models.SortType;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxEventListener;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
@@ -39,6 +39,9 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
     int mNoPriority;
     protected
     @ColorInt
+    int mNoPriorityBackground;
+    protected
+    @ColorInt
     int mHighPriority;
     protected
     @ColorInt
@@ -55,10 +58,11 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
                                  RecyclerView recyclerView) {
         super(context, listener, recyclerView);
 
-        mNoPriority = context.getResources().getColor(android.R.color.transparent);
-        mHighPriority = context.getResources().getColor(R.color.red_color);
-        mLowPriority = context.getResources().getColor(R.color.green_500);
-        mMediumPriority = context.getResources().getColor(R.color.orange_500);
+        mNoPriority = ContextCompat.getColor(context, R.color.action_mode_toolbar_color);
+        mNoPriorityBackground = ContextCompat.getColor(context, android.R.color.transparent);
+        mHighPriority = ContextCompat.getColor(context, R.color.red_color);
+        mLowPriority = ContextCompat.getColor(context, R.color.green_500);
+        mMediumPriority = ContextCompat.getColor(context, R.color.orange_500);
 
         mData = new ArrayList<>(1);
     }
@@ -109,7 +113,7 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
                 view.setBackgroundColor(mMediumPriority);
                 break;
             case Priority.NO_PRIORITY:
-                view.setBackgroundColor(mNoPriority);
+                view.setBackgroundColor(mNoPriorityBackground);
                 break;
         }
     }

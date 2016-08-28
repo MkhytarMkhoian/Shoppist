@@ -3,14 +3,16 @@ package com.justplay1.shoppist.view.fragments.dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.components.DaggerGoodsComponent;
+import com.justplay1.shoppist.di.components.GoodsComponent;
+import com.justplay1.shoppist.di.modules.ActivityModule;
+import com.justplay1.shoppist.di.modules.GoodsModule;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.UnitViewModel;
@@ -34,15 +36,12 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
     @Inject
     AddGoodsPresenter mPresenter;
 
+    private GoodsComponent mComponent;
     private OnCompleteListener mCompleteListener;
     private MaterialEditText mNameEdit;
     private CategorySpinnerView mCategoryList;
     private UnitsSpinnerView mUnitList;
     private String mNewName;
-
-    public AddGoodsDialogFragment() {
-        // Empty constructor required for DialogFragment
-    }
 
     private static AddGoodsDialogFragment newInstance(ProductViewModel product, String newName) {
         Bundle args = new Bundle();
@@ -59,6 +58,17 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
 
     public static AddGoodsDialogFragment newInstance(ProductViewModel product) {
         return newInstance(product, null);
+    }
+
+    @Override
+    protected void injectDependencies() {
+        super.injectDependencies();
+        mComponent = DaggerGoodsComponent.builder()
+                .appComponent(App.get().getAppComponent())
+                .activityModule(new ActivityModule(getActivity()))
+                .goodsModule(new GoodsModule())
+                .build();
+        mComponent.inject(this);
     }
 
     @Override
@@ -88,8 +98,8 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
     }
 
     @Override
-    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_goods_editor_dialog, container);
+    protected int getLayoutId() {
+        return R.layout.fragment_goods_editor_dialog;
     }
 
     @Override

@@ -124,6 +124,8 @@ dependencies {
         exclude module: 'appcompat-v7'
     }
 
+    compile 'com.jakewharton.timber:timber:2.7.1'
+
     androidTestCompile presentationTestDependencies.mockito
     androidTestCompile presentationTestDependencies.dexmaker
     androidTestCompile presentationTestDependencies.dexmakerMockito

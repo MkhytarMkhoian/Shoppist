@@ -6,6 +6,7 @@ import com.justplay1.shoppist.models.ListViewModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -40,8 +41,8 @@ public class ListModelDataMapper {
         return listModel;
     }
 
-    public java.util.List transformToViewModel(Collection<ListModel> lists) {
-        java.util.List listModels = new ArrayList<>();
+    public List<ListViewModel> transformToViewModel(Collection<ListModel> lists) {
+        List<ListViewModel> listModels = new ArrayList<>();
         ListViewModel listModel;
         for (ListModel list : lists) {
             listModel = transformToViewModel(list);

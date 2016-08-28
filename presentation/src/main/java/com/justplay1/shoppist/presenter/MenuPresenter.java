@@ -28,7 +28,7 @@ public class MenuPresenter extends BaseRxPresenter<MenuView> {
     }
 
     public void init() {
-        setAccount();
+//        setAccount();
         getNewNotificationCount();
     }
 
@@ -55,13 +55,13 @@ public class MenuPresenter extends BaseRxPresenter<MenuView> {
     }
 
     public void onHeaderClick() {
-        if (isViewAttached()) {
-            if (mAccountManager.isUserAuthenticated()) {
-                getView().openLogin();
-            } else {
-                getView().openAccountSetting();
-            }
-        }
+//        if (isViewAttached()) {
+//            if (mAccountManager.isUserAuthenticated()) {
+//                getView().openLogin();
+//            } else {
+//                getView().openAccountSetting();
+//            }
+//        }
     }
 
     private final class GetNewNotificationCountSubscriber extends DefaultSubscriber<Integer> {

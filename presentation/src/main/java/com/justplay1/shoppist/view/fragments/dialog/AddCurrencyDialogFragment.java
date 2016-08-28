@@ -6,7 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.components.CurrencyComponent;
+import com.justplay1.shoppist.di.components.DaggerCurrencyComponent;
+import com.justplay1.shoppist.di.modules.ActivityModule;
+import com.justplay1.shoppist.di.modules.CurrencyModule;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.presenter.AddCurrencyPresenter;
 import com.justplay1.shoppist.utils.ShoppistUtils;
@@ -24,12 +29,9 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
     @Inject
     AddCurrencyPresenter mPresenter;
 
+    private CurrencyComponent mComponent;
     private MaterialEditText mNameEdit;
     private OnCompleteListener mCompleteListener;
-
-    public AddCurrencyDialogFragment() {
-        // Empty constructor required for DialogFragment
-    }
 
     public static AddCurrencyDialogFragment newInstance(CurrencyViewModel currency) {
         Bundle args = new Bundle();
@@ -37,6 +39,17 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
         AddCurrencyDialogFragment fragment = new AddCurrencyDialogFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    protected void injectDependencies() {
+        super.injectDependencies();
+        mComponent = DaggerCurrencyComponent.builder()
+                .appComponent(App.get().getAppComponent())
+                .activityModule(new ActivityModule(getActivity()))
+                .currencyModule(new CurrencyModule())
+                .build();
+        mComponent.inject(this);
     }
 
     @Override
@@ -80,8 +93,8 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
     }
 
     @Override
-    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_currency_editor_dialog, container);
+    protected int getLayoutId() {
+        return R.layout.fragment_currency_editor_dialog;
     }
 
     @Override

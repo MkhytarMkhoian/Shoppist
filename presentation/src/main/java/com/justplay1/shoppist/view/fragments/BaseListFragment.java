@@ -57,6 +57,7 @@ public abstract class BaseListFragment extends BaseFragment {
         mProgressDialog = new CustomProgressDialog(getContext());
         mProgressDialog.setMessage(getString(R.string.please_wait));
         mProgressDialog.setColor(mPreferences.getColorPrimary());
+        mEmptyView = (EmptyView) view.findViewById(android.R.id.empty);
     }
 
     protected void initRecyclerView(View view, Bundle savedInstanceState) {

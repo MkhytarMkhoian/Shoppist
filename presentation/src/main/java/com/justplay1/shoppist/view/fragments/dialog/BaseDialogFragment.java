@@ -1,6 +1,7 @@
 package com.justplay1.shoppist.view.fragments.dialog;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
@@ -10,10 +11,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.preferences.ShoppistPreferences;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.CustomProgressDialog;
+
+import javax.inject.Inject;
 
 /**
  * Created by Mkhytar on 31.01.2016.
@@ -21,12 +25,29 @@ import com.justplay1.shoppist.view.component.CustomProgressDialog;
 public abstract class BaseDialogFragment extends AppCompatDialogFragment
         implements View.OnClickListener {
 
+    @Inject
     protected ShoppistPreferences mPreferences;
     protected Button mPositiveButton;
     protected Button mNegativeButton;
     protected CustomProgressDialog mProgressDialog;
 
-    public abstract View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
+    protected abstract
+    @LayoutRes
+    int getLayoutId();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        injectDependencies();
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    /**
+     * Inject the dependencies
+     */
+    protected void injectDependencies() {
+        App.get().getAppComponent().inject(this);
+    }
 
     public void init(View view) {
         mPositiveButton = (Button) view.findViewById(R.id.positive_button);
@@ -44,7 +65,7 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.rounded_corners_dialog);
-        View view = createView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(getLayoutId(), container, false);
         init(view);
         return view;
     }

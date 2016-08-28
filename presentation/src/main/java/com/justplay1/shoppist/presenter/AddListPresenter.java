@@ -14,6 +14,8 @@ import com.justplay1.shoppist.models.mappers.ListModelDataMapper;
 import com.justplay1.shoppist.presenter.base.BaseAddElementPresenter;
 import com.justplay1.shoppist.view.AddListView;
 
+import java.util.Collections;
+
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -121,7 +123,7 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
         mSubscriptions.add(
                 Observable.fromCallable(() -> mDataMapper.transform(data))
                         .flatMap(list -> {
-                            mUpdateLists.setData(list);
+                            mUpdateLists.setData(Collections.singletonList(list));
                             return mUpdateLists.get();
                         }).subscribe(new SaveListSubscriber(isLongClick, false)));
     }

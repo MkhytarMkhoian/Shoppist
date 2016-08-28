@@ -21,8 +21,7 @@ public class CategoriesActivity extends SingleListFragmentActivity<CategoryFragm
         implements Toolbar.OnMenuItemClickListener, CategoryFragment.CategoryFragmentListener {
 
     public static Intent getCallingIntent(Context context) {
-        Intent callingIntent = new Intent(context, CategoriesActivity.class);
-        return callingIntent;
+        return new Intent(context, CategoriesActivity.class);
     }
 
     @Override

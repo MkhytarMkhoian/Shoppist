@@ -92,19 +92,6 @@ public class MenuFragment extends BaseFragment implements NavigationView.OnNavig
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        TextView username = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.username);
-        if (ParseUser.getCurrentUser() != null) {
-            if (!ParseUser.getCurrentUser().getUsername().equals(username.getText())) {
-                username.setText(ParseUser.getCurrentUser().getUsername());
-            }
-        } else {
-            username.setText(R.string.tap_to_sing_up_or_login);
-        }
-    }
-
-    @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.goods_button:
@@ -134,8 +121,8 @@ public class MenuFragment extends BaseFragment implements NavigationView.OnNavig
 
     @Override
     public void setDefaultAccountTitle() {
-        TextView usernameView = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.username);
-        usernameView.setText(getString(R.string.tap_to_sing_up_or_login));
+//        TextView usernameView = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.username);
+//        usernameView.setText(getString(R.string.tap_to_sing_up_or_login));
     }
 
     @Override
@@ -155,8 +142,8 @@ public class MenuFragment extends BaseFragment implements NavigationView.OnNavig
 
     @Override
     public void setAccount(String username) {
-        TextView usernameView = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.username);
-        usernameView.setText(username);
+//        TextView usernameView = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.username);
+//        usernameView.setText(username);
     }
 
     @Override

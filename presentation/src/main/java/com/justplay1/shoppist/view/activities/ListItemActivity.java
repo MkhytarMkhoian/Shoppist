@@ -24,8 +24,9 @@ public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragme
 
     private String mParentListId;
 
-    public static Intent getCallingIntent(Context context) {
+    public static Intent getCallingIntent(Context context, String parentId) {
         Intent callingIntent = new Intent(context, ListItemActivity.class);
+        callingIntent.putExtra(Const.PARENT_LIST_ID, parentId);
         return callingIntent;
     }
 

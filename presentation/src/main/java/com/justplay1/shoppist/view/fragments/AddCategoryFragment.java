@@ -1,5 +1,6 @@
 package com.justplay1.shoppist.view.fragments;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;

@@ -33,7 +33,7 @@ public abstract class BaseAddElementFragment extends BaseFragment
 
     protected AddElementListener mListener;
     protected MaterialAutoCompleteTextView mNameEdit;
-    protected FloatingActionButton mDoneBtn;
+    protected FloatingActionButton mActionButton;
     protected CustomProgressDialog mProgressDialog;
     protected ImageButton mVoiceSearchBtn;
 
@@ -64,9 +64,11 @@ public abstract class BaseAddElementFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (isItemEdit()) {
-            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
+                    | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         } else {
-            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
+                    | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         }
         init(view);
     }
@@ -85,10 +87,10 @@ public abstract class BaseAddElementFragment extends BaseFragment
         mVoiceSearchBtn = (ImageButton) view.findViewById(R.id.menu_voice_search);
         mVoiceSearchBtn.setOnClickListener(this);
 
-        mDoneBtn = (FloatingActionButton) view.findViewById(R.id.done_button);
-        mDoneBtn.setOnLongClickListener(this);
-        mDoneBtn.setOnClickListener(this);
-        mDoneBtn.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
+        mActionButton = (FloatingActionButton) view.findViewById(R.id.done_button);
+        mActionButton.setOnLongClickListener(this);
+        mActionButton.setOnClickListener(this);
+        mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
     }
 
     private void doSearch(int requestCode, int resultCode, Intent data) {

@@ -1,6 +1,5 @@
 package com.justplay1.shoppist.presenter;
 
-import android.os.Bundle;
 import android.support.v4.util.Pair;
 
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
@@ -8,6 +7,7 @@ import com.justplay1.shoppist.interactor.lists.GetLists;
 import com.justplay1.shoppist.interactor.lists.SoftDeleteLists;
 import com.justplay1.shoppist.interactor.lists.UpdateLists;
 import com.justplay1.shoppist.models.HeaderViewModel;
+import com.justplay1.shoppist.models.ListModel;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.SortType;
 import com.justplay1.shoppist.models.mappers.ListModelDataMapper;
@@ -21,13 +21,14 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * Created by Mkhytar on 01.07.2016.
  */
 public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel> {
 
-    private final ListModelDataMapper mListModelDataMapper;
+    private final ListModelDataMapper mDataMapper;
     private final GetLists mGetLists;
     private final SoftDeleteLists mSoftDeleteLists;
     private final UpdateLists mUpdateLists;
@@ -42,18 +43,55 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
         this.mGetLists = getLists;
         this.mSoftDeleteLists = softDeleteLists;
         this.mUpdateLists = updateLists;
-        this.mListModelDataMapper = listModelDataMapper;
+        this.mDataMapper = listModelDataMapper;
     }
 
     @Override
     public boolean isManualSortEnable() {
-        return false;
+        return mPreferences.isManualSortEnableForCategories();
     }
 
     public void init() {
         if (mPreferences.isNeedShowRateDialog()) {
             showRateDialog();
         }
+        loadData();
+    }
+
+    @SuppressWarnings("ResourceType")
+    public void loadData() {
+        showLoading();
+        mSubscriptions.add(mGetLists.get()
+                .map(mDataMapper::transformToViewModel)
+                .map(listViewModels -> sort(listViewModels, mPreferences.getSortForLists()))
+                .subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListViewModel>>>>() {
+                    @Override
+                    public void onNext(List<Pair<HeaderViewModel, List<ListViewModel>>> data) {
+                        hideLoading();
+                        showData(data);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        hideLoading();
+                        e.printStackTrace();
+                    }
+                }));
+    }
+
+    public void savePosition(final List<ListViewModel> data) {
+        mSubscriptions.add(Observable.fromCallable(() -> {
+            final int size = data.size();
+            for (int i = 0; i < size; i++) {
+                data.get(i).setPosition(i);
+            }
+
+            return data;
+        }).map((Func1<List<ListViewModel>, List<ListModel>>) mDataMapper::transform)
+                .flatMap(lists -> {
+                    mUpdateLists.setData(lists);
+                    return mUpdateLists.get();
+                }).subscribe());
     }
 
     private void showRateDialog() {
@@ -62,32 +100,34 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
         }
     }
 
-    public void savePosition(List<ListViewModel> lists) {
-        if (mPreferences.isManualSortEnableForShoppingLists()) {
-            final int size = lists.size();
-            for (int i = 0; i < size; i++) {
-                lists.get(i).setPosition(i);
-            }
-//            mUpdateLists.setData(lists);
+    private void showLoading() {
+        if (isViewAttached()) {
+            getView().showLoading();
+        }
+    }
+
+    private void hideLoading() {
+        if (isViewAttached()) {
+            getView().hideLoading();
         }
     }
 
     public void sortByName(final List<ListViewModel> data) {
         mPreferences.setManualSortEnableForShoppingLists(false);
         mPreferences.setSortForShoppingLists(SortType.SORT_BY_NAME);
-        sort(data, SortType.SORT_BY_NAME, false);
+        showData(sort(data, SortType.SORT_BY_NAME));
     }
 
     public void sortByPriority(final List<ListViewModel> data) {
         mPreferences.setManualSortEnableForShoppingLists(false);
         mPreferences.setSortForShoppingLists(SortType.SORT_BY_PRIORITY);
-        sort(data, SortType.SORT_BY_PRIORITY, false);
+        showData(sort(data, SortType.SORT_BY_PRIORITY));
     }
 
     public void sortByTimeCreated(final List<ListViewModel> data) {
         mPreferences.setManualSortEnableForShoppingLists(false);
         mPreferences.setSortForShoppingLists(SortType.SORT_BY_TIME_CREATED);
-        sort(data, SortType.SORT_BY_TIME_CREATED, false);
+        showData(sort(data, SortType.SORT_BY_TIME_CREATED));
     }
 
     public void onSortByManualClick() {
@@ -102,14 +142,6 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
 
     }
 
-    public void onListItemClick(ListViewModel item) {
-
-    }
-
-    public void onEmailShareClick() {
-
-    }
-
     public void onAddButtonClick() {
         openEditListScreen(null);
     }
@@ -118,12 +150,8 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
 
     }
 
-    public void onDeleteCheckedItemsClick() {
-
-    }
-
     public void deleteItems(Collection<ListViewModel> data) {
-        mSubscriptions.add(Observable.fromCallable(() -> mListModelDataMapper.transform(data))
+        mSubscriptions.add(Observable.fromCallable(() -> mDataMapper.transform(data))
                 .flatMap(list -> {
                     mSoftDeleteLists.setData(list);
                     return mSoftDeleteLists.get();

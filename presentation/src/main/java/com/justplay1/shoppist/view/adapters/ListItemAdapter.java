@@ -179,7 +179,7 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
                 holder.note.setOnClickListener(listener);
                 ViewUtils.setPaddingRight(holder.info2, 0);
             } else {
-                ViewUtils.setPaddingRight(holder.info2, mContext.getResources().getDimensionPixelSize(R.dimen.content_margin2x));
+                ViewUtils.setPaddingRight(holder.info2, mContext.getResources().getDimensionPixelSize(R.dimen.content2x));
                 holder.note.setVisibility(View.GONE);
             }
         }

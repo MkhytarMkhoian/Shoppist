@@ -76,7 +76,7 @@ public abstract class BaseListAdapter<T extends BaseViewModel>
 
     @Override
     public void onCheck(BaseItemHolder holder) {
-        //        mLinearLayoutManager.findViewByPosition()
+//        T item = getItem(holder.childPosition);
 //        item.setChecked(holder.selectBox.isChecked());
 //        addToChecked(item.getId(), item.isChecked());
 //        setCount(item.isChecked());

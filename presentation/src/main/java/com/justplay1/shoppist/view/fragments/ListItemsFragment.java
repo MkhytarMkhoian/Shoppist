@@ -3,6 +3,7 @@ package com.justplay1.shoppist.view.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -124,6 +125,7 @@ public class ListItemsFragment extends BaseEDSListFragment
     protected void init(View view) {
         super.init(view);
         mActionButton = (FloatingActionButton) view.findViewById(R.id.add_button);
+        mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
         mActionButton.setOnLongClickListener(this);
         mActionButton.setOnClickListener(this);
     }

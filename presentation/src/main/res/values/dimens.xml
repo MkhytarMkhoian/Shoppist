@@ -50,6 +50,8 @@
     <dimen name="color_swatch_margins_large">8dp</dimen>
     <dimen name="color_swatch_margins_small">4dp</dimen>
 
-    <dimen name="content_margin2x">16dp</dimen>
-    <dimen name="content_margin">8dp</dimen>
+    <dimen name="content">8dp</dimen>
+    <dimen name="content2x">16dp</dimen>
+    <dimen name="content3x">24dp</dimen>
+    <dimen name="content4x">32dp</dimen>
 </resources>

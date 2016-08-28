@@ -2,11 +2,14 @@ package com.justplay1.shoppist.view.fragments.dialog;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.components.CategoryComponent;
+import com.justplay1.shoppist.di.components.DaggerCategoryComponent;
+import com.justplay1.shoppist.di.modules.ActivityModule;
+import com.justplay1.shoppist.di.modules.CategoryModule;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.presenter.SelectCategoryPresenter;
 import com.justplay1.shoppist.view.SelectCategoryView;
@@ -23,10 +26,7 @@ public class SelectCategoryDialogFragment extends BaseSelectItemDialogFragment<C
 
     @Inject
     SelectCategoryPresenter mPresenter;
-
-    public SelectCategoryDialogFragment() {
-        // Empty constructor required for DialogFragment
-    }
+    private CategoryComponent mComponent;
 
     public static SelectCategoryDialogFragment newInstance() {
         return newInstance(null);
@@ -38,6 +38,17 @@ public class SelectCategoryDialogFragment extends BaseSelectItemDialogFragment<C
         SelectCategoryDialogFragment fragment = new SelectCategoryDialogFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    protected void injectDependencies() {
+        super.injectDependencies();
+        mComponent = DaggerCategoryComponent.builder()
+                .appComponent(App.get().getAppComponent())
+                .activityModule(new ActivityModule(getActivity()))
+                .categoryModule(new CategoryModule())
+                .build();
+        mComponent.inject(this);
     }
 
     @Override
@@ -67,8 +78,8 @@ public class SelectCategoryDialogFragment extends BaseSelectItemDialogFragment<C
     }
 
     @Override
-    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_select_category_dialog, container);
+    protected int getLayoutId() {
+        return R.layout.fragment_select_category_dialog;
     }
 
     @Override

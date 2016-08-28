@@ -154,7 +154,7 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
         mQuantityEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
         mNote.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
 
-        mDoneBtn.requestFocus();
+        mActionButton.requestFocus();
 
         ImageButton incrementPriceBtn = (ImageButton) view.findViewById(R.id.increment_price_button);
         ImageButton decrementPriceBtn = (ImageButton) view.findViewById(R.id.decrement_price_button);

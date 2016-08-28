@@ -87,7 +87,9 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     @Override
     public void onPause() {
         super.onPause();
-        mPresenter.savePosition(mAdapter.getItems());
+        if (mPreferences.isManualSortEnableForLists()) {
+            mPresenter.savePosition(mAdapter.getItems());
+        }
     }
 
     @Override
@@ -142,7 +144,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
 
     @Override
     public void onItemClick(BaseItemHolder holder, int position, long id) {
-        mPresenter.onListItemClick(mAdapter.getChildItem(holder.groupPosition, holder.childPosition));
+        mListener.openListDetailScreen(mAdapter.getChildItem(holder.groupPosition, holder.childPosition).getId());
     }
 
     @Override
@@ -243,6 +245,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     public void showData(List<Pair<HeaderViewModel, List<ListViewModel>>> data) {
         mAdapter.setData(data);
         mAdapter.notifyDataSetChanged();
+        onExpandAllClick();
     }
 
     @Override
@@ -263,12 +266,12 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
 
     @Override
     public void showLoading() {
-        mProgressDialog.show();
+        mEmptyView.showProgressBar();
     }
 
     @Override
     public void hideLoading() {
-        mProgressDialog.dismiss();
+        mEmptyView.hideProgressBar();
     }
 
     @Override
@@ -277,7 +280,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     }
 
     public boolean isManualSortModeEnable() {
-        return mAdapter.isManualSortModeEnable();
+        return mPresenter.isManualSortEnable();
     }
 
     public void disableManualSort() {
@@ -298,11 +301,11 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     }
 
     public void onDeleteCheckedItemsClick() {
-        mPresenter.onDeleteCheckedItemsClick();
+
     }
 
     public void onEmailShareClick() {
-        mPresenter.onEmailShareClick();
+
     }
 
     public boolean isEditButtonEnable() {
@@ -377,5 +380,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     public interface ListsFragmentInteractionListener {
 
         void openEditScreen(ListViewModel list);
+
+        void openListDetailScreen(String parentId);
     }
 }

@@ -14,7 +14,7 @@ allprojects {
     ext {
         androidApplicationId = 'com.justplay1.shoppist'
         androidVersionCode = 24
-        androidVersionName = "1.2.5"
+        androidVersionName = "2.0"
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
         testApplicationId = 'com.justplay1.shoppist.test'
     }

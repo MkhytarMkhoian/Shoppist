@@ -1,6 +1,5 @@
 package com.justplay1.shoppist.presenter;
 
-import android.os.Bundle;
 import android.support.v4.util.Pair;
 
 import com.justplay1.shoppist.di.scope.PerActivity;
@@ -83,7 +82,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
 
     @Override
     public boolean isManualSortEnable() {
-        return false;
+        return mPreferences.isManualSortEnableForShoppingListItems();
     }
 
     public void init() {
@@ -120,8 +119,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         mGetListItems.setParentId(mParentList.getId());
         return mGetListItems.get()
                 .map(mListItemsModelDataMapper::transformToViewModel)
-                .map(listItems -> sort(listItems, mPreferences.getSortForShoppingListItems(),
-                        mPreferences.isManualSortEnableForShoppingListItems()));
+                .map(listItems -> sort(listItems, mPreferences.getSortForListItems()));
     }
 
     private Observable<CurrencyViewModel> loadDefaultCurrency() {

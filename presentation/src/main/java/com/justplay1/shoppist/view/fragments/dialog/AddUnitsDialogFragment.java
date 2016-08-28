@@ -6,7 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.components.DaggerUnitsComponent;
+import com.justplay1.shoppist.di.components.UnitsComponent;
+import com.justplay1.shoppist.di.modules.ActivityModule;
+import com.justplay1.shoppist.di.modules.UnitsModule;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.presenter.AddUnitPresenter;
 import com.justplay1.shoppist.utils.ShoppistUtils;
@@ -24,13 +29,10 @@ public class AddUnitsDialogFragment extends BaseDialogFragment
     @Inject
     AddUnitPresenter mPresenter;
 
+    private UnitsComponent mComponent;
     private OnCompleteListener mCompleteListener;
     private MaterialEditText mFullNameEdit;
     private MaterialEditText mShortNameEdit;
-
-    public AddUnitsDialogFragment() {
-        // Empty constructor required for DialogFragment
-    }
 
     public static AddUnitsDialogFragment newInstance(UnitViewModel unit) {
         Bundle args = new Bundle();
@@ -38,6 +40,17 @@ public class AddUnitsDialogFragment extends BaseDialogFragment
         AddUnitsDialogFragment fragment = new AddUnitsDialogFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    protected void injectDependencies() {
+        super.injectDependencies();
+        mComponent = DaggerUnitsComponent.builder()
+                .appComponent(App.get().getAppComponent())
+                .activityModule(new ActivityModule(getActivity()))
+                .unitsModule(new UnitsModule())
+                .build();
+        mComponent.inject(this);
     }
 
     @Override
@@ -73,8 +86,8 @@ public class AddUnitsDialogFragment extends BaseDialogFragment
     }
 
     @Override
-    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_units_editor_dialog, container);
+    protected int getLayoutId() {
+        return R.layout.fragment_units_editor_dialog;
     }
 
     @Override

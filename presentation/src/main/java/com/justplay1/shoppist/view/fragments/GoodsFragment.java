@@ -3,10 +3,12 @@ package com.justplay1.shoppist.view.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.Pair;
@@ -77,6 +79,25 @@ public class GoodsFragment extends BaseExpandableListFragment
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mPresenter.attachView(this);
+        mPresenter.init();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.detachView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDestroy();
+    }
+
+    @Override
     protected RecyclerView.Adapter getAdapter() {
         return mAdapter;
     }
@@ -85,7 +106,7 @@ public class GoodsFragment extends BaseExpandableListFragment
     protected void init(View view) {
         super.init(view);
         mActionButton = (FloatingActionButton) view.findViewById(R.id.add_button);
-        mActionButton.setBackgroundColor(mPreferences.getColorPrimary());
+        mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
         mActionButton.setOnClickListener(this);
     }
 

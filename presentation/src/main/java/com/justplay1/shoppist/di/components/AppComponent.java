@@ -22,6 +22,7 @@ import com.justplay1.shoppist.repository.NotificationRepository;
 import com.justplay1.shoppist.repository.UnitsRepository;
 import com.justplay1.shoppist.view.activities.BaseActivity;
 import com.justplay1.shoppist.view.fragments.BaseFragment;
+import com.justplay1.shoppist.view.fragments.dialog.BaseDialogFragment;
 
 import javax.inject.Singleton;
 
@@ -43,6 +44,8 @@ public interface AppComponent {
     void inject(BaseActivity baseActivity);
 
     void inject(BaseFragment baseFragment);
+
+    void inject(BaseDialogFragment baseFragment);
 
     Context context();
 

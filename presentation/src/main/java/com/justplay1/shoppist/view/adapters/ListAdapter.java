@@ -14,7 +14,6 @@ import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
-import com.justplay1.shoppist.models.Priority;
 import com.justplay1.shoppist.models.SortType;
 import com.justplay1.shoppist.preferences.ShoppistPreferences;
 import com.justplay1.shoppist.utils.DraggableUtils;
@@ -42,7 +41,7 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
     @Override
     public void onMoveChildItem(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition) {
         super.onMoveChildItem(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition);
-        if (!mPreferences.isManualSortEnableForShoppingLists()) {
+        if (!mPreferences.isManualSortEnableForLists()) {
             mPreferences.setManualSortEnableForShoppingLists(true);
         }
     }
@@ -67,11 +66,7 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
         HeaderViewModel model = getGroupItem(groupPosition);
         HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
         if (mSort == SortType.SORT_BY_PRIORITY) {
-            if (model.getPriority() == Priority.NO_PRIORITY) {
-                headerHolder.name.setTextColor(mContext.getResources().getColor(R.color.action_mode_toolbar_color));
-            } else {
-                setPriorityTextColor(model.getPriority(), headerHolder.name);
-            }
+            setPriorityTextColor(model.getPriority(), headerHolder.name);
         } else {
             headerHolder.name.setTextColor(mPreferences.getColorPrimary());
         }

@@ -15,7 +15,6 @@ import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.ItemType;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
 import com.justplay1.shoppist.utils.DraggableUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.utils.ViewUtils;
@@ -125,12 +124,9 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel>
             super(itemView, clickListener);
         }
 
-        public CategoryItemViewHolder(View itemView) {
-            super(itemView);
-        }
-
         @Override
         protected void init(View itemView) {
+
             dragHandle = itemView.findViewById(R.id.drag_handle);
             container = itemView.findViewById(R.id.swipe_container);
             selectBox = (SelectBoxView) itemView.findViewById(R.id.select_box);

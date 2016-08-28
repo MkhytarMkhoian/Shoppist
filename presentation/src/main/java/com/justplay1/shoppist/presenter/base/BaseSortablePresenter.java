@@ -47,8 +47,7 @@ public abstract class BaseSortablePresenter<V extends ContextView, T extends Bas
         return data;
     }
 
-    protected List<Pair<HeaderViewModel, List<T>>> sort(final List<T> data,
-                                                        final @SortType int sortType, final boolean isManualSortEnable) {
+    protected List<Pair<HeaderViewModel, List<T>>> sort(final List<T> data, final @SortType int sortType) {
         List<Pair<HeaderViewModel, List<T>>> result = new ArrayList<>();
         if (data == null || data.isEmpty()) return result;
 

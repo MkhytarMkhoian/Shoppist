@@ -2,6 +2,7 @@ package com.justplay1.shoppist.view.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -77,7 +78,7 @@ public class UnitFragment extends BaseListFragment
     protected void init(View view) {
         super.init(view);
         mActionButton = (FloatingActionButton) view.findViewById(R.id.add_button);
-        mActionButton.setBackgroundColor(mPreferences.getColorPrimary());
+        mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
         mActionButton.setOnClickListener(this);
     }
 
@@ -111,7 +112,7 @@ public class UnitFragment extends BaseListFragment
     @Override
     public boolean onItemLongClick(BaseItemHolder holder, int position, long id) {
         mPresenter.onListItemLongClick(mAdapter.getItem(position));
-        return false;
+        return true;
     }
 
     @Override

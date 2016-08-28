@@ -5,6 +5,7 @@ import com.justplay1.shoppist.di.modules.UnitsModule;
 import com.justplay1.shoppist.di.scope.PerActivity;
 import com.justplay1.shoppist.view.fragments.UnitFragment;
 import com.justplay1.shoppist.view.fragments.dialog.AddUnitsDialogFragment;
+import com.justplay1.shoppist.view.fragments.dialog.SelectUnitDialogFragment;
 
 import dagger.Component;
 
@@ -18,4 +19,6 @@ public interface UnitsComponent extends ActivityComponent {
     void inject(UnitFragment fragment);
 
     void inject(AddUnitsDialogFragment fragment);
+
+    void inject(SelectUnitDialogFragment fragment);
 }

@@ -158,7 +158,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         for (int i = 0; i < categories.length; i++) {
             String[] categoriesName = categories[i].split(" ! ");
-
             db.insert(CategoryDAO.TABLE, null, new CategoryDAO.Builder()
                     .id(categoriesName[1])
                     .timestamp(0)

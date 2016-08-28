@@ -58,9 +58,9 @@ public class SettingsActivity extends BaseActivity implements MainSettingFragmen
                 case GENERAL_SETTING:
                     mToolbar.setTitle(R.string.category_general);
                     return GeneralSettingFragment.newInstance();
-                case ACCOUNT_SETTING:
-                    mToolbar.setTitle(R.string.category_account);
-                    return AccountSettingFragment.newInstance();
+//                case ACCOUNT_SETTING:
+//                    mToolbar.setTitle(R.string.category_account);
+//                    return AccountSettingFragment.newInstance();
                 case NOTIFICATION_SETTING:
                     mToolbar.setTitle(R.string.category_notification);
                     return NotificationSettingFragment.newInstance();

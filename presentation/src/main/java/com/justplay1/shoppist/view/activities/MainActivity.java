@@ -38,7 +38,6 @@ public class MainActivity extends BaseListActivity
         setContentView(R.layout.activity_main);
 
         mMenuFragment = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_fragment);
-
         initToolbar();
     }
 
@@ -115,6 +114,11 @@ public class MainActivity extends BaseListActivity
     @Override
     public void openEditScreen(ListViewModel list) {
         mNavigator.navigateToAddListScreen(this, list);
+    }
+
+    @Override
+    public void openListDetailScreen(String parentId) {
+        mNavigator.navigateToListItemsScreen(this, parentId);
     }
 
     @Override
