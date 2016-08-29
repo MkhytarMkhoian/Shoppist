@@ -28,7 +28,8 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
     private static final String LAST_TIMESTAMP_QUERY =
             "SELECT MAX(" + ListItemDAO.TIMESTAMP + ") FROM " + ListItemDAO.TABLE;
 
-    public static final String ALL_LIST_ITEMS = ListItemDAO.TABLE +
+    public static final String ALL_LIST_ITEMS =
+            "SELECT * FROM " +  ListItemDAO.TABLE +
             " LEFT OUTER JOIN " + CategoryDAO.TABLE
             + " ON " + ListItemDAO.CATEGORY_ID + " = " + CategoryDAO.TABLE + "." + CategoryDAO.CATEGORY_ID +
             " LEFT OUTER JOIN " + UnitDAO.TABLE

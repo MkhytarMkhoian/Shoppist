@@ -38,6 +38,8 @@ ext {
     materialEditTextVersion = '2.1.4'
     materialDateTimePickerVersion = '2.1.1'
 
+    calligraphyVersion = '2.2.0'
+
     //Testing
     robolectricVersion = '3.0'
     jUnitVersion = '4.12'
@@ -67,7 +69,9 @@ ext {
             materialDateTimePicker: "com.wdullaer:materialdatetimepicker:${materialDateTimePickerVersion}",
 
             rxJava                : "io.reactivex:rxjava:${rxJavaVersion}",
-            rxAndroid             : "io.reactivex:rxandroid:${rxAndroidVersion}"
+            rxAndroid             : "io.reactivex:rxandroid:${rxAndroidVersion}",
+
+            calligraphy           : "uk.co.chrisjenx:calligraphy:${calligraphyVersion}"
     ]
 
     presentationTestDependencies = [

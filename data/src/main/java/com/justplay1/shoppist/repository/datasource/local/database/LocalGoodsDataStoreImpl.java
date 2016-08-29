@@ -33,7 +33,7 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
             "SELECT MAX(" + ProductDAO.TIMESTAMP + ") FROM " + ProductDAO.TABLE;
 
     public static String PRODUCTS_QUERY(String selection) {
-        return ProductDAO.TABLE +
+        return "SELECT * FROM " + ProductDAO.TABLE +
                 " LEFT OUTER JOIN " + CategoryDAO.TABLE
                 + " ON " + ProductDAO.CATEGORY_ID + " = " + CategoryDAO.TABLE
                 + "." + CategoryDAO.CATEGORY_ID +
