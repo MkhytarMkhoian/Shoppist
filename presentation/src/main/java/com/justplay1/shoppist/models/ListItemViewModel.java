@@ -12,23 +12,17 @@ public class ListItemViewModel extends BaseViewModel {
     private boolean status;
     private CategoryViewModel category;
     @Priority
-    private int priority;
+    private int priority = Priority.NO_PRIORITY;
     private boolean isChecked;
     private double price;
-    private double quantity;
+    private double quantity = 1;
     private UnitViewModel unit;
     private long timeCreated;
     private CurrencyViewModel currency;
-    private int position;
+    private int position = -1;
 
     public ListItemViewModel() {
-        name = "";
-        note = "";
-        priority = Priority.NO_PRIORITY;
-        quantity = 1;
-        position = -1;
-        timestamp = 0;
-        isDelete = false;
+
     }
 
     public ListItemViewModel(ListItemViewModel item) {
@@ -225,7 +219,7 @@ public class ListItemViewModel extends BaseViewModel {
         dest.writeString(note);
         dest.writeByte((byte) (status ? 1 : 0));
         dest.writeParcelable(category, flags);
-        dest.writeSerializable(priority);
+        dest.writeInt(priority);
         dest.writeByte((byte) (isChecked ? 1 : 0));
         dest.writeDouble(price);
         dest.writeDouble(quantity);

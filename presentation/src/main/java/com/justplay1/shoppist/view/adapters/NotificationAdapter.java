@@ -12,7 +12,6 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeMana
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.NotificationViewModel;
 import com.justplay1.shoppist.preferences.ShoppistPreferences;
@@ -91,14 +90,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         holder.time.setText(String.format(Locale.getDefault(), "%s %d", mCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()), mCalendar.get(Calendar.DAY_OF_MONTH)));
 
         if (notification.getTime() > mPreferences.getLastUserSeenNotificationsTime()) {
-            holder.time.setTypeface(App.fontRobotoMedium);
-            holder.name.setTypeface(App.fontRobotoMedium);
             holder.name.setTypeface(holder.name.getTypeface(), Typeface.BOLD);
             holder.time.setTypeface(holder.time.getTypeface(), Typeface.BOLD);
             holder.time.setTextColor(mBlueColor);
         } else {
-            holder.time.setTypeface(App.fontRobotoRegular);
-            holder.name.setTypeface(App.fontRobotoRegular);
             holder.name.setTypeface(holder.name.getTypeface(), Typeface.NORMAL);
             holder.time.setTypeface(holder.time.getTypeface(), Typeface.NORMAL);
             holder.time.setTextColor(mBlackColor);
@@ -215,10 +210,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             name = (TextView) itemView.findViewById(R.id.title);
             selectBox = (SelectBoxView) itemView.findViewById(R.id.select_box);
             selectBox.setClickable(false);
-
-            fullMessage.setTypeface(App.fontRobotoRegular);
-            name.setTypeface(App.fontRobotoRegular);
-            time.setTypeface(App.fontRobotoRegular);
         }
     }
 

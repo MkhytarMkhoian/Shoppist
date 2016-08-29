@@ -1,69 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:ignore="MissingPrefix">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/content2x">
 
         <LinearLayout
-            android:id="@+id/container"
+            android:id="@+id/name_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="@dimen/content2x">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/name_frame"
-                android:layout_width="match_parent"
+            <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+                android:id="@+id/name_edit"
+                fontPath="fonts/RobotoRegular.ttf"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:hint="@string/category_name"
+                android:inputType="textCapSentences"
+                android:maxLines="1"
+                android:singleLine="true"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="@string/category_name"
+                app:met_maxCharacters="60"
+                app:met_primaryColor="?colorAccent" />
 
-                <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
-                    android:id="@+id/name_edit"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:inputType="textCapSentences"
-                    android:hint="@string/category_name"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    app:met_floatingLabel="highlight"
-                    app:met_floatingLabelText="@string/category_name"
-                    app:met_maxCharacters="60"
-                    app:met_primaryColor="?colorAccent" />
-
-                <ImageButton
-                    android:id="@+id/menu_voice_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/list_view_selector"
-                    android:src="@drawable/ic_mic" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/color_label"
+            <ImageButton
+                android:id="@+id/menu_voice_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/color"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/color_button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="3dp" />
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/list_view_selector"
+                android:src="@drawable/ic_mic" />
         </LinearLayout>
+
+        <TextView
+            fontPath="fonts/RobotoRegular.ttf"
+            android:id="@+id/color_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/color"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/color_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="3dp" />
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/done_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/content2x"
         android:layout_gravity="bottom|right|end"
+        android:layout_margin="@dimen/content2x"
         android:src="@drawable/ic_check_white"
         app:elevation="6dp"
         app:fabSize="normal"

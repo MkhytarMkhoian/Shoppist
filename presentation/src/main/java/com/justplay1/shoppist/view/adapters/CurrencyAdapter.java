@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.ItemType;
@@ -77,7 +76,6 @@ public class CurrencyAdapter extends BaseListAdapter<CurrencyViewModel> {
             container = itemView.findViewById(R.id.swipe_container);
             selectBox = (SelectBoxView) itemView.findViewById(R.id.select_box);
             name = (TextView) itemView.findViewById(R.id.item_name);
-            selectBox.setInnerTextTypeface(App.fontRobotoLight);
         }
     }
 }

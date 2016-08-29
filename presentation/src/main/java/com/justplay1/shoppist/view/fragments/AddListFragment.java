@@ -87,11 +87,9 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
         super.init(view);
 
         TextView colorLabel = (TextView) view.findViewById(R.id.color_label);
-        colorLabel.setTypeface(App.fontRobotoRegular);
         colorLabel.setTextColor(mPreferences.getColorPrimary());
 
         TextView priorityLabel = (TextView) view.findViewById(R.id.priority_label);
-        priorityLabel.setTypeface(App.fontRobotoRegular);
         priorityLabel.setTextColor(mPreferences.getColorPrimary());
 
         mNameEdit.setOnKeyListener((v, keyCode, event) -> {

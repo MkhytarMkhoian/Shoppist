@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="10dp">
+    android:paddingTop="10dp"
+    tools:ignore="MissingPrefix">
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/goods_name"
@@ -13,8 +15,8 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:hint="@string/name"
-        android:maxLines="1"
         android:inputType="textCapSentences"
+        android:maxLines="1"
         android:singleLine="true"
         app:met_floatingLabel="highlight"
         app:met_floatingLabelText="@string/name"
@@ -22,6 +24,7 @@
 
     <TextView
         android:id="@+id/category_label"
+        fontPath="fonts/RobotoRegular.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
@@ -39,6 +42,7 @@
 
     <TextView
         android:id="@+id/units_label"
+        fontPath="fonts/RobotoRegular.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"

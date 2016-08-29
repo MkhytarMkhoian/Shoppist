@@ -151,7 +151,7 @@ public class ListViewModel extends BaseViewModel {
         dest.writeString(name);
         dest.writeInt(boughtCount);
         dest.writeLong(timeCreated);
-        dest.writeSerializable(priority);
+        dest.writeInt(priority);
         dest.writeInt(color);
         dest.writeByte((byte) (isChecked ? 1 : 0));
         dest.writeInt(size);

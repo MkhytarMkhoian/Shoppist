@@ -1,6 +1,7 @@
 package com.justplay1.shoppist.view.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import com.justplay1.shoppist.utils.ShoppistUtils;
 
 import javax.inject.Inject;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 /**
  * Created by Mkhitar on 05.03.2015.
@@ -35,6 +38,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getAppComponent().inject(this);
         setStatusBarColor();
+    }
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(context));
     }
 
     protected void addFragment(int containerViewId, Fragment fragment) {

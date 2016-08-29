@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.models.CategoryViewModel;
@@ -52,7 +51,7 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel>
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_header, parent, false);
             return new HeaderViewHolder(view);
         } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemcategory, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
             return new CategoryItemViewHolder(view, mItemClickListener);
         }
     }
@@ -150,7 +149,6 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel>
             container = itemView.findViewById(R.id.swipe_container);
             selectBox = (SelectBoxView) itemView.findViewById(R.id.select_box);
             name = (TextView) itemView.findViewById(R.id.item_name);
-            selectBox.setInnerTextTypeface(App.fontRobotoLight);
         }
     }
 }

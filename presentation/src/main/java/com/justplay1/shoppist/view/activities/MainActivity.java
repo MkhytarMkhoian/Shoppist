@@ -121,8 +121,8 @@ public class MainActivity extends BaseListActivity
     }
 
     @Override
-    public void openListDetailScreen(String parentId) {
-        mNavigator.navigateToListItemsScreen(this, parentId);
+    public void openListDetailScreen(ListViewModel list) {
+        mNavigator.navigateToListItemsScreen(this, list);
     }
 
     @Override

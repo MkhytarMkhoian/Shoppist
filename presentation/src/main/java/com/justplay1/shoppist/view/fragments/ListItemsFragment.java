@@ -52,9 +52,9 @@ public class ListItemsFragment extends BaseEDSListFragment
     private ListItemAdapter mAdapter;
     private ListItemsFragmentInteractionListener mListener;
 
-    public static ListItemsFragment newInstance(String parentListId) {
+    public static ListItemsFragment newInstance(ListViewModel parentList) {
         Bundle args = new Bundle();
-        args.putString(Const.PARENT_LIST_ID, parentListId);
+        args.putParcelable(ListViewModel.class.getName(), parentList);
         ListItemsFragment fragment = new ListItemsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -69,6 +69,12 @@ public class ListItemsFragment extends BaseEDSListFragment
             throw new ClassCastException(context.toString()
                     + " must implement FragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mPresenter.onCreate(getArguments(), savedInstanceState);
     }
 
     @Override
@@ -133,11 +139,6 @@ public class ListItemsFragment extends BaseEDSListFragment
     @Override
     protected RecyclerView.Adapter getAdapter() {
         return mAdapter;
-    }
-
-    @Override
-    protected void initRecyclerView(View view, Bundle savedInstanceState) {
-        super.initRecyclerView(view, savedInstanceState);
     }
 
     @Override

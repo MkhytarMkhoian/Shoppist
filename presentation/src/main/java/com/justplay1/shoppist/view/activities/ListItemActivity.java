@@ -22,17 +22,17 @@ import com.justplay1.shoppist.view.fragments.ListItemsFragment;
 public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragment>
         implements Toolbar.OnMenuItemClickListener, ListItemsFragment.ListItemsFragmentInteractionListener {
 
-    private String mParentListId;
+    private ListViewModel mParentList;
 
-    public static Intent getCallingIntent(Context context, String parentId) {
+    public static Intent getCallingIntent(Context context, ListViewModel parentList) {
         Intent callingIntent = new Intent(context, ListItemActivity.class);
-        callingIntent.putExtra(Const.PARENT_LIST_ID, parentId);
+        callingIntent.putExtra(ListViewModel.class.getName(), parentList);
         return callingIntent;
     }
 
     @Override
     public ListItemsFragment createFragment() {
-        return ListItemsFragment.newInstance(mParentListId);
+        return ListItemsFragment.newInstance(mParentList);
     }
 
     @Override
@@ -40,13 +40,14 @@ public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_single_fragment);
         if (getIntent() != null) {
-            mParentListId = getIntent().getStringExtra(Const.PARENT_LIST_ID);
+            mParentList = getIntent().getParcelableExtra(ListViewModel.class.getName());
         }
         initToolbar();
     }
 
     private void initToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle(mParentList.getName());
         ViewCompat.setElevation(mToolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
         mToolbar.setBackgroundColor(mPreferences.getColorPrimary());
         mToolbar.setOnMenuItemClickListener(this);

@@ -1,5 +1,6 @@
 package com.justplay1.shoppist.presenter;
 
+import android.os.Bundle;
 import android.support.v4.util.Pair;
 
 import com.justplay1.shoppist.di.scope.PerActivity;
@@ -78,6 +79,14 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         this.mGetListItems = getListItems;
         this.mUpdateListItems = updateListItems;
         this.mSoftDeleteListItems = softDeleteListItems;
+    }
+
+    @Override
+    public void onCreate(Bundle arguments, Bundle savedInstanceState) {
+        super.onCreate(arguments, savedInstanceState);
+        if (arguments != null){
+            mParentList = arguments.getParcelable(ListViewModel.class.getName());
+        }
     }
 
     @Override

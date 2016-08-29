@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.models.AddElementType;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
@@ -65,9 +66,9 @@ public class Navigator {
         }
     }
 
-    public void navigateToListItemsScreen(Activity activity, String parentId) {
+    public void navigateToListItemsScreen(Activity activity, ListViewModel parentList) {
         if (activity != null) {
-            Intent intentToLaunch = ListItemActivity.getCallingIntent(activity, parentId);
+            Intent intentToLaunch = ListItemActivity.getCallingIntent(activity, parentList);
             activity.startActivity(intentToLaunch);
             startActivityAnimation(activity);
         }
@@ -100,7 +101,7 @@ public class Navigator {
     public void navigateToAddCategoryScreen(Activity activity, CategoryViewModel category) {
         if (activity != null) {
             Intent intentToLaunch = AddElementActivity.getCallingIntent(activity,
-                    AddElementActivity.AddElementType.CATEGORY, category, null, null);
+                    AddElementType.CATEGORY, category, null, null);
             activity.startActivity(intentToLaunch);
             startActivityAnimation(activity);
         }
@@ -109,7 +110,7 @@ public class Navigator {
     public void navigateToAddListScreen(Activity activity, ListViewModel list) {
         if (activity != null) {
             Intent intentToLaunch = AddElementActivity.getCallingIntent(activity,
-                    AddElementActivity.AddElementType.LIST, null, list, null);
+                    AddElementType.LIST, null, list, null);
             activity.startActivity(intentToLaunch);
             startActivityAnimation(activity);
         }
@@ -118,7 +119,7 @@ public class Navigator {
     public void navigateToAddListItemScreen(Activity activity, ListViewModel list, ListItemViewModel listItem) {
         if (activity != null) {
             Intent intentToLaunch = AddElementActivity.getCallingIntent(activity,
-                    AddElementActivity.AddElementType.LIST_ITEM, null, list, listItem);
+                    AddElementType.LIST_ITEM, null, list, listItem);
             activity.startActivity(intentToLaunch);
             startActivityAnimation(activity);
         }

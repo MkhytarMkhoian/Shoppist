@@ -142,10 +142,6 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
             selectBox = (SelectBoxView) itemView.findViewById(R.id.select_box);
             name = (TextView) itemView.findViewById(R.id.item_name);
             categoryName = (TextView) itemView.findViewById(R.id.category_name);
-
-            selectBox.setInnerTextTypeface(App.fontRobotoLight);
-            name.setTypeface(App.fontRobotoMedium);
-            categoryName.setTypeface(App.fontRobotoMedium);
         }
 
         @Override

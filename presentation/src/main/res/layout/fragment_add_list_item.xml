@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:ignore="MissingPrefix">
 
     <ScrollView
         android:id="@+id/nScrollView"
@@ -30,15 +32,16 @@
 
                 <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
                     android:id="@+id/name_edit"
+                    fontPath="fonts/RobotoRegular.ttf"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:inputType="textCapSentences"
                     android:completionThreshold="1"
                     android:hint="@string/name"
                     android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
                     android:maxLines="1"
                     android:singleLine="true"
                     app:met_floatingLabel="highlight"
@@ -56,6 +59,7 @@
             </LinearLayout>
 
             <TextView
+                fontPath="fonts/RobotoRegular.ttf"
                 android:id="@+id/category_label"
                 android:text="@string/category"
                 android:textSize="14sp"
@@ -63,7 +67,7 @@
                 app:layout_row="0"
                 app:layout_rowSpan="1" />
 
-            <com.justplay1.shoppist.ui.views.spinner.CategorySpinnerView
+            <com.justplay1.shoppist.view.component.spinner.CategorySpinnerView
                 android:id="@+id/category_spinner_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,6 +76,7 @@
                 app:layout_rowSpan="1" />
 
             <TextView
+                fontPath="fonts/RobotoRegular.ttf"
                 android:id="@+id/priority_label"
                 android:layout_marginTop="10dp"
                 android:text="@string/priority"
@@ -102,6 +107,7 @@
                 app:layout_rowSpan="1" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
+                fontPath="fonts/RobotoRegular.ttf"
                 android:id="@+id/quantity_edit"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
@@ -137,6 +143,7 @@
                 app:layout_rowSpan="1" />
 
             <TextView
+                fontPath="fonts/RobotoRegular.ttf"
                 android:id="@+id/unit_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -146,7 +153,7 @@
                 app:layout_row="0"
                 app:layout_rowSpan="1" />
 
-            <com.justplay1.shoppist.ui.views.spinner.UnitsSpinnerView
+            <com.justplay1.shoppist.view.component.spinner.UnitsSpinnerView
                 android:id="@+id/units_spinner_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -170,6 +177,7 @@
                 app:layout_rowSpan="1" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
+                fontPath="fonts/RobotoRegular.ttf"
                 android:id="@+id/price_edit"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
@@ -203,6 +211,7 @@
                 app:layout_rowSpan="1" />
 
             <TextView
+                fontPath="fonts/RobotoRegular.ttf"
                 android:id="@+id/currency_label"
                 android:text="@string/currency"
                 android:textSize="14sp"
@@ -210,7 +219,7 @@
                 app:layout_row="0"
                 app:layout_rowSpan="1" />
 
-            <com.justplay1.shoppist.ui.views.spinner.CurrencySpinnerView
+            <com.justplay1.shoppist.view.component.spinner.CurrencySpinnerView
                 android:id="@+id/currency_spinner_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -219,6 +228,7 @@
                 app:layout_rowSpan="1" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
+                fontPath="fonts/RobotoRegular.ttf"
                 android:id="@+id/description_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -237,9 +247,9 @@
         android:id="@+id/done_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right|end"
         android:layout_margin="@dimen/content2x"
         android:src="@drawable/ic_check_white"
-        android:layout_gravity="bottom|right|end"
         app:elevation="6dp"
         app:fabSize="normal"
         app:pressedTranslationZ="12dp" />

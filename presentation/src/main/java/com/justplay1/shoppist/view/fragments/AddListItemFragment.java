@@ -1,7 +1,6 @@
 package com.justplay1.shoppist.view.fragments;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -61,6 +60,7 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
     private CurrencySpinnerView mCurrencyList;
     private AutoCompleteTextAdapter mAutoCompleteTextAdapter;
 
+    private AddListItemListener mListItemListener;
     private AddListItemsComponent mComponent;
 
     @Inject
@@ -73,6 +73,17 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
         AddListItemFragment fragment = new AddListItemFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mListItemListener = (AddListItemListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement FragmentInteractionListener");
+        }
     }
 
     @Override
@@ -129,22 +140,31 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
         super.init(view);
 
         mAutoCompleteTextAdapter = new AutoCompleteTextAdapter(getContext());
+        mAutoCompleteTextAdapter.setListener(product -> showNewGoodsDialog(product));
         mNameEdit.setAdapter(mAutoCompleteTextAdapter);
-        mNameEdit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mNameEdit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ProductViewModel product = mAutoCompleteTextAdapter.getProduct(mNameEdit.getText().toString());
-                mPresenter.onProductSelected(product);
-
-//                String name = mAutoCompleteTextAdapter.getItem(position);
-//                if (name.equals(mAutoCompleteTextAdapter.getCurrentText())) {
-//                    showNewGoodsDialog(name);
-//                } else {
-//                    ProductViewModel product = mAutoCompleteTextAdapter.getProduct(name);
-//                    setSpinnerItem(mCategoryList.getSpinner(), product.getCategory().getId());
-//                    setSpinnerItem(mUnitList.getSpinner(), product.getUnit().getId());
-//                }
+                if (product != null) {
+                    mPresenter.onProductSelected(product);
+                    selectUnit(product.getUnit().getId());
+                    selectCategory(product.getUnit().getId());
+                } else {
+                    mPresenter.onProductSelected(null);
+                    selectUnit(UnitViewModel.NO_UNIT_ID);
+                    selectCategory(CategoryViewModel.NO_CATEGORY_ID);
+                }
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        mNameEdit.setOnItemClickListener((parent, view1, position, id) -> {
+
+
         });
 
         mPriceEdit = (MaterialEditText) view.findViewById(R.id.price_edit);
@@ -175,14 +195,6 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
         categoryLabel.setTextColor(mPreferences.getColorPrimary());
         priorityLabel.setTextColor(mPreferences.getColorPrimary());
         unitLabel.setTextColor(mPreferences.getColorPrimary());
-
-        currencyLabel.setTypeface(App.fontRobotoRegular);
-        categoryLabel.setTypeface(App.fontRobotoRegular);
-        priorityLabel.setTypeface(App.fontRobotoRegular);
-        unitLabel.setTypeface(App.fontRobotoRegular);
-        mPriceEdit.setTypeface(App.fontRobotoRegular);
-        mQuantityEdit.setTypeface(App.fontRobotoRegular);
-        mNote.setTypeface(App.fontRobotoRegular);
 
         mPriceEdit.setPrimaryColor(mPreferences.getColorPrimary());
         mQuantityEdit.setPrimaryColor(mPreferences.getColorPrimary());
@@ -249,8 +261,8 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
 
     private void initializeCategoryList(View view) {
         mCategoryList = (CategorySpinnerView) view.findViewById(R.id.category_spinner_view);
-        mCategoryList.setOnAddBtnClickListener(v -> mPresenter.onAddCategoryClick());
-        mCategoryList.setOnEditBtnClickListener(v -> mPresenter.onEditCategoryClick());
+        mCategoryList.setOnAddBtnClickListener(v -> mListItemListener.openAddCategoryScreen(null));
+        mCategoryList.setOnEditBtnClickListener(v -> mListItemListener.openAddCategoryScreen(mCategoryList.getSelectedItem()));
         mCategoryList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -266,8 +278,8 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
 
     private void initializeUnitList(View view) {
         mUnitList = (UnitsSpinnerView) view.findViewById(R.id.units_spinner_view);
-        mUnitList.setOnAddBtnClickListener(v -> mPresenter.onAddUnitClick());
-        mUnitList.setOnEditBtnClickListener(v -> mPresenter.onEditUnitClick());
+        mUnitList.setOnAddBtnClickListener(v -> showUnitDialog(null));
+        mUnitList.setOnEditBtnClickListener(v -> showUnitDialog(mUnitList.getSelectedItem()));
         mUnitList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -283,8 +295,8 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
 
     private void initializeCurrencyList(View view) {
         mCurrencyList = (CurrencySpinnerView) view.findViewById(R.id.currency_spinner_view);
-        mCurrencyList.setOnAddBtnClickListener(v -> mPresenter.onAddCurrencyClick());
-        mCurrencyList.setOnEditBtnClickListener(v -> mPresenter.onEditCurrencyClick());
+        mCurrencyList.setOnAddBtnClickListener(v -> showCurrencyDialog(null));
+        mCurrencyList.setOnEditBtnClickListener(v -> showCurrencyDialog(mCurrencyList.getSelectedItem()));
         mCurrencyList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -300,8 +312,8 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
 
     @Override
     public boolean onLongClick(View v) {
-//        ProductViewModel product = mAutoCompleteTextAdapter.getProduct(mNameEdit.getText().toString());
-//        mPresenter.onProductSelected(product);
+        ProductViewModel product = mAutoCompleteTextAdapter.getProduct(mNameEdit.getText().toString());
+        mPresenter.onProductSelected(product);
         mPresenter.setNote(ShoppistUtils.filterSpace(mNote.getText().toString()));
         mPresenter.setPrice(mPriceEdit.getText().toString());
         mPresenter.setQuantity(mQuantityEdit.getText().toString());
@@ -319,7 +331,7 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
                 mPresenter.onDoneButtonClick(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
                 break;
             case R.id.menu_voice_search:
-                mPresenter.startVoiceRecognition();
+//                mPresenter.startVoiceRecognition();
                 break;
             case R.id.decrement_price_button:
                 mPresenter.onDecrementPriceClick(mPriceEdit.getText().toString());
@@ -336,35 +348,32 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            if (data.getBooleanExtra(Const.NEW_DATA, false)) {
-                mPresenter.loadCategories();
-                data.removeExtra(Const.NEW_DATA);
-            }
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == Activity.RESULT_OK && data != null) {
+//            if (data.getBooleanExtra(Const.NEW_DATA, false)) {
+//                mPresenter.loadCategories();
+//                data.removeExtra(Const.NEW_DATA);
+//            }
+//        }
+//    }
 
-    @Override
-    public void showCurrencyDialog(final CurrencyViewModel editCurrency) {
+    private void showCurrencyDialog(final CurrencyViewModel editCurrency) {
         FragmentManager fm = getFragmentManager();
         AddCurrencyDialogFragment dialog = AddCurrencyDialogFragment.newInstance(editCurrency);
         dialog.setCompleteListener(isUpdate -> mPresenter.loadCurrency());
         dialog.show(fm, AddCurrencyDialogFragment.class.getName());
     }
 
-    @Override
-    public void showUnitDialog(final UnitViewModel editUnit) {
+    private void showUnitDialog(final UnitViewModel editUnit) {
         FragmentManager fm = getFragmentManager();
         AddUnitsDialogFragment dialog = AddUnitsDialogFragment.newInstance(editUnit);
         dialog.setCompleteListener(isUpdate -> mPresenter.loadUnits());
         dialog.show(fm, AddUnitsDialogFragment.class.getName());
     }
 
-    @Override
-    public void showNewGoodsDialog(final String newProduct) {
+    private void showNewGoodsDialog(final String newProduct) {
         FragmentManager fm = getFragmentManager();
         AddGoodsDialogFragment dialog = AddGoodsDialogFragment.newInstance(newProduct);
         dialog.setCompleteListener(isUpdate -> mPresenter.loadGoods());
@@ -481,5 +490,10 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
     @Override
     public void setDefaultCurrency() {
         mCurrencyList.selectItem(mPreferences.getDefaultCurrency());
+    }
+
+    public interface AddListItemListener {
+
+        void openAddCategoryScreen(CategoryViewModel category);
     }
 }

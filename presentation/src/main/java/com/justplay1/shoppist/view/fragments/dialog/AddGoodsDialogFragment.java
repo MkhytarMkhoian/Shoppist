@@ -107,10 +107,8 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
         super.init(view);
         TextView categoryLabel = (TextView) view.findViewById(R.id.category_label);
         categoryLabel.setTextColor(mPreferences.getColorPrimary());
-        categoryLabel.setTypeface(App.fontRobotoRegular);
         TextView unitsLabel = (TextView) view.findViewById(R.id.units_label);
         unitsLabel.setTextColor(mPreferences.getColorPrimary());
-        unitsLabel.setTypeface(App.fontRobotoRegular);
 
         mNameEdit = (MaterialEditText) view.findViewById(R.id.goods_name);
         mNameEdit.setPrimaryColor(mPreferences.getColorPrimary());

@@ -9,6 +9,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.models.AddElementType;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
@@ -21,16 +22,16 @@ import com.justplay1.shoppist.view.fragments.BaseAddElementFragment;
  * Created by Mkhitar on 15.05.2015.
  */
 public class AddElementActivity extends SingleListFragmentActivity<BaseAddElementFragment>
-        implements BaseAddElementFragment.AddElementListener {
+        implements BaseAddElementFragment.AddElementListener, AddListItemFragment.AddListItemListener {
 
     private Toolbar mToolbar;
-    private AddElementType mElementType;
+    private @AddElementType int mElementType;
 
     private CategoryViewModel mCategoryModel;
     private ListViewModel mListModel;
     private ListItemViewModel mListItemModel;
 
-    public static Intent getCallingIntent(Context context, AddElementType type,
+    public static Intent getCallingIntent(Context context, @AddElementType int type,
                                           CategoryViewModel category, ListViewModel list,
                                           ListItemViewModel listItem) {
         Intent callingIntent = new Intent(context, AddElementActivity.class);
@@ -44,23 +45,24 @@ public class AddElementActivity extends SingleListFragmentActivity<BaseAddElemen
     @Override
     public BaseAddElementFragment createFragment() {
         switch (mElementType) {
-            case CATEGORY:
+            case AddElementType.CATEGORY:
                 return AddCategoryFragment.newInstance(mCategoryModel);
-            case LIST:
+            case AddElementType.LIST:
                 return AddListFragment.newInstance(mListModel);
-            case LIST_ITEM:
+            case AddElementType.LIST_ITEM:
                 return AddListItemFragment.newInstance(mListModel.getId(), mListItemModel);
         }
         return null;
     }
 
+    @SuppressWarnings("ResourceType")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
         if (getIntent() != null) {
-            mElementType = (AddElementType) getIntent().getSerializableExtra(AddElementType.class.getName());
+            mElementType = getIntent().getIntExtra(AddElementType.class.getName(), 0);
             mCategoryModel = getIntent().getParcelableExtra(CategoryViewModel.class.getName());
             mListModel = getIntent().getParcelableExtra(ListViewModel.class.getName());
             mListItemModel = getIntent().getParcelableExtra(ListItemViewModel.class.getName());
@@ -86,6 +88,11 @@ public class AddElementActivity extends SingleListFragmentActivity<BaseAddElemen
     }
 
     @Override
+    public void openAddCategoryScreen(CategoryViewModel category) {
+        mNavigator.navigateToAddCategoryScreen(this, category);
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -101,9 +108,5 @@ public class AddElementActivity extends SingleListFragmentActivity<BaseAddElemen
     protected void finishWithResult() {
         Intent data = new Intent();
         finishActivityWithResult(this, RESULT_OK, data);
-    }
-
-    public enum AddElementType {
-        CATEGORY, LIST, LIST_ITEM;
     }
 }

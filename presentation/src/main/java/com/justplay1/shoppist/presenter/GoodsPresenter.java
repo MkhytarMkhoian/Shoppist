@@ -107,6 +107,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     }
 
     public void loadData() {
+        showLoading();
         mSubscriptions.add(Observable.zip(loadDefaultUnit(), loadDefaultCategory(), loadGoods(), (unitViewModel, categoryViewModel, goods) -> {
             for (Pair<HeaderViewModel, List<ProductViewModel>> pair : goods) {
                 for (ProductViewModel product : pair.second) {
@@ -122,7 +123,14 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
         }).subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ProductViewModel>>>>() {
             @Override
             public void onNext(List<Pair<HeaderViewModel, List<ProductViewModel>>> data) {
+                hideLoading();
                 showData(data);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                hideLoading();
+                e.printStackTrace();
             }
         }));
     }
@@ -236,6 +244,18 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     private void showDeleteDialog() {
         if (isViewAttached()) {
             getView().showDeleteDialog();
+        }
+    }
+
+    private void showLoading() {
+        if (isViewAttached()) {
+            getView().showLoading();
+        }
+    }
+
+    private void hideLoading() {
+        if (isViewAttached()) {
+            getView().hideLoading();
         }
     }
 }

@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
@@ -143,9 +142,6 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
             priorityIndicator = (ImageView) itemView.findViewById(R.id.priority_indicator);
             name = (TextView) itemView.findViewById(R.id.item_name);
             size = (TextView) itemView.findViewById(R.id.list_count);
-
-            selectBox.setInnerTextTypeface(App.fontRobotoLight);
-            name.setTypeface(App.fontRobotoMedium);
         }
 
         @Override

@@ -30,6 +30,7 @@ import java.util.Map;
 public class AutoCompleteTextAdapter extends BaseAdapter implements Filterable {
 
     private Context mContext;
+    private OnAddButtonClickListener mListener;
     private Map<String, ProductViewModel> mProducts;
     private List<SpannableStringBuilder> mProductsToDisplay;
 
@@ -86,6 +87,11 @@ public class AutoCompleteTextAdapter extends BaseAdapter implements Filterable {
         } else {
             holder.addBtn.setVisibility(View.GONE);
         }
+        holder.addBtn.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.OnAddButtonClick(mProductsToDisplay.get(position).toString());
+            }
+        });
         holder.name.setText(mProductsToDisplay.get(position), TextView.BufferType.SPANNABLE);
         return convertView;
     }
@@ -161,9 +167,18 @@ public class AutoCompleteTextAdapter extends BaseAdapter implements Filterable {
         return builder;
     }
 
-    public void setData(Map<String, ProductViewModel> data){
+    public void setData(Map<String, ProductViewModel> data) {
         mProducts = data;
         notifyDataSetChanged();
+    }
+
+    public void setListener(OnAddButtonClickListener listener) {
+        this.mListener = listener;
+    }
+
+    public interface OnAddButtonClickListener {
+
+        void OnAddButtonClick(String name);
     }
 
     public static class ViewHolder {

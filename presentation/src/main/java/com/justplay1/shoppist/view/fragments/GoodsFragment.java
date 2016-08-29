@@ -268,6 +268,7 @@ public class GoodsFragment extends BaseExpandableListFragment
     @Override
     public void showData(List<Pair<HeaderViewModel, List<ProductViewModel>>> data) {
         mAdapter.setData(data);
+        mAdapter.notifyDataSetChanged();
         mRecyclerViewExpandableItemManager.expandAll();
     }
 

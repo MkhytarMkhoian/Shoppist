@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white_pressed"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
 
     <LinearLayout
         android:id="@+id/swipe_container"
@@ -37,31 +39,34 @@
 
                 <TextView
                     android:id="@+id/title"
+                    fontPath="fonts/RobotoRegular.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_toLeftOf="@+id/time"
-                    android:layout_marginRight="5dp"
                     android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/time"
                     android:text="Medium Text"
                     android:textColor="@color/text_color_black" />
 
                 <TextView
                     android:id="@+id/time"
+                    fontPath="fonts/RobotoRegular.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Nov 26"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/text_color_black" />
 
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/full_message"
+                fontPath="fonts/RobotoRegular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Medium Text" />

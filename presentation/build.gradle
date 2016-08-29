@@ -108,6 +108,7 @@ dependencies {
     compile presentationDependencies.appcompat
     compile presentationDependencies.design
     compile presentationDependencies.recyclerView
+    compile presentationDependencies.calligraphy
 
     compile (presentationDependencies.advRecyclerView){
         transitive = true

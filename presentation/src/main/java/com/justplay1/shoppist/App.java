@@ -14,16 +14,14 @@ import com.justplay1.shoppist.di.modules.RepositoryModule;
 import com.justplay1.shoppist.di.modules.ThreadExecutorModule;
 import com.parse.Parse;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 /**
  * Created by Mkhytar on 20.10.2015.
  */
 public class App extends Application {
 
     private AppComponent mAppComponent;
-
-    public static Typeface fontRobotoLight;
-    public static Typeface fontRobotoRegular;
-    public static Typeface fontRobotoMedium;
 
     private static App instance;
 
@@ -38,9 +36,10 @@ public class App extends Application {
         Parse.enableLocalDatastore(this);
         Parse.initialize(this);
 
-        fontRobotoLight = Typeface.createFromAsset(getAssets(), "roboto_light.ttf");
-        fontRobotoMedium = Typeface.createFromAsset(getAssets(), "Roboto-Medium.ttf");
-        fontRobotoRegular = Typeface.createFromAsset(getAssets(), "Roboto-Regular.ttf");
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
 
 //        mSyncLimitFilter.requestSync(false);
     }

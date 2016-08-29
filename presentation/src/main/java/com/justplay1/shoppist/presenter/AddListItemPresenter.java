@@ -138,7 +138,6 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         loadGoods();
     }
 
-
     public void onPrioritySelected(@Priority int priority) {
         mPriority = priority;
     }
@@ -253,40 +252,12 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         return mItem != null;
     }
 
-    public void startVoiceRecognition() {
-
-    }
-
-    public void onEditCurrencyClick() {
-
-    }
-
-    public void onAddCurrencyClick() {
-
-    }
-
-    public void onEditUnitClick() {
-
-    }
-
-    public void onAddUnitClick() {
-
-    }
-
-    public void onEditCategoryClick() {
-
-    }
-
-    public void onAddCategoryClick() {
-
-    }
-
     public void onIncrementPriceClick(String price) {
-        setViewPrice(String.format("%s", decrementValue(price)));
+        setViewPrice(String.format("%s", incrementValue(price)));
     }
 
     public void onDecrementPriceClick(String price) {
-        setViewPrice(String.format("%s", incrementValue(price)));
+        setViewPrice(String.format("%s", decrementValue(price)));
     }
 
     public void onIncrementQuantityClick(String quantity) {
@@ -344,9 +315,6 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
 
                         if (mItem != null) {
                             selectCategory(mItem.getCategory().getId());
-//                        } else if (mAutoCompleteTextAdapter.getProduct(mNameEdit.getText().toString()) != null) {
-//                            ProductViewModel product = mAutoCompleteTextAdapter.getProduct(mNameEdit.getText().toString());
-//                            setSpinnerItem(mCategoryList.getSpinner(), product.getCategory().getId());
                         } else {
                             selectCategory(CategoryViewModel.NO_CATEGORY_ID);
                         }
@@ -368,9 +336,6 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
                         setUnits(unitViewModels);
                         if (mItem != null) {
                             selectUnit(mItem.getUnit().getId());
-//                        } else if (mAutoCompleteTextAdapter.getProduct(mNameEdit.getText().toString()) != null) {
-//                            ProductViewModel product = mAutoCompleteTextAdapter.getProduct(mNameEdit.getText().toString());
-//                            selectUnit(product.getUnit().getId());
                         } else {
                             selectUnit(UnitViewModel.NO_UNIT_ID);
                         }

@@ -164,7 +164,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
 
     @Override
     public void onItemClick(BaseItemHolder holder, int position, long id) {
-        mListener.openListDetailScreen(mAdapter.getChildItem(holder.groupPosition, holder.childPosition).getId());
+        mListener.openListDetailScreen(mAdapter.getChildItem(holder.groupPosition, holder.childPosition));
     }
 
     @Override
@@ -401,6 +401,6 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
 
         void openEditScreen(ListViewModel list);
 
-        void openListDetailScreen(String parentId);
+        void openListDetailScreen(ListViewModel list);
     }
 }

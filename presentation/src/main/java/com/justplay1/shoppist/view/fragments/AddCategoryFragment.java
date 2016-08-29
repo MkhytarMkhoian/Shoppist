@@ -89,7 +89,6 @@ public class AddCategoryFragment extends BaseAddElementFragment
         super.init(view);
 
         TextView colorLabel = (TextView) view.findViewById(R.id.color_label);
-        colorLabel.setTypeface(App.fontRobotoRegular);
         colorLabel.setTextColor(mPreferences.getColorPrimary());
 
         mNameEdit.setOnKeyListener((v, keyCode, event) -> {

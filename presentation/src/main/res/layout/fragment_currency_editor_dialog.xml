@@ -3,10 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingPrefix"
     android:paddingTop="10dp"
     android:orientation="vertical">
 
     <com.rengwuxian.materialedittext.MaterialEditText
+        fontPath="fonts/RobotoRegular.ttf"
         android:id="@+id/name_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -81,7 +81,6 @@ public abstract class BaseAddElementFragment extends BaseFragment
 
         mNameEdit = (MaterialAutoCompleteTextView) view.findViewById(R.id.name_edit);
         mNameEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
-        mNameEdit.setTypeface(App.fontRobotoRegular);
         mNameEdit.setPrimaryColor(mPreferences.getColorPrimary());
 
         mVoiceSearchBtn = (ImageButton) view.findViewById(R.id.menu_voice_search);

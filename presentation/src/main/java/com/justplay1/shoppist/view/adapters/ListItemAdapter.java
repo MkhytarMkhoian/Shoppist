@@ -330,12 +330,6 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
             categoryName = (TextView) itemView.findViewById(R.id.category_name);
             priorityIndicator = (ImageView) itemView.findViewById(R.id.priority_indicator);
             selectBox = (SelectBoxView) itemView.findViewById(R.id.select_box);
-
-            selectBox.setInnerTextTypeface(App.fontRobotoLight);
-            categoryName.setTypeface(App.fontRobotoRegular);
-            name.setTypeface(App.fontRobotoMedium);
-            priceAndCurrency.setTypeface(App.fontRobotoRegular);
-            quantityAndUnit.setTypeface(App.fontRobotoRegular);
         }
 
         @Override

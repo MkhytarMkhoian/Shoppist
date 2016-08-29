@@ -14,12 +14,6 @@ import java.util.Map;
  */
 public interface AddListItemView extends AddElementView {
 
-    void showCurrencyDialog(CurrencyViewModel currency);
-
-    void showUnitDialog(UnitViewModel unit);
-
-    void showNewGoodsDialog(String productName);
-
     void setPriority(@Priority int priority);
 
     void setPrice(String price);

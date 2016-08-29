@@ -74,7 +74,6 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
             container = itemView.findViewById(R.id.swipe_container);
             selectBox = (SelectBoxView) itemView.findViewById(R.id.select_box);
             name = (TextView) itemView.findViewById(R.id.item_name);
-            selectBox.setInnerTextTypeface(App.fontRobotoLight);
         }
     }
 }
