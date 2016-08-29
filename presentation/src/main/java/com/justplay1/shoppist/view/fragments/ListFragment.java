@@ -18,6 +18,8 @@ import android.view.View;
 
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.bus.ThemeUpdatedEvent;
+import com.justplay1.shoppist.bus.UiEventBus;
 import com.justplay1.shoppist.di.components.DaggerListsComponent;
 import com.justplay1.shoppist.di.components.ListsComponent;
 import com.justplay1.shoppist.di.modules.ActivityModule;
@@ -28,6 +30,7 @@ import com.justplay1.shoppist.presenter.ListPresenter;
 import com.justplay1.shoppist.utils.AnimationResultListener;
 import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.ListView;
+import com.justplay1.shoppist.view.activities.MainActivity;
 import com.justplay1.shoppist.view.adapters.ListAdapter;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
@@ -38,6 +41,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.Subscription;
+
 /**
  * Created by Mkhytar on 26.03.2016.
  */
@@ -46,6 +51,8 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
 
     @Inject
     ListPresenter mPresenter;
+
+    private Subscription mBusSubscription;
 
     private ListsComponent mComponent;
     private ListsFragmentInteractionListener mListener;
@@ -81,7 +88,20 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mBusSubscription.unsubscribe();
         mPresenter.detachView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        UiEventBus.instanceOf().filteredObservable(ThemeUpdatedEvent.class);
+        mBusSubscription = UiEventBus.instanceOf().observable().subscribe(o -> {
+            mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
+            ((MainActivity) getActivity()).refreshToolbarColor();
+            ((MainActivity) getActivity()).setStatusBarColor();
+            mAdapter.notifyDataSetChanged();
+        });
     }
 
     @Override

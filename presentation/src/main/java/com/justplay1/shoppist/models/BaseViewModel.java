@@ -109,7 +109,7 @@ public abstract class BaseViewModel implements Parcelable {
         throw new UnsupportedOperationException();
     }
 
-    public int getItemType() {
+    public @ItemType int getItemType() {
         return ItemType.LIST_ITEM;
     }
 

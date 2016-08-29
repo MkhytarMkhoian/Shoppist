@@ -3,16 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:visible="false"
         android:id="@+id/notifications"
         android:icon="@drawable/ic_notifications"
         android:title="@string/notifications"
-        app:actionLayout="@layout/notification_badge" />
-
-    <item
-        android:id="@+id/history_button"
-        android:icon="@drawable/ic_category"
-        android:title="@string/history"
-        android:visible="false" />
+        app:actionLayout="@layout/view_notification_badge" />
 
     <item android:title="@string/shopping">
         <menu>

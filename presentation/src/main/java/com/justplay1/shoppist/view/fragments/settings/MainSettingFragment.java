@@ -1,6 +1,6 @@
 package com.justplay1.shoppist.view.fragments.settings;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
@@ -26,7 +26,7 @@ public class MainSettingFragment extends PreferenceFragment implements ColorThem
     private MainSettingFragmentInteractionListener mListener;
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Activity context) {
         super.onAttach(context);
         try {
             mListener = (MainSettingFragmentInteractionListener) context;

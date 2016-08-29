@@ -32,11 +32,6 @@ public class ListsSettingPresenter extends BaseRxPresenter<ListsSettingView> {
         this.mPreferences = preferences;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle bundle) {
-
-    }
-
     public void init() {
         if (!mPreferences.getDefaultCurrency().isEmpty()) {
             loadDefaultCurrency();

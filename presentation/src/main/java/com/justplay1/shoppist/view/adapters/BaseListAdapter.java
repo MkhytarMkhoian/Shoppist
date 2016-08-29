@@ -23,6 +23,7 @@ public abstract class BaseListAdapter<T extends BaseViewModel>
     public BaseListAdapter(Context context, ActionModeOpenCloseListener listener,
                            RecyclerView recyclerView) {
         super(context, listener, recyclerView);
+        mData = new ArrayList<>(1);
     }
 
     @Override
@@ -36,12 +37,12 @@ public abstract class BaseListAdapter<T extends BaseViewModel>
 
     @Override
     public int getItemCount() {
-        if (mData == null) return 0;
         return mData.size();
     }
 
     @Override
     public int getItemViewType(int position) {
+        if (mData.size() == 0) return super.getItemViewType(position);
         return getItem(position).getItemType();
     }
 
@@ -58,18 +59,26 @@ public abstract class BaseListAdapter<T extends BaseViewModel>
     }
 
     public int getCountWithoutHeaders() {
-        if (mData == null) return 0;
         return mData.size();
     }
 
+    public List<T> getItemsWithoutHeaders() {
+        List<T> items = new ArrayList<>();
+        for (T item : mData) {
+            if (item instanceof HeaderViewModel) continue;
+            items.add(item);
+        }
+        return items;
+    }
+
     public T getItem(int position) {
-        if (mData == null) return null;
+        if (mData.size() == 0) return null;
         return mData.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        if (mData == null) return 0;
+        if (mData.size() == 0) return 0;
         return mData.get(position).hashCode();
     }
 

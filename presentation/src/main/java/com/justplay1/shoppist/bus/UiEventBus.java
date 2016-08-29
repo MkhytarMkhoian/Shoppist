@@ -4,19 +4,27 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import rx.Observable;
-import rx.functions.Func1;
 import rx.subjects.PublishSubject;
 
 /**
  * Created by Mkhytar on 29.07.2016.
  */
 @Singleton
-public class RxEventBus {
+public class UiEventBus {
 
     private final PublishSubject<Object> mBusSubject;
 
+    private static UiEventBus instance;
+
+    public static UiEventBus instanceOf() {
+        if (instance == null) {
+            instance = new UiEventBus();
+        }
+        return instance;
+    }
+
     @Inject
-    public RxEventBus() {
+    public UiEventBus() {
         mBusSubject = PublishSubject.create();
     }
 
@@ -40,13 +48,6 @@ public class RxEventBus {
      */
     public <T> Observable<T> filteredObservable(final Class<T> eventClass) {
         return mBusSubject.filter(eventClass::isInstance)
-                .map(new Func1<Object, T>() {
-            //Safe to cast because of the previous filter
-            @SuppressWarnings("unchecked")
-            @Override
-            public T call(Object event) {
-                return (T) event;
-            }
-        });
+                .map(event -> (T) event);
     }
 }

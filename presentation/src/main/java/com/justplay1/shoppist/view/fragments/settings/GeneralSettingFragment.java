@@ -10,7 +10,9 @@ import android.widget.ArrayAdapter;
 import com.jenzz.materialpreference.CheckBoxPreference;
 import com.jenzz.materialpreference.Preference;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.bus.ThemeUpdatedEvent;
 import com.justplay1.shoppist.utils.ColorThemeUpdater;
+import com.justplay1.shoppist.bus.UiEventBus;
 import com.justplay1.shoppist.view.activities.SettingsActivity;
 import com.justplay1.shoppist.view.component.ColorCheckBoxPreference;
 import com.justplay1.shoppist.view.fragments.dialog.SelectThemeColorDialogFragment;
@@ -22,8 +24,6 @@ public class GeneralSettingFragment extends BaseSettingFragment implements Color
 
     private static final String COLOR_THEME_BTN_ID = "color_theme";
     private static final String CONFIRM_TO_DELETE_BTN_ID = "confirm_to_delete";
-    private static final String SELECT_ANIMATION_BTN_ID = "select_animation";
-    private static final String CLOSE_MANUAL_SORT_MODE_WITH_BACK_ID = "close_manual_sort_mode_with_back_press_id";
     private static final String LONG_ITEM_CLICK_ACTION_ID = "long_item_click_action_id";
 
     private Preference mColorThemeBtn;
@@ -55,8 +55,12 @@ public class GeneralSettingFragment extends BaseSettingFragment implements Color
         switch (preference.getKey()) {
             case COLOR_THEME_BTN_ID:
                 FragmentManager fm = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
-                SelectThemeColorDialogFragment colorDialog = SelectThemeColorDialogFragment.newInstance();
-                colorDialog.setOnColorSelectedListener((colorPrimary, colorPrimaryDark) -> updateTheme());
+                SelectThemeColorDialogFragment colorDialog = SelectThemeColorDialogFragment.newInstance(mPreferences.getColorPrimary());
+                colorDialog.setOnColorSelectedListener((colorPrimary, colorPrimaryDark) -> {
+                    mPreferences.setColorPrimary(colorPrimary);
+                    mPreferences.setColorPrimaryDark(colorPrimaryDark);
+                    updateTheme();
+                });
                 colorDialog.show(fm, SelectThemeColorDialogFragment.class.getName());
                 break;
             case CONFIRM_TO_DELETE_BTN_ID:
@@ -72,8 +76,11 @@ public class GeneralSettingFragment extends BaseSettingFragment implements Color
     protected void updateGeneralCheckBox() {
         if (findPreference(CONFIRM_TO_DELETE_BTN_ID) != null) {
             getPreferenceScreen().removePreference(findPreference(CONFIRM_TO_DELETE_BTN_ID));
-            getPreferenceScreen().removePreference(findPreference(SELECT_ANIMATION_BTN_ID));
-            getPreferenceScreen().removePreference(findPreference(CLOSE_MANUAL_SORT_MODE_WITH_BACK_ID));
+            mConfirmToDeleteBtn = null;
+        }
+        if (findPreference(LONG_ITEM_CLICK_ACTION_ID) != null) {
+            getPreferenceScreen().removePreference(findPreference(LONG_ITEM_CLICK_ACTION_ID));
+            mLongItemClickActionBtn = null;
         }
 
         if (mConfirmToDeleteBtn == null) {
@@ -82,14 +89,9 @@ public class GeneralSettingFragment extends BaseSettingFragment implements Color
             mConfirmToDeleteBtn.setTitle(R.string.confirm_to_delete);
             mConfirmToDeleteBtn.setSummary(R.string.confirm_to_delete_summary);
         }
-        getPreferenceScreen().removePreference(mConfirmToDeleteBtn);
         getPreferenceScreen().addPreference(mConfirmToDeleteBtn);
 
         mConfirmToDeleteBtn.setOnPreferenceClickListener(this);
-
-        if (findPreference(LONG_ITEM_CLICK_ACTION_ID) != null) {
-            getPreferenceScreen().removePreference(findPreference(LONG_ITEM_CLICK_ACTION_ID));
-        }
 
         if (mLongItemClickActionBtn == null) {
             mLongItemClickActionBtn = new Preference(getActivity());
@@ -104,7 +106,6 @@ public class GeneralSettingFragment extends BaseSettingFragment implements Color
                     break;
             }
         }
-        getPreferenceScreen().removePreference(mLongItemClickActionBtn);
         getPreferenceScreen().addPreference(mLongItemClickActionBtn);
         mLongItemClickActionBtn.setOnPreferenceClickListener(this);
     }
@@ -144,19 +145,11 @@ public class GeneralSettingFragment extends BaseSettingFragment implements Color
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        updateTheme();
-    }
-
-    @Override
     public void updateTheme() {
         ((SettingsActivity) getActivity()).refreshToolbarColor();
-        setThemeColor();
-    }
-
-    protected void setThemeColor() {
         ((SettingsActivity) getActivity()).setStatusBarColor();
         updateGeneralCheckBox();
+
+        UiEventBus.instanceOf().post(new ThemeUpdatedEvent());
     }
 }

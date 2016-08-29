@@ -5,6 +5,7 @@ import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.interactor.currency.AddCurrency;
 import com.justplay1.shoppist.interactor.currency.GetCurrencies;
+import com.justplay1.shoppist.interactor.currency.GetCurrency;
 import com.justplay1.shoppist.interactor.currency.SoftDeleteCurrency;
 import com.justplay1.shoppist.interactor.currency.UpdateCurrency;
 import com.justplay1.shoppist.repository.CurrencyRepository;
@@ -34,6 +35,12 @@ public class CurrencyModule {
     @PerActivity
     GetCurrencies provideGetCurrencies(CurrencyRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new GetCurrencies(repository, threadExecutor, postExecutionThread);
+    }
+
+    @Provides
+    @PerActivity
+    GetCurrency provideGetCurrency(CurrencyRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+        return new GetCurrency(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides

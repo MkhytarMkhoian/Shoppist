@@ -81,7 +81,7 @@ public class ListItemModel extends BaseModel {
     }
 
     public boolean isCategoryEmpty() {
-        return category == null || category.getId() == null || category.getName() == null || !category.isEnable();
+        return category == null || category.getId() == null || category.getName() == null;
     }
 
     public boolean isCurrencyEmpty() {

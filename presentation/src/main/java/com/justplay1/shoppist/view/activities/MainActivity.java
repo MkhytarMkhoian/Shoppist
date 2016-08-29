@@ -79,6 +79,10 @@ public class MainActivity extends BaseListActivity
         mMenuDrawer.addDrawerListener(mToggle);
     }
 
+    public void refreshToolbarColor() {
+        mToolbar.setBackgroundColor(mPreferences.getColorPrimary());
+    }
+
     @Override
     public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {

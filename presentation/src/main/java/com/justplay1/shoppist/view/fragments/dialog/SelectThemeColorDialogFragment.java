@@ -1,6 +1,7 @@
 package com.justplay1.shoppist.view.fragments.dialog;
 
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ProgressBar;
 
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.component.themedialog.ColorPickerPalette;
 import com.justplay1.shoppist.view.component.themedialog.ColorPickerSwatch;
 import com.justplay1.shoppist.utils.ShoppistUtils;
@@ -30,21 +32,17 @@ public class SelectThemeColorDialogFragment extends DialogFragment implements Co
 
     private int[] mColorsPrimary;
     private int[] mColorPrimaryDark;
-    private int mSelectedColor;
+    private @ColorInt int mSelectedColor;
     private int mColumns = 4;
     private int mSize;
 
     private ColorPickerPalette mPalette;
     private ProgressBar mProgress;
     private ColorPickerSwatch.OnColorSelectedListener mListener;
-    private ShoppistPreferences mPreferences;
 
-    public SelectThemeColorDialogFragment() {
-        // Empty constructor required for dialog fragments.
-    }
-
-    public static SelectThemeColorDialogFragment newInstance() {
+    public static SelectThemeColorDialogFragment newInstance(@ColorInt int selectedColor) {
         Bundle args = new Bundle();
+        args.putInt(Const.SELECTED_COLOR, selectedColor);
         SelectThemeColorDialogFragment fragment = new SelectThemeColorDialogFragment();
         fragment.setArguments(args);
         return fragment;
@@ -60,7 +58,10 @@ public class SelectThemeColorDialogFragment extends DialogFragment implements Co
         mSize = ShoppistUtils.isTablet(getActivity()) ? SelectThemeColorDialogFragment.SIZE_LARGE : SelectThemeColorDialogFragment.SIZE_SMALL;
         mColorsPrimary = getResources().getIntArray(R.array.color_theme);
         mColorPrimaryDark = getResources().getIntArray(R.array.color_status_bar);
-        mSelectedColor = mPreferences.getColorPrimary();
+
+        if (getArguments() != null){
+            mSelectedColor = getArguments().getInt(Const.SELECTED_COLOR);
+        }
 
         if (savedInstanceState != null) {
             mColorsPrimary = savedInstanceState.getIntArray(KEY_COLORS);
@@ -86,9 +87,6 @@ public class SelectThemeColorDialogFragment extends DialogFragment implements Co
 
     @Override
     public void onColorSelected(int colorPrimary, int colorPrimaryDark) {
-        mPreferences.setColorPrimary(colorPrimary);
-        mPreferences.setColorPrimaryDark(colorPrimaryDark);
-
         if (mListener != null) {
             mListener.onColorSelected(colorPrimary, colorPrimaryDark);
         }

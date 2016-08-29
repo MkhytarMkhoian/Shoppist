@@ -27,7 +27,6 @@ public class CategoryModelDataMapper {
             categoryModel.setId(category.getId());
             categoryModel.setName(category.getName());
             categoryModel.setColor(category.getColor());
-            categoryModel.setEnable(category.isEnable());
             categoryModel.setCreateByUser(category.isCreateByUser());
             categoryModel.setServerId(category.getServerId());
             categoryModel.setPosition(category.getPosition());
@@ -57,7 +56,6 @@ public class CategoryModelDataMapper {
             entity.setId(category.getId());
             entity.setName(category.getName());
             entity.setColor(category.getColor());
-            entity.setEnable(category.isEnable());
             entity.setCreateByUser(category.isCreateByUser());
             entity.setServerId(category.getServerId());
             entity.setPosition(category.getPosition());

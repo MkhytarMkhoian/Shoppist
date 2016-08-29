@@ -91,6 +91,7 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView> {
     }
 
     public void loadData() {
+        showLoading();
         mSubscriptions.add(mGetCategories.get()
                 .map(mDataMapper::transformToViewModel)
                 .map(categoryModels -> {
@@ -104,7 +105,14 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView> {
                 .subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
                     @Override
                     public void onNext(List<CategoryViewModel> categoryViewModels) {
+                        hideLoading();
                         showData(categoryViewModels);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        hideLoading();
+                        e.printStackTrace();
                     }
                 }));
     }
@@ -124,6 +132,18 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView> {
     private void openAddCategoryScreen(CategoryViewModel data) {
         if (isViewAttached()) {
             getView().openAddCategoryScreen(data);
+        }
+    }
+
+    private void showLoading() {
+        if (isViewAttached()) {
+            getView().showLoading();
+        }
+    }
+
+    private void hideLoading() {
+        if (isViewAttached()) {
+            getView().hideLoading();
         }
     }
 

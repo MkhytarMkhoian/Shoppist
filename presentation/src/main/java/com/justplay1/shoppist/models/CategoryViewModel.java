@@ -12,14 +12,12 @@ public class CategoryViewModel extends BaseViewModel {
     public static final String NO_CATEGORY_ID = "1";
 
     private int color;
-    private boolean isEnable;
     private boolean isChecked;
     private boolean isCreateByUser;
     private int position = -1;
 
     public CategoryViewModel() {
         color = Color.DKGRAY;
-        isEnable = true;
         timestamp = 0;
     }
 
@@ -28,7 +26,6 @@ public class CategoryViewModel extends BaseViewModel {
         setId(category.getId());
         setName(category.getName());
         setColor(category.getColor());
-        setEnable(category.isEnable());
         setCreateByUser(category.isCreateByUser());
         setServerId(category.getServerId());
         setPosition(category.getPosition());
@@ -41,7 +38,6 @@ public class CategoryViewModel extends BaseViewModel {
         this();
         name = parcel.readString();
         color = parcel.readInt();
-        isEnable = parcel.readByte() != 0;
         isChecked = parcel.readByte() != 0;
         id = parcel.readString();
         isCreateByUser = parcel.readByte() != 0;
@@ -68,14 +64,6 @@ public class CategoryViewModel extends BaseViewModel {
 
     public void setColor(int color) {
         this.color = color;
-    }
-
-    public boolean isEnable() {
-        return isEnable;
-    }
-
-    public void setEnable(boolean isEnable) {
-        this.isEnable = isEnable;
     }
 
     public boolean isCreateByUser() {
@@ -109,7 +97,6 @@ public class CategoryViewModel extends BaseViewModel {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeInt(color);
-        dest.writeByte((byte) (isEnable ? 1 : 0));
         dest.writeByte((byte) (isChecked ? 1 : 0));
         dest.writeString(id);
         dest.writeByte((byte) (isCreateByUser ? 1 : 0));
@@ -141,10 +128,5 @@ public class CategoryViewModel extends BaseViewModel {
     @Override
     public boolean isChecked() {
         return isChecked;
-    }
-
-    @Override
-    public int getItemType() {
-        return ItemType.LIST_ITEM;
     }
 }

@@ -5,6 +5,7 @@ import android.preference.PreferenceFragment;
 import android.support.annotation.XmlRes;
 
 import com.jenzz.materialpreference.Preference;
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.preferences.ShoppistPreferences;
 import com.justplay1.shoppist.view.component.CustomProgressDialog;
@@ -34,7 +35,7 @@ public abstract class BaseSettingFragment extends PreferenceFragment implements 
      * Inject the dependencies
      */
     protected void injectDependencies() {
-
+        App.get().getAppComponent().inject(this);
     }
 
     protected abstract

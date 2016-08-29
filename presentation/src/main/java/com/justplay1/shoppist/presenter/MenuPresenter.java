@@ -29,7 +29,7 @@ public class MenuPresenter extends BaseRxPresenter<MenuView> {
 
     public void init() {
 //        setAccount();
-        getNewNotificationCount();
+//        getNewNotificationCount();
     }
 
     private void getNewNotificationCount() {

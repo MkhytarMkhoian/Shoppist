@@ -8,12 +8,10 @@ public class CategoryModel extends BaseModel {
     public static final String NO_CATEGORY_ID = "1";
 
     private int color;
-    private boolean isEnable;
     private boolean isCreateByUser;
     private int position = -1;
 
     public CategoryModel() {
-        isEnable = true;
     }
 
     public CategoryModel(CategoryModel category) {
@@ -21,7 +19,6 @@ public class CategoryModel extends BaseModel {
         setId(category.getId());
         setName(category.getName());
         setColor(category.getColor());
-        setEnable(category.isEnable());
         setCreateByUser(category.isCreateByUser());
         setServerId(category.getServerId());
         setPosition(category.getPosition());
@@ -44,14 +41,6 @@ public class CategoryModel extends BaseModel {
 
     public void setColor(int color) {
         this.color = color;
-    }
-
-    public boolean isEnable() {
-        return isEnable;
-    }
-
-    public void setEnable(boolean isEnable) {
-        this.isEnable = isEnable;
     }
 
     public boolean isCreateByUser() {

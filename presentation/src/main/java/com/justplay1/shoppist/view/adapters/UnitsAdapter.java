@@ -12,7 +12,6 @@ import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.models.ItemType;
 import com.justplay1.shoppist.models.UnitViewModel;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
@@ -37,7 +36,7 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
         View view;
         switch (viewType) {
             case ItemType.LIST_ITEM:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_currency_item, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_currency, parent, false);
                 return new UnitItemViewHolder(view, mItemClickListener);
         }
         return null;

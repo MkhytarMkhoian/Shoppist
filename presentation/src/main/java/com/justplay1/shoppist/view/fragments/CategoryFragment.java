@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
@@ -31,7 +32,6 @@ import com.justplay1.shoppist.view.CategoryView;
 import com.justplay1.shoppist.view.adapters.CategoriesAdapter;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
-import com.justplay1.shoppist.view.component.search.FloatingSearchView;
 
 import java.util.Collection;
 import java.util.List;
@@ -51,7 +51,7 @@ public class CategoryFragment extends BaseListFragment
     private FloatingActionButton mActionButton;
     private RecyclerViewDragDropManager mRecyclerViewDragDropManager;
     private CategoriesAdapter mAdapter;
-    private FloatingSearchView.RecyclerView.Adapter mWrappedAdapter;
+    private RecyclerView.Adapter mWrappedAdapter;
     private CategoryFragmentListener mListener;
 
     public static CategoryFragment newInstance() {
@@ -107,7 +107,7 @@ public class CategoryFragment extends BaseListFragment
 
     @Override
     protected void initAdapter() {
-        mAdapter = new CategoriesAdapter(getContext(), mActionModeOpenCloseListener, mRecyclerView);
+        mAdapter = new CategoriesAdapter(getContext(), mActionModeOpenCloseListener, mRecyclerView, mPreferences);
         mAdapter.setClickListener(this);
     }
 
@@ -170,7 +170,7 @@ public class CategoryFragment extends BaseListFragment
     public void onPause() {
         mRecyclerViewDragDropManager.cancelDrag();
         super.onPause();
-        mPresenter.savePosition(mAdapter.getItems());
+        mPresenter.savePosition(mAdapter.getItemsWithoutHeaders());
     }
 
     @Override

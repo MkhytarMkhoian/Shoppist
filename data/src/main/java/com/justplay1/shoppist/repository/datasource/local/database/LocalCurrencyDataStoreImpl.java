@@ -77,7 +77,8 @@ public class LocalCurrencyDataStoreImpl extends BaseLocalDataStore<CurrencyDAO> 
 
     @Override
     public Observable<CurrencyDAO> getItem(String id) {
-        return null;
+        return db.createQuery(CurrencyDAO.TABLE, CURRENCY_QUERY(CurrencyDAO.WHERE_STRING), id)
+                .mapToOne(CurrencyDAO.MAPPER::call);
     }
 
     @Override

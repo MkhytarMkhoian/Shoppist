@@ -48,13 +48,13 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
 
     @Override
     public BaseHeaderHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_list_header, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_header, parent, false);
         return new HeaderViewHolder(view, mHeaderClickListener);
     }
 
     @Override
     public BaseDraggableItemViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_shopping_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shopping_list, parent, false);
         ListViewHolder holder = new ListViewHolder(view, mItemClickListener);
         holder.setColor(mPreferences.getColorPrimaryDark());
         return holder;

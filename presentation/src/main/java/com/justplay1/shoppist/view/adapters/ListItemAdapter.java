@@ -88,10 +88,10 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
         View view;
         switch (viewType) {
             case ItemType.HEADER_ITEM:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_list_header, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_header, parent, false);
                 return new HeaderViewHolder(view, mHeaderClickListener);
             case ItemType.CART_HEADER:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_list_header, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_header, parent, false);
                 CartViewHolder holder = new CartViewHolder(view, mHeaderClickListener);
                 holder.setColor(mPreferences.getColorPrimary());
                 return holder;
@@ -101,7 +101,7 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
 
     @Override
     public BaseDraggableSwipeableItemViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_shopping_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shopping_list, parent, false);
         return new ListItemViewHolder(view, mItemClickListener);
     }
 

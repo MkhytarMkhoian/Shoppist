@@ -18,7 +18,6 @@ import com.justplay1.shoppist.di.modules.ActivityModule;
 import com.justplay1.shoppist.presenter.MenuPresenter;
 import com.justplay1.shoppist.view.MenuView;
 import com.justplay1.shoppist.view.activities.SettingsActivity;
-import com.parse.ParseUser;
 
 import javax.inject.Inject;
 
@@ -86,7 +85,7 @@ public class MenuFragment extends BaseFragment implements NavigationView.OnNavig
         mNavigationView = (NavigationView) view.findViewById(R.id.drawer_menu);
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        View header = LayoutInflater.from(getContext()).inflate(R.layout.drawer_header, null);
+        View header = LayoutInflater.from(getContext()).inflate(R.layout.menu_header, null);
         mNavigationView.addHeaderView(header);
         mNavigationView.getHeaderView(0).setOnClickListener(v -> mPresenter.onHeaderClick());
     }

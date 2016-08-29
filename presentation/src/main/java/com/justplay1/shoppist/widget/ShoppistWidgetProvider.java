@@ -149,7 +149,7 @@ public class ShoppistWidgetProvider extends AppWidgetProvider {
     }
 
     static void setHeader(RemoteViews rv, Context context, int appWidgetId, SharedPreferences sp) {
-//        rv.setInt(R.id.toolbar, "setBackgroundColor", ShoppistPreferences.getColorPrimary());
+//        rv.setInt(R.id.view_toolbar, "setBackgroundColor", ShoppistPreferences.getColorPrimary());
 
         Intent updIntent = new Intent(context, SelectListDialogActivity.class);
         updIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);

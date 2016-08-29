@@ -80,13 +80,13 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
 
     @Override
     public GoodsViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_product_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product, parent, false);
         return new GoodsViewHolder(view, mItemClickListener);
     }
 
     @Override
     public BaseHeaderHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_list_header, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_header, parent, false);
         return new HeaderViewHolder(view, mHeaderClickListener);
     }
 
