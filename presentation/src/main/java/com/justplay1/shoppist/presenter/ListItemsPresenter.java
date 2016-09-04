@@ -218,14 +218,6 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         strikeOut(items, true);
     }
 
-    public void onEditItemClick() {
-
-    }
-
-    public void onDeleteCheckedItemsClick() {
-        showDeletingAnimation();
-    }
-
     public void deleteItems(Collection<ListItemViewModel> data) {
         mSubscriptions.add(Observable.fromCallable(() -> mListItemsModelDataMapper.transform(data))
                 .flatMap(listItemModels -> {

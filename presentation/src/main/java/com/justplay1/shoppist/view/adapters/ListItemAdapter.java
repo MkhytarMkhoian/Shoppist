@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.models.CurrencyViewModel;
@@ -30,7 +29,7 @@ import com.justplay1.shoppist.utils.ExpandUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.utils.ViewUtils;
 import com.justplay1.shoppist.view.component.ExpandIndicator;
-import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
+import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseDraggableSwipeableItemViewHolder;
@@ -46,7 +45,7 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
 
     private NoteClickListener mNoteClickListener;
 
-    public ListItemAdapter(Context context, ActionModeOpenCloseListener listener,
+    public ListItemAdapter(Context context, ActionModeInteractionListener listener,
                            RecyclerView recyclerView, ShoppistPreferences preferences) {
         super(context, listener, recyclerView, preferences);
     }
@@ -101,7 +100,7 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
 
     @Override
     public BaseDraggableSwipeableItemViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shopping_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shopping_list_item, parent, false);
         return new ListItemViewHolder(view, mItemClickListener);
     }
 
@@ -233,9 +232,8 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
         }
 
         holder.selectBox.setNormalStateColor(normalStateColor);
-        holder.selectBox.setHolder(holder);
         holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
-        holder.selectBox.setEventListener(this);
+        holder.selectBox.setEventListener(isChecked -> onCheckItem(item, isChecked));
         holder.selectBox.refresh(item.isChecked());
 
         DraggableUtils.clearSelector(holder, holder.container);

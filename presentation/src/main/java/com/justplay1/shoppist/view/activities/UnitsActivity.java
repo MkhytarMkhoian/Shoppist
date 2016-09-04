@@ -86,4 +86,10 @@ public class UnitsActivity extends SingleListFragmentActivity<UnitFragment> impl
         delete.setVisible(mFragment.isDeleteButtonEnable());
         return true;
     }
+
+    @Override
+    public void onDestroyActionMode(ActionMode actionMode) {
+        super.onDestroyActionMode(actionMode);
+        mFragment.onUnCheckAllItemsClick();
+    }
 }

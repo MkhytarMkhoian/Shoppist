@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.ListViewModel;
@@ -196,55 +197,132 @@ public class MainActivity extends BaseListActivity
         if (edit != null) {
             edit.setVisible(mListFragment.isEditButtonEnable());
         }
-
         MenuItem checkAll = menu.findItem(R.id.menu_check_all);
         checkAll.setEnabled(mListFragment.isCheckAllButtonEnable());
         return true;
     }
 
     @Override
+    public void onDestroyActionMode(ActionMode actionMode) {
+        super.onDestroyActionMode(actionMode);
+        mListFragment.onUnCheckAllItemsClick();
+    }
+
+    @Override
     public void onCategoryClick() {
-        mNavigator.navigateToCategoriesScreen(this);
+        mMenuDrawer.addDrawerListener(new DrawerListener() {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                mNavigator.navigateToCategoriesScreen(MainActivity.this);
+                mMenuDrawer.removeDrawerListener(this);
+            }
+        });
+        mMenuDrawer.closeDrawers();
     }
 
     @Override
     public void onCurrencyClick() {
-        mNavigator.navigateToCurrencyScreen(this);
+        mMenuDrawer.addDrawerListener(new DrawerListener() {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                mNavigator.navigateToCurrencyScreen(MainActivity.this);
+                mMenuDrawer.removeDrawerListener(this);
+            }
+        });
+        mMenuDrawer.closeDrawers();
     }
 
     @Override
     public void onNotificationClick() {
-        mNavigator.navigateToNotificationsScreen(this);
+        mMenuDrawer.addDrawerListener(new DrawerListener() {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                mNavigator.navigateToNotificationsScreen(MainActivity.this);
+                mMenuDrawer.removeDrawerListener(this);
+            }
+        });
+        mMenuDrawer.closeDrawers();
     }
 
     @Override
     public void onFeedbackClick() {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.app_email)});
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) +
-                " Version: " + ShoppistUtils.getAppVersion(this));
-        sendIntent.setType("message/rfc822");
-        startActivity(Intent.createChooser(sendIntent, getString(R.string.send_mail_using)));
+        mMenuDrawer.addDrawerListener(new DrawerListener() {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.app_email)});
+                sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) +
+                        " Version: " + ShoppistUtils.getAppVersion(MainActivity.this));
+                sendIntent.setType("message/rfc822");
+                startActivity(Intent.createChooser(sendIntent, getString(R.string.send_mail_using)));
+                mMenuDrawer.removeDrawerListener(this);
+            }
+        });
+        mMenuDrawer.closeDrawers();
     }
 
     @Override
     public void onGoodsClick() {
-        mNavigator.navigateToGoodsScreen(this);
+        mMenuDrawer.addDrawerListener(new DrawerListener() {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                mNavigator.navigateToGoodsScreen(MainActivity.this);
+                mMenuDrawer.removeDrawerListener(this);
+            }
+        });
+        mMenuDrawer.closeDrawers();
     }
 
     @Override
     public void onUnitsClick() {
-        mNavigator.navigateToUnitsScreen(this);
+        mMenuDrawer.addDrawerListener(new DrawerListener() {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                mNavigator.navigateToUnitsScreen(MainActivity.this);
+                mMenuDrawer.removeDrawerListener(this);
+            }
+        });
+        mMenuDrawer.closeDrawers();
     }
 
     @Override
     public void onSettingClick(int settingId) {
-        mNavigator.navigateToSettingScreen(this, settingId);
+        mMenuDrawer.addDrawerListener(new DrawerListener() {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                mNavigator.navigateToSettingScreen(MainActivity.this, settingId);
+                mMenuDrawer.removeDrawerListener(this);
+            }
+        });
+        mMenuDrawer.closeDrawers();
     }
 
     @Override
     public void onLoginClick() {
         mNavigator.navigateToSignInScreen(this);
+    }
+
+    private static abstract class DrawerListener implements DrawerLayout.DrawerListener {
+
+        @Override
+        public void onDrawerSlide(View drawerView, float slideOffset) {
+
+        }
+
+        @Override
+        public void onDrawerOpened(View drawerView) {
+
+        }
+
+        @Override
+        public void onDrawerClosed(View drawerView) {
+
+        }
+
+        @Override
+        public void onDrawerStateChanged(int newState) {
+
+        }
     }
 }

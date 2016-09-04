@@ -16,10 +16,8 @@ import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ItemType;
 import com.justplay1.shoppist.models.Priority;
 import com.justplay1.shoppist.models.SortType;
-import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
-import com.justplay1.shoppist.view.component.animboxes.SelectBoxEventListener;
+import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +27,7 @@ import java.util.List;
  */
 public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends RecyclerView.ViewHolder, CVH extends RecyclerView.ViewHolder>
         extends BaseAdapter<T>
-        implements ExpandableItemAdapter<GVH, CVH>, SelectBoxEventListener {
+        implements ExpandableItemAdapter<GVH, CVH> {
 
     protected List<Pair<HeaderViewModel, List<T>>> mData;
     protected ShoppistRecyclerView.OnHeaderClickListener mHeaderClickListener;
@@ -54,7 +52,7 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
     @SortType
     int mSort = SortType.SORT_BY_NAME;
 
-    public BaseExpandableAdapter(Context context, ActionModeOpenCloseListener listener,
+    public BaseExpandableAdapter(Context context, ActionModeInteractionListener listener,
                                  RecyclerView recyclerView) {
         super(context, listener, recyclerView);
 
@@ -125,14 +123,6 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
         }
         notifyItemRangeChanged(mLinearLayoutManager.findLastVisibleItemPosition() + 1,
                 (getGroupCount() + getChildItemsCount()) - mLinearLayoutManager.findLastVisibleItemPosition());
-    }
-
-    @Override
-    public void onCheck(BaseItemHolder holder) {
-        T item = getChildItem(holder.groupPosition, holder.childPosition);
-        item.setChecked(holder.selectBox.isChecked());
-        addToChecked(item.getId(), item.isChecked());
-        setCount(item.isChecked());
     }
 
     private List<T> getItems(boolean checked) {

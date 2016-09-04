@@ -1,6 +1,7 @@
 package com.justplay1.shoppist.view.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,7 @@ import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.ItemType;
 import com.justplay1.shoppist.utils.ShoppistUtils;
-import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
+import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
@@ -23,7 +24,7 @@ import java.util.Locale;
  */
 public class CurrencyAdapter extends BaseListAdapter<CurrencyViewModel> {
 
-    public CurrencyAdapter(Context context, ActionModeOpenCloseListener listener,
+    public CurrencyAdapter(Context context, ActionModeInteractionListener listener,
                            RecyclerView recyclerView) {
         super(context, listener, recyclerView);
         setHasStableIds(true);
@@ -45,17 +46,15 @@ public class CurrencyAdapter extends BaseListAdapter<CurrencyViewModel> {
         switch (viewHolder.getItemViewType()) {
             case ItemType.LIST_ITEM:
                 CurrencyItemViewHolder holder = (CurrencyItemViewHolder) viewHolder;
-                CurrencyViewModel currency = getItem(position);
-                currency.setChecked(isItemChecked(currency.getId()));
+                CurrencyViewModel item = getItem(position);
+                item.setChecked(isItemChecked(item.getId()));
 
-                holder.name.setText(currency.getName());
+                holder.name.setText(item.getName());
 
-                int normalStateColor = mContext.getResources().getColor(R.color.blue_grey_500);
-                holder.selectBox.setNormalStateColor(normalStateColor);
-                holder.selectBox.setHolder(holder);
-                holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(currency.getName()).toUpperCase(Locale.getDefault()));
-                holder.selectBox.setEventListener(this);
-                holder.selectBox.refresh(currency.isChecked());
+                holder.selectBox.setNormalStateColor(ContextCompat.getColor(mContext, R.color.blue_grey_500));
+                holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
+                holder.selectBox.setEventListener(isChecked -> onCheckItem(item, isChecked));
+                holder.selectBox.refresh(item.isChecked());
                 break;
         }
     }

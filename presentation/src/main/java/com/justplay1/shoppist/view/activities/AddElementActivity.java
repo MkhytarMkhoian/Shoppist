@@ -1,6 +1,5 @@
 package com.justplay1.shoppist.view.activities;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,11 +20,13 @@ import com.justplay1.shoppist.view.fragments.BaseAddElementFragment;
 /**
  * Created by Mkhitar on 15.05.2015.
  */
-public class AddElementActivity extends SingleListFragmentActivity<BaseAddElementFragment>
+public class AddElementActivity extends SingleFragmentActivity<BaseAddElementFragment>
         implements BaseAddElementFragment.AddElementListener, AddListItemFragment.AddListItemListener {
 
     private Toolbar mToolbar;
-    private @AddElementType int mElementType;
+    private
+    @AddElementType
+    int mElementType;
 
     private CategoryViewModel mCategoryModel;
     private ListViewModel mListModel;
@@ -90,14 +91,6 @@ public class AddElementActivity extends SingleListFragmentActivity<BaseAddElemen
     @Override
     public void openAddCategoryScreen(CategoryViewModel category) {
         mNavigator.navigateToAddCategoryScreen(this, category);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-        }
     }
 
     @Override

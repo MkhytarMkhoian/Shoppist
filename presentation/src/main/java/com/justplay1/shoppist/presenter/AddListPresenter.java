@@ -94,10 +94,6 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
         mColor = color;
     }
 
-    public void startVoiceRecognition() {
-
-    }
-
     public void onColorButtonClick() {
         showSelectColorDialog();
     }

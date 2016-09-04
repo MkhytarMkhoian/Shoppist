@@ -199,6 +199,7 @@ public class AddUnitPresenter extends BaseRxPresenter<AddUnitView> {
 
         @Override
         public void onError(Throwable e) {
+            e.printStackTrace();
             hideLoading();
         }
 

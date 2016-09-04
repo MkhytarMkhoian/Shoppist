@@ -4,12 +4,13 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Checkable;
 
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.utils.AnimationResultListener;
-import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
+import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
@@ -28,20 +29,20 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
     protected Context mContext;
     protected boolean isManualSortModeEnable;
     protected ShoppistRecyclerView.OnItemClickListener mItemClickListener;
-    protected ActionModeOpenCloseListener mActionModeOpenCloseListener;
+    protected ActionModeInteractionListener mActionModeInteractionListener;
 
     protected RecyclerView mRecyclerView;
     protected boolean deleteState = false;
     protected int mCheckedCount = 0;
     protected int mPreviousScrollY = 0;
     protected LinearLayoutManager mLinearLayoutManager;
-    protected List<BaseItemHolder> mVisibleItems = new ArrayList<>();
+    protected List<Checkable> mVisibleItems = new ArrayList<>();
     protected Map<String, Boolean> mCheckedItems = new HashMap<>();
 
-    public BaseAdapter(Context context, ActionModeOpenCloseListener listener,
+    public BaseAdapter(Context context, ActionModeInteractionListener listener,
                        RecyclerView recyclerView) {
         this.mContext = context;
-        this.mActionModeOpenCloseListener = listener;
+        this.mActionModeInteractionListener = listener;
         this.mRecyclerView = recyclerView;
         mLinearLayoutManager = ((LinearLayoutManager) mRecyclerView.getLayoutManager());
     }
@@ -71,8 +72,8 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
             if (item == null) continue;
 
             holder = mRecyclerView.getChildViewHolder(item);
-            if (holder instanceof BaseItemHolder) {
-                mVisibleItems.add((BaseItemHolder) holder);
+            if (holder instanceof Checkable) {
+                mVisibleItems.add((Checkable) holder);
             }
         }
     }
@@ -105,27 +106,28 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
     public void unCheckAllItems(boolean animation) {
         if (deleteState) return;
 
-        mActionModeOpenCloseListener.closeActionMode();
+        mActionModeInteractionListener.closeActionMode();
         findVisibleItems();
-        for (int i = 0; i < mVisibleItems.size(); i++) {
-            if (mVisibleItems.get(i).selectBox.isChecked()) {
-                mVisibleItems.get(i).selectBox.setChecked(false, animation);
+        for (Checkable checkable : mVisibleItems) {
+            if (!checkable.isChecked()) {
+                checkable.setChecked(false);
             }
         }
         checkInvisibleItems(false);
         refreshInvisibleItems();
+        clearCheckedItems();
     }
 
     public void checkAllItems() {
         findVisibleItems();
-        for (BaseItemHolder holder : mVisibleItems) {
-            if (!holder.selectBox.isChecked()) {
-                holder.selectBox.setChecked(true, true);
+        for (Checkable checkable : mVisibleItems) {
+            if (!checkable.isChecked()) {
+                checkable.setChecked(true);
             }
         }
         checkInvisibleItems(true);
         mCheckedCount = getCheckedItems().size();
-        mActionModeOpenCloseListener.openActionMode(mCheckedCount);
+        mActionModeInteractionListener.openActionMode(mCheckedCount);
         refreshInvisibleItems();
     }
 
@@ -158,7 +160,6 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
     }
 
     public void clearCheckedItems() {
-        mVisibleItems.clear();
         mCheckedItems.clear();
     }
 
@@ -169,8 +170,13 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         return true;
     }
 
-    // Set selected count
-    public void setCount(final boolean isChecked) {
+    protected void onCheckItem(T item, boolean isChecked) {
+        item.setChecked(isChecked);
+        addToChecked(item.getId(), item.isChecked());
+        updateCount(item.isChecked());
+    }
+
+    public void updateCount(final boolean isChecked) {
         if (isChecked) {
             if (mCheckedCount < getItemCount()) {
                 mCheckedCount++;
@@ -178,13 +184,22 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         } else {
             if (mCheckedCount != 0) {
                 mCheckedCount--;
+                if (mCheckedCount == 0 && mActionModeInteractionListener.isActionModeShowing()) {
+                    mActionModeInteractionListener.closeActionMode();
+                    clearCheckedItems();
+                    return;
+                }
             }
         }
-        mActionModeOpenCloseListener.updateActionMode(mCheckedCount);
+        if (!mActionModeInteractionListener.isActionModeShowing()) {
+            mActionModeInteractionListener.openActionMode(mCheckedCount);
+        } else {
+            mActionModeInteractionListener.updateActionMode(mCheckedCount);
+        }
     }
 
     protected void finishDelete() {
-        mActionModeOpenCloseListener.closeActionMode();
+        mActionModeInteractionListener.closeActionMode();
         mRecyclerView.setEnabled(true);
         deleteState = false;
     }
@@ -214,17 +229,6 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
 
     public void setClickListener(ShoppistRecyclerView.OnItemClickListener clickListener) {
         this.mItemClickListener = clickListener;
-    }
-
-    public void onLongClick(View listItem) {
-        SelectBoxView selectBox = (SelectBoxView) listItem.findViewById(R.id.select_box);
-        if (selectBox == null) return;
-
-        if (selectBox.isChecked()) {
-            selectBox.setChecked(false, true);
-        } else {
-            selectBox.setChecked(true, true);
-        }
     }
 
     public void onMovedToScrapHeap(RecyclerView.ViewHolder holder) {

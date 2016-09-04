@@ -101,7 +101,7 @@ public class CurrencyFragment extends BaseListFragment
 
     @Override
     protected void initAdapter() {
-        mAdapter = new CurrencyAdapter(getContext(), mActionModeOpenCloseListener, mRecyclerView);
+        mAdapter = new CurrencyAdapter(getContext(), mActionModeInteractionListener, mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
     }
@@ -146,7 +146,7 @@ public class CurrencyFragment extends BaseListFragment
 
     @Override
     public boolean onItemLongClick(BaseItemHolder holder, int position, long id) {
-        mPresenter.onListItemLongClick(mAdapter.getItem(position));
+        holder.toggle();
         return true;
     }
 

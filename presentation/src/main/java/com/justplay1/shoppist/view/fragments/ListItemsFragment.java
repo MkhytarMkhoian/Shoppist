@@ -120,7 +120,7 @@ public class ListItemsFragment extends BaseEDSListFragment
 
     @Override
     protected void initAdapter() {
-        mAdapter = new ListItemAdapter(getContext(), mActionModeOpenCloseListener, mRecyclerView, mPreferences);
+        mAdapter = new ListItemAdapter(getContext(), mActionModeInteractionListener, mRecyclerView, mPreferences);
         mAdapter.setClickListener(this);
         mAdapter.setHeaderClickListener(this);
         mAdapter.setSwipeEventListener(this);
@@ -160,6 +160,7 @@ public class ListItemsFragment extends BaseEDSListFragment
     public void showData(List<Pair<HeaderViewModel, List<ListItemViewModel>>> data) {
         mAdapter.setData(data);
         mAdapter.notifyDataSetChanged();
+        onExpandAll();
     }
 
     @Override
@@ -200,7 +201,7 @@ public class ListItemsFragment extends BaseEDSListFragment
     @Override
     public boolean onItemLongClick(BaseItemHolder holder, int position, long id) {
         if (mPreferences.getLongItemClickAction() == 0) {
-            mAdapter.onCheck(holder);
+            holder.toggle();
         } else {
             mPresenter.onListItemLongClick(mAdapter.getChildItem(holder.groupPosition, holder.childPosition));
         }
@@ -400,7 +401,7 @@ public class ListItemsFragment extends BaseEDSListFragment
     private void unCheckItem(ListItemViewModel item) {
         if (item.isChecked()) {
             mAdapter.deleteItemFromChecked(item.getId());
-            mAdapter.setCount(false);
+            mAdapter.updateCount(false);
         }
     }
 

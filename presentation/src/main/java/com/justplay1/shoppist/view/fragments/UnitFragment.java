@@ -70,7 +70,7 @@ public class UnitFragment extends BaseListFragment
 
     @Override
     protected void initAdapter() {
-        mAdapter = new UnitsAdapter(getContext(), mActionModeOpenCloseListener, mRecyclerView);
+        mAdapter = new UnitsAdapter(getContext(), mActionModeInteractionListener, mRecyclerView);
         mAdapter.setClickListener(this);
     }
 
@@ -111,7 +111,7 @@ public class UnitFragment extends BaseListFragment
 
     @Override
     public boolean onItemLongClick(BaseItemHolder holder, int position, long id) {
-        mPresenter.onListItemLongClick(mAdapter.getItem(position));
+        holder.toggle();
         return true;
     }
 

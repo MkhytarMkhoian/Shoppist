@@ -33,7 +33,7 @@ public class SearchActivity extends SingleFragmentActivity<SearchFragment> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_single_fragment);
+        setContentView(R.layout.layout_fragment_container);
         setStatusBarColor(FloatingSearchView.DEFAULT_BACKGROUND_COLOR);
 
         if (getIntent() != null) {

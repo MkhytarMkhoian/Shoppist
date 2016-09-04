@@ -159,6 +159,12 @@ public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragme
     }
 
     @Override
+    public void onDestroyActionMode(ActionMode actionMode) {
+        super.onDestroyActionMode(actionMode);
+        mFragment.onUnCheckAllItemsClick();
+    }
+
+    @Override
     public void setTitle(String title) {
         mToolbar.setTitle(title);
     }

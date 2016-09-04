@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
@@ -17,7 +16,7 @@ import com.justplay1.shoppist.preferences.ShoppistPreferences;
 import com.justplay1.shoppist.utils.ExpandUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.ExpandIndicator;
-import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
+import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
@@ -32,7 +31,7 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
 
     private ShoppistPreferences mPreferences;
 
-    public GoodsAdapter(Context context, ActionModeOpenCloseListener listener,
+    public GoodsAdapter(Context context, ActionModeInteractionListener listener,
                         RecyclerView recyclerView, ShoppistPreferences preferences) {
         super(context, listener, recyclerView);
         setHasStableIds(true);
@@ -56,26 +55,25 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
 
     @Override
     public void onBindChildViewHolder(GoodsViewHolder holder, int groupPosition, int childPosition, int viewType) {
-        ProductViewModel product = getChildItem(groupPosition, childPosition);
-        product.setChecked(isItemChecked(product.getId()));
+        ProductViewModel item = getChildItem(groupPosition, childPosition);
+        item.setChecked(isItemChecked(item.getId()));
 
         holder.childPosition = childPosition;
         holder.groupPosition = groupPosition;
 
-        holder.name.setText(product.getName());
+        holder.name.setText(item.getName());
 
         if (mSort == SortType.SORT_BY_CATEGORIES) {
             holder.categoryName.setVisibility(View.GONE);
         } else {
             holder.categoryName.setVisibility(View.VISIBLE);
-            holder.categoryName.setText(product.getCategory().getName());
+            holder.categoryName.setText(item.getCategory().getName());
         }
 
-        holder.selectBox.setNormalStateColor(product.getCategory().getColor());
-        holder.selectBox.setHolder(holder);
-        holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(product.getName()).toUpperCase(Locale.getDefault()));
-        holder.selectBox.setEventListener(this);
-        holder.selectBox.refresh(product.isChecked());
+        holder.selectBox.setNormalStateColor(item.getCategory().getColor());
+        holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
+        holder.selectBox.setEventListener(isChecked -> onCheckItem(item, isChecked));
+        holder.selectBox.refresh(item.isChecked());
     }
 
     @Override

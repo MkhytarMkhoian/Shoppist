@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableDraggableItemAdapter;
 import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.models.HeaderViewModel;
-import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
+import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public abstract class BaseExpandableDraggableAdapter<T extends BaseViewModel, GV
         extends BaseExpandableAdapter<T, GVH, CVH>
         implements ExpandableDraggableItemAdapter<GVH, CVH> {
 
-    public BaseExpandableDraggableAdapter(Context context, ActionModeOpenCloseListener listener,
+    public BaseExpandableDraggableAdapter(Context context, ActionModeInteractionListener listener,
                                           RecyclerView recyclerView) {
         super(context, listener, recyclerView);
     }

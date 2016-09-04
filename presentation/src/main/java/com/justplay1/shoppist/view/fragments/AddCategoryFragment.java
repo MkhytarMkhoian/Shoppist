@@ -1,6 +1,5 @@
 package com.justplay1.shoppist.view.fragments;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
@@ -129,9 +128,6 @@ public class AddCategoryFragment extends BaseAddElementFragment
                 break;
             case R.id.done_button:
                 mPresenter.onDoneButtonClick(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
-                break;
-            case R.id.menu_voice_search:
-                mPresenter.startVoiceRecognition();
                 break;
         }
     }

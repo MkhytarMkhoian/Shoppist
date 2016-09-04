@@ -22,45 +22,30 @@
             app:columnCount="4"
             app:orientation="horizontal">
 
-            <LinearLayout
+            <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+                android:id="@+id/name_edit"
+                fontPath="fonts/RobotoRegular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:completionThreshold="1"
+                android:hint="@string/name"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences"
+                android:maxLines="1"
+                android:singleLine="true"
                 app:layout_columnSpan="4"
                 app:layout_row="0"
-                app:layout_rowSpan="1">
-
-                <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
-                    android:id="@+id/name_edit"
-                    fontPath="fonts/RobotoRegular.ttf"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:completionThreshold="1"
-                    android:hint="@string/name"
-                    android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    app:met_floatingLabel="highlight"
-                    app:met_floatingLabelText="@string/name"
-                    app:met_maxCharacters="40"
-                    app:met_primaryColor="?colorAccent" />
-
-                <ImageButton
-                    android:id="@+id/menu_voice_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/list_view_selector"
-                    android:src="@drawable/ic_mic" />
-            </LinearLayout>
+                app:layout_rowSpan="1"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="@string/name"
+                app:met_maxCharacters="40"
+                app:met_primaryColor="?colorAccent" />
 
             <TextView
-                fontPath="fonts/RobotoRegular.ttf"
                 android:id="@+id/category_label"
+                fontPath="fonts/RobotoRegular.ttf"
                 android:text="@string/category"
                 android:textSize="14sp"
                 app:layout_columnSpan="4"
@@ -76,8 +61,8 @@
                 app:layout_rowSpan="1" />
 
             <TextView
-                fontPath="fonts/RobotoRegular.ttf"
                 android:id="@+id/priority_label"
+                fontPath="fonts/RobotoRegular.ttf"
                 android:layout_marginTop="10dp"
                 android:text="@string/priority"
                 android:textSize="14sp"
@@ -107,8 +92,8 @@
                 app:layout_rowSpan="1" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                fontPath="fonts/RobotoRegular.ttf"
                 android:id="@+id/quantity_edit"
+                fontPath="fonts/RobotoRegular.ttf"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -143,8 +128,8 @@
                 app:layout_rowSpan="1" />
 
             <TextView
-                fontPath="fonts/RobotoRegular.ttf"
                 android:id="@+id/unit_label"
+                fontPath="fonts/RobotoRegular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/unit"
@@ -177,8 +162,8 @@
                 app:layout_rowSpan="1" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                fontPath="fonts/RobotoRegular.ttf"
                 android:id="@+id/price_edit"
+                fontPath="fonts/RobotoRegular.ttf"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -211,8 +196,8 @@
                 app:layout_rowSpan="1" />
 
             <TextView
-                fontPath="fonts/RobotoRegular.ttf"
                 android:id="@+id/currency_label"
+                fontPath="fonts/RobotoRegular.ttf"
                 android:text="@string/currency"
                 android:textSize="14sp"
                 app:layout_columnSpan="4"
@@ -228,8 +213,8 @@
                 app:layout_rowSpan="1" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                fontPath="fonts/RobotoRegular.ttf"
                 android:id="@+id/description_edit"
+                fontPath="fonts/RobotoRegular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/note"

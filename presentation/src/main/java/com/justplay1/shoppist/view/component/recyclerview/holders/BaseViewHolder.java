@@ -7,7 +7,8 @@ import android.view.View;
 /**
  * Created by Mkhytar on 25.08.2015.
  */
-public abstract class BaseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+public abstract class BaseViewHolder extends RecyclerView.ViewHolder
+        implements View.OnClickListener, View.OnLongClickListener {
 
     public BaseViewHolder(View itemView) {
         super(itemView);

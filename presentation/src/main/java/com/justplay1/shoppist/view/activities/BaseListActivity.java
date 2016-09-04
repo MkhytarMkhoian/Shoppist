@@ -1,24 +1,27 @@
 package com.justplay1.shoppist.view.activities;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
+import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 
 /**
  * Created by Mkhytar on 28.07.2016.
  */
 public abstract class BaseListActivity extends BaseActivity
-        implements ActionModeOpenCloseListener, ActionMode.Callback {
+        implements ActionModeInteractionListener, ActionMode.Callback {
 
     protected Toolbar mToolbar;
     protected ActionMode mActionMode;
     protected boolean isActionModeShowing;
 
+    @Override
     public boolean isActionModeShowing() {
         return isActionModeShowing;
     }
@@ -41,7 +44,6 @@ public abstract class BaseListActivity extends BaseActivity
 
     @Override
     public void updateActionMode(int count) {
-        // Set action mode title
         if (mActionMode != null) {
             mActionMode.setTitle(String.valueOf(count));
             mActionMode.invalidate();
@@ -74,12 +76,22 @@ public abstract class BaseListActivity extends BaseActivity
 
     @Override
     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-        setStatusBarColor((getResources().getColor(R.color.grey_700)));
-        return true;
+        return false;
     }
 
     @Override
     public void onDestroyActionMode(ActionMode mode) {
+    }
+
+    @Override
+    public void onSupportActionModeStarted(@NonNull ActionMode mode) {
+        super.onSupportActionModeStarted(mode);
+        setStatusBarColor(ContextCompat.getColor(this, R.color.grey_700));
+    }
+
+    @Override
+    public void onSupportActionModeFinished(@NonNull ActionMode mode) {
+        super.onSupportActionModeFinished(mode);
         setStatusBarColor();
     }
 }

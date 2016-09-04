@@ -107,7 +107,7 @@ public class CategoryFragment extends BaseListFragment
 
     @Override
     protected void initAdapter() {
-        mAdapter = new CategoriesAdapter(getContext(), mActionModeOpenCloseListener, mRecyclerView, mPreferences);
+        mAdapter = new CategoriesAdapter(getContext(), mActionModeInteractionListener, mRecyclerView, mPreferences);
         mAdapter.setClickListener(this);
     }
 
@@ -227,7 +227,7 @@ public class CategoryFragment extends BaseListFragment
 
     @Override
     public boolean onItemLongClick(BaseItemHolder holder, int position, long id) {
-        mPresenter.onListItemLongClick(mAdapter.getItem(position));
+        holder.toggle();
         return true;
     }
 
@@ -243,10 +243,6 @@ public class CategoryFragment extends BaseListFragment
 
     public boolean isCheckAllButtonEnable() {
         return !mAdapter.isAllItemsChecked();
-    }
-
-    public void onDestroyActionMode(ActionMode actionMode) {
-        mAdapter.clearCheckedItems();
     }
 
     public void onUnCheckAllItemsClick() {

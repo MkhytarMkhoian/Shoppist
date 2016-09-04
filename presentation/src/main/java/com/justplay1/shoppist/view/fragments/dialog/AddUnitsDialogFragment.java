@@ -2,9 +2,7 @@ package com.justplay1.shoppist.view.fragments.dialog;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;

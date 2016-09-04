@@ -16,7 +16,7 @@ import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.models.SwipeActionType;
 import com.justplay1.shoppist.preferences.ShoppistPreferences;
 import com.justplay1.shoppist.utils.DrawableUtils;
-import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
+import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseDraggableSwipeableItemViewHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
 
@@ -29,7 +29,7 @@ public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH exte
 
     private SwipeEventListener<T> mSwipeEventListener;
 
-    public BaseListItemGroupAdapter(Context context, ActionModeOpenCloseListener listener,
+    public BaseListItemGroupAdapter(Context context, ActionModeInteractionListener listener,
                                     RecyclerView recyclerView, ShoppistPreferences preferences) {
         super(context, listener, recyclerView, preferences);
     }

@@ -67,10 +67,6 @@ public class UnitsPresenter extends BaseRxPresenter<UnitsView> {
         openUnitAddDialog(unit);
     }
 
-    public void onListItemLongClick(UnitViewModel unit) {
-
-    }
-
     private void openUnitAddDialog(UnitViewModel unit) {
         if (isViewAttached()) {
             getView().openUnitAddDialog(unit);

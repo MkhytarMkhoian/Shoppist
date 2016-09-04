@@ -10,7 +10,7 @@ import com.h6ah4i.android.widget.advrecyclerview.expandable.GroupPositionItemDra
 import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.preferences.ShoppistPreferences;
 import com.justplay1.shoppist.utils.ViewUtils;
-import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
+import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseDraggableItemViewHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
 
@@ -22,7 +22,7 @@ public abstract class BaseListGroupAdapter<T extends BaseViewModel, GVH extends 
 
     protected ShoppistPreferences mPreferences;
 
-    public BaseListGroupAdapter(Context context, ActionModeOpenCloseListener listener,
+    public BaseListGroupAdapter(Context context, ActionModeInteractionListener listener,
                                 RecyclerView recyclerView, ShoppistPreferences preferences) {
         super(context, listener, recyclerView);
         setHasStableIds(true);

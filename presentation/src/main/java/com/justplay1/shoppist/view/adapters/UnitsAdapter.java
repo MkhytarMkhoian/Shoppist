@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.models.ItemType;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.utils.ShoppistUtils;
-import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
+import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
+import com.justplay1.shoppist.view.component.animboxes.SelectBoxCheckListener;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
@@ -25,7 +25,7 @@ import java.util.Locale;
  */
 public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
 
-    public UnitsAdapter(Context context, ActionModeOpenCloseListener listener,
+    public UnitsAdapter(Context context, ActionModeInteractionListener listener,
                         RecyclerView recyclerView) {
         super(context, listener, recyclerView);
         setHasStableIds(true);
@@ -47,17 +47,15 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
         switch (viewHolder.getItemViewType()) {
             case ItemType.LIST_ITEM:
                 UnitItemViewHolder holder = (UnitItemViewHolder) viewHolder;
-                UnitViewModel unit = getItem(position);
-                unit.setChecked(isItemChecked(unit.getId()));
+                UnitViewModel item = getItem(position);
+                item.setChecked(isItemChecked(item.getId()));
 
-                holder.name.setText(String.format("%s (%s)", unit.getName(), unit.getShortName()));
-                int normalStateColor = ContextCompat.getColor(mContext, R.color.blue_grey_500);
+                holder.name.setText(String.format("%s (%s)", item.getName(), item.getShortName()));
 
-                holder.selectBox.setNormalStateColor(normalStateColor);
-                holder.selectBox.setHolder(holder);
-                holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(unit.getName()).toUpperCase(Locale.getDefault()));
-                holder.selectBox.setEventListener(this);
-                holder.selectBox.refresh(unit.isChecked());
+                holder.selectBox.setNormalStateColor(ContextCompat.getColor(mContext, R.color.blue_grey_500));
+                holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
+                holder.selectBox.setEventListener(isChecked -> onCheckItem(item, isChecked));
+                holder.selectBox.refresh(item.isChecked());
                 break;
         }
     }

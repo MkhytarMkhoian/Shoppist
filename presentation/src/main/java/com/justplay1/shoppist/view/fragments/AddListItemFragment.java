@@ -140,31 +140,11 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
         super.init(view);
 
         mAutoCompleteTextAdapter = new AutoCompleteTextAdapter(getContext());
-        mAutoCompleteTextAdapter.setListener(product -> showNewGoodsDialog(product));
+        mAutoCompleteTextAdapter.setListener(this::showNewGoodsDialog);
         mNameEdit.setAdapter(mAutoCompleteTextAdapter);
-        mNameEdit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ProductViewModel product = mAutoCompleteTextAdapter.getProduct(mNameEdit.getText().toString());
-                if (product != null) {
-                    mPresenter.onProductSelected(product);
-                    selectUnit(product.getUnit().getId());
-                    selectCategory(product.getUnit().getId());
-                } else {
-                    mPresenter.onProductSelected(null);
-                    selectUnit(UnitViewModel.NO_UNIT_ID);
-                    selectCategory(CategoryViewModel.NO_CATEGORY_ID);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         mNameEdit.setOnItemClickListener((parent, view1, position, id) -> {
-
-
+            ProductViewModel product = mAutoCompleteTextAdapter.getProduct(mNameEdit.getText().toString());
+            mPresenter.onProductClick(product);
         });
 
         mPriceEdit = (MaterialEditText) view.findViewById(R.id.price_edit);
@@ -330,9 +310,6 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
                 mPresenter.setQuantity(mQuantityEdit.getText().toString());
                 mPresenter.onDoneButtonClick(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
                 break;
-            case R.id.menu_voice_search:
-//                mPresenter.startVoiceRecognition();
-                break;
             case R.id.decrement_price_button:
                 mPresenter.onDecrementPriceClick(mPriceEdit.getText().toString());
                 break;
@@ -348,35 +325,21 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
         }
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == Activity.RESULT_OK && data != null) {
-//            if (data.getBooleanExtra(Const.NEW_DATA, false)) {
-//                mPresenter.loadCategories();
-//                data.removeExtra(Const.NEW_DATA);
-//            }
-//        }
-//    }
-
     private void showCurrencyDialog(final CurrencyViewModel editCurrency) {
         FragmentManager fm = getFragmentManager();
         AddCurrencyDialogFragment dialog = AddCurrencyDialogFragment.newInstance(editCurrency);
-        dialog.setCompleteListener(isUpdate -> mPresenter.loadCurrency());
         dialog.show(fm, AddCurrencyDialogFragment.class.getName());
     }
 
     private void showUnitDialog(final UnitViewModel editUnit) {
         FragmentManager fm = getFragmentManager();
         AddUnitsDialogFragment dialog = AddUnitsDialogFragment.newInstance(editUnit);
-        dialog.setCompleteListener(isUpdate -> mPresenter.loadUnits());
         dialog.show(fm, AddUnitsDialogFragment.class.getName());
     }
 
     private void showNewGoodsDialog(final String newProduct) {
         FragmentManager fm = getFragmentManager();
         AddGoodsDialogFragment dialog = AddGoodsDialogFragment.newInstance(newProduct);
-        dialog.setCompleteListener(isUpdate -> mPresenter.loadGoods());
         dialog.show(fm, AddUnitsDialogFragment.class.getName());
     }
 

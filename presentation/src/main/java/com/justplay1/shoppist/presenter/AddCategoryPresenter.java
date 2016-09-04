@@ -74,10 +74,6 @@ public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryVie
         mColor = color;
     }
 
-    public void startVoiceRecognition() {
-
-    }
-
     public void onColorButtonClick() {
         showSelectColorDialog();
     }

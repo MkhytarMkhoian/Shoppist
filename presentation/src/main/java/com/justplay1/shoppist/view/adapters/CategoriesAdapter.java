@@ -21,7 +21,7 @@ import com.justplay1.shoppist.utils.ExpandUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.utils.ViewUtils;
 import com.justplay1.shoppist.view.component.ExpandIndicator;
-import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
+import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseDraggableItemViewHolder;
@@ -37,7 +37,7 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel>
 
     private ShoppistPreferences mPreferences;
 
-    public CategoriesAdapter(Context context, ActionModeOpenCloseListener listener,
+    public CategoriesAdapter(Context context, ActionModeInteractionListener listener,
                         RecyclerView recyclerView, ShoppistPreferences preferences) {
         super(context, listener, recyclerView);
         mPreferences = preferences;
@@ -67,8 +67,8 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel>
             ExpandUtils.toggleIndicator(headerHolder);
         } else {
             CategoryItemViewHolder holder = (CategoryItemViewHolder) viewHolder;
-            CategoryViewModel category = getItem(position);
-            category.setChecked(isItemChecked(category.getId()));
+            CategoryViewModel item = getItem(position);
+            item.setChecked(isItemChecked(item.getId()));
 
             if (isManualSortModeEnable) {
                 holder.dragHandle.setVisibility(View.VISIBLE);
@@ -76,12 +76,11 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel>
                 holder.dragHandle.setVisibility(View.GONE);
             }
 
-            holder.name.setText(category.getName());
-            holder.selectBox.setNormalStateColor(category.getColor());
-            holder.selectBox.setHolder(holder);
-            holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(category.getName()).toUpperCase(Locale.getDefault()));
-            holder.selectBox.setEventListener(this);
-            holder.selectBox.refresh(category.isChecked());
+            holder.name.setText(item.getName());
+            holder.selectBox.setNormalStateColor(item.getColor());
+            holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
+            holder.selectBox.setEventListener(isChecked -> onCheckItem(item, isChecked));
+            holder.selectBox.refresh(item.isChecked());
 
             DraggableUtils.clearSelector(holder, holder.container);
         }

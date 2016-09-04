@@ -176,9 +176,6 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
             case R.id.done_button:
                 mPresenter.onDoneButtonClick(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
                 break;
-            case R.id.menu_voice_search:
-                mPresenter.startVoiceRecognition();
-                break;
             case R.id.color_button:
                 mPresenter.onColorButtonClick();
                 break;

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="MissingPrefix"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/swipe_container"
@@ -22,12 +22,12 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="@dimen/content2x"
+            android:layout_marginEnd="@dimen/content2x"
             android:layout_marginLeft="11dp"
             android:layout_marginRight="16dp"
             android:layout_marginStart="11dp"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="@dimen/content2x" />
 
         <LinearLayout
             android:id="@+id/info"
@@ -96,7 +96,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:clickable="true"
-            android:padding="16dp"
+            android:padding="@dimen/content2x"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_info" />
 
@@ -106,7 +106,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center_vertical"
             android:clickable="true"
-            android:padding="16dp"
+            android:padding="@dimen/content2x"
             android:src="@drawable/ic_reorder" />
     </LinearLayout>
 </FrameLayout>

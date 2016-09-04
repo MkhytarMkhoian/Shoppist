@@ -31,12 +31,14 @@ import com.justplay1.shoppist.view.AddListItemView;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * Created by Mkhytar on 04.07.2016.
@@ -156,6 +158,17 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
 
     public void onCurrencySelected(CurrencyViewModel currency) {
         mCurrencyModel = currency;
+    }
+
+    public void onProductClick(ProductViewModel product) {
+        mProductModel = product;
+        if (product != null) {
+            selectUnit(product.getUnit().getId());
+            selectCategory(product.getUnit().getId());
+        } else {
+            selectUnit(UnitViewModel.NO_UNIT_ID);
+            selectCategory(CategoryViewModel.NO_CATEGORY_ID);
+        }
     }
 
     private void setPriority(@Priority int priority) {
@@ -367,12 +380,17 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     public void loadGoods() {
         mSubscriptions.add(mGetGoods.get()
                 .map(mGoodsModelDataMapper::transformToViewModel)
-                .flatMap(Observable::from)
-                .toMap(BaseViewModel::getName)
+                .map(productViewModels -> {
+                    Map<String, ProductViewModel> result = new HashMap<>();
+                    for (ProductViewModel item : productViewModels){
+                        result.put(item.getName(), item);
+                    }
+                    return result;
+                })
                 .subscribe(new DefaultSubscriber<Map<String, ProductViewModel>>() {
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
                     }
 
                     @Override

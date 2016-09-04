@@ -16,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseViewHolder;
 
 /**
  * Created by Mkhitar on 07.01.2015.
@@ -30,8 +28,7 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
     private String mInnerText;
     private ImageView mMainView;
     private TextView mInnerTextView;
-    private BaseItemHolder mHolder;
-    private SelectBoxEventListener mEventListener;
+    private SelectBoxCheckListener mEventListener;
     private Animation mToMiddleAnimation;
     private Animation mFromMiddleAnimation;
     private Animation mZoomAnimation;
@@ -107,9 +104,9 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
         if (!isClickable) return;
 
         if (isChecked) {
-            setChecked(false, true);
+            setChecked(false);
         } else {
-            setChecked(true, true);
+            setChecked(true);
         }
     }
 
@@ -120,14 +117,6 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
 
     public void setClickable(boolean isClickable) {
         this.isClickable = isClickable;
-    }
-
-    public BaseViewHolder getHolder() {
-        return mHolder;
-    }
-
-    public void setHolder(BaseItemHolder holder) {
-        this.mHolder = holder;
     }
 
     public ImageView getMainView() {
@@ -154,11 +143,7 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
         mInnerTextView.setTextColor(color);
     }
 
-    public SelectBoxEventListener getEventListener() {
-        return mEventListener;
-    }
-
-    public void setEventListener(SelectBoxEventListener eventListener) {
+    public void setEventListener(SelectBoxCheckListener eventListener) {
         this.mEventListener = eventListener;
     }
 
@@ -166,16 +151,9 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
         return isChecked;
     }
 
-    public void setChecked(boolean checked, boolean withAnimation) {
+    public void setChecked(boolean checked) {
         isChecked = checked;
-        if (withAnimation) {
-            doAnimation();
-        } else {
-            if (mEventListener != null) {
-                mEventListener.onCheck(mHolder);
-            }
-            switchBox();
-        }
+        doAnimation();
     }
 
     public void refresh() {
@@ -215,7 +193,7 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
 
     private void doAnimation() {
         if (mEventListener != null) {
-            mEventListener.onCheck(mHolder);
+            mEventListener.onCheck(isChecked);
         }
         clearAnimation();
         startAnimation(mToMiddleAnimation);
@@ -246,7 +224,6 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
     }
 
     private void switchBox() {
-//TODO optimize
         if (isChecked) {
             mInnerTextView.setText("");
             mInnerTextView.setBackgroundResource(R.drawable.ic_check_white);
@@ -260,11 +237,11 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
             mInnerTextView.getLayoutParams().width = LayoutParams.WRAP_CONTENT;
             setDrawable(mMainView, mNormalStateColor);
         }
-        if (mHolder != null && mHolder.container != null) {
-            mHolder.container.setActivated(isChecked);
-        } else if (mHolder != null) {
-            mHolder.itemView.setActivated(isChecked);
-        }
+//        if (mHolder != null && mHolder.container != null) {
+//            mHolder.container.setActivated(isChecked);
+//        } else if (mHolder != null) {
+//            mHolder.itemView.setActivated(isChecked);
+//        }
     }
 
     public void onMovedToScrapHeap() {

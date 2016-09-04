@@ -19,7 +19,7 @@ import com.justplay1.shoppist.utils.DraggableUtils;
 import com.justplay1.shoppist.utils.ExpandUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.ExpandIndicator;
-import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
+import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseDraggableItemViewHolder;
@@ -32,7 +32,7 @@ import java.util.Locale;
  */
 public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderHolder, BaseDraggableItemViewHolder> {
 
-    public ListAdapter(Context context, ActionModeOpenCloseListener listener,
+    public ListAdapter(Context context, ActionModeInteractionListener listener,
                        RecyclerView recyclerView, ShoppistPreferences preferences) {
         super(context, listener, recyclerView, preferences);
     }
@@ -76,8 +76,8 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
     @Override
     public void onBindChildViewHolder(BaseDraggableItemViewHolder viewHolder, int groupPosition, int childPosition, int viewType) {
         ListViewHolder holder = (ListViewHolder) viewHolder;
-        ListViewModel list = getChildItem(groupPosition, childPosition);
-        list.setChecked(isItemChecked(list.getId()));
+        ListViewModel item = getChildItem(groupPosition, childPosition);
+        item.setChecked(isItemChecked(item.getId()));
 
         holder.childPosition = childPosition;
         holder.groupPosition = groupPosition;
@@ -90,15 +90,14 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
             holder.size.setVisibility(View.VISIBLE);
         }
 
-        holder.name.setText(list.getName());
-        holder.size.setText(String.format(Locale.getDefault(), "%d/%d", list.getBoughtCount(), list.getSize()));
-        setPriorityBackgroundColor(list.getPriority(), holder.priorityIndicator);
+        holder.name.setText(item.getName());
+        holder.size.setText(String.format(Locale.getDefault(), "%d/%d", item.getBoughtCount(), item.getSize()));
+        setPriorityBackgroundColor(item.getPriority(), holder.priorityIndicator);
 
-        holder.selectBox.setNormalStateColor(list.getColor());
-        holder.selectBox.setHolder(holder);
-        holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(list.getName()).toUpperCase(Locale.getDefault()));
-        holder.selectBox.setEventListener(this);
-        holder.selectBox.refresh(list.isChecked());
+        holder.selectBox.setNormalStateColor(item.getColor());
+        holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
+        holder.selectBox.setEventListener(isChecked -> onCheckItem(item, isChecked));
+        holder.selectBox.refresh(item.isChecked());
 
         DraggableUtils.clearSelector(holder, holder.container);
     }

@@ -138,7 +138,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
 
     @Override
     protected void initAdapter() {
-        mAdapter = new ListAdapter(getContext(), mActionModeOpenCloseListener, mRecyclerView, mPreferences);
+        mAdapter = new ListAdapter(getContext(), mActionModeInteractionListener, mRecyclerView, mPreferences);
         mAdapter.setClickListener(this);
         mAdapter.setHeaderClickListener(this);
     }
@@ -180,7 +180,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     @Override
     public boolean onItemLongClick(BaseItemHolder holder, int position, long id) {
         if (mPreferences.getLongItemClickAction() == 0) {
-            mAdapter.onCheck(holder);
+            holder.toggle();
         } else {
             mPresenter.onListItemLongClick(mAdapter.getChildItem(holder.groupPosition, holder.childPosition));
         }

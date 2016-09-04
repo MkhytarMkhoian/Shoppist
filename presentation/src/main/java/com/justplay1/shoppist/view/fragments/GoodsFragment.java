@@ -123,7 +123,7 @@ public class GoodsFragment extends BaseExpandableListFragment
 
     @Override
     protected void initAdapter() {
-        mAdapter = new GoodsAdapter(getContext(), mActionModeOpenCloseListener, mRecyclerView, mPreferences);
+        mAdapter = new GoodsAdapter(getContext(), mActionModeInteractionListener, mRecyclerView, mPreferences);
         mAdapter.setClickListener(this);
     }
 
@@ -156,7 +156,7 @@ public class GoodsFragment extends BaseExpandableListFragment
 
     @Override
     public boolean onItemLongClick(BaseItemHolder holder, int position, long id) {
-        mPresenter.onListItemLongClick(null);
+        holder.toggle();
         return true;
     }
 
@@ -185,11 +185,11 @@ public class GoodsFragment extends BaseExpandableListFragment
         mPresenter.onChangeUnitClick(mAdapter.getCheckedItems());
     }
 
-    public void onCheckAllClick() {
+    public void onCheckAllItemsClick() {
         mAdapter.checkAllItems();
     }
 
-    public void onUnCheckAllClick() {
+    public void onUnCheckAllItemsClick() {
         mAdapter.unCheckAllItems(true);
     }
 

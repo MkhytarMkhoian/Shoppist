@@ -1,6 +1,7 @@
 package com.justplay1.shoppist.view.component.recyclerview.holders;
 
 import android.view.View;
+import android.widget.Checkable;
 
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
@@ -8,7 +9,7 @@ import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 /**
  * Created by Mkhytar on 04.09.2015.
  */
-public abstract class BaseItemHolder extends BaseViewHolder {
+public abstract class BaseItemHolder extends BaseViewHolder implements Checkable{
 
     protected ShoppistRecyclerView.OnItemClickListener mClickListener;
 
@@ -40,5 +41,24 @@ public abstract class BaseItemHolder extends BaseViewHolder {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void setChecked(boolean checked) {
+        selectBox.setChecked(checked);
+    }
+
+    @Override
+    public boolean isChecked() {
+        return selectBox.isChecked();
+    }
+
+    @Override
+    public void toggle() {
+        if (selectBox.isChecked()) {
+            selectBox.setChecked(false);
+        } else {
+            selectBox.setChecked(true);
+        }
     }
 }

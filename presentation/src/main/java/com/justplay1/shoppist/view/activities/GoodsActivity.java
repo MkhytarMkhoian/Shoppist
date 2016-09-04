@@ -64,7 +64,7 @@ public class GoodsActivity extends SingleListFragmentActivity<GoodsFragment>
                 mFragment.onSearchClick();
                 break;
             case R.id.menu_check_all:
-                mFragment.onCheckAllClick();
+                mFragment.onCheckAllItemsClick();
                 break;
             case R.id.menu_expand_all:
                 mFragment.onExpandAllClick();
@@ -90,10 +90,10 @@ public class GoodsActivity extends SingleListFragmentActivity<GoodsFragment>
                 mFragment.onDeleteClick();
                 break;
             case R.id.menu_check_all:
-                mFragment.onCheckAllClick();
+                mFragment.onCheckAllItemsClick();
                 break;
             case R.id.menu_uncheck_all:
-                mFragment.onUnCheckAllClick();
+                mFragment.onUnCheckAllItemsClick();
                 break;
             case R.id.menu_change_category:
                 mFragment.onChangeCategoryClick();
@@ -116,6 +116,12 @@ public class GoodsActivity extends SingleListFragmentActivity<GoodsFragment>
         MenuItem checkAll = menu.findItem(R.id.menu_check_all);
         checkAll.setEnabled(mFragment.isCheckAllButtonEnable());
         return true;
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode actionMode) {
+        super.onDestroyActionMode(actionMode);
+        mFragment.onUnCheckAllItemsClick();
     }
 
     @Override

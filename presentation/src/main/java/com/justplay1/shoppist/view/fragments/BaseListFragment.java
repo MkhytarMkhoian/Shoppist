@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.view.component.CustomProgressDialog;
 import com.justplay1.shoppist.view.component.EmptyView;
-import com.justplay1.shoppist.view.component.actionmode.ActionModeOpenCloseListener;
+import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 
 /**
@@ -24,7 +24,7 @@ public abstract class BaseListFragment extends BaseFragment {
     protected CustomProgressDialog mProgressDialog;
     protected ShoppistRecyclerView mRecyclerView;
     protected LinearLayoutManager mLayoutManager;
-    protected ActionModeOpenCloseListener mActionModeOpenCloseListener;
+    protected ActionModeInteractionListener mActionModeInteractionListener;
 
     protected abstract
     @LayoutRes
@@ -36,10 +36,10 @@ public abstract class BaseListFragment extends BaseFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mActionModeOpenCloseListener = (ActionModeOpenCloseListener) context;
+            mActionModeInteractionListener = (ActionModeInteractionListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement ActionModeOpenCloseListener");
+                    + " must implement ActionModeInteractionListener");
         }
     }
 

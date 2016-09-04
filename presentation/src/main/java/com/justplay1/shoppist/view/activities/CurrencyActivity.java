@@ -85,4 +85,10 @@ public class CurrencyActivity extends SingleListFragmentActivity<CurrencyFragmen
         delete.setVisible(mFragment.isDeleteButtonEnable());
         return true;
     }
+
+    @Override
+    public void onDestroyActionMode(ActionMode actionMode) {
+        super.onDestroyActionMode(actionMode);
+        mFragment.onUnCheckAllItemsClick();
+    }
 }
