@@ -21,7 +21,7 @@ This app is licensed under the [Apache Software License, Version 2.0](http://www
 
 See [`LICENSE`](LICENSE) for full of the license text.
 
-    Copyright (C) 2015 Haruki Hasegawa
+    Copyright 2016 Mkhytar Mkhoian
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
