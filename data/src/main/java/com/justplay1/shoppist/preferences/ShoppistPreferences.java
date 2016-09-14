@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.preferences;
 
 import android.content.Context;
@@ -11,34 +27,21 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * Created by Mkhitar on 28.10.2014.
+ * Created by Mkhytar Mkhoian.
  */
 @Singleton
 public class ShoppistPreferences {
 
-    public static final String PARSE_USER_ID_HASH = "parse_user_id_hash";
     public static final String COLOR_PRIMARY = "color_theme";
     public static final String COLOR_PRIMARY_DARK = "color_status_bar_theme";
     public static final String LOCK_SCREEN = "LockScreen";
 
-    public static final String LAST_USER_SEEN_NOTIFICATIONS_TIME = "last_user_seen_notifications_time";
-    public static final String NOTIFICATION_ENABLE = "NotificationEnable";
-    public static final String NOTIFICATION_VIBRATION = "NotificationVibration";
-    public static final String NOTIFICATION_SOUND = "NotificationSound";
-    public static final String AVAILABLE_UPDATE_NOTIFICATION = "available_update_notification";
-    public static final String AVAILABLE_DELETE_NOTIFICATION = "available_delete_notification";
-    public static final String AVAILABLE_NEW_NOTIFICATION = "available_new_notification";
-    public static final String AVAILABLE_BOUGHT_NOTIFICATION = "available_bought_notification";
-    public static final String AVAILABLE_NOT_BOUGHT_NOTIFICATION = "available_not_bought_notification";
-
     public static final String CONFIRM_DELETE_DIALOG = "confirm_delete_dialog";
-    public static final String SELECT_ANIMATION = "select_animation";
     public static final String IS_NEED_SHOW_RATE_DIALOG = "is_need_show_rate_dialog";
     public static final String DEFAULT_CURRENCY = "default_currency_id";
     public static final String DISCOLOR_PURCHASED_GOODS = "discolor_purchased_goods";
     public static final String CALCULATE_PRICE = "calculate_price";
     public static final String SHOW_GOODS_HEADER = "show_goods_header";
-    public static final String CLOSE_MANUAL_SORT_MODE_WITH_BACK_BUTTON = "close_manual_sort_mode_with_back_button";
     public static final String LONG_ITEM_CLICK_ACTION = "long_item_click_action";
     public static final String ADD_BUTTON_CLICK_ACTION = "add_button_click_action";
 
@@ -60,7 +63,6 @@ public class ShoppistPreferences {
     /**
      * Mirror variables of preference
      */
-    private long mParseUserIdHash;
     private int mColorPrimary;
     private int mColorPrimaryDark;
     private boolean mLockScreen;
@@ -69,16 +71,6 @@ public class ShoppistPreferences {
     private int mSortForShoppingListItems;
     private int mSortForCategories;
     private int mSortForGoods;
-
-    private long mLastUserSeenNotificationsTime;
-    private boolean isNotificationEnable;
-    private boolean isNotificationVibration;
-    private boolean isNotificationSound;
-    private boolean isAvailableUpdateNotification;
-    private boolean isAvailableNewNotification;
-    private boolean isAvailableDeleteNotification;
-    private boolean isAvailableBoughtNotification;
-    private boolean isAvailableNotBoughtNotification;
 
     private boolean mConfirmDeleteDialog;
     private int mNeedShowRateDialog;
@@ -111,16 +103,6 @@ public class ShoppistPreferences {
             mSortForGoods = mPreference.getInt(SORT_FOR_GOODS, 3);
             mLockScreen = mPreference.getBoolean(LOCK_SCREEN, false);
 
-            mLastUserSeenNotificationsTime = mPreference.getLong(LAST_USER_SEEN_NOTIFICATIONS_TIME, 0);
-            isNotificationEnable = mPreference.getBoolean(NOTIFICATION_ENABLE, true);
-            isNotificationVibration = mPreference.getBoolean(NOTIFICATION_VIBRATION, true);
-            isNotificationSound = mPreference.getBoolean(NOTIFICATION_SOUND, true);
-            isAvailableUpdateNotification = mPreference.getBoolean(AVAILABLE_UPDATE_NOTIFICATION, true);
-            isAvailableNewNotification = mPreference.getBoolean(AVAILABLE_NEW_NOTIFICATION, true);
-            isAvailableDeleteNotification = mPreference.getBoolean(AVAILABLE_DELETE_NOTIFICATION, true);
-            isAvailableBoughtNotification = mPreference.getBoolean(AVAILABLE_BOUGHT_NOTIFICATION, true);
-            isAvailableNotBoughtNotification = mPreference.getBoolean(AVAILABLE_NOT_BOUGHT_NOTIFICATION, true);
-
             mConfirmDeleteDialog = mPreference.getBoolean(CONFIRM_DELETE_DIALOG, false);
             mNeedShowRateDialog = mPreference.getInt(IS_NEED_SHOW_RATE_DIALOG, 0);
             mDefaultCurrency = mPreference.getString(DEFAULT_CURRENCY, "1");
@@ -128,7 +110,6 @@ public class ShoppistPreferences {
             mCalculatePrice = mPreference.getBoolean(CALCULATE_PRICE, true);
             mShowGoodsHeader = mPreference.getBoolean(SHOW_GOODS_HEADER, true);
             mLongItemClickAction = mPreference.getInt(LONG_ITEM_CLICK_ACTION, 0);
-            mParseUserIdHash = mPreference.getLong(PARSE_USER_ID_HASH, 0);
             mAddButtonClickAction = mPreference.getInt(ADD_BUTTON_CLICK_ACTION, 0);
 
             isManualSortEnableForShoppingLists = mPreference.getBoolean(IS_MANUAL_SORT_ENABLE_FOR_SHOPPING_LISTS, false);
@@ -170,29 +151,6 @@ public class ShoppistPreferences {
         editor.putInt(COLOR_PRIMARY_DARK, color);
         editor.commit();
 
-    }
-
-    public long getLastUserSeenNotificationsTime() {
-        return mLastUserSeenNotificationsTime;
-    }
-
-    public void setLastUserSeenNotificationsTime(long time) {
-        mLastUserSeenNotificationsTime = time;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putLong(LAST_USER_SEEN_NOTIFICATIONS_TIME, time);
-        editor.commit();
-
-    }
-
-    public long getParseUserIdHash() {
-        return mParseUserIdHash;
-    }
-
-    public void setParseUserIdHash(long hash) {
-        mParseUserIdHash = hash;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putLong(PARSE_USER_ID_HASH, hash);
-        editor.apply();
     }
 
     public int getColorPrimary() {
@@ -269,94 +227,6 @@ public class ShoppistPreferences {
         mLockScreen = lockScreen;
         SharedPreferences.Editor editor = mPreference.edit();
         editor.putBoolean(LOCK_SCREEN, lockScreen);
-        editor.apply();
-    }
-
-    public boolean isNotificationEnable() {
-        return isNotificationEnable;
-    }
-
-    public void setNotificationEnable(boolean notificationEnable) {
-        isNotificationEnable = notificationEnable;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putBoolean(NOTIFICATION_ENABLE, notificationEnable);
-        editor.apply();
-    }
-
-    public boolean isNotificationVibration() {
-        return isNotificationVibration;
-    }
-
-    public void setNotificationVibration(boolean notificationVibration) {
-        isNotificationVibration = notificationVibration;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putBoolean(NOTIFICATION_VIBRATION, notificationVibration);
-        editor.apply();
-    }
-
-    public boolean isNotificationSound() {
-        return isNotificationSound;
-    }
-
-    public void setNotificationSound(boolean notificationSound) {
-        isNotificationSound = notificationSound;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putBoolean(NOTIFICATION_SOUND, notificationSound);
-        editor.apply();
-    }
-
-    public boolean isAvailableNewNotification() {
-        return isAvailableNewNotification;
-    }
-
-    public void setAvailableNewNotification(boolean available) {
-        isAvailableNewNotification = available;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putBoolean(AVAILABLE_NEW_NOTIFICATION, available);
-        editor.apply();
-    }
-
-    public boolean isAvailableDeleteNotification() {
-        return isAvailableDeleteNotification;
-    }
-
-    public void setAvailableDeleteNotification(boolean available) {
-        isAvailableDeleteNotification = available;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putBoolean(AVAILABLE_DELETE_NOTIFICATION, available);
-        editor.apply();
-    }
-
-    public boolean isAvailableUpdateNotification() {
-        return isAvailableUpdateNotification;
-    }
-
-    public void setAvailableUpdateNotification(boolean available) {
-        isAvailableUpdateNotification = available;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putBoolean(AVAILABLE_UPDATE_NOTIFICATION, available);
-        editor.apply();
-    }
-
-    public boolean isAvailableBoughtNotification() {
-        return isAvailableBoughtNotification;
-    }
-
-    public void setAvailableBoughtNotification(boolean available) {
-        isAvailableBoughtNotification = available;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putBoolean(AVAILABLE_BOUGHT_NOTIFICATION, available);
-        editor.apply();
-    }
-
-    public boolean isAvailableNotBoughtNotification() {
-        return isAvailableNotBoughtNotification;
-    }
-
-    public void setAvailableNotBoughtNotification(boolean available) {
-        isAvailableNotBoughtNotification = available;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putBoolean(AVAILABLE_NOT_BOUGHT_NOTIFICATION, available);
         editor.apply();
     }
 

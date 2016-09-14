@@ -9,7 +9,7 @@ import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 /**
  * Created by Mkhytar on 04.09.2015.
  */
-public abstract class BaseItemHolder extends BaseViewHolder implements Checkable{
+public abstract class BaseItemHolder extends BaseViewHolder implements Checkable {
 
     protected ShoppistRecyclerView.OnItemClickListener mClickListener;
 
@@ -45,7 +45,7 @@ public abstract class BaseItemHolder extends BaseViewHolder implements Checkable
 
     @Override
     public void setChecked(boolean checked) {
-        selectBox.setChecked(checked);
+        selectBox.setCheckedWithAnim(checked);
     }
 
     @Override
@@ -55,10 +55,14 @@ public abstract class BaseItemHolder extends BaseViewHolder implements Checkable
 
     @Override
     public void toggle() {
-        if (selectBox.isChecked()) {
-            selectBox.setChecked(false);
+        selectBox.setCheckedWithAnim(!selectBox.isChecked());
+    }
+
+    public void setActivated(boolean isChecked) {
+        if (container != null) {
+            container.setActivated(isChecked);
         } else {
-            selectBox.setChecked(true);
+            itemView.setActivated(isChecked);
         }
     }
 }

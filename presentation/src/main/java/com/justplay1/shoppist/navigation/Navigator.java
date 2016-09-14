@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.navigation;
 
 import android.app.Activity;
@@ -14,10 +30,8 @@ import com.justplay1.shoppist.view.activities.CategoriesActivity;
 import com.justplay1.shoppist.view.activities.CurrencyActivity;
 import com.justplay1.shoppist.view.activities.GoodsActivity;
 import com.justplay1.shoppist.view.activities.ListItemActivity;
-import com.justplay1.shoppist.view.activities.NotificationActivity;
 import com.justplay1.shoppist.view.activities.SearchActivity;
 import com.justplay1.shoppist.view.activities.SettingsActivity;
-import com.justplay1.shoppist.view.activities.SignInActivity;
 import com.justplay1.shoppist.view.activities.UnitsActivity;
 
 import javax.inject.Inject;
@@ -74,25 +88,9 @@ public class Navigator {
         }
     }
 
-    public void navigateToNotificationsScreen(Activity activity) {
-        if (activity != null) {
-            Intent intentToLaunch = NotificationActivity.getCallingIntent(activity);
-            activity.startActivity(intentToLaunch);
-            startActivityAnimation(activity);
-        }
-    }
-
     public void navigateToSettingScreen(Activity activity, int settingId) {
         if (activity != null) {
             Intent intentToLaunch = SettingsActivity.getCallingIntent(activity, settingId);
-            activity.startActivity(intentToLaunch);
-            startActivityAnimation(activity);
-        }
-    }
-
-    public void navigateToSignInScreen(Activity activity) {
-        if (activity != null) {
-            Intent intentToLaunch = SignInActivity.getCallingIntent(activity);
             activity.startActivity(intentToLaunch);
             startActivityAnimation(activity);
         }

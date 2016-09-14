@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.models;
 
 import android.graphics.Color;
@@ -5,7 +21,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by Mkhitar on 16.11.2014.
+ * Created by Mkhytar Mkhoian.
  */
 public class CategoryViewModel extends BaseViewModel {
 
@@ -18,7 +34,6 @@ public class CategoryViewModel extends BaseViewModel {
 
     public CategoryViewModel() {
         color = Color.DKGRAY;
-        timestamp = 0;
     }
 
     public CategoryViewModel(CategoryViewModel category) {
@@ -27,11 +42,7 @@ public class CategoryViewModel extends BaseViewModel {
         setName(category.getName());
         setColor(category.getColor());
         setCreateByUser(category.isCreateByUser());
-        setServerId(category.getServerId());
         setPosition(category.getPosition());
-        setDelete(category.isDelete());
-        setDirty(category.isDirty());
-        setTimestamp(category.getTimestamp());
     }
 
     public CategoryViewModel(Parcel parcel) {
@@ -41,11 +52,7 @@ public class CategoryViewModel extends BaseViewModel {
         isChecked = parcel.readByte() != 0;
         id = parcel.readString();
         isCreateByUser = parcel.readByte() != 0;
-        serverId = parcel.readString();
         position = parcel.readInt();
-        isDelete = parcel.readByte() != 0;
-        isDirty = parcel.readByte() != 0;
-        timestamp = parcel.readLong();
     }
 
     @Override
@@ -100,11 +107,7 @@ public class CategoryViewModel extends BaseViewModel {
         dest.writeByte((byte) (isChecked ? 1 : 0));
         dest.writeString(id);
         dest.writeByte((byte) (isCreateByUser ? 1 : 0));
-        dest.writeString(serverId);
         dest.writeInt(position);
-        dest.writeByte((byte) (isDelete ? 1 : 0));
-        dest.writeByte((byte) (isDirty ? 1 : 0));
-        dest.writeLong(timestamp);
     }
 
     public static final Parcelable.Creator<CategoryViewModel> CREATOR = new Creator<CategoryViewModel>() {

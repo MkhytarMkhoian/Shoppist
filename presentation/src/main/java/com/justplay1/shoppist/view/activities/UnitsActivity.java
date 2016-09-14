@@ -14,7 +14,7 @@ import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.view.fragments.UnitFragment;
 
 /**
- * Created by Mkhytar on 30.01.2016.
+ * Created by Mkhytar Mkhoian.
  */
 public class UnitsActivity extends SingleListFragmentActivity<UnitFragment> implements Toolbar.OnMenuItemClickListener {
 
@@ -73,7 +73,7 @@ public class UnitsActivity extends SingleListFragmentActivity<UnitFragment> impl
                 mFragment.onCheckAllItemsClick();
                 break;
             case R.id.menu_uncheck_all:
-                mFragment.onUnCheckAllItemsClick();
+                closeActionMode();
                 break;
         }
         return true;
@@ -84,6 +84,9 @@ public class UnitsActivity extends SingleListFragmentActivity<UnitFragment> impl
         super.onPrepareActionMode(mode, menu);
         MenuItem delete = menu.findItem(R.id.menu_delete);
         delete.setVisible(mFragment.isDeleteButtonEnable());
+
+        MenuItem checkAll = menu.findItem(R.id.menu_check_all);
+        checkAll.setEnabled(mFragment.isCheckAllButtonEnable());
         return true;
     }
 

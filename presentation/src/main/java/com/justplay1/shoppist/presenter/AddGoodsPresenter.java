@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.presenter;
 
 import android.os.Bundle;
@@ -16,17 +32,19 @@ import com.justplay1.shoppist.models.mappers.GoodsModelDataMapper;
 import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
 import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
 import com.justplay1.shoppist.utils.Const;
+import com.justplay1.shoppist.utils.ModelUtils;
 import com.justplay1.shoppist.view.AddGoodsView;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
 import rx.Observable;
 
 /**
- * Created by Mkhytar on 07.08.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @PerActivity
 public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView> {
@@ -158,22 +176,18 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView> {
             product.setUnit(mUnitModel);
 
             if (mItem != null) {
-                product.setTimestamp(mItem.getTimestamp());
                 product.setId(mItem.getId());
-                product.setServerId(mItem.getServerId());
                 product.setTimeCreated(mItem.getTimeCreated());
                 product.setCreateByUser(mItem.isCreateByUser());
-                product.setDirty(mItem.isDirty());
                 if (!mItem.getCategory().getId().equals(product.getCategory().getId())
                         || !mItem.getUnit().getId().equals(product.getUnit().getId())
                         || !mItem.getName().equals(product.getName())) {
                     product.setCreateByUser(true);
-                    product.setDirty(true);
                 }
                 updateGoods(product);
             } else {
+                product.setId(ModelUtils.generateId());
                 product.setTimeCreated(System.currentTimeMillis());
-                product.setDirty(true);
                 product.setCreateByUser(true);
                 addGoods(product);
             }

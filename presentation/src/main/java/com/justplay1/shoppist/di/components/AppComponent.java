@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.di.components;
 
 import android.content.Context;
@@ -12,13 +28,11 @@ import com.justplay1.shoppist.di.modules.ThreadExecutorModule;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.preferences.ShoppistPreferences;
-import com.justplay1.shoppist.repository.AccountRepository;
 import com.justplay1.shoppist.repository.CategoryRepository;
 import com.justplay1.shoppist.repository.CurrencyRepository;
 import com.justplay1.shoppist.repository.GoodsRepository;
 import com.justplay1.shoppist.repository.ListItemsRepository;
 import com.justplay1.shoppist.repository.ListRepository;
-import com.justplay1.shoppist.repository.NotificationRepository;
 import com.justplay1.shoppist.repository.UnitsRepository;
 import com.justplay1.shoppist.view.activities.BaseActivity;
 import com.justplay1.shoppist.view.fragments.BaseFragment;
@@ -65,13 +79,9 @@ public interface AppComponent {
 
     GoodsRepository goodsRepository();
 
-    NotificationRepository notificationRepository();
-
     UnitsRepository unitsRepository();
 
     ListRepository listRepository();
-
-    AccountRepository accountRepository();
 
     ListItemsRepository listItemsRepository();
 }

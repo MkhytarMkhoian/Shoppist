@@ -1,6 +1,21 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.view.fragments;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -28,7 +43,6 @@ import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.presenter.ListPresenter;
 import com.justplay1.shoppist.utils.AnimationResultListener;
-import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.ListView;
 import com.justplay1.shoppist.view.activities.MainActivity;
 import com.justplay1.shoppist.view.adapters.ListAdapter;
@@ -44,7 +58,7 @@ import javax.inject.Inject;
 import rx.Subscription;
 
 /**
- * Created by Mkhytar on 26.03.2016.
+ * Created by Mkhytar Mkhoian.
  */
 public class ListFragment extends BaseEDSListFragment implements ShoppistRecyclerView.OnItemClickListener,
         ShoppistRecyclerView.OnHeaderClickListener, ListView, View.OnClickListener {
@@ -317,7 +331,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     }
 
     public void onUnCheckAllItemsClick() {
-        mAdapter.unCheckAllItems(true);
+        mAdapter.unCheckAllItems();
     }
 
     public void onDeleteCheckedItemsClick() {
@@ -377,24 +391,6 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
         dialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(mPreferences.getColorPrimary());
         dialog.getButton(Dialog.BUTTON_NEGATIVE).setTextColor(mPreferences.getColorPrimary());
         dialog.getButton(Dialog.BUTTON_NEUTRAL).setTextColor(mPreferences.getColorPrimary());
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            if (data.getStringExtra(Const.OLD_ID) != null) {
-                String oldId = data.getStringExtra(Const.OLD_ID);
-                String newId = data.getStringExtra(Const.NEW_ID);
-
-                boolean checked = mAdapter.isItemChecked(oldId);
-                mAdapter.deleteItemFromChecked(oldId);
-                mAdapter.addToChecked(newId, checked);
-
-                data.removeExtra(Const.NEW_ID);
-                data.removeExtra(Const.OLD_ID);
-            }
-        }
     }
 
     public interface ListsFragmentInteractionListener {

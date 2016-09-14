@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.repository.datasource.local.database;
 
 import android.content.ContentValues;
@@ -20,17 +36,15 @@ import javax.inject.Singleton;
 import rx.Observable;
 
 /**
- * Created by Mkhytar on 28.04.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @Singleton
 public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> implements LocalCategoryDataStore {
 
-    public static final String WITHOUT_DELETED = CategoryDAO.IS_DELETED + "<1";
-
-    private static final String LAST_TIMESTAMP_QUERY =
-            "SELECT MAX(" + CategoryDAO.TIMESTAMP + ") FROM " + CategoryDAO.TABLE;
-
     private static String CATEGORY_QUERY(String selection) {
+        if (selection == null) {
+            return "SELECT * FROM " + CategoryDAO.TABLE;
+        }
         return "SELECT * FROM " + CategoryDAO.TABLE +
                 " WHERE " + selection;
     }
@@ -53,15 +67,11 @@ public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> 
         for (int i = 0; i < categories.length; i++) {
             categoriesName = categories[i].split(" ! ");
             String id = categoriesName[1];
-            String serverId = null;
             String name = categoriesName[0];
-            long timestamp = 0;
-            boolean isDirty = false;
-            boolean isDelete = false;
             int color = categoriesColors[i];
             boolean isCreateByUser = false;
             int position = -1;
-            CategoryDAO category = new CategoryDAO(id, serverId, name, timestamp, isDirty, isDelete,
+            CategoryDAO category = new CategoryDAO(id, name,
                     color, isCreateByUser, position);
             categoryList.put(category.getId(), category);
         }
@@ -70,17 +80,7 @@ public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> 
 
     @Override
     public Observable<List<CategoryDAO>> getItems() {
-        return getAllCategories(0, false);
-    }
-
-    @Override
-    public Observable<List<CategoryDAO>> getDirtyItems() {
-        return getAllCategories(0, true);
-    }
-
-    @Override
-    public Observable<List<CategoryDAO>> getItems(long timestamp) {
-        return getAllCategories(timestamp, false);
+        return getAllCategories();
     }
 
     @Override
@@ -150,44 +150,20 @@ public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> 
     }
 
     @Override
-    public Observable<Long> getLastTimestamp() {
-        return getValue(CategoryDAO.TABLE, LAST_TIMESTAMP_QUERY);
-    }
-
-    @Override
     protected ContentValues getValue(CategoryDAO data) {
         CategoryDAO.Builder builder = new CategoryDAO.Builder();
         builder.id(data.getId());
-        if (data.getServerId() != null) {
-            builder.serverId(data.getServerId());
-        }
         builder.name(data.getName());
         builder.color(data.getColor());
         builder.createByUser(data.isCreateByUser());
         if (data.getPosition() != -1) {
             builder.position(data.getPosition());
         }
-        builder.isDelete(data.isDelete());
-        builder.isDirty(data.isDirty());
-        builder.timestamp(data.getTimestamp());
         return builder.build();
     }
 
-    private Observable<List<CategoryDAO>> getAllCategories(long timestamp, boolean getDirty) {
-        String selection = WITHOUT_DELETED;
-        String[] selectionArgs = new String[]{};
-        if (timestamp > 0 && getDirty) {
-            selection = CategoryDAO.TIMESTAMP + " > ? AND " + CategoryDAO.IS_DIRTY + " = ?";
-            selectionArgs = new String[]{timestamp + "", "1"};
-        } else if (timestamp > 0) {
-            selection = CategoryDAO.TIMESTAMP + " > ?";
-            selectionArgs = new String[]{timestamp + ""};
-        } else if (getDirty) {
-            selection = CategoryDAO.IS_DIRTY + " = ?";
-            selectionArgs = new String[]{"1"};
-        }
-
-        return db.createQuery(CategoryDAO.TABLE, CATEGORY_QUERY(selection), selectionArgs)
+    private Observable<List<CategoryDAO>> getAllCategories() {
+        return db.createQuery(CategoryDAO.TABLE, CATEGORY_QUERY(null), new String[]{})
                 .mapToList(cursor -> CategoryDAO.map(cursor, CategoryDAO.CATEGORY_ID));
     }
 }

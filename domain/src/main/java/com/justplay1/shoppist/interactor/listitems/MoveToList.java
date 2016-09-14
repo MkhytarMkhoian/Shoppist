@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.interactor.listitems;
 
 import com.justplay1.shoppist.executor.PostExecutionThread;
@@ -16,7 +32,7 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * Created by Mkhytar on 13.05.2016.
+ * Created by Mkhytar Mkhoian.
  */
 public class MoveToList extends UseCase<Boolean> {
 
@@ -52,27 +68,13 @@ public class MoveToList extends UseCase<Boolean> {
                 ListItemModel newItem = new ListItemModel(item);
                 newItem.setId(UUID.nameUUIDFromBytes((newItem.getName() + UUID.randomUUID()).getBytes()).toString());
                 newItem.setParentListId(mNewParentListId);
-                newItem.setServerId(null);
-                newItem.setDirty(true);
                 needAdd.add(newItem);
             }
             if (needAdd.size() > 0) {
                 mRepository.save(needAdd);
             }
             if (!mCopy) {
-                List<ListItemModel> toDelete = new ArrayList<>();
-                List<ListItemModel> toUpdate = new ArrayList<>();
-                for (ListItemModel item : mData) {
-                    item.setDirty(true);
-                    item.setDelete(true);
-                    if (item.getServerId() == null) {
-                        toDelete.add(item);
-                    } else {
-                        toUpdate.add(item);
-                    }
-                }
-                mRepository.delete(toDelete);
-                mRepository.update(toUpdate);
+                mRepository.delete(mData);
             }
             return true;
         });

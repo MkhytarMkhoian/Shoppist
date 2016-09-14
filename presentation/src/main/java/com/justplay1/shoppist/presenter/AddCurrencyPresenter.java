@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.presenter;
 
 import android.os.Bundle;
@@ -9,6 +25,7 @@ import com.justplay1.shoppist.interactor.currency.UpdateCurrency;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
 import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
+import com.justplay1.shoppist.utils.ModelUtils;
 import com.justplay1.shoppist.view.AddCurrencyView;
 
 import java.util.Collections;
@@ -18,7 +35,7 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * Created by Mkhytar on 07.08.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @PerActivity
 public class AddCurrencyPresenter extends BaseRxPresenter<AddCurrencyView> {
@@ -75,16 +92,11 @@ public class AddCurrencyPresenter extends BaseRxPresenter<AddCurrencyView> {
             CurrencyViewModel currency = new CurrencyViewModel();
             if (mItem != null) {
                 currency.setId(mItem.getId());
-                currency.setServerId(mItem.getServerId());
                 currency.setName(name);
-                currency.setTimestamp(mItem.getTimestamp());
-                if (!mItem.getName().equals(currency.getName())) {
-                    currency.setDirty(true);
-                }
                 updateCurrency(currency);
             } else {
+                currency.setId(ModelUtils.generateId());
                 currency.setName(name);
-                currency.setDirty(true);
                 addCurrency(currency);
             }
         }

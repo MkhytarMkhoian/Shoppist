@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.entity.mappers;
 
 import com.justplay1.shoppist.entity.ListDAO;
@@ -11,7 +27,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * Created by Mkhytar on 29.04.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @Singleton
 public class ListDAODataMapper {
@@ -26,10 +42,6 @@ public class ListDAODataMapper {
             list = new ListModel();
             list.setId(listEntity.getId());
             list.setName(listEntity.getName());
-            list.setServerId(listEntity.getServerId());
-            list.setDelete(listEntity.isDelete());
-            list.setTimestamp(listEntity.getTimestamp());
-            list.setDirty(listEntity.isDirty());
             list.setTimeCreated(listEntity.getTimeCreated());
             list.setPriority(listEntity.getPriority());
             list.setBoughtCount(listEntity.getBoughtCount());
@@ -56,11 +68,7 @@ public class ListDAODataMapper {
         ListDAO entity = null;
         if (list != null) {
             entity = new ListDAO(list.getId(),
-                    list.getServerId(),
                     list.getName(),
-                    list.getTimestamp(),
-                    list.isDirty(),
-                    list.isDelete(),
                     list.getBoughtCount(),
                     list.getTimeCreated(),
                     list.getPriority(),

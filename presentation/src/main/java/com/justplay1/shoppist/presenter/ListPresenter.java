@@ -1,10 +1,26 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.presenter;
 
 import android.support.v4.util.Pair;
 
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
+import com.justplay1.shoppist.interactor.lists.DeleteLists;
 import com.justplay1.shoppist.interactor.lists.GetLists;
-import com.justplay1.shoppist.interactor.lists.SoftDeleteLists;
 import com.justplay1.shoppist.interactor.lists.UpdateLists;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ListModel;
@@ -24,24 +40,24 @@ import rx.Observable;
 import rx.functions.Func1;
 
 /**
- * Created by Mkhytar on 01.07.2016.
+ * Created by Mkhytar Mkhoian.
  */
 public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel> {
 
     private final ListModelDataMapper mDataMapper;
     private final GetLists mGetLists;
-    private final SoftDeleteLists mSoftDeleteLists;
+    private final DeleteLists mDeleteLists;
     private final UpdateLists mUpdateLists;
 
     @Inject
     public ListPresenter(ShoppistPreferences preferences,
                          GetLists getLists,
-                         SoftDeleteLists softDeleteLists,
+                         DeleteLists deleteLists,
                          UpdateLists updateLists,
                          ListModelDataMapper listModelDataMapper) {
         super(preferences);
         this.mGetLists = getLists;
-        this.mSoftDeleteLists = softDeleteLists;
+        this.mDeleteLists = deleteLists;
         this.mUpdateLists = updateLists;
         this.mDataMapper = listModelDataMapper;
     }
@@ -153,8 +169,8 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
     public void deleteItems(Collection<ListViewModel> data) {
         mSubscriptions.add(Observable.fromCallable(() -> mDataMapper.transform(data))
                 .flatMap(list -> {
-                    mSoftDeleteLists.setData(list);
-                    return mSoftDeleteLists.get();
+                    mDeleteLists.setData(list);
+                    return mDeleteLists.get();
                 }).subscribe(new DefaultSubscriber<Boolean>()));
     }
 

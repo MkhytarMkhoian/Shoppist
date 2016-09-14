@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.view.adapters;
 
 import android.content.Context;
@@ -13,16 +29,13 @@ import com.justplay1.shoppist.utils.AnimationResultListener;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
- * Created by Mkhytar on 02.09.2015.
+ * Created by Mkhytar Mkhoian.
  */
 public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -34,10 +47,7 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
     protected RecyclerView mRecyclerView;
     protected boolean deleteState = false;
     protected int mCheckedCount = 0;
-    protected int mPreviousScrollY = 0;
     protected LinearLayoutManager mLinearLayoutManager;
-    protected List<Checkable> mVisibleItems = new ArrayList<>();
-    protected Map<String, Boolean> mCheckedItems = new HashMap<>();
 
     public BaseAdapter(Context context, ActionModeInteractionListener listener,
                        RecyclerView recyclerView) {
@@ -61,10 +71,10 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         return mCheckedCount;
     }
 
-    protected void findVisibleItems() {
+    protected List<Checkable> findVisibleItems() {
+        List<Checkable> visibleItems = new ArrayList<>();
         final int firstPosition = mLinearLayoutManager.findFirstVisibleItemPosition();
         final int lastPosition = mLinearLayoutManager.findLastVisibleItemPosition();
-        clearCheckedItems();
 
         RecyclerView.ViewHolder holder;
         for (int i = firstPosition; i <= lastPosition; i++) {
@@ -73,24 +83,13 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
 
             holder = mRecyclerView.getChildViewHolder(item);
             if (holder instanceof Checkable) {
-                mVisibleItems.add((Checkable) holder);
+                visibleItems.add((Checkable) holder);
             }
         }
+        return visibleItems;
     }
 
-    public List<SelectBoxView> findVisibleCheckedBoxes() {
-        List<SelectBoxView> boxViews = new ArrayList<>();
-        for (int i = 0; i < mRecyclerView.getChildCount(); ++i) {
-            SelectBoxView boxView = (SelectBoxView) mRecyclerView.getChildAt(i).findViewById(R.id.select_box);
-            if (boxView == null) continue;
-            if (boxView.isChecked()) {
-                boxViews.add(boxView);
-            }
-        }
-        return boxViews;
-    }
-
-    public List<T> findInvisibleCheckedBoxes() {
+    public List<T> findInvisibleCheckedItems() {
         findVisibleItems();
         List<T> boxViews = new ArrayList<>();
         for (int i = 0; i < getCheckedItems().size(); i++) {
@@ -103,50 +102,34 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         return boxViews;
     }
 
-    public void unCheckAllItems(boolean animation) {
+    public void unCheckAllItems() {
         if (deleteState) return;
 
-        mActionModeInteractionListener.closeActionMode();
-        findVisibleItems();
-        for (Checkable checkable : mVisibleItems) {
-            if (!checkable.isChecked()) {
+        if (mActionModeInteractionListener.isActionModeShowing()) {
+            mActionModeInteractionListener.closeActionMode();
+        }
+        List<Checkable> visibleItems = findVisibleItems();
+        for (Checkable checkable : visibleItems) {
+            if (checkable.isChecked()) {
                 checkable.setChecked(false);
             }
         }
         checkInvisibleItems(false);
         refreshInvisibleItems();
-        clearCheckedItems();
+        mCheckedCount = 0;
     }
 
     public void checkAllItems() {
-        findVisibleItems();
-        for (Checkable checkable : mVisibleItems) {
+        List<Checkable> visibleItems = findVisibleItems();
+        for (Checkable checkable : visibleItems) {
             if (!checkable.isChecked()) {
                 checkable.setChecked(true);
             }
         }
         checkInvisibleItems(true);
         mCheckedCount = getCheckedItems().size();
-        mActionModeInteractionListener.openActionMode(mCheckedCount);
+        startActionMode();
         refreshInvisibleItems();
-    }
-
-    public void addToChecked(String id, boolean isChecked) {
-        if (isChecked) {
-            mCheckedItems.put(id, true);
-        } else {
-            deleteItemFromChecked(id);
-        }
-    }
-
-    public void deleteItemFromChecked(String id) {
-        mCheckedItems.remove(id);
-    }
-
-    public boolean isItemChecked(String id) {
-        Boolean isChecked = mCheckedItems.get(id);
-        if (isChecked == null) return false;
-        return isChecked;
     }
 
     protected void checkInvisibleItems(boolean check) {
@@ -154,25 +137,12 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
             if (item instanceof HeaderViewModel) continue;
             if (item.isChecked() != check) {
                 item.setChecked(check);
-                mCheckedItems.put(item.getId(), check);
             }
         }
     }
 
-    public void clearCheckedItems() {
-        mCheckedItems.clear();
-    }
-
-    public boolean isScrolling(int newScrollY) {
-        if (newScrollY > mPreviousScrollY) {
-            mPreviousScrollY = newScrollY;
-        }
-        return true;
-    }
-
     protected void onCheckItem(T item, boolean isChecked) {
         item.setChecked(isChecked);
-        addToChecked(item.getId(), item.isChecked());
         updateCount(item.isChecked());
     }
 
@@ -186,11 +156,14 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
                 mCheckedCount--;
                 if (mCheckedCount == 0 && mActionModeInteractionListener.isActionModeShowing()) {
                     mActionModeInteractionListener.closeActionMode();
-                    clearCheckedItems();
                     return;
                 }
             }
         }
+        startActionMode();
+    }
+
+    private void startActionMode() {
         if (!mActionModeInteractionListener.isActionModeShowing()) {
             mActionModeInteractionListener.openActionMode(mCheckedCount);
         } else {
@@ -211,10 +184,6 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         finishDelete();
     }
 
-    public void deleteFromVisibleBoxes(BaseItemHolder holder) {
-        mVisibleItems.remove(holder);
-    }
-
     public boolean isManualSortModeEnable() {
         return isManualSortModeEnable;
     }
@@ -229,15 +198,5 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
 
     public void setClickListener(ShoppistRecyclerView.OnItemClickListener clickListener) {
         this.mItemClickListener = clickListener;
-    }
-
-    public void onMovedToScrapHeap(RecyclerView.ViewHolder holder) {
-        SelectBoxView selectBox = (SelectBoxView) holder.itemView.findViewById(R.id.select_box);
-        if (selectBox == null) return;
-
-        if (isScrolling(mLinearLayoutManager.findFirstVisibleItemPosition())) {
-            deleteFromVisibleBoxes((BaseItemHolder) holder);
-            selectBox.onMovedToScrapHeap();
-        }
     }
 }

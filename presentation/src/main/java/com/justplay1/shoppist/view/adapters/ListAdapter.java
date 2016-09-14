@@ -28,7 +28,7 @@ import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHold
 import java.util.Locale;
 
 /**
- * Created by Mkhitar on 18.08.2015.
+ * Created by Mkhytar Mkhoian.
  */
 public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderHolder, BaseDraggableItemViewHolder> {
 
@@ -77,7 +77,6 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
     public void onBindChildViewHolder(BaseDraggableItemViewHolder viewHolder, int groupPosition, int childPosition, int viewType) {
         ListViewHolder holder = (ListViewHolder) viewHolder;
         ListViewModel item = getChildItem(groupPosition, childPosition);
-        item.setChecked(isItemChecked(item.getId()));
 
         holder.childPosition = childPosition;
         holder.groupPosition = groupPosition;
@@ -96,8 +95,12 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
 
         holder.selectBox.setNormalStateColor(item.getColor());
         holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
-        holder.selectBox.setEventListener(isChecked -> onCheckItem(item, isChecked));
-        holder.selectBox.refresh(item.isChecked());
+        holder.selectBox.setEventListener(isChecked -> {
+            onCheckItem(item, isChecked);
+            holder.setActivated(isChecked);
+        });
+        holder.selectBox.setChecked(item.isChecked());
+        holder.setActivated(item.isChecked());
 
         DraggableUtils.clearSelector(holder, holder.container);
     }

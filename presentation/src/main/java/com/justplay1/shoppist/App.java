@@ -1,7 +1,22 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist;
 
 import android.app.Application;
-import android.graphics.Typeface;
 
 import com.justplay1.shoppist.di.components.AppComponent;
 import com.justplay1.shoppist.di.components.DaggerAppComponent;
@@ -12,12 +27,11 @@ import com.justplay1.shoppist.di.modules.LocalDataStoreModule;
 import com.justplay1.shoppist.di.modules.PreferenceModule;
 import com.justplay1.shoppist.di.modules.RepositoryModule;
 import com.justplay1.shoppist.di.modules.ThreadExecutorModule;
-import com.parse.Parse;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
- * Created by Mkhytar on 20.10.2015.
+ * Created by Mkhytar Mkhoian.
  */
 public class App extends Application {
 
@@ -33,15 +47,10 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this);
-
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
-
-//        mSyncLimitFilter.requestSync(false);
     }
 
     private void initializeInjector() {

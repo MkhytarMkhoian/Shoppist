@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.repository.datasource.local.database;
 
 import android.content.ContentValues;
@@ -19,25 +35,24 @@ import javax.inject.Singleton;
 import rx.Observable;
 
 /**
- * Created by Mkhytar on 28.04.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @Singleton
 public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO> implements LocalListItemsDataStore {
 
-    private static final String WITHOUT_DELETED = ListItemDAO.IS_DELETED + "<1";
-    private static final String LAST_TIMESTAMP_QUERY =
-            "SELECT MAX(" + ListItemDAO.TIMESTAMP + ") FROM " + ListItemDAO.TABLE;
-
     public static final String ALL_LIST_ITEMS =
-            "SELECT * FROM " +  ListItemDAO.TABLE +
-            " LEFT OUTER JOIN " + CategoryDAO.TABLE
-            + " ON " + ListItemDAO.CATEGORY_ID + " = " + CategoryDAO.TABLE + "." + CategoryDAO.CATEGORY_ID +
-            " LEFT OUTER JOIN " + UnitDAO.TABLE
-            + " ON " + ListItemDAO.UNIT_ID + " = " + UnitDAO.TABLE + "." + UnitDAO.UNIT_ID +
-            " LEFT OUTER JOIN " + CurrencyDAO.TABLE
-            + " ON " + ListItemDAO.CURRENCY_ID + " = " + CurrencyDAO.TABLE + "." + CurrencyDAO.CURRENCY_ID;
+            "SELECT * FROM " + ListItemDAO.TABLE +
+                    " LEFT OUTER JOIN " + CategoryDAO.TABLE
+                    + " ON " + ListItemDAO.CATEGORY_ID + " = " + CategoryDAO.TABLE + "." + CategoryDAO.CATEGORY_ID +
+                    " LEFT OUTER JOIN " + UnitDAO.TABLE
+                    + " ON " + ListItemDAO.UNIT_ID + " = " + UnitDAO.TABLE + "." + UnitDAO.UNIT_ID +
+                    " LEFT OUTER JOIN " + CurrencyDAO.TABLE
+                    + " ON " + ListItemDAO.CURRENCY_ID + " = " + CurrencyDAO.TABLE + "." + CurrencyDAO.CURRENCY_ID;
 
     public static String LIST_ITEMS_QUERY(String selection) {
+        if (selection == null){
+            return ALL_LIST_ITEMS;
+        }
         return ALL_LIST_ITEMS + " WHERE " + selection;
     }
 
@@ -53,17 +68,7 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
 
     @Override
     public Observable<List<ListItemDAO>> getItems() {
-        return getAllShoppingListItems(0, false);
-    }
-
-    @Override
-    public Observable<List<ListItemDAO>> getDirtyItems() {
-        return getAllShoppingListItems(0, true);
-    }
-
-    @Override
-    public Observable<List<ListItemDAO>> getItems(long timestamp) {
-        return getAllShoppingListItems(timestamp, false);
+        return getAllShoppingListItems();
     }
 
     @Override
@@ -137,41 +142,21 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
 //        mContext.getContentResolver().notifyChange(ShoppingListContact.ShoppingLists.CONTENT_URI, null, false);
     }
 
-    public Observable<List<ListItemDAO>> getAllShoppingListItems(long timestamp, boolean getDirty) {
-        String selection = WITHOUT_DELETED;
-        String[] selectionArgs = null;
-        if (timestamp > 0 && getDirty) {
-            selection = ListItemDAO.TIMESTAMP + " > ? AND " + ListItemDAO.IS_DIRTY + " = ?";
-            selectionArgs = new String[]{timestamp + "", 1 + ""};
-        } else if (timestamp > 0) {
-            selection = ListItemDAO.TIMESTAMP + " > ?";
-            selectionArgs = new String[]{timestamp + ""};
-        } else if (getDirty) {
-            selection = ListItemDAO.IS_DIRTY + " = ?";
-            selectionArgs = new String[]{1 + ""};
-        }
-        return db.createQuery(ListItemDAO.TABLE, LIST_ITEMS_QUERY(selection), selectionArgs)
+    public Observable<List<ListItemDAO>> getAllShoppingListItems() {
+        return db.createQuery(ListItemDAO.TABLE, LIST_ITEMS_QUERY(null), new String[]{})
                 .mapToList(ListItemDAO.MAPPER::call);
     }
 
     public Observable<List<ListItemDAO>> getListItems(String listId) {
         return db.createQuery(ListItemDAO.TABLE,
-                LIST_ITEMS_QUERY(ListItemDAO.PARENT_LIST_ID + "=? AND " + WITHOUT_DELETED),
+                LIST_ITEMS_QUERY(ListItemDAO.PARENT_LIST_ID + "=?"),
                 listId)
                 .mapToList(ListItemDAO.MAPPER::call);
     }
 
     @Override
-    public Observable<Long> getLastTimestamp() {
-        return getValue(ListItemDAO.TABLE, LAST_TIMESTAMP_QUERY);
-    }
-
-    @Override
     protected ContentValues getValue(ListItemDAO item) {
         ListItemDAO.Builder builder = new ListItemDAO.Builder();
-        if (item.getServerId() != null) {
-            builder.serverId(item.getServerId());
-        }
         builder.id(item.getId());
         builder.name(item.getName());
         builder.parentId(item.getParentListId());
@@ -187,9 +172,6 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
         if (item.getPosition() != -1) {
             builder.position(item.getPosition());
         }
-        builder.isDelete(item.isDelete());
-        builder.isDirty(item.isDirty());
-        builder.timestamp(item.getTimestamp());
         return builder.build();
     }
 }

@@ -13,8 +13,6 @@ ext {
     androidCompileSdkVersion = 23
 
     //Libraries
-    parseVersion = '1.13.0'
-    parseBoltsTasksVersion = '1.3.0'
 
     daggerVersion = '2.2'
     javaxAnnotationVersion = '1.0'
@@ -96,9 +94,6 @@ ext {
 
     dataDependencies = [
             sqlbrite          : "com.squareup.sqlbrite:sqlbrite:${sqlbrite}",
-
-            parseBoltsTasks   : "com.parse.bolts:bolts-tasks:${parseBoltsTasksVersion}",
-            parse             : "com.parse:parse-android:${parseVersion}",
 
             daggerCompiler    : "com.google.dagger:dagger-compiler:${daggerVersion}",
             dagger            : "com.google.dagger:dagger:${daggerVersion}",

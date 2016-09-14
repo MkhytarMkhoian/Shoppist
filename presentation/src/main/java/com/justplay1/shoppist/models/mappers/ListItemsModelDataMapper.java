@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.models.mappers;
 
 import com.justplay1.shoppist.di.scope.PerActivity;
@@ -11,7 +27,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Created by Mkhytar on 29.04.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @PerActivity
 public class ListItemsModelDataMapper {
@@ -34,10 +50,6 @@ public class ListItemsModelDataMapper {
             itemModel = new ListItemViewModel();
             itemModel.setId(item.getId());
             itemModel.setName(item.getName());
-            itemModel.setServerId(item.getServerId());
-            itemModel.setDirty(item.isDirty());
-            itemModel.setDelete(item.isDelete());
-            itemModel.setTimestamp(item.getTimestamp());
             itemModel.setNote(item.getNote());
             itemModel.setParentListId(item.getParentListId());
             itemModel.setPrice(item.getPrice());
@@ -71,10 +83,6 @@ public class ListItemsModelDataMapper {
             item = new ListItemModel();
             item.setId(itemModel.getId());
             item.setName(itemModel.getName());
-            item.setServerId(itemModel.getServerId());
-            item.setDirty(itemModel.isDirty());
-            item.setDelete(itemModel.isDelete());
-            item.setTimestamp(itemModel.getTimestamp());
             item.setNote(itemModel.getNote());
             item.setParentListId(itemModel.getParentListId());
             item.setPrice(itemModel.getPrice());

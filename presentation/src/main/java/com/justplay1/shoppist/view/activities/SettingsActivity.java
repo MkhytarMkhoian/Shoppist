@@ -1,29 +1,39 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.view.activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
 import com.justplay1.shoppist.utils.Const;
-import com.justplay1.shoppist.view.fragments.settings.AccountSettingFragment;
 import com.justplay1.shoppist.view.fragments.settings.GeneralSettingFragment;
-import com.justplay1.shoppist.view.fragments.settings.MainSettingFragment;
-import com.justplay1.shoppist.view.fragments.settings.NotificationSettingFragment;
 import com.justplay1.shoppist.view.fragments.settings.ListsSettingFragment;
+import com.justplay1.shoppist.view.fragments.settings.MainSettingFragment;
 import com.justplay1.shoppist.view.fragments.settings.SystemSettingFragment;
 
-import javax.inject.Inject;
-
 /**
- * Created by Mkhytar on 19.12.2015.
+ * Created by Mkhytar Mkhoian.
  */
-public class SettingsActivity extends BaseActivity implements MainSettingFragment.MainSettingFragmentInteractionListener{
+public class SettingsActivity extends BaseActivity implements MainSettingFragment.MainSettingFragmentInteractionListener {
 
     public static final int GENERAL_SETTING = 1;
     public static final int NOTIFICATION_SETTING = 2;
@@ -59,12 +69,6 @@ public class SettingsActivity extends BaseActivity implements MainSettingFragmen
                 case GENERAL_SETTING:
                     mToolbar.setTitle(R.string.category_general);
                     return GeneralSettingFragment.newInstance();
-//                case ACCOUNT_SETTING:
-//                    mToolbar.setTitle(R.string.category_account);
-//                    return AccountSettingFragment.newInstance();
-                case NOTIFICATION_SETTING:
-                    mToolbar.setTitle(R.string.category_notification);
-                    return NotificationSettingFragment.newInstance();
                 case LISTS_SETTING:
                     mToolbar.setTitle(R.string.shopping_lists);
                     return ListsSettingFragment.newInstance();

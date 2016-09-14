@@ -1,31 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2016 Mkhytar Mkhoian
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.justplay1.shoppist">
-
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <!-- for sync adapter -->
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
-    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
-
-    <!-- for communication with server -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-    <!-- for cloud message-->
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <permission
-        android:name="com.justplay1.shoppist.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-
-    <uses-permission android:name="com.justplay1.shoppist.permission.C2D_MESSAGE" />
 
     <application
         android:name=".App"
@@ -53,21 +43,13 @@
         <activity
             android:name=".view.activities.CurrencyActivity"
             android:label="@string/currency"
-            android:parentActivityName=".view.activities.MainActivity"
             android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.activities.MainActivity" />
         </activity>
 
         <activity
             android:name=".view.activities.UnitsActivity"
             android:label="@string/units"
-            android:parentActivityName=".view.activities.MainActivity"
             android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.activities.MainActivity" />
         </activity>
 
         <activity
@@ -78,11 +60,7 @@
         <activity
             android:name=".view.activities.CategoriesActivity"
             android:label="@string/title_activity_category"
-            android:parentActivityName=".view.activities.MainActivity"
             android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.activities.MainActivity" />
         </activity>
 
         <activity
@@ -93,18 +71,12 @@
         <activity
             android:name=".view.activities.AddElementActivity"
             android:label="@string/title_activity_add_list"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".view.activities.GoodsActivity"
             android:label="@string/goods"
-            android:parentActivityName=".view.activities.MainActivity"
             android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.activities.MainActivity" />
         </activity>
 
         <activity
@@ -129,27 +101,6 @@
             android:taskAffinity=".widget.AddDialogWidgetActivity"
             android:theme="@style/ShoppingList.Dialog" />
 
-        <activity
-            android:name=".view.activities.NotificationActivity"
-            android:label="@string/notifications"
-            android:launchMode="singleTop"
-            android:parentActivityName=".view.activities.MainActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.activities.MainActivity" />
-        </activity>
-
-        <activity
-            android:name=".view.activities.SignInActivity"
-            android:exported="false"
-            android:label="@string/title_activity_login"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-
         <service
             android:name=".widget.ShoppistWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
@@ -165,49 +116,5 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/shoppist_widget_metadata" />
         </receiver>
-
-        <service
-            android:name=".services.SyncService"
-            android:exported="true"
-            android:process=":sync"/>
-
-        <!-- for cloud message-->
-        <service android:name="com.parse.PushService" />
-
-        <receiver android:name="com.parse.ParseBroadcastReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.parse.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <!--
-                  IMPORTANT: Change "com.parse.tutorials.pushnotifications" to match your app's package name.
-                -->
-                <category android:name="com.justplay1.shoppist" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name=".repository.sync.SyncPushBroadcastReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.parse.push.intent.RECEIVE" />
-                <action android:name="com.parse.push.intent.DELETE" />
-                <action android:name="com.parse.push.intent.OPEN" />
-            </intent-filter>
-        </receiver>
-
-        <meta-data
-            android:name="com.parse.APPLICATION_ID"
-            android:value="@string/parse_app_id" />
-        <meta-data
-            android:name="com.parse.CLIENT_KEY"
-            android:value="@string/parse_client_key" />
     </application>
 </manifest>

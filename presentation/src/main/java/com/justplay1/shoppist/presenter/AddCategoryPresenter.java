@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.presenter;
 
 import android.graphics.Color;
@@ -12,6 +28,7 @@ import com.justplay1.shoppist.interactor.category.UpdateCategory;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
 import com.justplay1.shoppist.presenter.base.BaseAddElementPresenter;
+import com.justplay1.shoppist.utils.ModelUtils;
 import com.justplay1.shoppist.view.AddCategoryView;
 
 import java.util.Collections;
@@ -21,7 +38,7 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * Created by Mkhytar on 04.07.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @PerActivity
 public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryView> {
@@ -137,13 +154,12 @@ public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryVie
         CategoryViewModel category = new CategoryViewModel();
         category.setName(name);
         category.setColor(mColor);
-        category.setDirty(true);
 
         if (mItem != null) {
             category.setId(mItem.getId());
-            category.setServerId(mItem.getServerId());
             category.setCreateByUser(mItem.isCreateByUser());
         } else {
+            category.setId(ModelUtils.generateId());
             category.setCreateByUser(true);
         }
         return category;

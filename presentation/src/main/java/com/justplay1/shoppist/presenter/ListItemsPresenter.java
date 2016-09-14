@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.presenter;
 
 import android.os.Bundle;
@@ -8,7 +24,7 @@ import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.GetCategory;
 import com.justplay1.shoppist.interactor.currency.GetCurrency;
 import com.justplay1.shoppist.interactor.listitems.GetListItems;
-import com.justplay1.shoppist.interactor.listitems.SoftDeleteListItems;
+import com.justplay1.shoppist.interactor.listitems.DeleteListItems;
 import com.justplay1.shoppist.interactor.listitems.UpdateListItems;
 import com.justplay1.shoppist.interactor.units.GetUnit;
 import com.justplay1.shoppist.models.CategoryViewModel;
@@ -36,7 +52,7 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * Created by Mkhytar on 01.07.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @PerActivity
 public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, ListItemViewModel> {
@@ -51,7 +67,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     private final GetCurrency mGetCurrency;
     private final GetListItems mGetListItems;
     private final UpdateListItems mUpdateListItems;
-    private final SoftDeleteListItems mSoftDeleteListItems;
+    private final DeleteListItems mDeleteListItems;
 
     private ListViewModel mParentList;
     private ListItemViewModel mItem;
@@ -67,7 +83,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
                               GetCurrency getCurrency,
                               GetListItems getListItems,
                               UpdateListItems updateListItems,
-                              SoftDeleteListItems softDeleteListItems) {
+                              DeleteListItems deleteListItems) {
         super(preferences);
         this.mCategoryModelDataMapper = categoryModelDataMapper;
         this.mUnitsDataModelMapper = unitsDataModelMapper;
@@ -78,7 +94,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         this.mGetCurrency = getCurrency;
         this.mGetListItems = getListItems;
         this.mUpdateListItems = updateListItems;
-        this.mSoftDeleteListItems = softDeleteListItems;
+        this.mDeleteListItems = deleteListItems;
     }
 
     @Override
@@ -158,8 +174,6 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
 
     public void onChildItemMoved(final ListItemViewModel moveItem) {
         mSubscriptions.add(Observable.fromCallable(() -> {
-            moveItem.setDirty(true);
-            moveItem.setTimestamp(System.currentTimeMillis());
             moveItem.setStatus(!moveItem.getStatus());
             return moveItem;
         }).map(mListItemsModelDataMapper::transform)
@@ -221,8 +235,8 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     public void deleteItems(Collection<ListItemViewModel> data) {
         mSubscriptions.add(Observable.fromCallable(() -> mListItemsModelDataMapper.transform(data))
                 .flatMap(listItemModels -> {
-                    mSoftDeleteListItems.setData(listItemModels);
-                    return mSoftDeleteListItems.get();
+                    mDeleteListItems.setData(listItemModels);
+                    return mDeleteListItems.get();
                 }).subscribe(new DefaultSubscriber<Boolean>()));
     }
 
@@ -286,8 +300,6 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
                         itemsToMove.add(item);
                     }
                 }
-                item.setDirty(true);
-                item.setTimestamp(System.currentTimeMillis());
             }
             return itemsToMove;
         }).filter(itemsToMove -> itemsToMove.size() > 0)

@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.presenter;
 
 import android.os.Bundle;
@@ -31,7 +47,7 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * Created by Mkhytar on 07.08.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @PerActivity
 public class SearchPresenter extends BaseRxPresenter<SearchView> {
@@ -152,11 +168,10 @@ public class SearchPresenter extends BaseRxPresenter<SearchView> {
         ListItemViewModel listItem = new ListItemViewModel();
         listItem.setParentListId(mParentListId);
         listItem.setNote("");
-        listItem.setDirty(true);
         listItem.setName(product.getName());
         listItem.setTimeCreated(System.currentTimeMillis());
         listItem.setStatus(false);
-        listItem.setId(UUID.nameUUIDFromBytes((product.getName() + UUID.randomUUID()).getBytes()).toString());
+        listItem.setId(UUID.nameUUIDFromBytes((System.currentTimeMillis() + "").getBytes()).toString());
         listItem.setUnit(product.getUnit());
         CurrencyViewModel currency = new CurrencyViewModel();
         currency.setId(CurrencyViewModel.NO_CURRENCY_ID);

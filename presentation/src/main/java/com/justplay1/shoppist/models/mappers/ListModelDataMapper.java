@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.models.mappers;
 
 import com.justplay1.shoppist.di.scope.PerActivity;
@@ -11,7 +27,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Created by Mkhytar on 29.04.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @PerActivity
 public class ListModelDataMapper {
@@ -27,10 +43,6 @@ public class ListModelDataMapper {
             listModel = new ListViewModel();
             listModel.setId(list.getId());
             listModel.setName(list.getName());
-            listModel.setServerId(list.getServerId());
-            listModel.setDelete(list.isDelete());
-            listModel.setTimestamp(list.getTimestamp());
-            listModel.setDirty(list.isDirty());
             listModel.setTimeCreated(list.getTimeCreated());
             listModel.setPriority(list.getPriority());
             listModel.setBoughtCount(list.getBoughtCount());
@@ -59,10 +71,6 @@ public class ListModelDataMapper {
             list = new ListModel();
             list.setId(listModel.getId());
             list.setName(listModel.getName());
-            list.setServerId(listModel.getServerId());
-            list.setDelete(listModel.isDelete());
-            list.setTimestamp(listModel.getTimestamp());
-            list.setDirty(listModel.isDirty());
             list.setTimeCreated(listModel.getTimeCreated());
             list.setPriority(listModel.getPriority());
             list.setBoughtCount(listModel.getBoughtCount());
@@ -73,8 +81,8 @@ public class ListModelDataMapper {
         return list;
     }
 
-    public java.util.List transform(Collection<ListViewModel> listModels) {
-        java.util.List lists = new ArrayList<>();
+    public List<ListModel> transform(Collection<ListViewModel> listModels) {
+        List<ListModel> lists = new ArrayList<>();
         ListModel list;
         for (ListViewModel listModel : listModels) {
             list = transform(listModel);

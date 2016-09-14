@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.view.fragments;
 
 import android.app.Activity;
@@ -9,6 +25,7 @@ import android.speech.RecognizerIntent;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.ActionMenuView;
 import android.text.Editable;
@@ -47,7 +64,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 /**
- * Created by Mkhytar on 07.08.2016.
+ * Created by Mkhytar Mkhoian.
  */
 public class SearchFragment extends BaseFragment
         implements FloatingSearchView.OnIconClickListener,
@@ -163,7 +180,7 @@ public class SearchFragment extends BaseFragment
 
     private void updateNavigationIcon() {
         Context context = mSearchView.getContext();
-        Drawable drawable = getResources().getDrawable(R.drawable.ic_arrow_back);
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_arrow_back);
         drawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTint(drawable, ViewUtils.getThemeAttrColor(context, R.attr.colorControlNormal));
         mSearchView.setIcon(drawable);

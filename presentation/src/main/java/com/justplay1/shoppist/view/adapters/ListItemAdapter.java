@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.ColorInt;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,7 @@ import java.util.Locale;
 
 
 /**
- * Created by Mkhitar on 22.08.2015.
+ * Created by Mkhytar Mkhoian.
  */
 public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel, BaseHeaderHolder, BaseDraggableSwipeableItemViewHolder> {
 
@@ -112,7 +113,7 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
                 HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
                 if (mSort == SortType.SORT_BY_PRIORITY) {
                     if (model.getPriority() == Priority.NO_PRIORITY) {
-                        headerViewHolder.name.setTextColor(mContext.getResources().getColor(R.color.action_mode_toolbar_color));
+                        headerViewHolder.name.setTextColor(ContextCompat.getColor(mContext, R.color.action_mode_toolbar_color));
                     } else {
                         setPriorityTextColor(model.getPriority(), headerViewHolder.name);
                     }
@@ -156,7 +157,6 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
         holder.groupPosition = groupPosition;
 
         final ListItemViewModel item = getChildItem(groupPosition, childPosition);
-        item.setChecked(isItemChecked(item.getId()));
 
         holder.name.setText(item.getName());
 
@@ -217,24 +217,28 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
             holder.categoryName.setPaintFlags(holder.categoryName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
             if (mPreferences.isDiscolorPurchasedGoods()) {
-                holder.name.setTextColor(mContext.getResources().getColor(R.color.disable_text_color_black));
-                normalStateColor = mContext.getResources().getColor(R.color.grey_300);
-                holder.selectBox.setInnerTextColor(mContext.getResources().getColor(R.color.disable_text_color_black));
+                holder.name.setTextColor(ContextCompat.getColor(mContext, R.color.disable_text_color_black));
+                normalStateColor = ContextCompat.getColor(mContext, R.color.grey_300);
+                holder.selectBox.setInnerTextColor(ContextCompat.getColor(mContext, R.color.disable_text_color_black));
             }
         } else {
             holder.name.setPaintFlags(holder.name.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             holder.categoryName.setPaintFlags(holder.categoryName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
             if (mPreferences.isDiscolorPurchasedGoods()) {
-                holder.name.setTextColor(mContext.getResources().getColor(R.color.text_color_black));
-                holder.selectBox.setInnerTextColor(mContext.getResources().getColor(R.color.white));
+                holder.name.setTextColor(ContextCompat.getColor(mContext, R.color.text_color_black));
+                holder.selectBox.setInnerTextColor(ContextCompat.getColor(mContext, R.color.white));
             }
         }
 
         holder.selectBox.setNormalStateColor(normalStateColor);
         holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
-        holder.selectBox.setEventListener(isChecked -> onCheckItem(item, isChecked));
-        holder.selectBox.refresh(item.isChecked());
+        holder.selectBox.setEventListener(isChecked -> {
+            onCheckItem(item, isChecked);
+            holder.setActivated(isChecked);
+        });
+        holder.selectBox.setChecked(item.isChecked());
+        holder.setActivated(item.isChecked());
 
         DraggableUtils.clearSelector(holder, holder.container);
 

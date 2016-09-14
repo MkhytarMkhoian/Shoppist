@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.interactor.lists;
 
 import com.justplay1.shoppist.executor.PostExecutionThread;
@@ -6,24 +22,22 @@ import com.justplay1.shoppist.interactor.UseCase;
 import com.justplay1.shoppist.models.ListModel;
 import com.justplay1.shoppist.repository.ListRepository;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import rx.Observable;
 
 /**
- * Created by Mkhytar on 13.05.2016.
+ * Created by Mkhytar Mkhoian.
  */
-public class SoftDeleteLists extends UseCase<Boolean> {
+public class DeleteLists extends UseCase<Boolean> {
 
     private final ListRepository mRepository;
     private Collection<ListModel> mData;
 
     @Inject
-    public SoftDeleteLists(ListRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    public DeleteLists(ListRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         mRepository = repository;
     }
@@ -35,24 +49,8 @@ public class SoftDeleteLists extends UseCase<Boolean> {
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
         return Observable.fromCallable(() -> {
-            List<ListModel> toDelete = new ArrayList<>();
-            List<ListModel> toUpdate = new ArrayList<>();
+            mRepository.delete(mData);
             for (ListModel list : mData) {
-                if (list.getServerId() == null) {
-                    toDelete.add(list);
-                } else {
-                    list.setDirty(true);
-                    list.setDelete(true);
-                    toUpdate.add(list);
-                }
-            }
-            mRepository.delete(toDelete);
-            mRepository.update(toUpdate);
-
-            for (ListModel list : toUpdate) {
-                mRepository.markListItemsAsDeleted(list.getId());
-            }
-            for (ListModel list : toDelete) {
                 mRepository.deleteListItems(list.getId());
             }
             return true;

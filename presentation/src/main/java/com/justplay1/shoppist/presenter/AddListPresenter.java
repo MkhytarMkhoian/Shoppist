@@ -1,9 +1,24 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.presenter;
 
 import android.graphics.Color;
 import android.os.Bundle;
 
-import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.di.scope.PerActivity;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.lists.AddList;
@@ -12,6 +27,7 @@ import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.Priority;
 import com.justplay1.shoppist.models.mappers.ListModelDataMapper;
 import com.justplay1.shoppist.presenter.base.BaseAddElementPresenter;
+import com.justplay1.shoppist.utils.ModelUtils;
 import com.justplay1.shoppist.view.AddListView;
 
 import java.util.Collections;
@@ -21,7 +37,7 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * Created by Mkhytar on 04.07.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @PerActivity
 public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
@@ -158,18 +174,15 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
         ListViewModel list = new ListViewModel();
         list.setName(name);
         list.setColor(mColor);
-        list.setDirty(true);
         list.setPriority(mPriority);
 
         if (mItem != null) {
             list.setId(mItem.getId());
-            list.setServerId(mItem.getServerId());
             list.setChecked(mItem.isChecked());
-            list.setTimestamp(mItem.getTimestamp());
             list.setTimeCreated(mItem.getTimeCreated());
         } else {
             list.setTimeCreated(System.currentTimeMillis());
-            list.setId(generateId(name));
+            list.setId(ModelUtils.generateId());
         }
         return list;
     }

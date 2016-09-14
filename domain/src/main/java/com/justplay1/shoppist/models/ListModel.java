@@ -1,7 +1,23 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.models;
 
 /**
- * Created by Mkhitar on 28.10.2014.
+ * Created by Mkhytar Mkhoian.
  */
 public class ListModel extends BaseModel {
 
@@ -26,12 +42,8 @@ public class ListModel extends BaseModel {
         setTimeCreated(list.getTimeCreated());
         setPriority(list.getPriority());
         setSize(list.getSize());
-        setServerId(list.getServerId());
         setBoughtCount(list.getBoughtCount());
         setPosition(list.getPosition());
-        setDelete(list.isDelete());
-        setDirty(list.isDirty());
-        setTimestamp(list.getTimestamp());
     }
 
     public int getPosition() {

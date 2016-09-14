@@ -1,11 +1,25 @@
-package com.justplay1.shoppist.presenter;
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 
-import android.os.Bundle;
+package com.justplay1.shoppist.presenter;
 
 import com.justplay1.shoppist.di.scope.PerActivity;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
+import com.justplay1.shoppist.interactor.category.DeleteCategory;
 import com.justplay1.shoppist.interactor.category.GetCategories;
-import com.justplay1.shoppist.interactor.category.SoftDeleteCategory;
 import com.justplay1.shoppist.interactor.category.UpdateCategory;
 import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.models.CategoryModel;
@@ -30,7 +44,7 @@ import rx.Observable;
 import rx.functions.Func1;
 
 /**
- * Created by Mkhytar on 01.07.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @PerActivity
 public class CategoryPresenter extends BaseRxPresenter<CategoryView> {
@@ -39,16 +53,16 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView> {
     private final ShoppistPreferences mPreferences;
     private final UpdateCategory mUpdateCategory;
     private final GetCategories mGetCategories;
-    private final SoftDeleteCategory mSoftDeleteCategory;
+    private final DeleteCategory mDeleteCategory;
 
     @Inject
     public CategoryPresenter(ShoppistPreferences preferences, UpdateCategory updateCategory,
-                             GetCategories getCategories, SoftDeleteCategory softDeleteCategory,
+                             GetCategories getCategories, DeleteCategory deleteCategory,
                              CategoryModelDataMapper dataMapper) {
         this.mPreferences = preferences;
         this.mUpdateCategory = updateCategory;
         this.mGetCategories = getCategories;
-        this.mSoftDeleteCategory = softDeleteCategory;
+        this.mDeleteCategory = deleteCategory;
         this.mDataMapper = dataMapper;
     }
 

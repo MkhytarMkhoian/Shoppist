@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016 Mkhytar Mkhoian
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.justplay1.shoppist.view.adapters;
 
 import android.content.Context;
@@ -13,7 +28,6 @@ import com.justplay1.shoppist.models.ItemType;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
-import com.justplay1.shoppist.view.component.animboxes.SelectBoxCheckListener;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
@@ -21,7 +35,7 @@ import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder
 import java.util.Locale;
 
 /**
- * Created by Mkhytar on 30.01.2016.
+ * Created by Mkhytar Mkhoian.
  */
 public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
 
@@ -33,13 +47,8 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
-        switch (viewType) {
-            case ItemType.LIST_ITEM:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_currency, parent, false);
-                return new UnitItemViewHolder(view, mItemClickListener);
-        }
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_currency, parent, false);
+        return new UnitItemViewHolder(view, mItemClickListener);
     }
 
     @Override
@@ -48,14 +57,17 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
             case ItemType.LIST_ITEM:
                 UnitItemViewHolder holder = (UnitItemViewHolder) viewHolder;
                 UnitViewModel item = getItem(position);
-                item.setChecked(isItemChecked(item.getId()));
 
                 holder.name.setText(String.format("%s (%s)", item.getName(), item.getShortName()));
 
                 holder.selectBox.setNormalStateColor(ContextCompat.getColor(mContext, R.color.blue_grey_500));
                 holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
-                holder.selectBox.setEventListener(isChecked -> onCheckItem(item, isChecked));
-                holder.selectBox.refresh(item.isChecked());
+                holder.selectBox.setEventListener(isChecked -> {
+                    onCheckItem(item, isChecked);
+                    holder.setActivated(isChecked);
+                });
+                holder.selectBox.setChecked(item.isChecked());
+                holder.setActivated(item.isChecked());
                 break;
         }
     }

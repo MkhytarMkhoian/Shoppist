@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.justplay1.shoppist.R;
 
 /**
- * Created by Mkhitar on 07.01.2015.
+ * Created by Mkhytar Mkhoian.
  */
 public class SelectBoxView extends FrameLayout implements View.OnClickListener, Animation.AnimationListener {
 
@@ -35,6 +35,7 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
     private int mDimen;
     private ShapeDrawable mShapeDrawable;
     private boolean isClickable = true;
+    private boolean isAttachedToWindow;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public SelectBoxView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -104,9 +105,9 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
         if (!isClickable) return;
 
         if (isChecked) {
-            setChecked(false);
+            setCheckedWithAnim(false);
         } else {
-            setChecked(true);
+            setCheckedWithAnim(true);
         }
     }
 
@@ -151,16 +152,16 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
         return isChecked;
     }
 
-    public void setChecked(boolean checked) {
+    public void setCheckedWithAnim(boolean checked) {
         isChecked = checked;
-        doAnimation();
+        if (isAttachedToWindow) {
+            doAnimation();
+        } else {
+            switchBox();
+        }
     }
 
-    public void refresh() {
-        switchBox();
-    }
-
-    public void refresh(boolean checked) {
+    public void setChecked(boolean checked) {
         isChecked = checked;
         switchBox();
     }
@@ -237,14 +238,18 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
             mInnerTextView.getLayoutParams().width = LayoutParams.WRAP_CONTENT;
             setDrawable(mMainView, mNormalStateColor);
         }
-//        if (mHolder != null && mHolder.container != null) {
-//            mHolder.container.setActivated(isChecked);
-//        } else if (mHolder != null) {
-//            mHolder.itemView.setActivated(isChecked);
-//        }
     }
 
-    public void onMovedToScrapHeap() {
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        isAttachedToWindow = true;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        isAttachedToWindow = false;
         if (animate() != null) {
             animate().cancel();
         }

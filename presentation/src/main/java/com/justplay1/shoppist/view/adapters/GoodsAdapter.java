@@ -56,7 +56,6 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
     @Override
     public void onBindChildViewHolder(GoodsViewHolder holder, int groupPosition, int childPosition, int viewType) {
         ProductViewModel item = getChildItem(groupPosition, childPosition);
-        item.setChecked(isItemChecked(item.getId()));
 
         holder.childPosition = childPosition;
         holder.groupPosition = groupPosition;
@@ -72,8 +71,11 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
 
         holder.selectBox.setNormalStateColor(item.getCategory().getColor());
         holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
-        holder.selectBox.setEventListener(isChecked -> onCheckItem(item, isChecked));
-        holder.selectBox.refresh(item.isChecked());
+        holder.selectBox.setEventListener(isChecked -> {
+            onCheckItem(item, isChecked);
+            holder.setActivated(isChecked);
+        });
+        holder.selectBox.setChecked(item.isChecked());
     }
 
     @Override

@@ -1,8 +1,22 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.view.fragments;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,7 +32,6 @@ import com.justplay1.shoppist.di.modules.ActivityModule;
 import com.justplay1.shoppist.di.modules.CurrencyModule;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.presenter.CurrencyPresenter;
-import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.CurrencyView;
 import com.justplay1.shoppist.view.adapters.CurrencyAdapter;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
@@ -30,7 +43,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Created by Mkhytar on 26.03.2016.
+ * Created by Mkhytar Mkhoian.
  */
 public class CurrencyFragment extends BaseListFragment
         implements CurrencyView, ShoppistRecyclerView.OnItemClickListener, View.OnClickListener {
@@ -155,7 +168,7 @@ public class CurrencyFragment extends BaseListFragment
     }
 
     public void onUnCheckAllItemsClick() {
-        mAdapter.unCheckAllItems(true);
+        mAdapter.unCheckAllItems();
     }
 
     public void onDeleteCheckedItemsClick() {
@@ -170,24 +183,6 @@ public class CurrencyFragment extends BaseListFragment
             }
         }
         return deleteFlag;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            if (data.getStringExtra(Const.OLD_ID) != null) {
-                String oldId = data.getStringExtra(Const.OLD_ID);
-                String newId = data.getStringExtra(Const.NEW_ID);
-
-                boolean checked = mAdapter.isItemChecked(oldId);
-                mAdapter.deleteItemFromChecked(oldId);
-                mAdapter.addToChecked(newId, checked);
-
-                data.removeExtra(Const.NEW_ID);
-                data.removeExtra(Const.OLD_ID);
-            }
-        }
     }
 
     @Override

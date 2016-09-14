@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.models;
 
 import android.os.Parcel;
@@ -7,7 +23,7 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstant
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemReactions;
 
 /**
- * Created by Mkhitar on 05.02.2015.
+ * Created by Mkhytar Mkhoian.
  */
 public abstract class BaseViewModel implements Parcelable {
 
@@ -15,40 +31,12 @@ public abstract class BaseViewModel implements Parcelable {
     protected boolean mPinned;
 
     protected String id;
-    protected String serverId;
     protected String name;
-    protected long timestamp;
-    protected boolean isDelete = false;
-    protected boolean isDirty = false;
 
     public BaseViewModel() {
     }
 
     public BaseViewModel(Parcel parcel) {
-    }
-
-    public String getServerId() {
-        return serverId;
-    }
-
-    public void setServerId(String id) {
-        serverId = id;
-    }
-
-    public boolean isDirty() {
-        return isDirty;
-    }
-
-    public void setDirty(boolean isDirty) {
-        this.isDirty = isDirty;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
     }
 
     public String getId() {
@@ -57,14 +45,6 @@ public abstract class BaseViewModel implements Parcelable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public boolean isDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(boolean isDelete) {
-        this.isDelete = isDelete;
     }
 
     public void setPinned(boolean pinnedToSwipeLeft) {
@@ -109,7 +89,9 @@ public abstract class BaseViewModel implements Parcelable {
         throw new UnsupportedOperationException();
     }
 
-    public @ItemType int getItemType() {
+    public
+    @ItemType
+    int getItemType() {
         return ItemType.LIST_ITEM;
     }
 

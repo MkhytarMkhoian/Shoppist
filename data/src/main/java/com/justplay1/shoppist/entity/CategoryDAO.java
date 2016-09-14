@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.entity;
 
 import android.content.ContentValues;
@@ -9,7 +25,7 @@ import com.justplay1.shoppist.repository.datasource.local.database.DbUtil;
 import rx.functions.Func1;
 
 /**
- * Created by Mkhitar on 16.11.2014.
+ * Created by Mkhytar Mkhoian.
  */
 public class CategoryDAO extends BaseDAO {
 
@@ -17,15 +33,11 @@ public class CategoryDAO extends BaseDAO {
 
     public static final String TABLE = "categories";
 
-    public static final String SERVER_ID = "category_parse_id";
     public static final String NAME = "category_name";
     public static final String CATEGORY_ID = "main_category_id";
     public static final String COLOR = "category_color";
     public static final String CREATE_BY_USER = "category_create_by_user";
     public static final String MANUAL_SORT_POSITION = "category_manual_sort_position";
-    public static final String IS_DELETED = "category_is_deleted";
-    public static final String TIMESTAMP = "category_timestamp";
-    public static final String IS_DIRTY = "category_is_dirty";
 
     public static final String WHERE_CATEGORY_ID = CATEGORY_ID + " IN(?)";
 
@@ -34,12 +46,11 @@ public class CategoryDAO extends BaseDAO {
     private int position = -1;
 
     public CategoryDAO(String id) {
-        super(id, null, null, 0, false, false);
+        super(id, null);
     }
 
-    public CategoryDAO(String id, String serverId, String name, long timestamp,
-                       boolean isDirty, boolean isDelete, int color, boolean isCreateByUser, int position) {
-        super(id, serverId, name, timestamp, isDirty, isDelete);
+    public CategoryDAO(String id, String name, int color, boolean isCreateByUser, int position) {
+        super(id, name);
         this.color = color;
         this.isCreateByUser = isCreateByUser;
         this.position = position;
@@ -79,11 +90,7 @@ public class CategoryDAO extends BaseDAO {
         int color = DbUtil.getInt(cursor, COLOR);
         boolean createByUser = DbUtil.getBoolean(cursor, CREATE_BY_USER);
         int position = DbUtil.getInt(cursor, MANUAL_SORT_POSITION);
-        String serverId = DbUtil.getString(cursor, SERVER_ID);
-        boolean isDelete = DbUtil.getBoolean(cursor, IS_DELETED);
-        boolean isDirty = DbUtil.getBoolean(cursor, IS_DIRTY);
-        long timestamp = DbUtil.getLong(cursor, TIMESTAMP);
-        return new CategoryDAO(id, serverId, name, timestamp, isDirty, isDelete, color, createByUser, position);
+        return new CategoryDAO(id, name, color, createByUser, position);
     }
 
     public static final class Builder {
@@ -109,28 +116,8 @@ public class CategoryDAO extends BaseDAO {
             return this;
         }
 
-        public Builder serverId(String serverId) {
-            values.put(SERVER_ID, serverId);
-            return this;
-        }
-
         public Builder position(int position) {
             values.put(MANUAL_SORT_POSITION, position);
-            return this;
-        }
-
-        public Builder isDelete(boolean delete) {
-            values.put(IS_DELETED, delete ? 1 : 0);
-            return this;
-        }
-
-        public Builder isDirty(boolean dirty) {
-            values.put(IS_DIRTY, dirty ? 1 : 0);
-            return this;
-        }
-
-        public Builder timestamp(long timestamp) {
-            values.put(TIMESTAMP, timestamp);
             return this;
         }
 

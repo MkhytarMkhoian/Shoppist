@@ -1,10 +1,26 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by Mkhitar on 18.05.2015.
+ * Created by Mkhytar Mkhoian.
  */
 public class ProductViewModel extends BaseViewModel {
 
@@ -15,7 +31,6 @@ public class ProductViewModel extends BaseViewModel {
     private UnitViewModel unit;
 
     public ProductViewModel() {
-        timestamp = 0;
     }
 
     public ProductViewModel(Parcel parcel) {
@@ -24,12 +39,8 @@ public class ProductViewModel extends BaseViewModel {
         name = parcel.readString();
         category = parcel.readParcelable(ProductViewModel.class.getClassLoader());
         isCreateByUser = parcel.readByte() != 0;
-        serverId = parcel.readString();
         isChecked = parcel.readByte() != 0;
         timeCreated = parcel.readLong();
-        isDelete = parcel.readByte() != 0;
-        isDirty = parcel.readByte() != 0;
-        timestamp = parcel.readLong();
         unit = parcel.readParcelable(ProductViewModel.class.getClassLoader());
     }
 
@@ -38,10 +49,6 @@ public class ProductViewModel extends BaseViewModel {
         setId(product.getId());
         setName(product.getName());
         setCreateByUser(product.isCreateByUser());
-        setServerId(product.getServerId());
-        setDelete(product.isDelete());
-        setDirty(product.isDirty());
-        setTimestamp(product.getTimestamp());
         setCategory(product.getCategory());
         setUnit(product.getUnit());
     }
@@ -115,12 +122,8 @@ public class ProductViewModel extends BaseViewModel {
         dest.writeString(name);
         dest.writeParcelable(category, flags);
         dest.writeByte((byte) (isCreateByUser ? 1 : 0));
-        dest.writeString(serverId);
         dest.writeByte((byte) (isChecked ? 1 : 0));
         dest.writeLong(timeCreated);
-        dest.writeByte((byte) (isDelete ? 1 : 0));
-        dest.writeByte((byte) (isDirty ? 1 : 0));
-        dest.writeLong(timestamp);
         dest.writeParcelable(unit, flags);
     }
 

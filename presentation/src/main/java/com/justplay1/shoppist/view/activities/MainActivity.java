@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.view.activities;
 
 import android.content.Intent;
@@ -21,6 +37,9 @@ import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.fragments.ListFragment;
 import com.justplay1.shoppist.view.fragments.MenuFragment;
 
+/**
+ * Created by Mkhytar Mkhoian.
+ */
 public class MainActivity extends BaseListActivity
         implements MenuFragment.MenuFragmentInteraction, Toolbar.OnMenuItemClickListener,
         ListFragment.ListsFragmentInteractionListener {
@@ -233,18 +252,6 @@ public class MainActivity extends BaseListActivity
     }
 
     @Override
-    public void onNotificationClick() {
-        mMenuDrawer.addDrawerListener(new DrawerListener() {
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                mNavigator.navigateToNotificationsScreen(MainActivity.this);
-                mMenuDrawer.removeDrawerListener(this);
-            }
-        });
-        mMenuDrawer.closeDrawers();
-    }
-
-    @Override
     public void onFeedbackClick() {
         mMenuDrawer.addDrawerListener(new DrawerListener() {
             @Override
@@ -298,12 +305,10 @@ public class MainActivity extends BaseListActivity
         mMenuDrawer.closeDrawers();
     }
 
-    @Override
-    public void onLoginClick() {
-        mNavigator.navigateToSignInScreen(this);
-    }
-
     private static abstract class DrawerListener implements DrawerLayout.DrawerListener {
+
+        DrawerListener() {
+        }
 
         @Override
         public void onDrawerSlide(View drawerView, float slideOffset) {

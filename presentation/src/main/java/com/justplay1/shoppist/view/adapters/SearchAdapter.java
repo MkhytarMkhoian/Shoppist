@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.view.adapters;
 
 import android.content.Context;
@@ -5,6 +21,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,11 +47,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Mkhytar on 10.02.2016.
+ * Created by Mkhytar Mkhoian.
  */
 public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
-    private Context mContext;
     private Map<String, ProductViewModel> mItems;
     private List<ProductViewModel> mItemsToDisplay;
     private ShoppistRecyclerView.OnItemClickListener mItemClickListener;
@@ -43,12 +59,11 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public SearchAdapter(Context context, final int contextType) {
         mContextType = contextType;
-        mContext = context;
         setHasStableIds(true);
         mItems = new HashMap<>();
         mItemsToDisplay = new ArrayList<>();
-        iconEndDrawable = mContext.getResources().getDrawable(R.drawable.ic_add_black_24dp);
-        iconEndDrawable.setColorFilter(mContext.getResources().getColor(R.color.action_mode_toolbar_color), PorterDuff.Mode.SRC_IN);
+        iconEndDrawable = ContextCompat.getDrawable(context, R.drawable.ic_add_black_24dp);
+        iconEndDrawable.setColorFilter(ContextCompat.getColor(context, R.color.action_mode_toolbar_color), PorterDuff.Mode.SRC_IN);
     }
 
     @Override

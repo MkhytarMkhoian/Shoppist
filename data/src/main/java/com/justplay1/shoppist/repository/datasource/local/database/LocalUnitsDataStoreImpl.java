@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.repository.datasource.local.database;
 
 import android.content.ContentValues;
@@ -20,16 +36,15 @@ import javax.inject.Singleton;
 import rx.Observable;
 
 /**
- * Created by Mkhytar on 28.04.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @Singleton
 public class LocalUnitsDataStoreImpl extends BaseLocalDataStore<UnitDAO> implements LocalUnitsDataStore {
 
-    private static final String WITHOUT_DELETED = UnitDAO.IS_DELETED + "<1";
-    private static final String LAST_TIMESTAMP_QUERY =
-            "SELECT MAX(" + UnitDAO.TIMESTAMP + ") FROM " + UnitDAO.TABLE;
-
     private static String UNIT_QUERY(String selection) {
+        if (selection == null){
+            return "SELECT * FROM " + UnitDAO.TABLE;
+        }
         return "SELECT * FROM " + UnitDAO.TABLE +
                 " WHERE " + selection;
     }
@@ -52,7 +67,7 @@ public class LocalUnitsDataStoreImpl extends BaseLocalDataStore<UnitDAO> impleme
             String id = unitId[1];
             String name = unit[0];
             String shortName = unitId[0];
-            UnitDAO unit1 = new UnitDAO(id, null, name, 0, false, false, shortName);
+            UnitDAO unit1 = new UnitDAO(id, name, shortName);
             unitList.put(unit1.getId(), unit1);
         }
         return Observable.just(unitList);
@@ -62,28 +77,14 @@ public class LocalUnitsDataStoreImpl extends BaseLocalDataStore<UnitDAO> impleme
     protected ContentValues getValue(UnitDAO unit) {
         return new UnitDAO.Builder()
                 .id(unit.getId())
-                .serverId(unit.getServerId())
                 .fullName(unit.getName())
                 .shortName(unit.getShortName())
-                .isDirty(unit.isDirty())
-                .isDelete(unit.isDelete())
-                .timestamp(unit.getTimestamp())
                 .build();
     }
 
     @Override
     public Observable<List<UnitDAO>> getItems() {
-        return getAllUnits(0, false);
-    }
-
-    @Override
-    public Observable<List<UnitDAO>> getDirtyItems() {
-        return getAllUnits(0, true);
-    }
-
-    @Override
-    public Observable<List<UnitDAO>> getItems(long timestamp) {
-        return getAllUnits(timestamp, false);
+        return getAllUnits();
     }
 
     @Override
@@ -158,25 +159,8 @@ public class LocalUnitsDataStoreImpl extends BaseLocalDataStore<UnitDAO> impleme
 //        mContext.getContentResolver().notifyChange(ShoppingListContact.ShoppingListItems.CONTENT_URI, null, false);
     }
 
-    @Override
-    public Observable<Long> getLastTimestamp() {
-        return getValue(UnitDAO.TABLE, LAST_TIMESTAMP_QUERY, null);
-    }
-
-    private Observable<List<UnitDAO>> getAllUnits(long timestamp, boolean getDirty) {
-        String selection = WITHOUT_DELETED;
-        String[] selectionArgs = null;
-        if (timestamp > 0 && getDirty) {
-            selection = UnitDAO.TIMESTAMP + " > ? AND " + UnitDAO.IS_DIRTY + " = ?";
-            selectionArgs = new String[]{timestamp + "", 1 + ""};
-        } else if (timestamp > 0) {
-            selection = UnitDAO.TIMESTAMP + " > ?";
-            selectionArgs = new String[]{timestamp + ""};
-        } else if (getDirty) {
-            selection = UnitDAO.IS_DIRTY + " = ?";
-            selectionArgs = new String[]{1 + ""};
-        }
-        return db.createQuery(UnitDAO.TABLE, UNIT_QUERY(selection), selectionArgs)
+    private Observable<List<UnitDAO>> getAllUnits() {
+        return db.createQuery(UnitDAO.TABLE, UNIT_QUERY(null), new String[]{})
                 .mapToList(UnitDAO.MAPPER::call);
     }
 }

@@ -1,13 +1,28 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.presenter;
 
-import android.os.Bundle;
 import android.support.v4.util.Pair;
 
 import com.justplay1.shoppist.di.scope.PerActivity;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.GetCategory;
+import com.justplay1.shoppist.interactor.goods.DeleteGoods;
 import com.justplay1.shoppist.interactor.goods.GetGoods;
-import com.justplay1.shoppist.interactor.goods.SoftDeleteGoods;
 import com.justplay1.shoppist.interactor.goods.UpdateGoods;
 import com.justplay1.shoppist.interactor.units.GetUnit;
 import com.justplay1.shoppist.models.CategoryViewModel;
@@ -30,7 +45,7 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * Created by Mkhytar on 01.07.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @PerActivity
 public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductViewModel> {
@@ -42,14 +57,14 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     private final GetCategory mGetCategory;
     private final GetUnit mGetUnit;
     private final GetGoods mGetGoods;
-    private final SoftDeleteGoods mSoftDeleteGoods;
+    private final DeleteGoods mDeleteGoods;
     private final UpdateGoods mUpdateGoods;
 
     @Inject
     public GoodsPresenter(ShoppistPreferences preferences,
                           GoodsModelDataMapper dataMapper,
                           GetGoods getGoods,
-                          SoftDeleteGoods softDeleteGoods,
+                          DeleteGoods deleteGoods,
                           UpdateGoods updateGoods,
                           GetCategory getCategory,
                           GetUnit getUnit,
@@ -58,7 +73,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
         super(preferences);
         this.mGoodsModelDataMapper = dataMapper;
         this.mGetGoods = getGoods;
-        this.mSoftDeleteGoods = softDeleteGoods;
+        this.mDeleteGoods = deleteGoods;
         this.mUpdateGoods = updateGoods;
         this.mGetCategory = getCategory;
         this.mGetUnit = getUnit;
@@ -78,10 +93,6 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
         showEditGoodsDialog(product);
     }
 
-    public void onListItemLongClick(ProductViewModel product) {
-
-    }
-
     public void onChangeCategoryClick(List<ProductViewModel> data) {
         showChangeCategoryDialog(data);
     }
@@ -90,16 +101,19 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
         showChangeUnitDialog(data);
     }
 
-    public void onSortByNameClick() {
+    public void onSortByNameClick(final List<ProductViewModel> data) {
         mPreferences.setSortForGoods(SortType.SORT_BY_NAME);
+        showData(sort(data, SortType.SORT_BY_NAME));
     }
 
-    public void onSortByTimeCreatedClick() {
+    public void onSortByTimeCreatedClick(final List<ProductViewModel> data) {
         mPreferences.setSortForGoods(SortType.SORT_BY_TIME_CREATED);
+        showData(sort(data, SortType.SORT_BY_TIME_CREATED));
     }
 
-    public void onSortByCategoryClick() {
+    public void onSortByCategoryClick(final List<ProductViewModel> data) {
         mPreferences.setSortForGoods(SortType.SORT_BY_CATEGORIES);
+        showData(sort(data, SortType.SORT_BY_CATEGORIES));
     }
 
     public void onSearchClick() {
@@ -144,7 +158,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     private Observable<List<Pair<HeaderViewModel, List<ProductViewModel>>>> loadGoods() {
         return mGetGoods.get()
                 .map(mGoodsModelDataMapper::transformToViewModel)
-                .map(goods -> sort(goods, mPreferences.getSortForCategories()));
+                .map(goods -> sort(goods, mPreferences.getSortForGoods()));
     }
 
     private Observable<UnitViewModel> loadDefaultUnit() {
@@ -162,8 +176,8 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     public void deleteItems(Collection<ProductViewModel> data) {
         mSubscriptions.add(Observable.fromCallable(() -> mGoodsModelDataMapper.transform(data))
                 .flatMap(goods -> {
-                    mSoftDeleteGoods.setData(goods);
-                    return mSoftDeleteGoods.get();
+                    mDeleteGoods.setData(goods);
+                    return mDeleteGoods.get();
                 }).subscribe(new DefaultSubscriber<Boolean>()));
     }
 
@@ -172,8 +186,6 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
             for (ProductViewModel product : editProducts) {
                 if (!unit.equals(product.getUnit())) {
                     product.setUnit(unit);
-                    unit.setTimestamp(product.getTimestamp());
-                    unit.setDirty(true);
                 }
             }
             return editProducts;
@@ -194,8 +206,6 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
             for (ProductViewModel product : editProducts) {
                 if (!category.equals(product.getCategory())) {
                     product.setCategory(category);
-                    category.setTimestamp(product.getTimestamp());
-                    category.setDirty(true);
                 }
             }
             return editProducts;

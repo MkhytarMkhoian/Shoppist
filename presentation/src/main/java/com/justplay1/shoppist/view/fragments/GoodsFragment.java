@@ -1,8 +1,22 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.view.fragments;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
@@ -29,7 +43,6 @@ import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.presenter.GoodsPresenter;
 import com.justplay1.shoppist.utils.AnimationResultListener;
-import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.GoodsView;
 import com.justplay1.shoppist.view.adapters.GoodsAdapter;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
@@ -45,7 +58,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Created by Mkhytar on 26.03.2016.
+ * Created by Mkhytar Mkhoian.
  */
 public class GoodsFragment extends BaseExpandableListFragment
         implements ShoppistRecyclerView.OnItemClickListener, View.OnClickListener, GoodsView {
@@ -190,7 +203,7 @@ public class GoodsFragment extends BaseExpandableListFragment
     }
 
     public void onUnCheckAllItemsClick() {
-        mAdapter.unCheckAllItems(true);
+        mAdapter.unCheckAllItems();
     }
 
     public void onDeleteClick() {
@@ -205,24 +218,6 @@ public class GoodsFragment extends BaseExpandableListFragment
     @Override
     public void onClick(View v) {
         mPresenter.onAddButtonClick();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            if (data.getStringExtra(Const.OLD_ID) != null) {
-                String oldId = data.getStringExtra(Const.OLD_ID);
-                String newId = data.getStringExtra(Const.NEW_ID);
-
-                boolean checked = mAdapter.isItemChecked(oldId);
-                mAdapter.deleteItemFromChecked(oldId);
-                mAdapter.addToChecked(newId, checked);
-
-                data.removeExtra(Const.NEW_ID);
-                data.removeExtra(Const.OLD_ID);
-            }
-        }
     }
 
     @Override
@@ -245,13 +240,6 @@ public class GoodsFragment extends BaseExpandableListFragment
     public void showEditGoodsDialog(final ProductViewModel editProduct) {
         FragmentManager fm = getFragmentManager();
         AddGoodsDialogFragment dialog = AddGoodsDialogFragment.newInstance(editProduct);
-        dialog.setCompleteListener(isUpdate -> {
-            if (isUpdate) {
-                boolean checked = mAdapter.isItemChecked(editProduct.getId());
-                mAdapter.deleteItemFromChecked(editProduct.getId());
-                mAdapter.addToChecked(editProduct.getId(), checked);
-            }
-        });
         dialog.show(fm, AddUnitsDialogFragment.class.getName());
     }
 
@@ -301,15 +289,15 @@ public class GoodsFragment extends BaseExpandableListFragment
     }
 
     public void onSortByNameClick() {
-        mPresenter.onSortByNameClick();
+        mPresenter.onSortByNameClick(mAdapter.getItems());
     }
 
     public void onSortByTimeCreatedClick() {
-        mPresenter.onSortByTimeCreatedClick();
+        mPresenter.onSortByTimeCreatedClick(mAdapter.getItems());
     }
 
     public void onSortByCategoryClick() {
-        mPresenter.onSortByCategoryClick();
+        mPresenter.onSortByCategoryClick(mAdapter.getItems());
     }
 
     public void onSearchClick() {

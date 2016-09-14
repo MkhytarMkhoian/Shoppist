@@ -1,9 +1,25 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.models;
 
 import android.os.Parcel;
 
 /**
- * Created by Mkhitar on 21.07.2015.
+ * Created by Mkhytar Mkhoian.
  */
 public class ListItemViewModel extends BaseViewModel {
 
@@ -39,12 +55,8 @@ public class ListItemViewModel extends BaseViewModel {
         setStatus(item.getStatus());
         setPriority(item.getPriority());
         setCategory(item.getCategory());
-        setServerId(item.getServerId());
         setPosition(item.getPosition());
         setPinned(item.isPinned());
-        setDelete(item.isDelete());
-        setDirty(item.isDirty());
-        setTimestamp(item.getTimestamp());
     }
 
     @SuppressWarnings("ResourceType")
@@ -63,12 +75,8 @@ public class ListItemViewModel extends BaseViewModel {
         unit = parcel.readParcelable(ListItemViewModel.class.getClassLoader());
         timeCreated = parcel.readLong();
         currency = parcel.readParcelable(ListItemViewModel.class.getClassLoader());
-        serverId = parcel.readString();
         position = parcel.readInt();
         mPinned = parcel.readByte() != 0;
-        isDelete = parcel.readByte() != 0;
-        isDirty = parcel.readByte() != 0;
-        timestamp = parcel.readLong();
     }
 
     public String getParentListId() {
@@ -226,12 +234,8 @@ public class ListItemViewModel extends BaseViewModel {
         dest.writeParcelable(unit, flags);
         dest.writeLong(timeCreated);
         dest.writeParcelable(currency, flags);
-        dest.writeString(serverId);
         dest.writeInt(position);
         dest.writeByte((byte) (mPinned ? 1 : 0));
-        dest.writeByte((byte) (isDelete ? 1 : 0));
-        dest.writeByte((byte) (isDirty ? 1 : 0));
-        dest.writeLong(timestamp);
     }
 
     public static final Creator<ListItemViewModel> CREATOR = new Creator<ListItemViewModel>() {

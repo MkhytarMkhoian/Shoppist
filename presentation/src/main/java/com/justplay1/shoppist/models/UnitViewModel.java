@@ -1,10 +1,26 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by Mkhitar on 15.05.2015.
+ * Created by Mkhytar Mkhoian.
  */
 public class UnitViewModel extends BaseViewModel {
 
@@ -16,18 +32,13 @@ public class UnitViewModel extends BaseViewModel {
     public UnitViewModel() {
         name = "";
         shortName = "";
-        timestamp = 0;
     }
 
     public UnitViewModel(Parcel parcel) {
         id = parcel.readString();
         name = parcel.readString();
         shortName = parcel.readString();
-        serverId = parcel.readString();
-        isDirty = parcel.readByte() != 0;
-        timestamp = parcel.readLong();
         isChecked = parcel.readByte() != 0;
-        isDelete = parcel.readByte() != 0;
     }
 
     @Override
@@ -72,11 +83,7 @@ public class UnitViewModel extends BaseViewModel {
         dest.writeString(id);
         dest.writeString(name);
         dest.writeString(shortName);
-        dest.writeString(serverId);
-        dest.writeByte((byte) (isDirty ? 1 : 0));
-        dest.writeLong(timestamp);
         dest.writeByte((byte) (isChecked ? 1 : 0));
-        dest.writeByte((byte) (isDelete ? 1 : 0));
     }
 
     public static final Parcelable.Creator<UnitViewModel> CREATOR = new Creator<UnitViewModel>() {

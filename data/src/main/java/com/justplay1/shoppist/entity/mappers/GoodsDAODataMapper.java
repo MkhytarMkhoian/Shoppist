@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.entity.mappers;
 
 import com.justplay1.shoppist.entity.ProductDAO;
@@ -11,7 +27,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * Created by Mkhytar on 29.04.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @Singleton
 public class GoodsDAODataMapper {
@@ -31,10 +47,6 @@ public class GoodsDAODataMapper {
             item = new ProductModel();
             item.setId(itemEntity.getId());
             item.setName(itemEntity.getName());
-            item.setServerId(itemEntity.getServerId());
-            item.setDirty(itemEntity.isDirty());
-            item.setDelete(itemEntity.isDelete());
-            item.setTimestamp(itemEntity.getTimestamp());
             item.setCategory(mCategoryDAODataMapper.transformFromDAO(itemEntity.getCategory()));
             item.setUnit(mUnitsDAODataMapper.transformFromDAO(itemEntity.getUnit()));
             item.setTimeCreated(itemEntity.getTimeCreated());
@@ -59,11 +71,7 @@ public class GoodsDAODataMapper {
         ProductDAO item = null;
         if (product != null) {
             item = new ProductDAO(product.getId(),
-                    product.getServerId(),
                     product.getName(),
-                    product.getTimestamp(),
-                    product.isDirty(),
-                    product.isDelete(),
                     mCategoryDAODataMapper.transformToDAO(product.getCategory()),
                     product.isCreateByUser(),
                     product.getTimeCreated(),

@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.presenter;
 
 import android.os.Bundle;
@@ -26,6 +42,7 @@ import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
 import com.justplay1.shoppist.preferences.ShoppistPreferences;
 import com.justplay1.shoppist.presenter.base.BaseAddElementPresenter;
 import com.justplay1.shoppist.utils.Const;
+import com.justplay1.shoppist.utils.ModelUtils;
 import com.justplay1.shoppist.view.AddListItemView;
 
 import java.math.BigDecimal;
@@ -41,7 +58,7 @@ import rx.Observable;
 import rx.functions.Func1;
 
 /**
- * Created by Mkhytar on 04.07.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @PerActivity
 public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemView> {
@@ -461,7 +478,6 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     private ListItemViewModel buildList(String name) {
         ListItemViewModel listItem = new ListItemViewModel();
         listItem.setName(name);
-        listItem.setDirty(true);
         listItem.setPriority(mPriority);
         listItem.setParentListId(mParentListId);
         listItem.setUnit(mUnitModel);
@@ -473,15 +489,13 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
 
         if (mItem != null) {
             listItem.setId(mItem.getId());
-            listItem.setServerId(mItem.getServerId());
             listItem.setChecked(mItem.isChecked());
-            listItem.setTimestamp(mItem.getTimestamp());
             listItem.setTimeCreated(mItem.getTimeCreated());
             listItem.setStatus(mItem.getStatus());
         } else {
             listItem.setStatus(false);
             listItem.setTimeCreated(System.currentTimeMillis());
-            listItem.setId(generateId(name));
+            listItem.setId(ModelUtils.generateId());
         }
         return listItem;
     }

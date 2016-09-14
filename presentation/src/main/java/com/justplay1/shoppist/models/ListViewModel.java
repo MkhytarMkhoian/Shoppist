@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.models;
 
 import android.graphics.Color;
@@ -5,7 +21,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by Mkhitar on 28.10.2014.
+ * Created by Mkhytar Mkhoian.
  */
 public class ListViewModel extends BaseViewModel {
 
@@ -32,13 +48,9 @@ public class ListViewModel extends BaseViewModel {
         setTimeCreated(shoppingList.getTimeCreated());
         setPriority(shoppingList.getPriority());
         setSize(shoppingList.getSize());
-        setServerId(shoppingList.getServerId());
         setBoughtCount(shoppingList.getBoughtCount());
         setPosition(shoppingList.getPosition());
         setPinned(shoppingList.isPinned());
-        setDelete(shoppingList.isDelete());
-        setDirty(shoppingList.isDirty());
-        setTimestamp(shoppingList.getTimestamp());
     }
 
     @SuppressWarnings("ResourceType")
@@ -52,12 +64,8 @@ public class ListViewModel extends BaseViewModel {
         color = parcel.readInt();
         isChecked = parcel.readByte() != 0;
         size = parcel.readInt();
-        serverId = parcel.readString();
         position = parcel.readInt();
         mPinned = parcel.readByte() != 0;
-        isDelete = parcel.readByte() != 0;
-        isDirty = parcel.readByte() != 0;
-        timestamp = parcel.readLong();
     }
 
     @Override
@@ -155,12 +163,8 @@ public class ListViewModel extends BaseViewModel {
         dest.writeInt(color);
         dest.writeByte((byte) (isChecked ? 1 : 0));
         dest.writeInt(size);
-        dest.writeString(serverId);
         dest.writeInt(position);
         dest.writeByte((byte) (mPinned ? 1 : 0));
-        dest.writeByte((byte) (isDelete ? 1 : 0));
-        dest.writeByte((byte) (isDirty ? 1 : 0));
-        dest.writeLong(timestamp);
     }
 
     public static final Parcelable.Creator<ListViewModel> CREATOR = new Creator<ListViewModel>() {

@@ -1,15 +1,12 @@
 package com.justplay1.shoppist.view.fragments;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.view.ActionMode;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -27,7 +24,6 @@ import com.justplay1.shoppist.di.modules.CategoryModule;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.presenter.CategoryPresenter;
 import com.justplay1.shoppist.utils.AnimationResultListener;
-import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.CategoryView;
 import com.justplay1.shoppist.view.adapters.CategoriesAdapter;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
@@ -39,7 +35,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Created by Mkhytar on 26.03.2016.
+ * Created by Mkhytar Mkhoian.
  */
 public class CategoryFragment extends BaseListFragment
         implements CategoryView, ShoppistRecyclerView.OnItemClickListener, View.OnClickListener {
@@ -246,7 +242,7 @@ public class CategoryFragment extends BaseListFragment
     }
 
     public void onUnCheckAllItemsClick() {
-        mAdapter.unCheckAllItems(true);
+        mAdapter.unCheckAllItems();
     }
 
     public void onCheckAllItemsClick() {
@@ -261,24 +257,6 @@ public class CategoryFragment extends BaseListFragment
             }
         });
 //        showDeleteDialog(getString(R.string.delete_the_category));
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            if (data.getStringExtra(Const.OLD_ID) != null) {
-                String oldId = data.getStringExtra(Const.OLD_ID);
-                String newId = data.getStringExtra(Const.NEW_ID);
-
-                boolean checked = mAdapter.isItemChecked(oldId);
-                mAdapter.deleteItemFromChecked(oldId);
-                mAdapter.addToChecked(newId, checked);
-
-                data.removeExtra(Const.NEW_ID);
-                data.removeExtra(Const.OLD_ID);
-            }
-        }
     }
 
     public boolean isManualSortModeEnable() {

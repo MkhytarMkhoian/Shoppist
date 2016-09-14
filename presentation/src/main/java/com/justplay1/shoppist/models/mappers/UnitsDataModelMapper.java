@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.models.mappers;
 
 import com.justplay1.shoppist.di.scope.PerActivity;
@@ -11,7 +27,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Created by Mkhytar on 28.04.2016.
+ * Created by Mkhytar Mkhoian.
  */
 @PerActivity
 public class UnitsDataModelMapper {
@@ -26,11 +42,7 @@ public class UnitsDataModelMapper {
             unitModel = new UnitViewModel();
             unitModel.setId(unit.getId());
             unitModel.setName(unit.getName());
-            unitModel.setServerId(unit.getServerId());
             unitModel.setShortName(unit.getShortName());
-            unitModel.setDelete(unit.isDelete());
-            unitModel.setTimestamp(unit.getTimestamp());
-            unitModel.setDirty(unit.isDirty());
         }
         return unitModel;
     }
@@ -53,11 +65,7 @@ public class UnitsDataModelMapper {
             unit = new UnitModel();
             unit.setId(unitModel.getId());
             unit.setName(unitModel.getName());
-            unit.setServerId(unitModel.getServerId());
             unit.setShortName(unitModel.getShortName());
-            unit.setDelete(unitModel.isDelete());
-            unit.setTimestamp(unitModel.getTimestamp());
-            unit.setDirty(unitModel.isDirty());
         }
         return unit;
     }

@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.entity;
 
 import android.content.ContentValues;
@@ -9,14 +25,13 @@ import com.justplay1.shoppist.repository.datasource.local.database.DbUtil;
 import rx.functions.Func1;
 
 /**
- * Created by Mkhitar on 28.10.2014.
+ * Created by Mkhytar Mkhoian.
  */
 public class ListDAO extends BaseDAO {
 
     public static final String TABLE = "shopping_lists";
 
     public static final String LIST_ID = "shopping_list_id";
-    public static final String SERVER_ID = "shopping_list_parse_id";
     public static final String LIST_NAME = "shopping_list_name";
     public static final String COLOR = "shopping_list_color";
     public static final String PRIORITY = "shopping_list_priority";
@@ -24,24 +39,19 @@ public class ListDAO extends BaseDAO {
     public static final String BOUGHT_COUNT = "shopping_list_bought_count";
     public static final String SIZE = "shopping_list_size";
     public static final String MANUAL_SORT_POSITION = "shopping_list_manual_sort_position";
-    public static final String IS_DELETED = "shopping_list_is_deleted";
-    public static final String TIMESTAMP = "shopping_list_timestamp";
-    public static final String IS_DIRTY = "shopping_list_is_dirty";
 
     public static final String WHERE_STRING = LIST_ID + " IN(?)";
 
     private int boughtCount;
     private long timeCreated;
-    @PriorityDAO
     private int priority = PriorityDAO.NO_PRIORITY;
     private int color = Color.DKGRAY;
     private int size;
     private int position = -1;
 
-    public ListDAO(String id, String serverId, String name, long timestamp, boolean isDirty,
-                   boolean isDelete, int boughtCount, long timeCreated,
+    public ListDAO(String id, String name, int boughtCount, long timeCreated,
                    int priority, int color, int size, int position) {
-        super(id, serverId, name, timestamp, isDirty, isDelete);
+        super(id, name);
         this.boughtCount = boughtCount;
         this.timeCreated = timeCreated;
         this.priority = priority;
@@ -95,16 +105,11 @@ public class ListDAO extends BaseDAO {
         String name = DbUtil.getString(cursor, LIST_NAME);
         int color = DbUtil.getInt(cursor, COLOR);
         int position = DbUtil.getInt(cursor, MANUAL_SORT_POSITION);
-        String serverId = DbUtil.getString(cursor, SERVER_ID);
-        boolean isDelete = DbUtil.getBoolean(cursor, IS_DELETED);
-        boolean isDirty = DbUtil.getBoolean(cursor, IS_DIRTY);
-        long timestamp = DbUtil.getLong(cursor, TIMESTAMP);
         long timeCreated = DbUtil.getLong(cursor, TIME_CREATED);
         int size = DbUtil.getInt(cursor, SIZE);
         int boughtCount = DbUtil.getInt(cursor, BOUGHT_COUNT);
         int priority = DbUtil.getInt(cursor, PRIORITY);
-        return new ListDAO(id, serverId, name, timestamp, isDirty, isDelete,
-                boughtCount, timeCreated, priority, color, size, position);
+        return new ListDAO(id, name, boughtCount, timeCreated, priority, color, size, position);
     };
 
     public static final class Builder {
@@ -130,28 +135,8 @@ public class ListDAO extends BaseDAO {
             return this;
         }
 
-        public Builder serverId(String serverId) {
-            values.put(SERVER_ID, serverId);
-            return this;
-        }
-
         public Builder position(int position) {
             values.put(MANUAL_SORT_POSITION, position);
-            return this;
-        }
-
-        public Builder isDelete(boolean delete) {
-            values.put(IS_DELETED, delete ? 1 : 0);
-            return this;
-        }
-
-        public Builder isDirty(boolean dirty) {
-            values.put(IS_DIRTY, dirty ? 1 : 0);
-            return this;
-        }
-
-        public Builder timestamp(long timestamp) {
-            values.put(TIMESTAMP, timestamp);
             return this;
         }
 

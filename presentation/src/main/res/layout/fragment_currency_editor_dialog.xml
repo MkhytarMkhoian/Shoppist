@@ -1,23 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2016 Mkhytar Mkhoian
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingPrefix"
+    android:orientation="vertical"
     android:paddingTop="10dp"
-    android:orientation="vertical">
+    tools:ignore="MissingPrefix">
 
     <com.rengwuxian.materialedittext.MaterialEditText
-        fontPath="fonts/RobotoRegular.ttf"
         android:id="@+id/name_edit"
+        fontPath="fonts/RobotoRegular.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/full_unit_name"
-        android:maxLines="1"
-        android:inputType="textCapSentences"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
+        android:hint="@string/full_unit_name"
+        android:inputType="textCapSentences"
+        android:maxLines="1"
         android:singleLine="true"
         app:met_floatingLabel="highlight"
         app:met_floatingLabelText="@string/full_unit_name"
