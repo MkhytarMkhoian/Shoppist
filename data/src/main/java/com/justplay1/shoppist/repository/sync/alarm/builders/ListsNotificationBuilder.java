@@ -7,7 +7,7 @@
 //import com.justplay1.shoppist.entity.ListDAO;
 //import com.justplay1.shoppist.entity.NotificationDAO;
 //import com.justplay1.shoppist.entity.NotificationType;
-//import com.justplay1.shoppist.preferences.ShoppistPreferences;
+//import com.justplay1.shoppist.preferences.AppPreferences;
 //import com.justplay1.shoppist.repository.datasource.local.LocalSetData;
 //
 //import java.util.List;
@@ -22,7 +22,7 @@
 //public class ListsNotificationBuilder extends NotificationBuilder<ListDAO> {
 //
 //    @Inject
-//    public ListsNotificationBuilder(Context context, ShoppistPreferences preferences, LocalSetData<NotificationDAO> dataStore) {
+//    public ListsNotificationBuilder(Context context, AppPreferences preferences, LocalSetData<NotificationDAO> dataStore) {
 //        super(context, preferences, dataStore);
 //    }
 //

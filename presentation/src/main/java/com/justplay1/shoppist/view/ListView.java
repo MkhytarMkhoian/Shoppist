@@ -32,9 +32,5 @@ public interface ListView extends LoadDataView, ContextView{
 
     void showRateDialog();
 
-    void openEditListScreen(ListViewModel list);
-
     void setManualSortModeEnable(boolean enable);
-
-    void showEmailShareDialog(String listName);
 }

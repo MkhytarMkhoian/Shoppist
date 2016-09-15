@@ -24,6 +24,7 @@ import com.justplay1.shoppist.interactor.currency.AddCurrency;
 import com.justplay1.shoppist.interactor.currency.UpdateCurrency;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
+import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
 import com.justplay1.shoppist.utils.ModelUtils;
 import com.justplay1.shoppist.view.AddCurrencyView;
@@ -38,7 +39,7 @@ import rx.Observable;
  * Created by Mkhytar Mkhoian.
  */
 @PerActivity
-public class AddCurrencyPresenter extends BaseRxPresenter<AddCurrencyView> {
+public class AddCurrencyPresenter extends BaseRxPresenter<AddCurrencyView, Router> {
 
     private final CurrencyModelDataMapper mDataMapper;
     private final UpdateCurrency mUpdateCurrency;

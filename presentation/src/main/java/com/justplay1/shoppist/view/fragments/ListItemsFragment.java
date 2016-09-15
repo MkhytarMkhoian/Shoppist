@@ -16,6 +16,7 @@
 
 package com.justplay1.shoppist.view.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import com.justplay1.shoppist.di.modules.ListItemsModule;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
+import com.justplay1.shoppist.navigation.ListItemsRouter;
 import com.justplay1.shoppist.presenter.ListItemsPresenter;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.ListItemsView;
@@ -61,9 +63,7 @@ public class ListItemsFragment extends BaseEDSListFragment
     ListItemsPresenter mPresenter;
 
     private ListItemsComponent mComponent;
-    private FloatingActionButton mActionButton;
     private ListItemAdapter mAdapter;
-    private ListItemsFragmentInteractionListener mListener;
 
     public static ListItemsFragment newInstance(ListViewModel parentList) {
         Bundle args = new Bundle();
@@ -74,19 +74,9 @@ public class ListItemsFragment extends BaseEDSListFragment
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            mListener = (ListItemsFragmentInteractionListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement FragmentInteractionListener");
-        }
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter.takeRouter((ListItemsRouter) getActivity());
         mPresenter.onCreate(getArguments(), savedInstanceState);
     }
 
@@ -95,6 +85,12 @@ public class ListItemsFragment extends BaseEDSListFragment
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
         mPresenter.init();
+    }
+
+    @Override
+    protected void init(View view) {
+        super.init(view);
+        mActionButton.setOnLongClickListener(this);
     }
 
     @Override
@@ -107,6 +103,12 @@ public class ListItemsFragment extends BaseEDSListFragment
     public void onDestroy() {
         super.onDestroy();
         mPresenter.onDestroy();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mPresenter.dropRouter((ListItemsRouter) getActivity());
     }
 
     @Override
@@ -138,15 +140,6 @@ public class ListItemsFragment extends BaseEDSListFragment
         mAdapter.setHeaderClickListener(this);
         mAdapter.setSwipeEventListener(this);
         mAdapter.setNoteClickListener(this);
-    }
-
-    @Override
-    protected void init(View view) {
-        super.init(view);
-        mActionButton = (FloatingActionButton) view.findViewById(R.id.add_button);
-        mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
-        mActionButton.setOnLongClickListener(this);
-        mActionButton.setOnClickListener(this);
     }
 
     @Override
@@ -194,16 +187,6 @@ public class ListItemsFragment extends BaseEDSListFragment
     @Override
     public void showError(String message) {
 
-    }
-
-    @Override
-    public void openStandardMode(ListViewModel list, ListItemViewModel item) {
-        mListener.openStandardMode(list, item);
-    }
-
-    @Override
-    public void openQuickMode(String parentListId) {
-        mListener.openQuickMode(parentListId);
     }
 
     @Override
@@ -320,13 +303,9 @@ public class ListItemsFragment extends BaseEDSListFragment
         return false;
     }
 
-    @Override
-    public void openEditScreen(ListViewModel list, ListItemViewModel item) {
-        mListener.openStandardMode(list, item);
-    }
-
-    public void deleteCheckedLists() {
-//        showDeleteDialog(getString(R.string.delete_the_item));
+    public void onDeleteCheckedItemsClick() {
+        deleteItems(getString(R.string.delete_the_item),
+                () -> mAdapter.deleteCheckedView(deleteItems -> mPresenter.deleteItems(deleteItems)));
     }
 
     public void onReturnAllToListClick() {
@@ -390,21 +369,18 @@ public class ListItemsFragment extends BaseEDSListFragment
     protected void swipeDeleteConfirm(String message, final ListItemViewModel item,
                                       final DeleteSwipeResultListener<ListItemViewModel> resultListener) {
         if (mPreferences.isNeedShowConfirmDeleteDialog()) {
-//            showConfirmDeleteDialog(message, new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(final DialogInterface dialog, int which) {
-//                    switch (which) {
-//                        case Dialog.BUTTON_POSITIVE:
-//                            unCheckItem(item);
-//                            resultListener.onDelete(item);
-//                            dialog.dismiss();
-//                        case Dialog.BUTTON_NEGATIVE:
-//                            resultListener.onCancel(item);
-//                            dialog.dismiss();
-//                            break;
-//                    }
-//                }
-//            });
+            showConfirmDeleteDialog(message, (dialog, which) -> {
+                switch (which) {
+                    case Dialog.BUTTON_POSITIVE:
+                        unCheckItem(item);
+                        resultListener.onDelete(item);
+                        dialog.dismiss();
+                    case Dialog.BUTTON_NEGATIVE:
+                        resultListener.onCancel(item);
+                        dialog.dismiss();
+                        break;
+                }
+            });
         } else {
             unCheckItem(item);
             resultListener.onDelete(item);
@@ -413,7 +389,6 @@ public class ListItemsFragment extends BaseEDSListFragment
 
     private void unCheckItem(ListItemViewModel item) {
         if (item.isChecked()) {
-//            mAdapter.deleteItemFromChecked(item.getId());
             mAdapter.updateCount(false);
         }
     }
@@ -461,10 +436,6 @@ public class ListItemsFragment extends BaseEDSListFragment
 
     }
 
-    public void onDeleteCheckedItemsClick() {
-        showDeletingAnimation();
-    }
-
     public boolean isMoveCopyButtonEnable() {
 //        if (getDataSize() > 1) {
 //            return true;
@@ -484,11 +455,6 @@ public class ListItemsFragment extends BaseEDSListFragment
         return !mAdapter.isAllItemsChecked();
     }
 
-    @Override
-    public void showDeletingAnimation() {
-        mAdapter.deleteCheckedView(deleteItems -> mPresenter.deleteItems(deleteItems));
-    }
-
     public boolean isManualSortModeEnable() {
         return mAdapter.isManualSortModeEnable();
     }
@@ -506,14 +472,5 @@ public class ListItemsFragment extends BaseEDSListFragment
         builder.setMessage(note);
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-    public interface ListItemsFragmentInteractionListener {
-
-        void setTitle(String title);
-
-        void openStandardMode(ListViewModel list, ListItemViewModel item);
-
-        void openQuickMode(String parentListId);
     }
 }

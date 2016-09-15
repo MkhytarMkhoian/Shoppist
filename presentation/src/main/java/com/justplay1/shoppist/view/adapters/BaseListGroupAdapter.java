@@ -24,7 +24,7 @@ import android.view.View;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.GroupPositionItemDraggableRange;
 import com.justplay1.shoppist.models.BaseViewModel;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.ViewUtils;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseDraggableItemViewHolder;
@@ -36,12 +36,11 @@ import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHold
 public abstract class BaseListGroupAdapter<T extends BaseViewModel, GVH extends BaseHeaderHolder, CVH extends BaseDraggableItemViewHolder>
         extends BaseExpandableDraggableAdapter<T, GVH, CVH> {
 
-    protected ShoppistPreferences mPreferences;
+    protected AppPreferences mPreferences;
 
     public BaseListGroupAdapter(Context context, ActionModeInteractionListener listener,
-                                RecyclerView recyclerView, ShoppistPreferences preferences) {
+                                RecyclerView recyclerView, AppPreferences preferences) {
         super(context, listener, recyclerView);
-        setHasStableIds(true);
         mPreferences = preferences;
     }
 

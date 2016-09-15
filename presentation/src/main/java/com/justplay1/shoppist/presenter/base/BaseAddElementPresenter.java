@@ -16,6 +16,7 @@
 
 package com.justplay1.shoppist.presenter.base;
 
+import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.view.AddElementView;
 
 import java.util.UUID;
@@ -23,7 +24,7 @@ import java.util.UUID;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseAddElementPresenter<V extends AddElementView> extends BaseRxPresenter<V> {
+public abstract class BaseAddElementPresenter<V extends AddElementView> extends BaseRxPresenter<V, Router> {
 
     protected void setName(String name) {
         if (isViewAttached()) {

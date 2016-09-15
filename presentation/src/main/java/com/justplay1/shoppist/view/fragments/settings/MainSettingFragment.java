@@ -58,7 +58,6 @@ public class MainSettingFragment extends PreferenceFragment implements ColorThem
         final String titleId = "title";
         String[] texts = {getString(R.string.category_general),
                 getString(R.string.shopping_list),
-                getString(R.string.category_notification),
                 getString(R.string.category_system)};
 
         ArrayList<Map<String, Object>> data = new ArrayList<>(texts.length);
@@ -101,13 +100,7 @@ public class MainSettingFragment extends PreferenceFragment implements ColorThem
                 mListener.openListsSetting();
                 break;
             case 2:
-                mListener.openNotificationSetting();
-                break;
-            case 3:
                 mListener.openSystemSetting();
-                break;
-            case 4:
-                mListener.openAccountSetting();
                 break;
         }
     }
@@ -118,10 +111,6 @@ public class MainSettingFragment extends PreferenceFragment implements ColorThem
 
         void openListsSetting();
 
-        void openNotificationSetting();
-
         void openSystemSetting();
-
-        void openAccountSetting();
     }
 }

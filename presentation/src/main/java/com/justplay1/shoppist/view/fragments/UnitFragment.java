@@ -30,6 +30,7 @@ import com.justplay1.shoppist.di.components.UnitsComponent;
 import com.justplay1.shoppist.di.modules.ActivityModule;
 import com.justplay1.shoppist.di.modules.UnitsModule;
 import com.justplay1.shoppist.models.UnitViewModel;
+import com.justplay1.shoppist.navigation.UnitRouter;
 import com.justplay1.shoppist.presenter.UnitsPresenter;
 import com.justplay1.shoppist.view.UnitsView;
 import com.justplay1.shoppist.view.adapters.UnitsAdapter;
@@ -45,13 +46,12 @@ import javax.inject.Inject;
  * Created by Mkhytar Mkhoian.
  */
 public class UnitFragment extends BaseListFragment
-        implements UnitsView, ShoppistRecyclerView.OnItemClickListener, View.OnClickListener {
+        implements UnitsView, ShoppistRecyclerView.OnItemClickListener, View.OnClickListener, UnitRouter {
 
     @Inject
     UnitsPresenter mPresenter;
 
     private UnitsComponent mComponent;
-    private FloatingActionButton mActionButton;
     private UnitsAdapter mAdapter;
 
     public static UnitFragment newInstance() {
@@ -71,7 +71,7 @@ public class UnitFragment extends BaseListFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.onCreate(null, savedInstanceState);
+        mPresenter.takeRouter(this);
     }
 
     @Override
@@ -82,17 +82,16 @@ public class UnitFragment extends BaseListFragment
     }
 
     @Override
-    protected void initAdapter() {
-        mAdapter = new UnitsAdapter(getContext(), mActionModeInteractionListener, mRecyclerView);
-        mAdapter.setClickListener(this);
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.detachView();
+        mPresenter.dropRouter(this);
     }
 
     @Override
-    protected void init(View view) {
-        super.init(view);
-        mActionButton = (FloatingActionButton) view.findViewById(R.id.add_button);
-        mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
-        mActionButton.setOnClickListener(this);
+    protected void initAdapter() {
+        mAdapter = new UnitsAdapter(getContext(), mActionModeInteractionListener, mRecyclerView);
+        mAdapter.setClickListener(this);
     }
 
     @Override
@@ -129,10 +128,9 @@ public class UnitFragment extends BaseListFragment
     }
 
     @Override
-    public void openUnitAddDialog(UnitViewModel unit) {
+    public void openUnitEditDialog(UnitViewModel unit) {
         FragmentManager fm = getFragmentManager();
         AddUnitsDialogFragment dialog = AddUnitsDialogFragment.newInstance(unit);
-        dialog.setCompleteListener(isUpdate -> mPresenter.loadData());
         dialog.show(fm, AddUnitsDialogFragment.class.getName());
     }
 
@@ -145,7 +143,8 @@ public class UnitFragment extends BaseListFragment
     }
 
     public void onDeleteCheckedItemsClick() {
-        //  showDeleteDialog(getString(R.string.delete_the_category));
+        deleteItems(getString(R.string.delete_the_item),
+                () -> mAdapter.deleteCheckedView(deleteItems -> mPresenter.deleteItems(deleteItems)));
     }
 
     public boolean isDeleteButtonEnable() {

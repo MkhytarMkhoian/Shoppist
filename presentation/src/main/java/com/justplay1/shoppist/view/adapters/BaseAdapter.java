@@ -51,6 +51,7 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
 
     public BaseAdapter(Context context, ActionModeInteractionListener listener,
                        RecyclerView recyclerView) {
+        setHasStableIds(true);
         this.mContext = context;
         this.mActionModeInteractionListener = listener;
         this.mRecyclerView = recyclerView;

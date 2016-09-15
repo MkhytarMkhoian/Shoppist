@@ -24,7 +24,7 @@ import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.Priority;
 import com.justplay1.shoppist.models.SortType;
 import com.justplay1.shoppist.models.UnitViewModel;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.DraggableUtils;
 import com.justplay1.shoppist.utils.ExpandUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
@@ -47,7 +47,7 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
     private NoteClickListener mNoteClickListener;
 
     public ListItemAdapter(Context context, ActionModeInteractionListener listener,
-                           RecyclerView recyclerView, ShoppistPreferences preferences) {
+                           RecyclerView recyclerView, AppPreferences preferences) {
         super(context, listener, recyclerView, preferences);
     }
 
@@ -215,20 +215,14 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
         if (item.getStatus()) {
             holder.name.setPaintFlags(holder.name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.categoryName.setPaintFlags(holder.categoryName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
-            if (mPreferences.isDiscolorPurchasedGoods()) {
-                holder.name.setTextColor(ContextCompat.getColor(mContext, R.color.disable_text_color_black));
-                normalStateColor = ContextCompat.getColor(mContext, R.color.grey_300);
-                holder.selectBox.setInnerTextColor(ContextCompat.getColor(mContext, R.color.disable_text_color_black));
-            }
+            holder.name.setTextColor(ContextCompat.getColor(mContext, R.color.disable_text_color_black));
+            normalStateColor = ContextCompat.getColor(mContext, R.color.grey_300);
+            holder.selectBox.setInnerTextColor(ContextCompat.getColor(mContext, R.color.disable_text_color_black));
         } else {
             holder.name.setPaintFlags(holder.name.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             holder.categoryName.setPaintFlags(holder.categoryName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-
-            if (mPreferences.isDiscolorPurchasedGoods()) {
-                holder.name.setTextColor(ContextCompat.getColor(mContext, R.color.text_color_black));
-                holder.selectBox.setInnerTextColor(ContextCompat.getColor(mContext, R.color.white));
-            }
+            holder.name.setTextColor(ContextCompat.getColor(mContext, R.color.text_color_black));
+            holder.selectBox.setInnerTextColor(ContextCompat.getColor(mContext, R.color.white));
         }
 
         holder.selectBox.setNormalStateColor(normalStateColor);

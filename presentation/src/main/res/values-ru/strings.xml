@@ -60,9 +60,9 @@
     <string name="name">Имя</string>
     <string name="list_name_is_required">Требуется название списка</string>
     <string name="no_priority">Нет приоритета</string>
-    <string name="low">Низкий приоритет</string>
+    <string name="low_priority">Низкий приоритет</string>
     <string name="medium_priority">Средний приоритет</string>
-    <string name="high">Высокий приоритет</string>
+    <string name="high_priority">Высокий приоритет</string>
     <string name="new_list_added">Новый список добавлен</string>
     <string name="list_updated">Список обновлен</string>
     <string name="goods_added">Товар добавлен</string>
@@ -132,7 +132,7 @@
     <string name="delete_the_item">Удалить элемент списка?</string>
     <string name="delete_the_list">Удалить список?</string>
     <string name="delete_the_category">Удалить категорию?</string>
-    <string name="select_with_animation">Анимация выделения элемента</string>
+    <string name="delete_the_goods">Удалить товар?</string>
     <string name="delete_with_animation">Анимация удаления элемента</string>
     <string name="add">Добавить</string>
     <string name="add_user">Добавить пользователя</string>
@@ -194,8 +194,6 @@
     <string name="rate_shoppist">Оценить Shoppist</string>
     <string name="skip">Пропустить</string>
     <string name="note">Заметка</string>
-    <string name="discolor_purchased_goods">Обесцветить Купленный Товар</string>
-    <string name="discolor_purchased_goods_summary">Обесцветить купленный товар в корзине покупок</string>
     <string name="calculate_price">Рассчитывать цену товара</string>
     <string name="calculate_price_summary">Рассчитывать цену товара по количеству</string>
     <string name="goods">Товары</string>
@@ -204,11 +202,10 @@
     <string name="action_strike_out">Вычеркнуть</string>
     <string name="action_return_to_list">Вернуть в список</string>
     <string name="version">Версия: </string>
-    <string name="show_goods_header">Показывать заголовок товаров</string>
     <string name="sort_manually_mode">Ручная сортировка</string>
     <string name="today">Сегодня</string>
     <string name="yesterday">Вчера</string>
-    <string name="days_ago">" дней назад"</string>
+    <string name="days_ago">дней назад</string>
     <string name="close_manual_sort_mode_with_back_btn_symmary">Выключать режим ручной сортировки нажатием кнопки назад</string>
     <string name="closing_manual_sort_mode">Закрытие ручного режима сортировки</string>
     <string name="edit_currency">Редактировать валюту</string>

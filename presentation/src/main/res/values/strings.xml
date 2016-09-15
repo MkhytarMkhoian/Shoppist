@@ -64,9 +64,9 @@
     <string name="name">Name</string>
     <string name="list_name_is_required">List name is required</string>
     <string name="no_priority">No priority</string>
-    <string name="low">Low priority</string>
+    <string name="low_priority">Low priority</string>
     <string name="medium_priority">Medium priority</string>
-    <string name="high">High priority</string>
+    <string name="high_priority">High priority</string>
     <string name="new_list_added">New list added</string>
     <string name="list_updated">List updated</string>
     <string name="goods_added">Goods added</string>
@@ -136,7 +136,7 @@
     <string name="delete_the_item">Delete the item?</string>
     <string name="delete_the_list">Delete the list?</string>
     <string name="delete_the_category">Delete the category?</string>
-    <string name="select_with_animation">Select With Animation</string>
+    <string name="delete_the_goods">Delete the goods?</string>
     <string name="delete_with_animation">Delete With Animation</string>
     <string name="add">Add</string>
     <string name="add_user">Add user</string>
@@ -193,8 +193,6 @@
     <string name="rate_shoppist">Rate Shoppist</string>
     <string name="skip">Skip</string>
     <string name="note">Note</string>
-    <string name="discolor_purchased_goods">Discolor The Purchased Goods</string>
-    <string name="discolor_purchased_goods_summary">Discolor the purchased goods in shopping cart</string>
     <string name="calculate_price">Calculate price of goods</string>
     <string name="calculate_price_summary">Calculate the price of goods by quantity</string>
     <string name="goods">Goods</string>
@@ -203,11 +201,10 @@
     <string name="action_strike_out">Strike out</string>
     <string name="action_return_to_list">Return to list</string>
     <string name="version">Version: </string>
-    <string name="show_goods_header">Show Goods Header</string>
     <string name="sort_manually_mode">Sort manually mode</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
-    <string name="days_ago">" days ago"</string>
+    <string name="days_ago">days ago</string>
     <string name="close_manual_sort_mode_with_back_btn_symmary">Turn off manual sort mode when tap on back button</string>
     <string name="closing_manual_sort_mode">Closing Manual Sort Mode</string>
     <string name="edit_currency">Edit currency</string>
@@ -265,5 +262,4 @@
     <string name="billing_not_supported">In-App billing is not supported.\n\nProbable reasons:\n1. Google Play is not installed or is not updated\n2. The app is running in emulator\n3. Bug in the library</string>
     <string name="for_month">For Month</string>
     <string name="delete_account_message">All data on server and device will be deleted. Are you sure?</string>
-
 </resources>

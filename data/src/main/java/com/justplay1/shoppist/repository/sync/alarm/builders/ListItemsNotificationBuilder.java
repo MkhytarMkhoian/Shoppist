@@ -7,7 +7,7 @@
 //import com.justplay1.shoppist.entity.ListItemDAO;
 //import com.justplay1.shoppist.entity.NotificationType;
 //import com.justplay1.shoppist.models.ListModel;
-//import com.justplay1.shoppist.preferences.ShoppistPreferences;
+//import com.justplay1.shoppist.preferences.AppPreferences;
 //import com.justplay1.shoppist.repository.datasource.local.LocalNotificationDataStore;
 //
 //import java.util.Collection;
@@ -26,7 +26,7 @@
 //
 //    @Inject
 //    public ListItemsNotificationBuilder(Context context,
-//                                        ShoppistPreferences preferences,
+//                                        AppPreferences preferences,
 //                                        LocalNotificationDataStore dataStore) {
 //        super(context, preferences, dataStore);
 //        mShoppingLists = new HashMap<>();

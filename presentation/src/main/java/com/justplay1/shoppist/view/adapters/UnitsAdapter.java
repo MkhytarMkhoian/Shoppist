@@ -42,7 +42,6 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
     public UnitsAdapter(Context context, ActionModeInteractionListener listener,
                         RecyclerView recyclerView) {
         super(context, listener, recyclerView);
-        setHasStableIds(true);
     }
 
     @Override

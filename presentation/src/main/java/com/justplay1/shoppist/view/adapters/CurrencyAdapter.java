@@ -42,7 +42,6 @@ public class CurrencyAdapter extends BaseListAdapter<CurrencyViewModel> {
     public CurrencyAdapter(Context context, ActionModeInteractionListener listener,
                            RecyclerView recyclerView) {
         super(context, listener, recyclerView);
-        setHasStableIds(true);
     }
 
     @Override

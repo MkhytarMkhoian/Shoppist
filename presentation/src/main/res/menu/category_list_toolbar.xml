@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Mkhytar Mkhoian
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,29 +18,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_sort"
-        android:icon="@drawable/ic_sort_white"
-        android:title="@string/action_sort"
-        app:showAsAction="always">
-        <menu>
-            <item
-                android:id="@+id/sort_by_name"
-                android:title="@string/sort_by_name" />
-        </menu>
-    </item>
-
-    <item
         android:id="@+id/action_menu"
-        android:title="@null"
         android:icon="@drawable/ic_menu_white"
+        android:title="@null"
         app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/menu_check_all"
                 android:title="@string/action_check_all" />
-            <item
-                android:id="@+id/action_sort_manual_mode"
-                android:title="@string/sort_manually_mode" />
         </menu>
     </item>
 </menu>

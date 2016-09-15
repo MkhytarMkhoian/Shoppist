@@ -27,7 +27,8 @@ import com.justplay1.shoppist.models.ListModel;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.SortType;
 import com.justplay1.shoppist.models.mappers.ListModelDataMapper;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.navigation.ListRouter;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.presenter.base.BaseSortablePresenter;
 import com.justplay1.shoppist.view.ListView;
 
@@ -42,7 +43,7 @@ import rx.functions.Func1;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel> {
+public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel, ListRouter> {
 
     private final ListModelDataMapper mDataMapper;
     private final GetLists mGetLists;
@@ -50,7 +51,7 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
     private final UpdateLists mUpdateLists;
 
     @Inject
-    public ListPresenter(ShoppistPreferences preferences,
+    public ListPresenter(AppPreferences preferences,
                          GetLists getLists,
                          DeleteLists deleteLists,
                          UpdateLists updateLists,
@@ -64,7 +65,7 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
 
     @Override
     public boolean isManualSortEnable() {
-        return mPreferences.isManualSortEnableForCategories();
+        return mPreferences.isManualSortEnableForShoppingLists();
     }
 
     public void init() {
@@ -103,7 +104,7 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
             }
 
             return data;
-        }).map((Func1<List<ListViewModel>, List<ListModel>>) mDataMapper::transform)
+        }).map(mDataMapper::transform)
                 .flatMap(lists -> {
                     mUpdateLists.setData(lists);
                     return mUpdateLists.get();
@@ -154,16 +155,28 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
         }
     }
 
-    public void onListItemLongClick(ListViewModel item) {
-
-    }
-
     public void onAddButtonClick() {
-        openEditListScreen(null);
+        if (hasRouter()){
+            getRouter().openEditScreen(null);
+        }
     }
 
     public void onEditItemClick(ListViewModel list) {
+        if (hasRouter()){
+            getRouter().openEditScreen(list);
+        }
+    }
 
+    public void onItemLongClick(ListViewModel list) {
+        if (hasRouter()){
+            getRouter().openListDetailScreen(list);
+        }
+    }
+
+    public void onItemClick(ListViewModel list) {
+        if (hasRouter()){
+            getRouter().openListDetailScreen(list);
+        }
     }
 
     public void deleteItems(Collection<ListViewModel> data) {
@@ -180,21 +193,9 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
         }
     }
 
-    private void showEmailShareDialog(String listName) {
-        if (isViewAttached()) {
-            getView().showEmailShareDialog(listName);
-        }
-    }
-
     private void setManualSortModeEnable(boolean enable) {
         if (isViewAttached()) {
             getView().setManualSortModeEnable(enable);
-        }
-    }
-
-    private void openEditListScreen(ListViewModel list) {
-        if (isViewAttached()) {
-            getView().openEditListScreen(list);
         }
     }
 }

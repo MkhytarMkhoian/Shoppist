@@ -20,7 +20,8 @@ import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.currency.GetCurrency;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.navigation.Router;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
 import com.justplay1.shoppist.view.ListsSettingView;
 
@@ -31,16 +32,16 @@ import rx.Observable;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class ListsSettingPresenter extends BaseRxPresenter<ListsSettingView> {
+public class ListsSettingPresenter extends BaseRxPresenter<ListsSettingView, Router> {
 
     private final CurrencyModelDataMapper mCurrencyModelDataMapper;
     private final GetCurrency mGetCurrency;
-    private final ShoppistPreferences mPreferences;
+    private final AppPreferences mPreferences;
 
     @Inject
     public ListsSettingPresenter(CurrencyModelDataMapper currencyModelDataMapper,
                                  GetCurrency getCurrency,
-                                 ShoppistPreferences preferences) {
+                                 AppPreferences preferences) {
         this.mCurrencyModelDataMapper = currencyModelDataMapper;
         this.mGetCurrency = getCurrency;
         this.mPreferences = preferences;

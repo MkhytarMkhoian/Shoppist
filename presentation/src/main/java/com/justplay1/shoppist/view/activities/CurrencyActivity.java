@@ -32,7 +32,8 @@ import com.justplay1.shoppist.view.fragments.CurrencyFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class CurrencyActivity extends SingleListFragmentActivity<CurrencyFragment> implements Toolbar.OnMenuItemClickListener {
+public class CurrencyActivity extends SingleListFragmentActivity<CurrencyFragment>
+        implements Toolbar.OnMenuItemClickListener {
 
     public static Intent getCallingIntent(Context context) {
         Intent callingIntent = new Intent(context, CurrencyActivity.class);
@@ -99,6 +100,9 @@ public class CurrencyActivity extends SingleListFragmentActivity<CurrencyFragmen
     public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
         MenuItem delete = menu.findItem(R.id.menu_delete);
         delete.setVisible(mFragment.isDeleteButtonEnable());
+
+        MenuItem checkAll = menu.findItem(R.id.menu_check_all);
+        checkAll.setEnabled(mFragment.isCheckAllButtonEnable());
         return true;
     }
 

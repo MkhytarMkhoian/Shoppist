@@ -22,6 +22,7 @@ import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.GetCategories;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
+import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
 import com.justplay1.shoppist.view.SelectCategoryView;
 
@@ -32,7 +33,7 @@ import javax.inject.Inject;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class SelectCategoryPresenter extends BaseRxPresenter<SelectCategoryView> {
+public class SelectCategoryPresenter extends BaseRxPresenter<SelectCategoryView, Router> {
 
     private final CategoryModelDataMapper mDataMapper;
     private final GetCategories mGetCategories;

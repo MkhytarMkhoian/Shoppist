@@ -19,6 +19,7 @@ package com.justplay1.shoppist.presenter.base;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
 
+import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.view.BaseMvpView;
 
 import rx.Observable;
@@ -27,7 +28,7 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseRxPresenter<V extends BaseMvpView> extends BasePresenter<V> {
+public abstract class BaseRxPresenter<V extends BaseMvpView, R extends Router> extends RouterPresenter<V, R> {
 
     protected CompositeSubscription mSubscriptions;
 

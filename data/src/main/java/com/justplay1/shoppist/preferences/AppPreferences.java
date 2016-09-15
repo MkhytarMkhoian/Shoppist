@@ -30,7 +30,7 @@ import javax.inject.Singleton;
  * Created by Mkhytar Mkhoian.
  */
 @Singleton
-public class ShoppistPreferences {
+public class AppPreferences {
 
     public static final String COLOR_PRIMARY = "color_theme";
     public static final String COLOR_PRIMARY_DARK = "color_status_bar_theme";
@@ -39,20 +39,16 @@ public class ShoppistPreferences {
     public static final String CONFIRM_DELETE_DIALOG = "confirm_delete_dialog";
     public static final String IS_NEED_SHOW_RATE_DIALOG = "is_need_show_rate_dialog";
     public static final String DEFAULT_CURRENCY = "default_currency_id";
-    public static final String DISCOLOR_PURCHASED_GOODS = "discolor_purchased_goods";
     public static final String CALCULATE_PRICE = "calculate_price";
-    public static final String SHOW_GOODS_HEADER = "show_goods_header";
     public static final String LONG_ITEM_CLICK_ACTION = "long_item_click_action";
     public static final String ADD_BUTTON_CLICK_ACTION = "add_button_click_action";
 
     public static final String SORT_FOR_SHOPPING_LISTS = "sort_for_shopping_lists";
     public static final String SORT_FOR_SHOPPING_LIST_ITEMS = "sort_for_shopping_list_items";
-    public static final String SORT_FOR_CATEGORIES = "sort_for_categories";
     public static final String SORT_FOR_GOODS = "sort_for_goods";
 
     public static final String IS_MANUAL_SORT_ENABLE_FOR_SHOPPING_LISTS = "is_manual_sort_enable_for_shopping_lists";
     public static final String IS_MANUAL_SORT_ENABLE_FOR_SHOPPING_LIST_ITEMS = "is_manual_sort_enable_for_shopping_list_items";
-    public static final String IS_MANUAL_SORT_ENABLE_FOR_CATEGORIES = "is_manual_sort_enable_for_categories";
 
     public static final String LEFT_SHOPPING_LIST_ITEM_SWIPE_ACTION = "left_shopping_list_item_swipe_action";
     public static final String RIGHT_SHOPPING_LIST_ITEM_SWIPE_ACTION = "right_shopping_list_item_swipe_action";
@@ -69,27 +65,23 @@ public class ShoppistPreferences {
 
     private int mSortForShoppingLists;
     private int mSortForShoppingListItems;
-    private int mSortForCategories;
     private int mSortForGoods;
 
     private boolean mConfirmDeleteDialog;
     private int mNeedShowRateDialog;
     private String mDefaultCurrency;
-    private boolean mDiscolorPurchasedGoods;
     private boolean mCalculatePrice;
-    private boolean mShowGoodsHeader;
     private int mLongItemClickAction;
     private int mAddButtonClickAction;
 
     private boolean isManualSortEnableForShoppingLists;
     private boolean isManualSortEnableForShoppingListItems;
-    private boolean isManualSortEnableForCategories;
 
     private int mLeftShoppingListItemSwipeAction;
     private int mRightShoppingListItemSwipeAction;
 
     @Inject
-    public ShoppistPreferences(Context context) {
+    public AppPreferences(Context context) {
         mContext = context;
     }
 
@@ -99,22 +91,18 @@ public class ShoppistPreferences {
             mColorPrimaryDark = mPreference.getInt(COLOR_PRIMARY_DARK, mContext.getResources().getColor(R.color.red_800));
             mSortForShoppingLists = mPreference.getInt(SORT_FOR_SHOPPING_LISTS, 4);
             mSortForShoppingListItems = mPreference.getInt(SORT_FOR_SHOPPING_LIST_ITEMS, SortTypeDAO.SORT_BY_CATEGORIES);
-            mSortForCategories = mPreference.getInt(SORT_FOR_CATEGORIES, -1);
             mSortForGoods = mPreference.getInt(SORT_FOR_GOODS, 3);
             mLockScreen = mPreference.getBoolean(LOCK_SCREEN, false);
 
             mConfirmDeleteDialog = mPreference.getBoolean(CONFIRM_DELETE_DIALOG, false);
             mNeedShowRateDialog = mPreference.getInt(IS_NEED_SHOW_RATE_DIALOG, 0);
             mDefaultCurrency = mPreference.getString(DEFAULT_CURRENCY, "1");
-            mDiscolorPurchasedGoods = mPreference.getBoolean(DISCOLOR_PURCHASED_GOODS, true);
             mCalculatePrice = mPreference.getBoolean(CALCULATE_PRICE, true);
-            mShowGoodsHeader = mPreference.getBoolean(SHOW_GOODS_HEADER, true);
             mLongItemClickAction = mPreference.getInt(LONG_ITEM_CLICK_ACTION, 0);
             mAddButtonClickAction = mPreference.getInt(ADD_BUTTON_CLICK_ACTION, 0);
 
             isManualSortEnableForShoppingLists = mPreference.getBoolean(IS_MANUAL_SORT_ENABLE_FOR_SHOPPING_LISTS, false);
             isManualSortEnableForShoppingListItems = mPreference.getBoolean(IS_MANUAL_SORT_ENABLE_FOR_SHOPPING_LIST_ITEMS, false);
-            isManualSortEnableForCategories = mPreference.getBoolean(IS_MANUAL_SORT_ENABLE_FOR_CATEGORIES, false);
 
             mLeftShoppingListItemSwipeAction = mPreference.getInt(LEFT_SHOPPING_LIST_ITEM_SWIPE_ACTION, 0);
             mRightShoppingListItemSwipeAction = mPreference.getInt(RIGHT_SHOPPING_LIST_ITEM_SWIPE_ACTION, 0);
@@ -197,17 +185,6 @@ public class ShoppistPreferences {
         editor.apply();
     }
 
-    public int getSortForCategories() {
-        return mSortForCategories;
-    }
-
-    public void setSortForCategories(int sort) {
-        mSortForCategories = sort;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putInt(SORT_FOR_CATEGORIES, sort);
-        editor.apply();
-    }
-
     public boolean isNeedShowConfirmDeleteDialog() {
         return mConfirmDeleteDialog;
     }
@@ -241,28 +218,6 @@ public class ShoppistPreferences {
         editor.apply();
     }
 
-    public boolean isDiscolorPurchasedGoods() {
-        return mDiscolorPurchasedGoods;
-    }
-
-    public void setDiscolorPurchasedGoods(boolean discolorPurchasedGoods) {
-        mDiscolorPurchasedGoods = discolorPurchasedGoods;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putBoolean(DISCOLOR_PURCHASED_GOODS, discolorPurchasedGoods);
-        editor.apply();
-    }
-
-    public boolean isShowGoodsHeader() {
-        return mShowGoodsHeader;
-    }
-
-    public void setShowGoodsHeader(boolean showGoodsHeader) {
-        mShowGoodsHeader = showGoodsHeader;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putBoolean(SHOW_GOODS_HEADER, showGoodsHeader);
-        editor.apply();
-    }
-
     public boolean isNeedShowRateDialog() {
         boolean flag = false;
         if (mNeedShowRateDialog == 30) {
@@ -284,17 +239,6 @@ public class ShoppistPreferences {
         editor.apply();
     }
 
-    public boolean isManualSortEnableForCategories() {
-        return isManualSortEnableForCategories;
-    }
-
-    public void setManualSortEnableForCategories(boolean enableForCategories) {
-        isManualSortEnableForCategories = enableForCategories;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putBoolean(IS_MANUAL_SORT_ENABLE_FOR_CATEGORIES, enableForCategories);
-        editor.commit();
-    }
-
     public boolean isManualSortEnableForShoppingListItems() {
         return isManualSortEnableForShoppingListItems;
     }
@@ -306,7 +250,7 @@ public class ShoppistPreferences {
         editor.commit();
     }
 
-    public boolean isManualSortEnableForLists() {
+    public boolean isManualSortEnableForShoppingLists() {
         return isManualSortEnableForShoppingLists;
     }
 

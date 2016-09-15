@@ -31,7 +31,7 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.models.SwipeActionType;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.DrawableUtils;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseDraggableSwipeableItemViewHolder;
@@ -47,7 +47,7 @@ public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH exte
     private SwipeEventListener<T> mSwipeEventListener;
 
     public BaseListItemGroupAdapter(Context context, ActionModeInteractionListener listener,
-                                    RecyclerView recyclerView, ShoppistPreferences preferences) {
+                                    RecyclerView recyclerView, AppPreferences preferences) {
         super(context, listener, recyclerView, preferences);
     }
 

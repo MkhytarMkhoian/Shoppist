@@ -32,7 +32,7 @@ import android.widget.Toast;
 
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.preferences.AppPreferences;
 
 import java.util.Locale;
 import java.util.Random;
@@ -45,7 +45,7 @@ import javax.inject.Inject;
 public abstract class BaseFragment extends Fragment {
 
     @Inject
-    ShoppistPreferences mPreferences;
+    AppPreferences mPreferences;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

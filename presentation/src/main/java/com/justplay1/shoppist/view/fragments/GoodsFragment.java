@@ -41,8 +41,8 @@ import com.justplay1.shoppist.di.modules.ActivityModule;
 import com.justplay1.shoppist.di.modules.GoodsModule;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
+import com.justplay1.shoppist.navigation.GoodsRouter;
 import com.justplay1.shoppist.presenter.GoodsPresenter;
-import com.justplay1.shoppist.utils.AnimationResultListener;
 import com.justplay1.shoppist.view.GoodsView;
 import com.justplay1.shoppist.view.adapters.GoodsAdapter;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
@@ -52,7 +52,6 @@ import com.justplay1.shoppist.view.fragments.dialog.AddUnitsDialogFragment;
 import com.justplay1.shoppist.view.fragments.dialog.SelectCategoryDialogFragment;
 import com.justplay1.shoppist.view.fragments.dialog.SelectUnitDialogFragment;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -68,8 +67,6 @@ public class GoodsFragment extends BaseExpandableListFragment
 
     private GoodsComponent mComponent;
     private GoodsAdapter mAdapter;
-    private FloatingActionButton mActionButton;
-    private GoodsFragmentInteractionListener mListener;
 
     public static GoodsFragment newInstance() {
 
@@ -81,14 +78,9 @@ public class GoodsFragment extends BaseExpandableListFragment
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            mListener = (GoodsFragmentInteractionListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement FragmentInteractionListener");
-        }
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mPresenter.takeRouter((GoodsRouter) getActivity());
     }
 
     @Override
@@ -111,16 +103,14 @@ public class GoodsFragment extends BaseExpandableListFragment
     }
 
     @Override
-    protected RecyclerView.Adapter getAdapter() {
-        return mAdapter;
+    public void onDetach() {
+        super.onDetach();
+        mPresenter.dropRouter((GoodsRouter) getActivity());
     }
 
     @Override
-    protected void init(View view) {
-        super.init(view);
-        mActionButton = (FloatingActionButton) view.findViewById(R.id.add_button);
-        mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
-        mActionButton.setOnClickListener(this);
+    protected RecyclerView.Adapter getAdapter() {
+        return mAdapter;
     }
 
     @Override
@@ -185,11 +175,6 @@ public class GoodsFragment extends BaseExpandableListFragment
         return !mAdapter.isAllItemsChecked();
     }
 
-    @Override
-    public void showDeleteDialog() {
-//        showDeleteDialog(getString(R.string.delete_goods));
-    }
-
     public void onChangeCategoryClick() {
         mPresenter.onChangeCategoryClick(mAdapter.getCheckedItems());
     }
@@ -206,8 +191,9 @@ public class GoodsFragment extends BaseExpandableListFragment
         mAdapter.unCheckAllItems();
     }
 
-    public void onDeleteClick() {
-        showDeleteDialog();
+    public void onDeleteCheckedItemsClick() {
+        deleteItems(getString(R.string.delete_the_goods),
+                () -> mAdapter.deleteCheckedView(deleteItems -> mPresenter.deleteItems(deleteItems)));
     }
 
     @Override
@@ -241,16 +227,6 @@ public class GoodsFragment extends BaseExpandableListFragment
         FragmentManager fm = getFragmentManager();
         AddGoodsDialogFragment dialog = AddGoodsDialogFragment.newInstance(editProduct);
         dialog.show(fm, AddUnitsDialogFragment.class.getName());
-    }
-
-
-    protected void deleteItem() {
-        mAdapter.deleteCheckedView(new AnimationResultListener<ProductViewModel>() {
-            @Override
-            public void onAnimationEnd(Collection<ProductViewModel> deleteItems) {
-                mPresenter.deleteItems(deleteItems);
-            }
-        });
     }
 
     @Override
@@ -302,15 +278,5 @@ public class GoodsFragment extends BaseExpandableListFragment
 
     public void onSearchClick() {
         mPresenter.onSearchClick();
-    }
-
-    @Override
-    public void openSearchScreen() {
-        mListener.openSearchScreen();
-    }
-
-    public interface GoodsFragmentInteractionListener {
-
-        void openSearchScreen();
     }
 }

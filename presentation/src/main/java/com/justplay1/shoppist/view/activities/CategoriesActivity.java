@@ -28,13 +28,14 @@ import android.view.MenuItem;
 
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.CategoryViewModel;
+import com.justplay1.shoppist.navigation.CategoryRouter;
 import com.justplay1.shoppist.view.fragments.CategoryFragment;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 public class CategoriesActivity extends SingleListFragmentActivity<CategoryFragment>
-        implements Toolbar.OnMenuItemClickListener, CategoryFragment.CategoryFragmentListener {
+        implements Toolbar.OnMenuItemClickListener, CategoryRouter {
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, CategoriesActivity.class);
@@ -69,12 +70,6 @@ public class CategoriesActivity extends SingleListFragmentActivity<CategoryFragm
             case R.id.menu_check_all:
                 mFragment.onCheckAllItemsClick();
                 break;
-            case R.id.sort_by_name:
-                mFragment.onSortByNameClick();
-                break;
-            case R.id.action_sort_manual_mode:
-                mFragment.onSortByManualClick();
-                break;
         }
         return true;
     }
@@ -89,7 +84,7 @@ public class CategoriesActivity extends SingleListFragmentActivity<CategoryFragm
     }
 
     @Override
-    public void openAddCategoryScreen(CategoryViewModel category) {
+    public void openEditCategoryScreen(CategoryViewModel category) {
         mNavigator.navigateToAddCategoryScreen(this, category);
     }
 

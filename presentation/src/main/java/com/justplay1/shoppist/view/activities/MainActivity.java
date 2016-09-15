@@ -33,6 +33,7 @@ import android.view.View;
 
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.ListViewModel;
+import com.justplay1.shoppist.navigation.ListRouter;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.fragments.ListFragment;
 import com.justplay1.shoppist.view.fragments.MenuFragment;
@@ -42,7 +43,7 @@ import com.justplay1.shoppist.view.fragments.MenuFragment;
  */
 public class MainActivity extends BaseListActivity
         implements MenuFragment.MenuFragmentInteraction, Toolbar.OnMenuItemClickListener,
-        ListFragment.ListsFragmentInteractionListener {
+        ListRouter {
 
     protected static final String FRAGMENT_TAG = "list_fragment";
 
@@ -152,7 +153,7 @@ public class MainActivity extends BaseListActivity
                 mListFragment.onCheckAllItemsClick();
                 break;
             case R.id.action_settings:
-                onSettingClick(0);
+                mNavigator.navigateToSettingScreen(this, 0);
                 break;
             case R.id.sort_by_name:
                 mListFragment.onSortByNameClick();

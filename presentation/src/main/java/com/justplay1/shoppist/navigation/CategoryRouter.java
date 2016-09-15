@@ -14,16 +14,14 @@
  *   limitations under the License.
  */
 
-package com.justplay1.shoppist.view;
+package com.justplay1.shoppist.navigation;
 
-import com.justplay1.shoppist.models.CurrencyViewModel;
-
-import java.util.List;
+import com.justplay1.shoppist.models.CategoryViewModel;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-public interface CurrencyView extends LoadDataView {
+public interface CategoryRouter extends Router {
 
-    void showData(List<CurrencyViewModel> data);
+    void openEditCategoryScreen(CategoryViewModel category);
 }

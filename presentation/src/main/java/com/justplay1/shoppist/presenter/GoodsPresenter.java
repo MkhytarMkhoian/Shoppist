@@ -33,7 +33,8 @@ import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
 import com.justplay1.shoppist.models.mappers.GoodsModelDataMapper;
 import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.navigation.GoodsRouter;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.presenter.base.BaseSortablePresenter;
 import com.justplay1.shoppist.view.GoodsView;
 
@@ -48,7 +49,7 @@ import rx.Observable;
  * Created by Mkhytar Mkhoian.
  */
 @PerActivity
-public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductViewModel> {
+public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductViewModel, GoodsRouter> {
 
     private final GoodsModelDataMapper mGoodsModelDataMapper;
     private final CategoryModelDataMapper mCategoryModelDataMapper;
@@ -61,7 +62,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     private final UpdateGoods mUpdateGoods;
 
     @Inject
-    public GoodsPresenter(ShoppistPreferences preferences,
+    public GoodsPresenter(AppPreferences preferences,
                           GoodsModelDataMapper dataMapper,
                           GetGoods getGoods,
                           DeleteGoods deleteGoods,
@@ -117,7 +118,9 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     }
 
     public void onSearchClick() {
-        openSearchScreen();
+        if (hasRouter()) {
+            getRouter().openSearchScreen();
+        }
     }
 
     public void loadData() {
@@ -242,18 +245,6 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     private void showEditGoodsDialog(ProductViewModel editProduct) {
         if (isViewAttached()) {
             getView().showEditGoodsDialog(editProduct);
-        }
-    }
-
-    private void openSearchScreen() {
-        if (isViewAttached()) {
-            getView().openSearchScreen();
-        }
-    }
-
-    private void showDeleteDialog() {
-        if (isViewAttached()) {
-            getView().showDeleteDialog();
         }
     }
 

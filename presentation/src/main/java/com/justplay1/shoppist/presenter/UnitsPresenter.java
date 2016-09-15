@@ -21,31 +21,32 @@ import com.justplay1.shoppist.interactor.units.DeleteUnits;
 import com.justplay1.shoppist.interactor.units.GetUnits;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.navigation.UnitRouter;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
 import com.justplay1.shoppist.view.UnitsView;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.Observable;
+
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class UnitsPresenter extends BaseRxPresenter<UnitsView> {
+public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
 
     private final UnitsDataModelMapper mDataMapper;
-    private final ShoppistPreferences mPreferences;
     private final GetUnits mGetUnits;
     private final DeleteUnits mDeleteUnits;
 
     @Inject
     public UnitsPresenter(UnitsDataModelMapper unitsDataModelMapper,
-                          ShoppistPreferences preferences,
                           GetUnits getUnits,
                           DeleteUnits deleteUnits) {
         this.mDataMapper = unitsDataModelMapper;
-        this.mPreferences = preferences;
         this.mGetUnits = getUnits;
         this.mDeleteUnits = deleteUnits;
     }
@@ -73,17 +74,23 @@ public class UnitsPresenter extends BaseRxPresenter<UnitsView> {
                 }));
     }
 
+    public void deleteItems(Collection<UnitViewModel> data) {
+        mSubscriptions.add(Observable.fromCallable(() -> mDataMapper.transform(data))
+                .flatMap(items -> {
+                    mDeleteUnits.setData(items);
+                    return mDeleteUnits.get();
+                }).subscribe(new DefaultSubscriber<Boolean>()));
+    }
+
     public void onAddButtonClick() {
-        openUnitAddDialog(null);
+        if (hasRouter()){
+            getRouter().openUnitEditDialog(null);
+        }
     }
 
     public void onListItemClick(UnitViewModel unit) {
-        openUnitAddDialog(unit);
-    }
-
-    private void openUnitAddDialog(UnitViewModel unit) {
-        if (isViewAttached()) {
-            getView().openUnitAddDialog(unit);
+        if (hasRouter()){
+            getRouter().openUnitEditDialog(unit);
         }
     }
 

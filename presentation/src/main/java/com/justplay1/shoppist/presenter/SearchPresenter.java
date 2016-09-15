@@ -32,6 +32,7 @@ import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
 import com.justplay1.shoppist.models.mappers.GoodsModelDataMapper;
 import com.justplay1.shoppist.models.mappers.ListItemsModelDataMapper;
+import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
 import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.SearchView;
@@ -50,7 +51,7 @@ import rx.Observable;
  * Created by Mkhytar Mkhoian.
  */
 @PerActivity
-public class SearchPresenter extends BaseRxPresenter<SearchView> {
+public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
 
     private final GoodsModelDataMapper mGoodsModelDataMapper;
     private final CategoryModelDataMapper mCategoryModelDataMapper;

@@ -5,7 +5,7 @@
 //
 //import com.justplay1.shoppist.entity.NotificationDAO;
 //import com.justplay1.shoppist.entity.NotificationStatus;
-//import com.justplay1.shoppist.preferences.ShoppistPreferences;
+//import com.justplay1.shoppist.preferences.AppPreferences;
 //import com.justplay1.shoppist.repository.datasource.local.LocalSetData;
 //
 //import java.util.ArrayList;
@@ -21,10 +21,10 @@
 //
 //    protected Context mContext;
 //    protected List<NotificationDAO> mNotifications;
-//    protected ShoppistPreferences mPreferences;
+//    protected AppPreferences mPreferences;
 //    protected LocalSetData<NotificationDAO> mSetData;
 //
-//    public NotificationBuilder(Context context, ShoppistPreferences preferences, LocalSetData<NotificationDAO> dataStore) {
+//    public NotificationBuilder(Context context, AppPreferences preferences, LocalSetData<NotificationDAO> dataStore) {
 //        mContext = context;
 //        mPreferences = preferences;
 //        mNotifications = new ArrayList<>();

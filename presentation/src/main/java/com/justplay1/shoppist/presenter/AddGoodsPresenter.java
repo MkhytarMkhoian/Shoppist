@@ -30,6 +30,7 @@ import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
 import com.justplay1.shoppist.models.mappers.GoodsModelDataMapper;
 import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
+import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
 import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.utils.ModelUtils;
@@ -47,7 +48,7 @@ import rx.Observable;
  * Created by Mkhytar Mkhoian.
  */
 @PerActivity
-public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView> {
+public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
 
     private final GoodsModelDataMapper mGoodsModelDataMapper;
     private final CategoryModelDataMapper mCategoryModelDataMapper;

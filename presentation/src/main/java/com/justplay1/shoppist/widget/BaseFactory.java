@@ -35,7 +35,7 @@ import com.justplay1.shoppist.models.ItemType;
 import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.Priority;
 import com.justplay1.shoppist.models.SortType;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ import java.util.Locale;
  */
 public abstract class BaseFactory<T extends BaseViewModel> implements RemoteViewsService.RemoteViewsFactory {
 
-    protected ShoppistPreferences mPreferences;
+    protected AppPreferences mPreferences;
 
     protected Context mContext;
     protected int mWidgetId;
@@ -278,9 +278,9 @@ public abstract class BaseFactory<T extends BaseViewModel> implements RemoteView
         if (!withHeaders) return;
 
         final String noPriority = mContext.getResources().getString(R.string.no_priority);
-        final String lowPriority = mContext.getResources().getString(R.string.low);
+        final String lowPriority = mContext.getResources().getString(R.string.low_priority);
         final String mediumPriority = mContext.getResources().getString(R.string.medium_priority);
-        final String highPriority = mContext.getResources().getString(R.string.high);
+        final String highPriority = mContext.getResources().getString(R.string.high_priority);
         @Priority int priority = -1;
 
         for (int i = 0; i < data.size(); i++) {
@@ -310,12 +310,7 @@ public abstract class BaseFactory<T extends BaseViewModel> implements RemoteView
     }
 
     protected void sortByCategory(List<T> data, boolean withHeaders) {
-        if (mPreferences.isManualSortEnableForCategories()) {
-            Collections.sort(data, (lhs, rhs) -> lhs.getCategory().getPosition() < rhs.getCategory().getPosition() ? -1
-                    : (lhs.getCategory().getPosition() == rhs.getCategory().getPosition() ? 0 : 1));
-        } else {
-            Collections.sort(data, (lhs, rhs) -> lhs.getCategory().getName().compareToIgnoreCase(rhs.getCategory().getName()));
-        }
+        Collections.sort(data, (lhs, rhs) -> lhs.getCategory().getName().compareToIgnoreCase(rhs.getCategory().getName()));
 
         if (!withHeaders) return;
 

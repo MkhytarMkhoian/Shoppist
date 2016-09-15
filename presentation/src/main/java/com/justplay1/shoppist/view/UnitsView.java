@@ -26,6 +26,4 @@ import java.util.List;
 public interface UnitsView extends LoadDataView {
 
     void showData(List<UnitViewModel> data);
-
-    void openUnitAddDialog(UnitViewModel unit);
 }

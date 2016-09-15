@@ -14,16 +14,10 @@
  *   limitations under the License.
  */
 
-package com.justplay1.shoppist.view;
-
-import com.justplay1.shoppist.models.CurrencyViewModel;
-
-import java.util.List;
+package com.justplay1.shoppist.navigation;
 
 /**
- * Created by Mkhytar Mkhoian.
+ * Contains navigation logic for describing which screens are shown in which order
  */
-public interface CurrencyView extends LoadDataView {
-
-    void showData(List<CurrencyViewModel> data);
+public interface Router {
 }

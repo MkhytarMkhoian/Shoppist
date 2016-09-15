@@ -23,6 +23,7 @@ import com.justplay1.shoppist.interactor.units.GetUnits;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
+import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
 import com.justplay1.shoppist.view.SelectUnitView;
 
@@ -33,7 +34,7 @@ import javax.inject.Inject;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView> {
+public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView, Router> {
 
     private final UnitsDataModelMapper mDataMapper;
     private final GetUnits mGetUnits;

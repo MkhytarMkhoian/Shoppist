@@ -31,15 +31,7 @@ public interface ListItemsView extends LoadDataView, ContextView {
 
     void showData(List<Pair<HeaderViewModel, List<ListItemViewModel>>> data);
 
-    void openStandardMode(ListViewModel list, ListItemViewModel item);
-
-    void openQuickMode(String parentListId);
-
-    void openEditScreen(ListViewModel list, ListItemViewModel item);
-
     void setManualSortModeEnable(boolean enable);
-
-    void showDeletingAnimation();
 
     void showEmailShareDialog(String listName);
 }

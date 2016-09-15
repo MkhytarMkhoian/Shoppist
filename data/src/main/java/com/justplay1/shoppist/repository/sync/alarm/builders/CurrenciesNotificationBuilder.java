@@ -7,7 +7,7 @@
 //import com.justplay1.shoppist.entity.CurrencyDAO;
 //import com.justplay1.shoppist.entity.NotificationDAO;
 //import com.justplay1.shoppist.entity.NotificationType;
-//import com.justplay1.shoppist.preferences.ShoppistPreferences;
+//import com.justplay1.shoppist.preferences.AppPreferences;
 //import com.justplay1.shoppist.repository.datasource.local.LocalSetData;
 //
 //import java.util.List;
@@ -22,7 +22,7 @@
 //public class CurrenciesNotificationBuilder extends NotificationBuilder<CurrencyDAO> {
 //
 //    @Inject
-//    public CurrenciesNotificationBuilder(Context context, ShoppistPreferences preferences, LocalSetData<NotificationDAO> dataStore) {
+//    public CurrenciesNotificationBuilder(Context context, AppPreferences preferences, LocalSetData<NotificationDAO> dataStore) {
 //        super(context, preferences, dataStore);
 //    }
 //

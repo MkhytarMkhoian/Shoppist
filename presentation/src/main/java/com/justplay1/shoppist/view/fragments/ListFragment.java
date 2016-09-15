@@ -25,7 +25,6 @@ import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +40,7 @@ import com.justplay1.shoppist.di.modules.ActivityModule;
 import com.justplay1.shoppist.di.modules.ListsModule;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
+import com.justplay1.shoppist.navigation.ListRouter;
 import com.justplay1.shoppist.presenter.ListPresenter;
 import com.justplay1.shoppist.utils.AnimationResultListener;
 import com.justplay1.shoppist.view.ListView;
@@ -69,9 +69,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     private Subscription mBusSubscription;
 
     private ListsComponent mComponent;
-    private ListsFragmentInteractionListener mListener;
     private ListAdapter mAdapter;
-    private FloatingActionButton mActionButton;
 
     public static ListFragment newInstance() {
         Bundle args = new Bundle();
@@ -82,14 +80,9 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            mListener = (ListsFragmentInteractionListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement FragmentInteractionListener");
-        }
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mPresenter.takeRouter((ListRouter) getActivity());
     }
 
     @Override
@@ -107,6 +100,18 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDestroy();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mPresenter.takeRouter((ListRouter) getActivity());
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         UiEventBus.instanceOf().filteredObservable(ThemeUpdatedEvent.class);
@@ -121,17 +126,9 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     @Override
     public void onPause() {
         super.onPause();
-        if (mPreferences.isManualSortEnableForLists()) {
+        if (mPreferences.isManualSortEnableForShoppingLists()) {
             mPresenter.savePosition(mAdapter.getItems());
         }
-    }
-
-    @Override
-    protected void init(View view) {
-        super.init(view);
-        mActionButton = (FloatingActionButton) view.findViewById(R.id.add_button);
-        mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
-        mActionButton.setOnClickListener(this);
     }
 
     @Override
@@ -178,7 +175,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
 
     @Override
     public void onItemClick(BaseItemHolder holder, int position, long id) {
-        mListener.openListDetailScreen(mAdapter.getChildItem(holder.groupPosition, holder.childPosition));
+        mPresenter.onItemClick(mAdapter.getChildItem(holder.groupPosition, holder.childPosition));
     }
 
     @Override
@@ -196,7 +193,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
         if (mPreferences.getLongItemClickAction() == 0) {
             holder.toggle();
         } else {
-            mPresenter.onListItemLongClick(mAdapter.getChildItem(holder.groupPosition, holder.childPosition));
+            mPresenter.onItemLongClick(mAdapter.getChildItem(holder.groupPosition, holder.childPosition));
         }
         return true;
     }
@@ -271,11 +268,6 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     }
 
     @Override
-    public void openEditListScreen(ListViewModel list) {
-        mListener.openEditScreen(list);
-    }
-
-    @Override
     public void showData(List<Pair<HeaderViewModel, List<ListViewModel>>> data) {
         mAdapter.setData(data);
         mAdapter.notifyDataSetChanged();
@@ -286,11 +278,6 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     public void setManualSortModeEnable(boolean enable) {
         mAdapter.setManualSortModeEnable(enable);
         mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showEmailShareDialog(String listName) {
-        emailShare();
     }
 
     @Override
@@ -335,7 +322,8 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     }
 
     public void onDeleteCheckedItemsClick() {
-
+        deleteItems(getString(R.string.delete_the_list),
+                () -> mAdapter.deleteCheckedView(deleteItems -> mPresenter.deleteItems(deleteItems)));
     }
 
     public void onEmailShareClick() {
@@ -391,12 +379,5 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
         dialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(mPreferences.getColorPrimary());
         dialog.getButton(Dialog.BUTTON_NEGATIVE).setTextColor(mPreferences.getColorPrimary());
         dialog.getButton(Dialog.BUTTON_NEUTRAL).setTextColor(mPreferences.getColorPrimary());
-    }
-
-    public interface ListsFragmentInteractionListener {
-
-        void openEditScreen(ListViewModel list);
-
-        void openListDetailScreen(ListViewModel list);
     }
 }

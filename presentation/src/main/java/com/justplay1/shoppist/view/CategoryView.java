@@ -26,8 +26,4 @@ import java.util.List;
 public interface CategoryView extends LoadDataView {
 
     void showData(List<CategoryViewModel> data);
-
-    void openAddCategoryScreen(CategoryViewModel category);
-
-    void setManualSortEnable(boolean manualSortEnable);
 }

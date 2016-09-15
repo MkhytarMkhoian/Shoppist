@@ -22,31 +22,31 @@ import com.justplay1.shoppist.interactor.currency.DeleteCurrency;
 import com.justplay1.shoppist.interactor.currency.GetCurrencies;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.navigation.CurrencyRouter;
 import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
 import com.justplay1.shoppist.view.CurrencyView;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import rx.Observable;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 @PerActivity
-public class CurrencyPresenter extends BaseRxPresenter<CurrencyView> {
+public class CurrencyPresenter extends BaseRxPresenter<CurrencyView, CurrencyRouter> {
 
     private final CurrencyModelDataMapper mDataMapper;
-    private final ShoppistPreferences mPreferences;
     private final GetCurrencies mGetCurrencies;
     private final DeleteCurrency mDeleteCurrency;
 
     @Inject
-    public CurrencyPresenter(ShoppistPreferences preferences,
-                             GetCurrencies getCurrencies,
+    public CurrencyPresenter(GetCurrencies getCurrencies,
                              DeleteCurrency deleteCurrency,
                              CurrencyModelDataMapper dataMapper) {
-        this.mPreferences = preferences;
         this.mGetCurrencies = getCurrencies;
         this.mDeleteCurrency = deleteCurrency;
         this.mDataMapper = dataMapper;
@@ -68,20 +68,14 @@ public class CurrencyPresenter extends BaseRxPresenter<CurrencyView> {
     }
 
     public void onAddButtonClick() {
-        showCurrencyAddDialog(null);
+        if (hasRouter()) {
+            getRouter().showCurrencyEditDialog(null);
+        }
     }
 
     public void onListItemClick(CurrencyViewModel currency) {
-        showCurrencyAddDialog(currency);
-    }
-
-    public void onListItemLongClick(CurrencyViewModel currency) {
-
-    }
-
-    private void showCurrencyAddDialog(CurrencyViewModel currency) {
-        if (isViewAttached()) {
-            getView().showCurrencyAddDialog(currency);
+        if (hasRouter()) {
+            getRouter().showCurrencyEditDialog(currency);
         }
     }
 
@@ -91,15 +85,11 @@ public class CurrencyPresenter extends BaseRxPresenter<CurrencyView> {
         }
     }
 
-    public void deleteItems() {
-
-    }
-
-    public void checkAll() {
-
-    }
-
-    public void unCheckAll() {
-
+    public void deleteItems(Collection<CurrencyViewModel> data) {
+        mSubscriptions.add(Observable.fromCallable(() -> mDataMapper.transform(data))
+                .flatMap(items -> {
+                    mDeleteCurrency.setData(items);
+                    return mDeleteCurrency.get();
+                }).subscribe(new DefaultSubscriber<Boolean>()));
     }
 }

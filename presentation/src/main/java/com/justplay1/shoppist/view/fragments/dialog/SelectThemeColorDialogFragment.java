@@ -27,7 +27,6 @@ import android.view.Window;
 import android.widget.ProgressBar;
 
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
 import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.component.themedialog.ColorPickerPalette;
 import com.justplay1.shoppist.view.component.themedialog.ColorPickerSwatch;

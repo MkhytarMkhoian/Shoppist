@@ -27,6 +27,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.navigation.GoodsRouter;
 import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.fragments.GoodsFragment;
 
@@ -34,7 +35,7 @@ import com.justplay1.shoppist.view.fragments.GoodsFragment;
  * Created by Mkhytar Mkhoian.
  */
 public class GoodsActivity extends SingleListFragmentActivity<GoodsFragment>
-        implements Toolbar.OnMenuItemClickListener, GoodsFragment.GoodsFragmentInteractionListener {
+        implements Toolbar.OnMenuItemClickListener, GoodsRouter {
 
     public static Intent getCallingIntent(Context context) {
         Intent callingIntent = new Intent(context, GoodsActivity.class);
@@ -103,7 +104,7 @@ public class GoodsActivity extends SingleListFragmentActivity<GoodsFragment>
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_delete:
-                mFragment.onDeleteClick();
+                mFragment.onDeleteCheckedItemsClick();
                 break;
             case R.id.menu_check_all:
                 mFragment.onCheckAllItemsClick();

@@ -170,7 +170,7 @@ public class DBHelper extends SQLiteOpenHelper {
         for (String product : products) {
             String[] productsName = product.split(" ! ");
             db.insert(ProductDAO.TABLE, null, new ProductDAO.Builder()
-                    .id(UUID.nameUUIDFromBytes((productsName[0]).getBytes()).toString())
+                    .id(UUID.nameUUIDFromBytes((System.nanoTime() + "").getBytes()).toString())
                     .name(productsName[0])
                     .categoryId(productsName[1])
                     .isCreateByUser(false)

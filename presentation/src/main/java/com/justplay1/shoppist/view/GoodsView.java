@@ -37,8 +37,4 @@ public interface GoodsView extends LoadDataView, ContextView {
     void showChangeCategoryDialog(List<ProductViewModel> editProducts);
 
     void showEditGoodsDialog(ProductViewModel editProduct);
-
-    void showDeleteDialog();
-
-    void openSearchScreen();
 }

@@ -18,7 +18,7 @@ package com.justplay1.shoppist.di.modules;
 
 import android.content.Context;
 
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.preferences.AppPreferences;
 
 import javax.inject.Singleton;
 
@@ -33,8 +33,8 @@ public class PreferenceModule {
 
     @Provides
     @Singleton
-    ShoppistPreferences provideShoppistPreferences(Context context) {
-        ShoppistPreferences preferences = new ShoppistPreferences(context);
+    AppPreferences provideShoppistPreferences(Context context) {
+        AppPreferences preferences = new AppPreferences(context);
         preferences.initPreferences();
         return preferences;
     }

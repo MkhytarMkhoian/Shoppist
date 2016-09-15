@@ -16,11 +16,11 @@ import com.justplay1.shoppist.view.fragments.UnitFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class UnitsActivity extends SingleListFragmentActivity<UnitFragment> implements Toolbar.OnMenuItemClickListener {
+public class UnitsActivity extends SingleListFragmentActivity<UnitFragment>
+        implements Toolbar.OnMenuItemClickListener {
 
     public static Intent getCallingIntent(Context context) {
-        Intent callingIntent = new Intent(context, UnitsActivity.class);
-        return callingIntent;
+        return new Intent(context, UnitsActivity.class);
     }
 
     @Override

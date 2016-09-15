@@ -23,8 +23,8 @@ import com.justplay1.shoppist.di.scope.PerActivity;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.GetCategory;
 import com.justplay1.shoppist.interactor.currency.GetCurrency;
-import com.justplay1.shoppist.interactor.listitems.GetListItems;
 import com.justplay1.shoppist.interactor.listitems.DeleteListItems;
+import com.justplay1.shoppist.interactor.listitems.GetListItems;
 import com.justplay1.shoppist.interactor.listitems.UpdateListItems;
 import com.justplay1.shoppist.interactor.units.GetUnit;
 import com.justplay1.shoppist.models.CategoryViewModel;
@@ -38,7 +38,8 @@ import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
 import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
 import com.justplay1.shoppist.models.mappers.ListItemsModelDataMapper;
 import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.navigation.ListItemsRouter;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.presenter.base.BaseSortablePresenter;
 import com.justplay1.shoppist.view.ListItemsView;
 
@@ -55,7 +56,7 @@ import rx.Observable;
  * Created by Mkhytar Mkhoian.
  */
 @PerActivity
-public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, ListItemViewModel> {
+public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, ListItemViewModel, ListItemsRouter> {
 
     private final CategoryModelDataMapper mCategoryModelDataMapper;
     private final UnitsDataModelMapper mUnitsDataModelMapper;
@@ -73,7 +74,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     private ListItemViewModel mItem;
 
     @Inject
-    public ListItemsPresenter(ShoppistPreferences preferences,
+    public ListItemsPresenter(AppPreferences preferences,
                               CategoryModelDataMapper categoryModelDataMapper,
                               UnitsDataModelMapper unitsDataModelMapper,
                               CurrencyModelDataMapper currencyModelDataMapper,
@@ -100,7 +101,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     @Override
     public void onCreate(Bundle arguments, Bundle savedInstanceState) {
         super.onCreate(arguments, savedInstanceState);
-        if (arguments != null){
+        if (arguments != null) {
             mParentList = arguments.getParcelable(ListViewModel.class.getName());
         }
     }
@@ -209,7 +210,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         switch (mPreferences.getAddButtonClickAction()) {
             case 0:
                 if (!isLongClick) {
-                    openStandardMode(mParentList, mItem);
+                    openEditScreen(mParentList, mItem);
                 } else {
                     openQuickMode(mItem.getId());
                 }
@@ -218,7 +219,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
                 if (!isLongClick) {
                     openQuickMode(mItem.getId());
                 } else {
-                    openStandardMode(mParentList, mItem);
+                    openEditScreen(mParentList, mItem);
                 }
                 break;
         }
@@ -334,27 +335,15 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         }
     }
 
-    private void openStandardMode(ListViewModel list, ListItemViewModel item) {
-        if (isViewAttached()) {
-            getView().openStandardMode(list, item);
-        }
-    }
-
     private void openQuickMode(String parentListId) {
-        if (isViewAttached()) {
-            getView().openQuickMode(parentListId);
+        if (hasRouter()) {
+            getRouter().openQuickMode(parentListId);
         }
     }
 
     private void openEditScreen(ListViewModel list, ListItemViewModel item) {
-        if (isViewAttached()) {
-            getView().openEditScreen(list, item);
-        }
-    }
-
-    private void showDeletingAnimation() {
-        if (isViewAttached()) {
-            getView().showDeletingAnimation();
+        if (hasRouter()) {
+            getRouter().openEditScreen(list, item);
         }
     }
 }

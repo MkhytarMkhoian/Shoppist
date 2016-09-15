@@ -49,15 +49,11 @@ import javax.inject.Inject;
 public class ListsSettingFragment extends BaseSettingFragment implements ListsSettingView {
 
     public static final String DEFAULT_CURRENCY_ID = "default_currency";
-    public static final String DISCOLOR_PURCHASED_GOODS_ID = "discolor_purchased_goods";
     public static final String CALCULATE_PRICE_ID = "calculate_price";
-    public static final String SHOW_GOODS_HEADER = "show_goods_header";
     public static final String SHOPPING_LIST_LEFT_SWIPE_ACTION_ID = "shopping_list_left_swipe_action_id";
     public static final String SHOPPING_LIST_RIGHT_SWIPE_ACTION_ID = "shopping_list_right_swipe_action_id";
     public static final String ADD_BUTTON_CLICK_ACTION_ID = "add_button_click_action";
 
-    private CheckBoxPreference mDiscolorPurchasedGoodsBtn;
-    private CheckBoxPreference mShowGoodsHeaderBtn;
     private CheckBoxPreference mCalculatePriceBtn;
 
     private Preference mShoppingListLeftSwipeActionBtn;
@@ -87,8 +83,6 @@ public class ListsSettingFragment extends BaseSettingFragment implements ListsSe
         mAddButtonClickAction.setOnPreferenceClickListener(this);
 
         mCalculatePriceBtn.setChecked(mPreferences.isCalculatePrice());
-        mShowGoodsHeaderBtn.setChecked(mPreferences.isShowGoodsHeader());
-        mDiscolorPurchasedGoodsBtn.setChecked(mPreferences.isDiscolorPurchasedGoods());
     }
 
     @Override
@@ -149,14 +143,8 @@ public class ListsSettingFragment extends BaseSettingFragment implements ListsSe
             case DEFAULT_CURRENCY_ID:
                 showSelectCurrencyDialog();
                 break;
-            case DISCOLOR_PURCHASED_GOODS_ID:
-                mPreferences.setDiscolorPurchasedGoods(((CheckBoxPreference) preference).isChecked());
-                break;
             case CALCULATE_PRICE_ID:
                 mPreferences.setCalculatePrice(((CheckBoxPreference) preference).isChecked());
-                break;
-            case SHOW_GOODS_HEADER:
-                mPreferences.setShowGoodsHeader(((CheckBoxPreference) preference).isChecked());
                 break;
             case SHOPPING_LIST_LEFT_SWIPE_ACTION_ID:
                 showChooseActionDialog(getActivity(), SHOPPING_LIST_LEFT_SWIPE_ACTION_ID);
@@ -174,18 +162,8 @@ public class ListsSettingFragment extends BaseSettingFragment implements ListsSe
     protected void updateShoppingListCheckBox() {
         if (findPreference(DEFAULT_CURRENCY_ID) != null) {
             getPreferenceScreen().removePreference(findPreference(DEFAULT_CURRENCY_ID));
-            getPreferenceScreen().removePreference(findPreference(DISCOLOR_PURCHASED_GOODS_ID));
             getPreferenceScreen().removePreference(findPreference(CALCULATE_PRICE_ID));
         }
-
-        if (mDiscolorPurchasedGoodsBtn == null) {
-            mDiscolorPurchasedGoodsBtn = new ColorCheckBoxPreference(getActivity(), mPreferences.getColorPrimary());
-            mDiscolorPurchasedGoodsBtn.setKey(DISCOLOR_PURCHASED_GOODS_ID);
-            mDiscolorPurchasedGoodsBtn.setTitle(getString(R.string.discolor_purchased_goods));
-            mDiscolorPurchasedGoodsBtn.setSummary(getString(R.string.discolor_purchased_goods_summary));
-        }
-        getPreferenceScreen().removePreference(mDiscolorPurchasedGoodsBtn);
-        getPreferenceScreen().addPreference(mDiscolorPurchasedGoodsBtn);
 
         if (mCalculatePriceBtn == null) {
             mCalculatePriceBtn = new ColorCheckBoxPreference(getActivity(), mPreferences.getColorPrimary());
@@ -204,17 +182,7 @@ public class ListsSettingFragment extends BaseSettingFragment implements ListsSe
         getPreferenceScreen().removePreference(mDefaultCurrencyBtn);
         getPreferenceScreen().addPreference(mDefaultCurrencyBtn);
 
-        if (mShowGoodsHeaderBtn == null) {
-            mShowGoodsHeaderBtn = new ColorCheckBoxPreference(getActivity(), mPreferences.getColorPrimary());
-            mShowGoodsHeaderBtn.setKey(SHOW_GOODS_HEADER);
-            mShowGoodsHeaderBtn.setTitle(R.string.show_goods_header);
-        }
-        getPreferenceScreen().removePreference(mShowGoodsHeaderBtn);
-        getPreferenceScreen().addPreference(mShowGoodsHeaderBtn);
-
         mCalculatePriceBtn.setOnPreferenceClickListener(this);
-        mDiscolorPurchasedGoodsBtn.setOnPreferenceClickListener(this);
-        mShowGoodsHeaderBtn.setOnPreferenceClickListener(this);
 
         if (mShoppingListLeftSwipeActionBtn == null) {
             mShoppingListLeftSwipeActionBtn = new Preference(getActivity());

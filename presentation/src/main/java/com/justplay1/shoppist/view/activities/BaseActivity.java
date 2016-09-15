@@ -30,7 +30,7 @@ import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.di.components.AppComponent;
 import com.justplay1.shoppist.di.modules.ActivityModule;
 import com.justplay1.shoppist.navigation.Navigator;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 
 import javax.inject.Inject;
@@ -46,7 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Inject
     Navigator mNavigator;
     @Inject
-    ShoppistPreferences mPreferences;
+    AppPreferences mPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

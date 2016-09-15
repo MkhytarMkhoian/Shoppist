@@ -36,10 +36,8 @@ import com.justplay1.shoppist.view.fragments.settings.SystemSettingFragment;
 public class SettingsActivity extends BaseActivity implements MainSettingFragment.MainSettingFragmentInteractionListener {
 
     public static final int GENERAL_SETTING = 1;
-    public static final int NOTIFICATION_SETTING = 2;
-    public static final int LISTS_SETTING = 3;
-    public static final int SYSTEM_SETTING = 4;
-    public static final int ACCOUNT_SETTING = 5;
+    public static final int LISTS_SETTING = 2;
+    public static final int SYSTEM_SETTING = 3;
 
     private Toolbar mToolbar;
 
@@ -112,17 +110,7 @@ public class SettingsActivity extends BaseActivity implements MainSettingFragmen
     }
 
     @Override
-    public void openNotificationSetting() {
-        mNavigator.navigateToSettingScreen(this, NOTIFICATION_SETTING);
-    }
-
-    @Override
     public void openSystemSetting() {
         mNavigator.navigateToSettingScreen(this, SYSTEM_SETTING);
-    }
-
-    @Override
-    public void openAccountSetting() {
-        mNavigator.navigateToSettingScreen(this, ACCOUNT_SETTING);
     }
 }

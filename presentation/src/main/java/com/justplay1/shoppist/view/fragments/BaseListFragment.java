@@ -16,10 +16,16 @@
 
 package com.justplay1.shoppist.view.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,13 +40,14 @@ import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseListFragment extends BaseFragment {
+public abstract class BaseListFragment extends BaseFragment implements View.OnClickListener{
 
     protected EmptyView mEmptyView;
     protected CustomProgressDialog mProgressDialog;
     protected ShoppistRecyclerView mRecyclerView;
     protected LinearLayoutManager mLayoutManager;
     protected ActionModeInteractionListener mActionModeInteractionListener;
+    protected FloatingActionButton mActionButton;
 
     protected abstract
     @LayoutRes
@@ -74,6 +81,10 @@ public abstract class BaseListFragment extends BaseFragment {
         mProgressDialog.setMessage(getString(R.string.please_wait));
         mProgressDialog.setColor(mPreferences.getColorPrimary());
         mEmptyView = (EmptyView) view.findViewById(android.R.id.empty);
+
+        mActionButton = (FloatingActionButton) view.findViewById(R.id.add_button);
+        mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
+        mActionButton.setOnClickListener(this);
     }
 
     protected void initRecyclerView(View view, Bundle savedInstanceState) {
@@ -95,5 +106,38 @@ public abstract class BaseListFragment extends BaseFragment {
             mRecyclerView = null;
         }
         mLayoutManager = null;
+    }
+
+    protected void deleteItems(String message, @NonNull DeleteListener listener) {
+        if (mPreferences.isNeedShowConfirmDeleteDialog()) {
+            showConfirmDeleteDialog(message, (dialog, which) -> {
+                switch (which) {
+                    case Dialog.BUTTON_POSITIVE:
+                        listener.onDelete();
+                        dialog.dismiss();
+                    case Dialog.BUTTON_NEGATIVE:
+                        dialog.dismiss();
+                        break;
+                }
+            });
+        } else {
+            listener.onDelete();
+        }
+    }
+
+    protected void showConfirmDeleteDialog(String message, DialogInterface.OnClickListener listener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(message);
+        builder.setPositiveButton(R.string.action_delete, listener);
+        builder.setNegativeButton(R.string.cancel, listener);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(mPreferences.getColorPrimary());
+        dialog.getButton(Dialog.BUTTON_NEGATIVE).setTextColor(mPreferences.getColorPrimary());
+    }
+
+    public interface DeleteListener {
+
+        void onDelete();
     }
 }

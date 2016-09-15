@@ -25,6 +25,7 @@ import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
+import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
 import com.justplay1.shoppist.view.SelectCurrencyView;
 
@@ -35,7 +36,7 @@ import javax.inject.Inject;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class SelectCurrencyPresenter extends BaseRxPresenter<SelectCurrencyView> {
+public class SelectCurrencyPresenter extends BaseRxPresenter<SelectCurrencyView, Router> {
 
     private final CurrencyModelDataMapper mDataMapper;
     private final GetCurrencies mGetCurrencies;

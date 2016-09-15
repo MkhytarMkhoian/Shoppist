@@ -27,7 +27,6 @@ import com.justplay1.shoppist.interactor.goods.UpdateGoods;
 import com.justplay1.shoppist.interactor.listitems.AddListItems;
 import com.justplay1.shoppist.interactor.listitems.UpdateListItems;
 import com.justplay1.shoppist.interactor.units.GetUnits;
-import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.ListItemViewModel;
@@ -39,7 +38,7 @@ import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
 import com.justplay1.shoppist.models.mappers.GoodsModelDataMapper;
 import com.justplay1.shoppist.models.mappers.ListItemsModelDataMapper;
 import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.presenter.base.BaseAddElementPresenter;
 import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.utils.ModelUtils;
@@ -55,7 +54,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.functions.Func1;
 
 /**
  * Created by Mkhytar Mkhoian.
@@ -77,7 +75,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     private final GetUnits mGetUnits;
     private final UpdateGoods mUpdateGoods;
 
-    private final ShoppistPreferences mPreferences;
+    private final AppPreferences mPreferences;
 
     private ListItemViewModel mItem;
     private String mParentListId;
@@ -103,7 +101,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
                                 GetGoods getGoods,
                                 GetUnits getUnits,
                                 UpdateGoods updateGoods,
-                                ShoppistPreferences preferences) {
+                                AppPreferences preferences) {
         this.mCategoryModelDataMapper = categoryModelDataMapper;
         this.mUnitsDataModelMapper = unitsDataModelMapper;
         this.mCurrencyModelDataMapper = currencyModelDataMapper;

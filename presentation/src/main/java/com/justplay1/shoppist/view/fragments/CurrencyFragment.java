@@ -31,6 +31,7 @@ import com.justplay1.shoppist.di.components.DaggerCurrencyComponent;
 import com.justplay1.shoppist.di.modules.ActivityModule;
 import com.justplay1.shoppist.di.modules.CurrencyModule;
 import com.justplay1.shoppist.models.CurrencyViewModel;
+import com.justplay1.shoppist.navigation.CurrencyRouter;
 import com.justplay1.shoppist.presenter.CurrencyPresenter;
 import com.justplay1.shoppist.view.CurrencyView;
 import com.justplay1.shoppist.view.adapters.CurrencyAdapter;
@@ -46,13 +47,12 @@ import javax.inject.Inject;
  * Created by Mkhytar Mkhoian.
  */
 public class CurrencyFragment extends BaseListFragment
-        implements CurrencyView, ShoppistRecyclerView.OnItemClickListener, View.OnClickListener {
+        implements CurrencyView, ShoppistRecyclerView.OnItemClickListener, CurrencyRouter {
 
     @Inject
     CurrencyPresenter mPresenter;
 
     private CurrencyComponent mComponent;
-    private FloatingActionButton mActionButton;
     private CurrencyAdapter mAdapter;
 
     public static CurrencyFragment newInstance() {
@@ -84,14 +84,6 @@ public class CurrencyFragment extends BaseListFragment
     }
 
     @Override
-    protected void init(View view) {
-        super.init(view);
-        mActionButton = (FloatingActionButton) view.findViewById(R.id.add_button);
-        mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
-        mActionButton.setOnClickListener(this);
-    }
-
-    @Override
     protected void injectDependencies() {
         super.injectDependencies();
         mComponent = DaggerCurrencyComponent.builder()
@@ -103,11 +95,6 @@ public class CurrencyFragment extends BaseListFragment
     }
 
     @Override
-    protected void initRecyclerView(View view, Bundle savedInstanceState) {
-        super.initRecyclerView(view, savedInstanceState);
-    }
-
-    @Override
     protected int getLayoutId() {
         return R.layout.fragment_list_with_button;
     }
@@ -115,8 +102,13 @@ public class CurrencyFragment extends BaseListFragment
     @Override
     protected void initAdapter() {
         mAdapter = new CurrencyAdapter(getContext(), mActionModeInteractionListener, mRecyclerView);
-        mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
+    }
+
+    @Override
+    protected void initRecyclerView(View view, Bundle savedInstanceState) {
+        super.initRecyclerView(view, savedInstanceState);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -140,10 +132,9 @@ public class CurrencyFragment extends BaseListFragment
     }
 
     @Override
-    public void showCurrencyAddDialog(CurrencyViewModel currency) {
+    public void showCurrencyEditDialog(CurrencyViewModel currency) {
         FragmentManager fm = getFragmentManager();
         AddCurrencyDialogFragment dialog = AddCurrencyDialogFragment.newInstance(currency);
-        dialog.setCompleteListener(isUpdate -> mPresenter.loadData());
         dialog.show(fm, AddCurrencyDialogFragment.class.getName());
     }
 
@@ -172,7 +163,8 @@ public class CurrencyFragment extends BaseListFragment
     }
 
     public void onDeleteCheckedItemsClick() {
-//        showDeleteDialog(getString(R.string.delete_the_category));
+        deleteItems(getString(R.string.delete_the_item),
+                () -> mAdapter.deleteCheckedView(deleteItems -> mPresenter.deleteItems(deleteItems)));
     }
 
     public boolean isDeleteButtonEnable() {
@@ -183,6 +175,10 @@ public class CurrencyFragment extends BaseListFragment
             }
         }
         return deleteFlag;
+    }
+
+    public boolean isCheckAllButtonEnable() {
+        return !mAdapter.isAllItemsChecked();
     }
 
     @Override

@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
+import com.justplay1.shoppist.navigation.ListItemsRouter;
 import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.fragments.ListItemsFragment;
 
@@ -36,7 +37,7 @@ import com.justplay1.shoppist.view.fragments.ListItemsFragment;
  * Created by Mkhytar Mkhoian.
  */
 public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragment>
-        implements Toolbar.OnMenuItemClickListener, ListItemsFragment.ListItemsFragmentInteractionListener {
+        implements Toolbar.OnMenuItemClickListener, ListItemsRouter {
 
     private ListViewModel mParentList;
 
@@ -181,12 +182,7 @@ public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragme
     }
 
     @Override
-    public void setTitle(String title) {
-        mToolbar.setTitle(title);
-    }
-
-    @Override
-    public void openStandardMode(ListViewModel list, ListItemViewModel item) {
+    public void openEditScreen(ListViewModel list, ListItemViewModel item) {
         mNavigator.navigateToAddListItemScreen(this, list, item);
     }
 

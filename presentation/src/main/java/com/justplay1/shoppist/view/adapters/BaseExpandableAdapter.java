@@ -323,7 +323,7 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
      */
     @Override
     public final int getItemCount() {
-        return 0;
+        return getChildItemsCount();
     }
 
     /**

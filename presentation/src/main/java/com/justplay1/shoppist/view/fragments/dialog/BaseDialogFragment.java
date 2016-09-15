@@ -29,7 +29,7 @@ import android.widget.EditText;
 
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.CustomProgressDialog;
 
@@ -42,7 +42,7 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment
         implements View.OnClickListener {
 
     @Inject
-    protected ShoppistPreferences mPreferences;
+    protected AppPreferences mPreferences;
     protected Button mPositiveButton;
     protected Button mNegativeButton;
     protected CustomProgressDialog mProgressDialog;

@@ -19,15 +19,16 @@ package com.justplay1.shoppist.presenter.base;
 import android.support.annotation.StringRes;
 import android.support.v4.util.Pair;
 
-import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.BaseViewModel;
+import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ItemType;
 import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.SortType;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.navigation.Router;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.ContextView;
 
@@ -40,12 +41,13 @@ import java.util.Locale;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseSortablePresenter<V extends ContextView, T extends BaseViewModel> extends BaseRxPresenter<V> {
+public abstract class BaseSortablePresenter<V extends ContextView, T extends BaseViewModel, R extends Router>
+        extends BaseRxPresenter<V, R> {
 
     protected int mDefaultSort;
-    protected final ShoppistPreferences mPreferences;
+    protected final AppPreferences mPreferences;
 
-    public BaseSortablePresenter(ShoppistPreferences preferences) {
+    public BaseSortablePresenter(AppPreferences preferences) {
         this.mPreferences = preferences;
     }
 
@@ -69,7 +71,8 @@ public abstract class BaseSortablePresenter<V extends ContextView, T extends Bas
 
         final Class<?> clazz = data.get(0).getClass();
         if (clazz.isAssignableFrom(ListViewModel.class)
-                || clazz.isAssignableFrom(ProductViewModel.class)) {
+                || clazz.isAssignableFrom(ProductViewModel.class)
+                || clazz.isAssignableFrom(CategoryViewModel.class)) {
             sort(result, sortType, data, true);
             if (isManualSortEnable()) {
                 sortByManually(result);
@@ -94,8 +97,8 @@ public abstract class BaseSortablePresenter<V extends ContextView, T extends Bas
 
         if (noDone.size() > 0) {
             HeaderViewModel header = new HeaderViewModel();
-            if (clazz.isAssignableFrom(ListItemViewModel.class) && mPreferences.isShowGoodsHeader()) {
-                header.setName(getString(R.string.goods).toUpperCase(Locale.getDefault()));
+            if (clazz.isAssignableFrom(ListItemViewModel.class)) {
+                header.setName(getString(com.justplay1.shoppist.R.string.goods).toUpperCase(Locale.getDefault()));
                 header.setShowExpandIndicator(false);
                 double totalPrice = 0;
                 for (T item : noDone) {
@@ -112,7 +115,7 @@ public abstract class BaseSortablePresenter<V extends ContextView, T extends Bas
             HeaderViewModel header = null;
             if (clazz.isAssignableFrom(ListItemViewModel.class)) {
                 header = new HeaderViewModel();
-                header.setName(getString(R.string.shopping_cart).toUpperCase(Locale.getDefault()));
+                header.setName(getString(com.justplay1.shoppist.R.string.shopping_cart).toUpperCase(Locale.getDefault()));
                 double totalPrice = 0;
                 for (T item : done) {
                     ListItemViewModel listItem = ((ListItemViewModel) item);
@@ -184,11 +187,11 @@ public abstract class BaseSortablePresenter<V extends ContextView, T extends Bas
                 flag = diffDay;
                 HeaderViewModel header = new HeaderViewModel();
                 if (flag < 1) {
-                    header.setName(getString(R.string.today));
+                    header.setName(getString(com.justplay1.shoppist.R.string.today));
                 } else if (flag == 1) {
-                    header.setName(getString(R.string.yesterday));
+                    header.setName(getString(com.justplay1.shoppist.R.string.yesterday));
                 } else {
-                    header.setName(flag + getString(R.string.days_ago));
+                    header.setName(flag + " " + getString(com.justplay1.shoppist.R.string.days_ago));
                 }
                 header.setItemType(ItemType.HEADER_ITEM);
 
@@ -246,10 +249,10 @@ public abstract class BaseSortablePresenter<V extends ContextView, T extends Bas
 
         if (!withHeaders) return;
 
-        final String noPriority = getString(R.string.no_priority);
-        final String lowPriority = getString(R.string.low);
-        final String mediumPriority = getString(R.string.medium_priority);
-        final String highPriority = getString(R.string.high);
+        final String noPriority = getString(com.justplay1.shoppist.R.string.no_priority);
+        final String lowPriority = getString(com.justplay1.shoppist.R.string.low_priority);
+        final String mediumPriority = getString(com.justplay1.shoppist.R.string.medium_priority);
+        final String highPriority = getString(com.justplay1.shoppist.R.string.high_priority);
         List<T> items = null;
         int priority = -1;
 
@@ -290,12 +293,7 @@ public abstract class BaseSortablePresenter<V extends ContextView, T extends Bas
     }
 
     private void sortByCategory(List<Pair<HeaderViewModel, List<T>>> result, List<T> data, boolean withHeaders) {
-        if (mPreferences.isManualSortEnableForCategories()) {
-            Collections.sort(data, (lhs, rhs) -> lhs.getCategory().getPosition() < rhs.getCategory().getPosition() ? -1
-                    : (lhs.getCategory().getPosition() == rhs.getCategory().getPosition() ? 0 : 1));
-        } else {
-            sortByCategory(data);
-        }
+        sortByCategory(data);
 
         if (!withHeaders) return;
 

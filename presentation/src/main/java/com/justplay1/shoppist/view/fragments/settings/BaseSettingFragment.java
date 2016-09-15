@@ -23,7 +23,7 @@ import android.support.annotation.XmlRes;
 import com.jenzz.materialpreference.Preference;
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.view.component.CustomProgressDialog;
 
 import javax.inject.Inject;
@@ -36,7 +36,7 @@ public abstract class BaseSettingFragment extends PreferenceFragment implements 
     protected CustomProgressDialog mProgressDialog;
 
     @Inject
-    ShoppistPreferences mPreferences;
+    AppPreferences mPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

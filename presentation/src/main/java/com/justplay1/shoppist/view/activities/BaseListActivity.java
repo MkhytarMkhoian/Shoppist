@@ -47,14 +47,12 @@ public abstract class BaseListActivity extends BaseActivity
         if (mActionMode != null) {
             mActionMode.finish();
             mActionMode = null;
-            isActionModeShowing = false;
         }
     }
 
     @Override
     public void openActionMode(int count) {
         mActionMode = startSupportActionMode(this);
-        isActionModeShowing = true;
         updateActionMode(count);
     }
 
@@ -103,11 +101,13 @@ public abstract class BaseListActivity extends BaseActivity
     public void onSupportActionModeStarted(@NonNull ActionMode mode) {
         super.onSupportActionModeStarted(mode);
         setStatusBarColor(ContextCompat.getColor(this, R.color.grey_700));
+        isActionModeShowing = true;
     }
 
     @Override
     public void onSupportActionModeFinished(@NonNull ActionMode mode) {
         super.onSupportActionModeFinished(mode);
         setStatusBarColor();
+        isActionModeShowing = false;
     }
 }

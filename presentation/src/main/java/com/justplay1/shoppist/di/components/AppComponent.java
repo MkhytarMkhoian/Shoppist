@@ -27,7 +27,7 @@ import com.justplay1.shoppist.di.modules.RepositoryModule;
 import com.justplay1.shoppist.di.modules.ThreadExecutorModule;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
-import com.justplay1.shoppist.preferences.ShoppistPreferences;
+import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.repository.CategoryRepository;
 import com.justplay1.shoppist.repository.CurrencyRepository;
 import com.justplay1.shoppist.repository.GoodsRepository;
@@ -70,7 +70,7 @@ public interface AppComponent {
 
     PostExecutionThread postExecutionThread();
 
-    ShoppistPreferences preferences();
+    AppPreferences preferences();
 
 
     CategoryRepository categoryRepository();
