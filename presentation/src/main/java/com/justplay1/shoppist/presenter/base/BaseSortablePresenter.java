@@ -44,25 +44,14 @@ import java.util.Locale;
 public abstract class BaseSortablePresenter<V extends ContextView, T extends BaseViewModel, R extends Router>
         extends BaseRxPresenter<V, R> {
 
-    protected int mDefaultSort;
     protected final AppPreferences mPreferences;
 
     public BaseSortablePresenter(AppPreferences preferences) {
         this.mPreferences = preferences;
     }
 
-    public abstract boolean isManualSortEnable();
-
     protected String getString(@StringRes int resId) {
         return getView().context().getString(resId);
-    }
-
-    protected List<Pair<HeaderViewModel, List<T>>> sortByManually(List<Pair<HeaderViewModel, List<T>>> data) {
-        for (Pair<HeaderViewModel, List<T>> pair : data) {
-            Collections.sort(pair.second, (lhs, rhs) ->
-                    lhs.getPosition() < rhs.getPosition() ? -1 : (lhs.getPosition() == rhs.getPosition() ? 0 : 1));
-        }
-        return data;
     }
 
     protected List<Pair<HeaderViewModel, List<T>>> sort(final List<T> data, final @SortType int sortType) {
@@ -74,9 +63,6 @@ public abstract class BaseSortablePresenter<V extends ContextView, T extends Bas
                 || clazz.isAssignableFrom(ProductViewModel.class)
                 || clazz.isAssignableFrom(CategoryViewModel.class)) {
             sort(result, sortType, data, true);
-            if (isManualSortEnable()) {
-                sortByManually(result);
-            }
             return result;
         }
 
@@ -90,9 +76,6 @@ public abstract class BaseSortablePresenter<V extends ContextView, T extends Bas
             }
         }
         sort(result, sortType, noDone, true);
-        if (isManualSortEnable()) {
-            sortByManually(result);
-        }
         sort(result, sortType, done, false);
 
         if (noDone.size() > 0) {

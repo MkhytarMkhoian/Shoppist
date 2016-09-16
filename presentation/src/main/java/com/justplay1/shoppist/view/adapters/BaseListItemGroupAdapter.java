@@ -34,13 +34,13 @@ import com.justplay1.shoppist.models.SwipeActionType;
 import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.DrawableUtils;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseDraggableSwipeableItemViewHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
+import com.justplay1.shoppist.view.component.recyclerview.holders.BaseSwipeableItemViewHolder;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH extends BaseHeaderHolder, CVH extends BaseDraggableSwipeableItemViewHolder>
+public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH extends BaseHeaderHolder, CVH extends BaseSwipeableItemViewHolder>
         extends BaseListGroupAdapter<T, GVH, CVH>
         implements ExpandableSwipeableItemAdapter<GVH, CVH> {
 
@@ -63,9 +63,6 @@ public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH exte
 
     @Override
     public int onGetChildItemSwipeReactionType(CVH holder, int groupPosition, int childPosition, int x, int y) {
-        if (onCheckChildCanStartDrag(holder, groupPosition, childPosition, x, y)) {
-            return SwipeableItemConstants.REACTION_CAN_NOT_SWIPE_BOTH_H;
-        }
         return getChildItem(groupPosition, childPosition).getSwipeReactionType();
     }
 

@@ -125,9 +125,7 @@ public class MainActivity extends BaseListActivity
 
     @Override
     public void onBackPressed() {
-        if (mListFragment.isManualSortModeEnable()) {
-            mListFragment.disableManualSort();
-        } else if (isActionModeShowing()) {
+        if (isActionModeShowing()) {
             closeActionMode();
         } else if (mMenuDrawer.isDrawerOpen(mMenuFragment.getView())) {
             mMenuDrawer.closeDrawers();
@@ -163,9 +161,6 @@ public class MainActivity extends BaseListActivity
                 break;
             case R.id.sort_by_time_created:
                 mListFragment.onSortByTimeCreatedClick();
-                break;
-            case R.id.action_sort_manual_mode:
-                mListFragment.onSortByManualClick();
                 break;
             case R.id.menu_expand_all:
                 mListFragment.onExpandAllClick();

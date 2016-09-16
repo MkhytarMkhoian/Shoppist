@@ -42,7 +42,6 @@ import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.navigation.ListRouter;
 import com.justplay1.shoppist.presenter.ListPresenter;
-import com.justplay1.shoppist.utils.AnimationResultListener;
 import com.justplay1.shoppist.view.ListView;
 import com.justplay1.shoppist.view.activities.MainActivity;
 import com.justplay1.shoppist.view.adapters.ListAdapter;
@@ -50,7 +49,6 @@ import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -66,7 +64,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     @Inject
     ListPresenter mPresenter;
 
-    private Subscription mBusSubscription;
+    private Subscription mUiBusSubscription;
 
     private ListsComponent mComponent;
     private ListAdapter mAdapter;
@@ -80,23 +78,19 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mPresenter.takeRouter((ListRouter) getActivity());
-    }
-
-    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
+        mPresenter.takeRouter((ListRouter) getActivity());
         mPresenter.init();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mBusSubscription.unsubscribe();
+        mUiBusSubscription.unsubscribe();
         mPresenter.detachView();
+        mPresenter.takeRouter((ListRouter) getActivity());
     }
 
     @Override
@@ -106,29 +100,15 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mPresenter.takeRouter((ListRouter) getActivity());
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         UiEventBus.instanceOf().filteredObservable(ThemeUpdatedEvent.class);
-        mBusSubscription = UiEventBus.instanceOf().observable().subscribe(o -> {
+        mUiBusSubscription = UiEventBus.instanceOf().observable().subscribe(o -> {
             mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
             ((MainActivity) getActivity()).refreshToolbarColor();
             ((MainActivity) getActivity()).setStatusBarColor();
             mAdapter.notifyDataSetChanged();
         });
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (mPreferences.isManualSortEnableForShoppingLists()) {
-            mPresenter.savePosition(mAdapter.getItems());
-        }
     }
 
     @Override
@@ -155,17 +135,8 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     }
 
     @Override
-    protected void initRecyclerView(View view, Bundle savedInstanceState) {
-        super.initRecyclerView(view, savedInstanceState);
-    }
-
-    @Override
     protected RecyclerView.Adapter getAdapter() {
         return mAdapter;
-    }
-
-    public void deleteCheckedLists() {
-//        showDeleteDialog(getString(R.string.delete_the_list));
     }
 
     @Override
@@ -210,10 +181,6 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
         mPresenter.sortByTimeCreated(mAdapter.getItems());
     }
 
-    public void onSortByManualClick() {
-        mPresenter.onSortByManualClick();
-    }
-
     public void onExpandAllClick() {
         mRecyclerViewExpandableItemManager.expandAll();
     }
@@ -222,44 +189,9 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
         mRecyclerViewExpandableItemManager.collapseAll();
     }
 
-    public void emailShare() {
-//        ThreadExecutor.doBackgroundTaskAsync(new Callable<String>() {
-//            @Override
-//            public String call() throws Exception {
-//                StringBuilder textToSend = new StringBuilder();
-//                for (ListViewModel shoppingList : mAdapter.getCheckedItems()) {
-//                    textToSend.append(shoppingList.getName()).append("\n").append("\n");
-//                    List<ListItemViewModel> items = App.get().getTablesHolder().getShoppingListItemTable().getShoppingListItems(shoppingList.getId());
-//                    textToSend.append(ShoppistUtils.buildShareString(items));
-//                }
-//                return textToSend.toString();
-//            }
-//        }, new ExecutorListener<String>() {
-//            @Override
-//            public void start() {
-//                mProgressDialog.show();
-//            }
-//
-//            @Override
-//            public void complete(String result) {
-//                mProgressDialog.dismiss();
-//                share(result, getString(R.string.shopping_list));
-//            }
-//
-//            @Override
-//            public void error(Exception e) {
-//                mProgressDialog.dismiss();
-//            }
-//        });
-    }
-
-    protected void deleteItem() {
-        mAdapter.deleteCheckedView(new AnimationResultListener<ListViewModel>() {
-            @Override
-            public void onAnimationEnd(Collection<ListViewModel> deleteItems) {
-
-            }
-        });
+    @Override
+    public void share(String share) {
+        share(share, getString(R.string.shopping_list));
     }
 
     @Override
@@ -272,12 +204,6 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
         mAdapter.setData(data);
         mAdapter.notifyDataSetChanged();
         onExpandAllClick();
-    }
-
-    @Override
-    public void setManualSortModeEnable(boolean enable) {
-        mAdapter.setManualSortModeEnable(enable);
-        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -296,17 +222,18 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     }
 
     @Override
+    public void showLoadingDialog() {
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void hideLoadingDialog() {
+        mProgressDialog.dismiss();
+    }
+
+    @Override
     public void showError(String message) {
 
-    }
-
-    public boolean isManualSortModeEnable() {
-        return mPresenter.isManualSortEnable();
-    }
-
-    public void disableManualSort() {
-        mAdapter.setManualSortModeEnable(false);
-        mAdapter.notifyDataSetChanged();
     }
 
     public void onEditItemClick() {
@@ -327,7 +254,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     }
 
     public void onEmailShareClick() {
-
+        mPresenter.emailShare(mAdapter.getCheckedItems());
     }
 
     public boolean isEditButtonEnable() {

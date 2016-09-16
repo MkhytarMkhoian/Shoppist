@@ -31,34 +31,25 @@ import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.SortType;
 import com.justplay1.shoppist.preferences.AppPreferences;
-import com.justplay1.shoppist.utils.DraggableUtils;
 import com.justplay1.shoppist.utils.ExpandUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.ExpandIndicator;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseDraggableItemViewHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
+import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 
 import java.util.Locale;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderHolder, BaseDraggableItemViewHolder> {
+public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderHolder, BaseItemHolder> {
 
     public ListAdapter(Context context, ActionModeInteractionListener listener,
                        RecyclerView recyclerView, AppPreferences preferences) {
         super(context, listener, recyclerView, preferences);
-    }
-
-    @Override
-    public void onMoveChildItem(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition) {
-        super.onMoveChildItem(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition);
-        if (!mPreferences.isManualSortEnableForShoppingLists()) {
-            mPreferences.setManualSortEnableForShoppingLists(true);
-        }
     }
 
     @Override
@@ -68,10 +59,9 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
     }
 
     @Override
-    public BaseDraggableItemViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+    public BaseItemHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shopping_list, parent, false);
         ListViewHolder holder = new ListViewHolder(view, mItemClickListener);
-        holder.setColor(mPreferences.getColorPrimaryDark());
         return holder;
     }
 
@@ -90,21 +80,14 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
     }
 
     @Override
-    public void onBindChildViewHolder(BaseDraggableItemViewHolder viewHolder, int groupPosition, int childPosition, int viewType) {
+    public void onBindChildViewHolder(BaseItemHolder viewHolder, int groupPosition, int childPosition, int viewType) {
         ListViewHolder holder = (ListViewHolder) viewHolder;
         ListViewModel item = getChildItem(groupPosition, childPosition);
 
         holder.childPosition = childPosition;
         holder.groupPosition = groupPosition;
 
-        if (isManualSortModeEnable) {
-            holder.dragHandle.setVisibility(View.VISIBLE);
-            holder.size.setVisibility(View.GONE);
-        } else {
-            holder.dragHandle.setVisibility(View.GONE);
-            holder.size.setVisibility(View.VISIBLE);
-        }
-
+        holder.size.setVisibility(View.VISIBLE);
         holder.name.setText(item.getName());
         holder.size.setText(String.format(Locale.getDefault(), "%d/%d", item.getBoughtCount(), item.getSize()));
         setPriorityBackgroundColor(item.getPriority(), holder.priorityIndicator);
@@ -117,8 +100,6 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
         });
         holder.selectBox.setChecked(item.isChecked());
         holder.setActivated(item.isChecked());
-
-        DraggableUtils.clearSelector(holder, holder.container);
     }
 
     public static class HeaderViewHolder extends BaseHeaderHolder {
@@ -135,7 +116,7 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
         }
     }
 
-    public static class ListViewHolder extends BaseDraggableItemViewHolder implements ExpandableItemViewHolder {
+    public static class ListViewHolder extends BaseItemHolder implements ExpandableItemViewHolder {
         public ImageView priorityIndicator;
         public TextView name;
         public TextView size;
@@ -152,10 +133,7 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
 
         @Override
         protected void init(View itemView) {
-
-            dragHandle = itemView.findViewById(R.id.drag_handle);
             container = itemView.findViewById(R.id.swipe_container);
-
             selectBox = (SelectBoxView) itemView.findViewById(R.id.select_box);
             priorityIndicator = (ImageView) itemView.findViewById(R.id.priority_indicator);
             name = (TextView) itemView.findViewById(R.id.item_name);

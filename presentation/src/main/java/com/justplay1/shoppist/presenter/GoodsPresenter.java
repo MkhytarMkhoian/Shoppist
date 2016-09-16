@@ -152,11 +152,6 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
         }));
     }
 
-    @Override
-    public boolean isManualSortEnable() {
-        return false;
-    }
-
     @SuppressWarnings("ResourceType")
     private Observable<List<Pair<HeaderViewModel, List<ProductViewModel>>>> loadGoods() {
         return mGetGoods.get()

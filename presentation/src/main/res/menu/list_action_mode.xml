@@ -24,7 +24,6 @@
         android:icon="@drawable/ic_edit_white"
         app:showAsAction="always" />
 
-
     <item
         android:id="@+id/menu_delete"
         android:title="@string/action_delete"

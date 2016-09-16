@@ -44,12 +44,7 @@ public class DatabaseModule {
     @Provides
     @Singleton
     SqlBrite provideSqlBrite() {
-        return SqlBrite.create(new SqlBrite.Logger() {
-            @Override
-            public void log(String message) {
-                Timber.tag("Database").v(message);
-            }
-        });
+        return SqlBrite.create(message -> Timber.tag("Database").v(message));
     }
 
     @Provides

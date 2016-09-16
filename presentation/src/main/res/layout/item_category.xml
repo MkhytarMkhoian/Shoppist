@@ -44,17 +44,5 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/text_color_black" />
 
-        <ImageView
-            android:id="@+id/drag_handle"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@null"
-            android:paddingEnd="@dimen/content2x"
-            android:paddingLeft="@dimen/content2x"
-            android:paddingRight="@dimen/content2x"
-            android:paddingStart="@dimen/content2x"
-            android:src="@drawable/ic_reorder" />
-
     </LinearLayout>
 </FrameLayout>

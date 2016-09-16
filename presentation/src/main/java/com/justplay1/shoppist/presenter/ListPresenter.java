@@ -18,18 +18,22 @@ package com.justplay1.shoppist.presenter;
 
 import android.support.v4.util.Pair;
 
+import com.justplay1.shoppist.bus.DataEventBus;
+import com.justplay1.shoppist.bus.ListsDataUpdatedEvent;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
+import com.justplay1.shoppist.interactor.listitems.GetListItems;
 import com.justplay1.shoppist.interactor.lists.DeleteLists;
 import com.justplay1.shoppist.interactor.lists.GetLists;
 import com.justplay1.shoppist.interactor.lists.UpdateLists;
 import com.justplay1.shoppist.models.HeaderViewModel;
-import com.justplay1.shoppist.models.ListModel;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.SortType;
+import com.justplay1.shoppist.models.mappers.ListItemsModelDataMapper;
 import com.justplay1.shoppist.models.mappers.ListModelDataMapper;
 import com.justplay1.shoppist.navigation.ListRouter;
 import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.presenter.base.BaseSortablePresenter;
+import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.ListView;
 
 import java.util.Collection;
@@ -38,7 +42,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.functions.Func1;
+import rx.Subscription;
 
 /**
  * Created by Mkhytar Mkhoian.
@@ -46,26 +50,44 @@ import rx.functions.Func1;
 public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel, ListRouter> {
 
     private final ListModelDataMapper mDataMapper;
+    private final ListItemsModelDataMapper mListItemsModelDataMapper;
     private final GetLists mGetLists;
     private final DeleteLists mDeleteLists;
-    private final UpdateLists mUpdateLists;
+    private final GetListItems mGetListItems;
+
+    private Subscription mDataBusSubscription;
 
     @Inject
     public ListPresenter(AppPreferences preferences,
                          GetLists getLists,
                          DeleteLists deleteLists,
-                         UpdateLists updateLists,
-                         ListModelDataMapper listModelDataMapper) {
+                         GetListItems getListItems,
+                         ListModelDataMapper listModelDataMapper,
+                         ListItemsModelDataMapper listItemsModelDataMapper) {
         super(preferences);
         this.mGetLists = getLists;
         this.mDeleteLists = deleteLists;
-        this.mUpdateLists = updateLists;
         this.mDataMapper = listModelDataMapper;
+        this.mListItemsModelDataMapper = listItemsModelDataMapper;
+        this.mGetListItems = getListItems;
     }
 
     @Override
-    public boolean isManualSortEnable() {
-        return mPreferences.isManualSortEnableForShoppingLists();
+    public void attachView(ListView view) {
+        super.attachView(view);
+        DataEventBus.instanceOf().filteredObservable(ListsDataUpdatedEvent.class);
+        mDataBusSubscription = DataEventBus.instanceOf().observable().subscribe(new DefaultSubscriber<Object>() {
+            @Override
+            public void onNext(Object o) {
+                loadData();
+            }
+        });
+    }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+        mDataBusSubscription.unsubscribe();
     }
 
     public void init() {
@@ -96,21 +118,6 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
                 }));
     }
 
-    public void savePosition(final List<ListViewModel> data) {
-        mSubscriptions.add(Observable.fromCallable(() -> {
-            final int size = data.size();
-            for (int i = 0; i < size; i++) {
-                data.get(i).setPosition(i);
-            }
-
-            return data;
-        }).map(mDataMapper::transform)
-                .flatMap(lists -> {
-                    mUpdateLists.setData(lists);
-                    return mUpdateLists.get();
-                }).subscribe());
-    }
-
     private void showRateDialog() {
         if (isViewAttached()) {
             getView().showRateDialog();
@@ -129,52 +136,53 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
         }
     }
 
+    private void showLoadingDialog() {
+        if (isViewAttached()) {
+            getView().showLoadingDialog();
+        }
+    }
+
+    private void hideLoadingDialog() {
+        if (isViewAttached()) {
+            getView().hideLoadingDialog();
+        }
+    }
+
     public void sortByName(final List<ListViewModel> data) {
-        mPreferences.setManualSortEnableForShoppingLists(false);
         mPreferences.setSortForShoppingLists(SortType.SORT_BY_NAME);
         showData(sort(data, SortType.SORT_BY_NAME));
     }
 
     public void sortByPriority(final List<ListViewModel> data) {
-        mPreferences.setManualSortEnableForShoppingLists(false);
         mPreferences.setSortForShoppingLists(SortType.SORT_BY_PRIORITY);
         showData(sort(data, SortType.SORT_BY_PRIORITY));
     }
 
     public void sortByTimeCreated(final List<ListViewModel> data) {
-        mPreferences.setManualSortEnableForShoppingLists(false);
         mPreferences.setSortForShoppingLists(SortType.SORT_BY_TIME_CREATED);
         showData(sort(data, SortType.SORT_BY_TIME_CREATED));
     }
 
-    public void onSortByManualClick() {
-        if (isManualSortEnable()) {
-            setManualSortModeEnable(false);
-        } else {
-            setManualSortModeEnable(true);
-        }
-    }
-
     public void onAddButtonClick() {
-        if (hasRouter()){
+        if (hasRouter()) {
             getRouter().openEditScreen(null);
         }
     }
 
     public void onEditItemClick(ListViewModel list) {
-        if (hasRouter()){
+        if (hasRouter()) {
             getRouter().openEditScreen(list);
         }
     }
 
     public void onItemLongClick(ListViewModel list) {
-        if (hasRouter()){
+        if (hasRouter()) {
             getRouter().openListDetailScreen(list);
         }
     }
 
     public void onItemClick(ListViewModel list) {
-        if (hasRouter()){
+        if (hasRouter()) {
             getRouter().openListDetailScreen(list);
         }
     }
@@ -184,18 +192,45 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
                 .flatMap(list -> {
                     mDeleteLists.setData(list);
                     return mDeleteLists.get();
-                }).subscribe(new DefaultSubscriber<Boolean>()));
+                }).subscribe(new DefaultSubscriber<>()));
+    }
+
+    public void emailShare(List<ListViewModel> data) {
+        showLoadingDialog();
+        mSubscriptions.add(Observable.from(data)
+                .flatMap(shoppingList -> {
+                    mGetListItems.setParentId(shoppingList.getId());
+                    return mGetListItems.get()
+                            .map(mListItemsModelDataMapper::transformToViewModel)
+                            .map(items -> shoppingList.getName() + "\n" + "\n" +
+                                    ShoppistUtils.buildShareString(items) + "\n");
+                })
+                .buffer(data.size())
+                .map(strings -> {
+                    String result = "";
+                    for (String s : strings) {
+                        result = result + s;
+                    }
+                    return result;
+                }).subscribe(new DefaultSubscriber<String>() {
+                    @Override
+                    public void onNext(String s) {
+                        hideLoadingDialog();
+                        if (isViewAttached()) {
+                            getView().share(s);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        hideLoadingDialog();
+                    }
+                }));
     }
 
     private void showData(List<Pair<HeaderViewModel, List<ListViewModel>>> data) {
         if (isViewAttached()) {
             getView().showData(data);
-        }
-    }
-
-    private void setManualSortModeEnable(boolean enable) {
-        if (isViewAttached()) {
-            getView().setManualSortModeEnable(enable);
         }
     }
 }

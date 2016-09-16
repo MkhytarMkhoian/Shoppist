@@ -25,7 +25,6 @@ import com.justplay1.shoppist.models.Priority;
 import com.justplay1.shoppist.models.SortType;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.preferences.AppPreferences;
-import com.justplay1.shoppist.utils.DraggableUtils;
 import com.justplay1.shoppist.utils.ExpandUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.utils.ViewUtils;
@@ -33,8 +32,8 @@ import com.justplay1.shoppist.view.component.ExpandIndicator;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseDraggableSwipeableItemViewHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
+import com.justplay1.shoppist.view.component.recyclerview.holders.BaseSwipeableItemViewHolder;
 
 import java.util.Locale;
 
@@ -42,7 +41,7 @@ import java.util.Locale;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel, BaseHeaderHolder, BaseDraggableSwipeableItemViewHolder> {
+public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel, BaseHeaderHolder, BaseSwipeableItemViewHolder> {
 
     private NoteClickListener mNoteClickListener;
 
@@ -76,14 +75,6 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
     }
 
     @Override
-    public void onMoveChildItem(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition) {
-        super.onMoveChildItem(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition);
-        if (!mPreferences.isManualSortEnableForShoppingListItems()) {
-            mPreferences.setManualSortEnableForShoppingListItems(true);
-        }
-    }
-
-    @Override
     public BaseHeaderHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
         View view;
         switch (viewType) {
@@ -100,7 +91,7 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
     }
 
     @Override
-    public BaseDraggableSwipeableItemViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+    public BaseSwipeableItemViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shopping_list_item, parent, false);
         return new ListItemViewHolder(view, mItemClickListener);
     }
@@ -150,7 +141,7 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
     }
 
     @Override
-    public void onBindChildViewHolder(BaseDraggableSwipeableItemViewHolder viewHolder, int groupPosition, int childPosition, int viewType) {
+    public void onBindChildViewHolder(BaseSwipeableItemViewHolder viewHolder, int groupPosition, int childPosition, int viewType) {
         ListItemViewHolder holder = (ListItemViewHolder) viewHolder;
 
         holder.childPosition = childPosition;
@@ -160,12 +151,10 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
 
         holder.name.setText(item.getName());
 
-        if (isManualSortModeEnable && !item.getStatus()) {
-            holder.dragHandle.setVisibility(View.VISIBLE);
+        if (!item.getStatus()) {
             holder.note.setVisibility(View.GONE);
             holder.info2.setVisibility(View.INVISIBLE);
         } else {
-            holder.dragHandle.setVisibility(View.GONE);
             holder.info2.setVisibility(View.VISIBLE);
 
             if (!item.getNote().isEmpty()) {
@@ -234,8 +223,6 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
         holder.selectBox.setChecked(item.isChecked());
         holder.setActivated(item.isChecked());
 
-        DraggableUtils.clearSelector(holder, holder.container);
-
         if (item.isPinned()) {
             if (holder.getSwipeResult() == SwipeableItemConstants.RESULT_SWIPED_RIGHT) {
                 holder.setSwipeItemHorizontalSlideAmount(SwipeableItemConstants.OUTSIDE_OF_THE_WINDOW_RIGHT);
@@ -295,7 +282,7 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
         }
     }
 
-    public static class ListItemViewHolder extends BaseDraggableSwipeableItemViewHolder implements ExpandableItemViewHolder {
+    public static class ListItemViewHolder extends BaseSwipeableItemViewHolder implements ExpandableItemViewHolder {
         public ImageView priorityIndicator;
         public ImageView note;
         public TextView name;
@@ -316,7 +303,6 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
 
         @Override
         protected void init(View itemView) {
-            dragHandle = itemView.findViewById(R.id.drag_handle);
             container = itemView.findViewById(R.id.swipe_container);
             info2 = (LinearLayout) itemView.findViewById(R.id.info2);
             note = (ImageView) itemView.findViewById(R.id.note_image);

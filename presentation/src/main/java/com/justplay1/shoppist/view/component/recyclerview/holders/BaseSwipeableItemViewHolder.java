@@ -12,7 +12,7 @@ import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 /**
  * Created by Mkhytar on 10.10.2015.
  */
-public abstract class BaseDraggableSwipeableItemViewHolder extends BaseDraggableItemViewHolder implements SwipeableItemViewHolder {
+public abstract class BaseSwipeableItemViewHolder extends BaseItemHolder implements SwipeableItemViewHolder {
     @SwipeableItemStateFlags
     private int mSwipeStateFlags;
     @SwipeableItemResults
@@ -26,11 +26,11 @@ public abstract class BaseDraggableSwipeableItemViewHolder extends BaseDraggable
     private float mMaxRightSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_RIGHT;
     private float mMaxDownSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_BOTTOM;
 
-    public BaseDraggableSwipeableItemViewHolder(View itemView) {
+    public BaseSwipeableItemViewHolder(View itemView) {
         super(itemView);
     }
 
-    public BaseDraggableSwipeableItemViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
+    public BaseSwipeableItemViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
         super(itemView, clickListener);
     }
 

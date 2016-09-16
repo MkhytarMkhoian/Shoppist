@@ -18,10 +18,8 @@ package com.justplay1.shoppist.view.fragments;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -76,7 +74,6 @@ public class ListItemsFragment extends BaseEDSListFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.takeRouter((ListItemsRouter) getActivity());
         mPresenter.onCreate(getArguments(), savedInstanceState);
     }
 
@@ -84,6 +81,7 @@ public class ListItemsFragment extends BaseEDSListFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
+        mPresenter.takeRouter((ListItemsRouter) getActivity());
         mPresenter.init();
     }
 
@@ -97,24 +95,13 @@ public class ListItemsFragment extends BaseEDSListFragment
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
+        mPresenter.dropRouter((ListItemsRouter) getActivity());
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mPresenter.onDestroy();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mPresenter.dropRouter((ListItemsRouter) getActivity());
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mPresenter.savePosition(mAdapter.getItems());
     }
 
     @Override
@@ -333,37 +320,26 @@ public class ListItemsFragment extends BaseEDSListFragment
     }
 
     public void onSortByNameClick() {
-        mPresenter.onSortByNameClick();
+        mPresenter.onSortByNameClick(mAdapter.getItems());
     }
 
     public void onSortByPriorityClick() {
-        mPresenter.onSortByPriorityClick();
+        mPresenter.onSortByPriorityClick(mAdapter.getItems());
     }
 
     public void onSortByCategoryClick() {
-        mPresenter.onSortByCategoryClick();
+        mPresenter.onSortByCategoryClick(mAdapter.getItems());
     }
 
     public void onSortByTimeCreatedClick() {
-        mPresenter.onSortByTimeCreatedClick();
-    }
-
-    public void onSortByManualClick() {
-        mPresenter.onSortByManualClick();
-    }
-
-    @Override
-    public void setManualSortModeEnable(boolean enable) {
-        mAdapter.setManualSortModeEnable(enable);
-        mAdapter.notifyDataSetChanged();
+        mPresenter.onSortByTimeCreatedClick(mAdapter.getItems());
     }
 
     @Override
     public void showEmailShareDialog(String listName) {
-        StringBuilder textToSend = new StringBuilder();
-        textToSend.append(listName).append("\n").append("\n");
-        textToSend.append(ShoppistUtils.buildShareString(mAdapter.getCheckedItems()));
-        share(textToSend.toString(), getString(R.string.shopping_list));
+        String textToSend = listName + "\n" + "\n" +
+                ShoppistUtils.buildShareString(mAdapter.getCheckedItems());
+        share(textToSend, getString(R.string.shopping_list));
     }
 
     protected void swipeDeleteConfirm(String message, final ListItemViewModel item,
@@ -433,7 +409,7 @@ public class ListItemsFragment extends BaseEDSListFragment
     }
 
     public void onEditItemClick() {
-
+        mPresenter.onEditItemClick(mAdapter.getCheckedItems().get(0));
     }
 
     public boolean isMoveCopyButtonEnable() {
@@ -453,15 +429,6 @@ public class ListItemsFragment extends BaseEDSListFragment
 
     public boolean isCheckAllButtonEnable() {
         return !mAdapter.isAllItemsChecked();
-    }
-
-    public boolean isManualSortModeEnable() {
-        return mAdapter.isManualSortModeEnable();
-    }
-
-    public void disableManualSort() {
-        mAdapter.setManualSortModeEnable(false);
-        mAdapter.notifyDataSetChanged();
     }
 
     @Override

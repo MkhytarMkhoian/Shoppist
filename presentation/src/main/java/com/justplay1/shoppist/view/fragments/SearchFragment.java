@@ -217,10 +217,10 @@ public class SearchFragment extends BaseFragment
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_clear:
-                mPresenter.onClearClick();
+                clearSearch();
                 break;
             case R.id.menu_voice_search:
-                mPresenter.onVoiceSearchClick();
+                openVoiceSearch();
                 break;
         }
         return true;
@@ -252,7 +252,6 @@ public class SearchFragment extends BaseFragment
         return true;
     }
 
-    @Override
     public void clearSearch() {
         mSearchView.setText(null);
         mSearchView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
@@ -278,7 +277,6 @@ public class SearchFragment extends BaseFragment
         });
     }
 
-    @Override
     public void openVoiceSearch() {
         startTextToSpeech(getActivity(), null, Const.REQ_CODE_SPEECH_INPUT);
     }

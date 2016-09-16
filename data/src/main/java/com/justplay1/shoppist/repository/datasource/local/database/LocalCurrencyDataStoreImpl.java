@@ -19,6 +19,8 @@ package com.justplay1.shoppist.repository.datasource.local.database;
 import android.content.ContentValues;
 import android.content.Context;
 
+import com.justplay1.shoppist.bus.DataEventBus;
+import com.justplay1.shoppist.bus.ListItemsDataUpdatedEvent;
 import com.justplay1.shoppist.data.R;
 import com.justplay1.shoppist.entity.CurrencyDAO;
 import com.justplay1.shoppist.repository.datasource.local.LocalCurrencyDataStore;
@@ -145,7 +147,7 @@ public class LocalCurrencyDataStoreImpl extends BaseLocalDataStore<CurrencyDAO> 
     }
 
     private void notifyShoppingListItemsChange() {
-//        mContext.getContentResolver().notifyChange(ShoppingListContact.ShoppingListItems.CONTENT_URI, null, false);
+        DataEventBus.instanceOf().post(new ListItemsDataUpdatedEvent());
     }
 
     @Override

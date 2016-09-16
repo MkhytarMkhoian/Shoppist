@@ -75,15 +75,6 @@ public class CategoriesActivity extends SingleListFragmentActivity<CategoryFragm
     }
 
     @Override
-    public void onBackPressed() {
-        if (mFragment.isManualSortModeEnable()) {
-            mFragment.disableManualSort();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
     public void openEditCategoryScreen(CategoryViewModel category) {
         mNavigator.navigateToAddCategoryScreen(this, category);
     }

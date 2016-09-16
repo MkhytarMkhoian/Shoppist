@@ -47,9 +47,6 @@ public class AppPreferences {
     public static final String SORT_FOR_SHOPPING_LIST_ITEMS = "sort_for_shopping_list_items";
     public static final String SORT_FOR_GOODS = "sort_for_goods";
 
-    public static final String IS_MANUAL_SORT_ENABLE_FOR_SHOPPING_LISTS = "is_manual_sort_enable_for_shopping_lists";
-    public static final String IS_MANUAL_SORT_ENABLE_FOR_SHOPPING_LIST_ITEMS = "is_manual_sort_enable_for_shopping_list_items";
-
     public static final String LEFT_SHOPPING_LIST_ITEM_SWIPE_ACTION = "left_shopping_list_item_swipe_action";
     public static final String RIGHT_SHOPPING_LIST_ITEM_SWIPE_ACTION = "right_shopping_list_item_swipe_action";
 
@@ -74,9 +71,6 @@ public class AppPreferences {
     private int mLongItemClickAction;
     private int mAddButtonClickAction;
 
-    private boolean isManualSortEnableForShoppingLists;
-    private boolean isManualSortEnableForShoppingListItems;
-
     private int mLeftShoppingListItemSwipeAction;
     private int mRightShoppingListItemSwipeAction;
 
@@ -100,9 +94,6 @@ public class AppPreferences {
             mCalculatePrice = mPreference.getBoolean(CALCULATE_PRICE, true);
             mLongItemClickAction = mPreference.getInt(LONG_ITEM_CLICK_ACTION, 0);
             mAddButtonClickAction = mPreference.getInt(ADD_BUTTON_CLICK_ACTION, 0);
-
-            isManualSortEnableForShoppingLists = mPreference.getBoolean(IS_MANUAL_SORT_ENABLE_FOR_SHOPPING_LISTS, false);
-            isManualSortEnableForShoppingListItems = mPreference.getBoolean(IS_MANUAL_SORT_ENABLE_FOR_SHOPPING_LIST_ITEMS, false);
 
             mLeftShoppingListItemSwipeAction = mPreference.getInt(LEFT_SHOPPING_LIST_ITEM_SWIPE_ACTION, 0);
             mRightShoppingListItemSwipeAction = mPreference.getInt(RIGHT_SHOPPING_LIST_ITEM_SWIPE_ACTION, 0);
@@ -174,7 +165,7 @@ public class AppPreferences {
         editor.apply();
     }
 
-    public int getSortForListItems() {
+    public int getSortForShoppingListItems() {
         return mSortForShoppingListItems;
     }
 
@@ -237,28 +228,6 @@ public class AppPreferences {
         SharedPreferences.Editor editor = mPreference.edit();
         editor.putInt(IS_NEED_SHOW_RATE_DIALOG, counter);
         editor.apply();
-    }
-
-    public boolean isManualSortEnableForShoppingListItems() {
-        return isManualSortEnableForShoppingListItems;
-    }
-
-    public void setManualSortEnableForShoppingListItems(boolean enableForShoppingListItems) {
-        isManualSortEnableForShoppingListItems = enableForShoppingListItems;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putBoolean(IS_MANUAL_SORT_ENABLE_FOR_SHOPPING_LIST_ITEMS, enableForShoppingListItems);
-        editor.commit();
-    }
-
-    public boolean isManualSortEnableForShoppingLists() {
-        return isManualSortEnableForShoppingLists;
-    }
-
-    public void setManualSortEnableForShoppingLists(boolean enableForShoppingLists) {
-        isManualSortEnableForShoppingLists = enableForShoppingLists;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putBoolean(IS_MANUAL_SORT_ENABLE_FOR_SHOPPING_LISTS, enableForShoppingLists);
-        editor.commit();
     }
 
     public int getLeftShoppingListItemSwipeAction() {

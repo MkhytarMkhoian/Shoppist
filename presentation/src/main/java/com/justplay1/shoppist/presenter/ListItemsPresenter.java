@@ -19,6 +19,8 @@ package com.justplay1.shoppist.presenter;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 
+import com.justplay1.shoppist.bus.DataEventBus;
+import com.justplay1.shoppist.bus.ListItemsDataUpdatedEvent;
 import com.justplay1.shoppist.di.scope.PerActivity;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.GetCategory;
@@ -27,6 +29,7 @@ import com.justplay1.shoppist.interactor.listitems.DeleteListItems;
 import com.justplay1.shoppist.interactor.listitems.GetListItems;
 import com.justplay1.shoppist.interactor.listitems.UpdateListItems;
 import com.justplay1.shoppist.interactor.units.GetUnit;
+import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.HeaderViewModel;
@@ -46,11 +49,14 @@ import com.justplay1.shoppist.view.ListItemsView;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.Subscription;
 
 /**
  * Created by Mkhytar Mkhoian.
@@ -70,6 +76,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     private final UpdateListItems mUpdateListItems;
     private final DeleteListItems mDeleteListItems;
 
+    private Subscription mDataBusSubscription;
     private ListViewModel mParentList;
     private ListItemViewModel mItem;
 
@@ -107,37 +114,25 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     }
 
     @Override
-    public boolean isManualSortEnable() {
-        return mPreferences.isManualSortEnableForShoppingListItems();
+    public void attachView(ListItemsView view) {
+        super.attachView(view);
+        DataEventBus.instanceOf().filteredObservable(ListItemsDataUpdatedEvent.class);
+        mDataBusSubscription = DataEventBus.instanceOf().observable().subscribe(new DefaultSubscriber<Object>() {
+            @Override
+            public void onNext(Object o) {
+                loadData();
+            }
+        });
+    }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+        mDataBusSubscription.unsubscribe();
     }
 
     public void init() {
         loadData();
-    }
-
-    public void loadData() {
-        mSubscriptions.add(Observable.zip(loadListItems(), loadDefaultUnit(), loadDefaultCategory(), loadDefaultCurrency(),
-                (listItems, unit, category, currency) -> {
-                    for (Pair<HeaderViewModel, List<ListItemViewModel>> pair : listItems) {
-                        for (ListItemViewModel item : pair.second) {
-                            if (item.isCategoryEmpty()) {
-                                item.setCategory(category);
-                            }
-                            if (item.isCurrencyEmpty()) {
-                                item.setCurrency(currency);
-                            }
-                            if (item.isUnitEmpty()) {
-                                item.setUnit(unit);
-                            }
-                        }
-                    }
-                    return listItems;
-                }).subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListItemViewModel>>>>() {
-            @Override
-            public void onNext(List<Pair<HeaderViewModel, List<ListItemViewModel>>> data) {
-                showData(data);
-            }
-        }));
     }
 
     @SuppressWarnings("ResourceType")
@@ -145,7 +140,43 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         mGetListItems.setParentId(mParentList.getId());
         return mGetListItems.get()
                 .map(mListItemsModelDataMapper::transformToViewModel)
-                .map(listItems -> sort(listItems, mPreferences.getSortForListItems()));
+                .map(listItems -> sort(listItems, mPreferences.getSortForShoppingListItems()));
+    }
+
+    public void loadData() {
+        mSubscriptions.add(Observable.zip(loadDefaultUnit(), loadDefaultCategory(), loadDefaultCurrency(),
+                (unit, category, currency) -> {
+                    Map<String, BaseViewModel> map = new HashMap<>();
+                    map.put(CategoryViewModel.NO_CATEGORY_ID, category);
+                    map.put(CurrencyViewModel.NO_CURRENCY_ID, currency);
+                    map.put(UnitViewModel.NO_UNIT_ID, unit);
+                    return map;
+                })
+                .flatMap(map -> loadListItems()
+                        .map(listItems -> {
+                            CategoryViewModel category = (CategoryViewModel) map.get(CategoryViewModel.NO_CATEGORY_ID);
+                            CurrencyViewModel currency = (CurrencyViewModel) map.get(CurrencyViewModel.NO_CURRENCY_ID);
+                            UnitViewModel unit = (UnitViewModel) map.get(UnitViewModel.NO_UNIT_ID);
+                            for (Pair<HeaderViewModel, List<ListItemViewModel>> pair : listItems) {
+                                for (ListItemViewModel item : pair.second) {
+                                    if (item.isCategoryEmpty()) {
+                                        item.setCategory(category);
+                                    }
+                                    if (item.isCurrencyEmpty()) {
+                                        item.setCurrency(currency);
+                                    }
+                                    if (item.isUnitEmpty()) {
+                                        item.setUnit(unit);
+                                    }
+                                }
+                            }
+                            return listItems;
+                        })).subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListItemViewModel>>>>() {
+                    @Override
+                    public void onNext(List<Pair<HeaderViewModel, List<ListItemViewModel>>> data) {
+                        showData(data);
+                    }
+                }));
     }
 
     private Observable<CurrencyViewModel> loadDefaultCurrency() {
@@ -185,6 +216,10 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
                 .subscribe(new DefaultSubscriber<Boolean>()));
     }
 
+    public void onEditItemClick(ListItemViewModel editItem) {
+        openEditScreen(mParentList, editItem);
+    }
+
     public void onChildItemEdit(ListItemViewModel editItem) {
         editItem.setPinned(false);
         openEditScreen(mParentList, editItem);
@@ -210,16 +245,16 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         switch (mPreferences.getAddButtonClickAction()) {
             case 0:
                 if (!isLongClick) {
-                    openEditScreen(mParentList, mItem);
+                    openEditScreen(mParentList, null);
                 } else {
-                    openQuickMode(mItem.getId());
+                    openQuickMode(mParentList.getId());
                 }
                 break;
             case 1:
                 if (!isLongClick) {
-                    openQuickMode(mItem.getId());
+                    openQuickMode(mParentList.getId());
                 } else {
-                    openEditScreen(mParentList, mItem);
+                    openEditScreen(mParentList, null);
                 }
                 break;
         }
@@ -253,37 +288,24 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         showEmailShareDialog(mParentList.getName());
     }
 
-    public void onSortByNameClick() {
-        mPreferences.setManualSortEnableForShoppingListItems(false);
+    public void onSortByNameClick(List<ListItemViewModel> data) {
         mPreferences.setSortForShoppingListItems(SortType.SORT_BY_NAME);
+        showData(sort(data, SortType.SORT_BY_NAME));
     }
 
-    public void onSortByPriorityClick() {
-        mPreferences.setManualSortEnableForShoppingListItems(false);
+    public void onSortByPriorityClick(List<ListItemViewModel> data) {
         mPreferences.setSortForShoppingListItems(SortType.SORT_BY_PRIORITY);
+        showData(sort(data, SortType.SORT_BY_PRIORITY));
     }
 
-    public void onSortByCategoryClick() {
-        mPreferences.setManualSortEnableForShoppingListItems(false);
+    public void onSortByCategoryClick(List<ListItemViewModel> data) {
         mPreferences.setSortForShoppingListItems(SortType.SORT_BY_CATEGORIES);
+        showData(sort(data, SortType.SORT_BY_CATEGORIES));
     }
 
-    public void onSortByTimeCreatedClick() {
-        mPreferences.setManualSortEnableForShoppingListItems(false);
+    public void onSortByTimeCreatedClick(List<ListItemViewModel> data) {
         mPreferences.setSortForShoppingListItems(SortType.SORT_BY_TIME_CREATED);
-    }
-
-    public void onSortByManualClick() {
-        setManualSortModeEnable(true);
-    }
-
-    public void savePosition(List<ListItemViewModel> items) {
-        if (mPreferences.isManualSortEnableForShoppingListItems()) {
-            final int size = items.size();
-            for (int i = 0; i < size; i++) {
-                items.get(i).setPosition(i);
-            }
-        }
+        showData(sort(data, SortType.SORT_BY_TIME_CREATED));
     }
 
     private void strikeOut(List<ListItemViewModel> items, boolean toShoppingCart) {
@@ -326,12 +348,6 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     private void showEmailShareDialog(String listName) {
         if (isViewAttached()) {
             getView().showEmailShareDialog(listName);
-        }
-    }
-
-    private void setManualSortModeEnable(boolean enable) {
-        if (isViewAttached()) {
-            getView().setManualSortModeEnable(enable);
         }
     }
 

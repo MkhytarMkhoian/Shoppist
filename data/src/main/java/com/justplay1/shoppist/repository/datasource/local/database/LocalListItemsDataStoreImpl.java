@@ -18,6 +18,8 @@ package com.justplay1.shoppist.repository.datasource.local.database;
 
 import android.content.ContentValues;
 
+import com.justplay1.shoppist.bus.DataEventBus;
+import com.justplay1.shoppist.bus.ListsDataUpdatedEvent;
 import com.justplay1.shoppist.entity.CategoryDAO;
 import com.justplay1.shoppist.entity.CurrencyDAO;
 import com.justplay1.shoppist.entity.ListItemDAO;
@@ -139,7 +141,7 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
     }
 
     private void notifyParentListChange() {//TODO
-//        mContext.getContentResolver().notifyChange(ShoppingListContact.ShoppingLists.CONTENT_URI, null, false);
+        DataEventBus.instanceOf().post(new ListsDataUpdatedEvent());
     }
 
     public Observable<List<ListItemDAO>> getAllShoppingListItems() {

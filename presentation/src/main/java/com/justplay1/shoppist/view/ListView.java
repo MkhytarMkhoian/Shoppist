@@ -32,5 +32,9 @@ public interface ListView extends LoadDataView, ContextView{
 
     void showRateDialog();
 
-    void setManualSortModeEnable(boolean enable);
+    void share(String share);
+
+    void showLoadingDialog();
+
+    void hideLoadingDialog();
 }

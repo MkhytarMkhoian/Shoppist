@@ -19,6 +19,9 @@ package com.justplay1.shoppist.repository.datasource.local.database;
 import android.content.ContentValues;
 import android.content.Context;
 
+import com.justplay1.shoppist.bus.DataEventBus;
+import com.justplay1.shoppist.bus.ListItemsDataUpdatedEvent;
+import com.justplay1.shoppist.bus.ListsDataUpdatedEvent;
 import com.justplay1.shoppist.data.R;
 import com.justplay1.shoppist.entity.UnitDAO;
 import com.justplay1.shoppist.repository.datasource.local.LocalUnitsDataStore;
@@ -156,7 +159,7 @@ public class LocalUnitsDataStoreImpl extends BaseLocalDataStore<UnitDAO> impleme
     }
 
     private void notifyShoppingListItemsChange() { // TODO
-//        mContext.getContentResolver().notifyChange(ShoppingListContact.ShoppingListItems.CONTENT_URI, null, false);
+        DataEventBus.instanceOf().post(new ListItemsDataUpdatedEvent());
     }
 
     private Observable<List<UnitDAO>> getAllUnits() {

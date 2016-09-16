@@ -96,9 +96,6 @@ public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragme
             case R.id.sort_by_category:
                 mFragment.onSortByCategoryClick();
                 break;
-            case R.id.action_sort_manual_mode:
-                mFragment.onSortByManualClick();
-                break;
             case R.id.action_return_all_to_list:
                 mFragment.onReturnAllToListClick();
                 break;
@@ -193,9 +190,7 @@ public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragme
 
     @Override
     public void onBackPressed() {
-        if (mFragment.isManualSortModeEnable()) {
-            mFragment.disableManualSort();
-        } else if (isActionModeShowing()) {
+        if (isActionModeShowing()) {
             closeActionMode();
         } else {
             finishWithResult();

@@ -36,6 +36,7 @@ import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.utils.Const;
+import com.justplay1.shoppist.view.SearchView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseViewHolder;
@@ -82,7 +83,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         ShapeDrawable drawable = new ShapeDrawable(ovalShape);
         drawable.getPaint().setColor(item.getCategory().getColor());
         holder.typeIcon.setBackgroundDrawable(drawable);
-        if (!item.getId().equals("000")) {
+        if (!item.getId().equals(SearchView.JUST_NAME)) {
             holder.text2.setText(item.getCategory().getName());
         } else {
             holder.text2.setVisibility(View.GONE);
@@ -101,7 +102,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void setData(Map<String, ProductViewModel> items) {
         mItems = items;
         mItemsToDisplay.clear();
-        mItemsToDisplay.addAll(mItems.values());;
+        mItemsToDisplay.addAll(mItems.values());
+        ;
     }
 
     public ProductViewModel getItem(int position) {
@@ -133,7 +135,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                     if (!mItems.containsKey(prefixString)) {
                         ProductViewModel product = new ProductViewModel();
-                        product.setId("000");
+                        product.setId(SearchView.JUST_NAME);
                         product.setName(constraint.toString());
                         UnitViewModel unit = new UnitViewModel();
                         unit.setId(UnitViewModel.NO_UNIT_ID);
@@ -196,10 +198,6 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         ImageView typeIcon, iconEnd;
         TextView text1, text2;
-
-        public SearchViewHolder(final View itemView) {
-            super(itemView);
-        }
 
         public SearchViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
             super(itemView, clickListener);

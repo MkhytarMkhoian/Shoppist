@@ -61,13 +61,6 @@
                 android:id="@+id/menu_collapse_all"
                 android:title="@string/collapse_all" />
             <item
-                android:id="@+id/action_sort_manual_mode"
-                android:title="@string/sort_manually_mode" />
-            <item
-                android:id="@+id/action_synchronization"
-                android:title="@string/synchronization"
-                android:visible="false" />
-            <item
                 android:id="@+id/action_settings"
                 android:title="@string/title_activity_settings" />
         </menu>

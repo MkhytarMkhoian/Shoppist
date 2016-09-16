@@ -136,7 +136,7 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
                 addItem(product);
                 break;
             case Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST:
-                if (product.getId().equals("000")) {
+                if (product.getId().equals(SearchView.JUST_NAME)) {
                     showEditGoodsDialog(product.getName());
                 } else {
                     showEditGoodsDialog(product);
@@ -155,14 +155,6 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
 
     public void onTouch() {
         closeSearch();
-    }
-
-    public void onClearClick() {
-
-    }
-
-    public void onVoiceSearchClick() {
-        openVoiceSearch();
     }
 
     private void addItem(ProductViewModel product) {
@@ -199,18 +191,6 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
     private void fadeInSignal(@ColorInt int color) {
         if (isViewAttached()) {
             getView().fadeInSignal(color);
-        }
-    }
-
-    private void clearSearch() {
-        if (isViewAttached()) {
-            getView().clearSearch();
-        }
-    }
-
-    private void openVoiceSearch() {
-        if (isViewAttached()) {
-            getView().openVoiceSearch();
         }
     }
 

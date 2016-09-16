@@ -49,14 +49,9 @@ public class CategoryFragment extends BaseListFragment
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mPresenter.takeRouter((CategoryRouter) getActivity());
-    }
-
-    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mPresenter.takeRouter((CategoryRouter) getActivity());
         mPresenter.attachView(this);
         mPresenter.init();
     }
@@ -109,18 +104,13 @@ public class CategoryFragment extends BaseListFragment
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
+        mPresenter.dropRouter((CategoryRouter) getActivity());
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mPresenter.onDestroy();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mPresenter.dropRouter((CategoryRouter) getActivity());
     }
 
     @Override
@@ -164,14 +154,5 @@ public class CategoryFragment extends BaseListFragment
     public void onDeleteCheckedItemsClick() {
         deleteItems(getString(R.string.delete_the_category),
                 () -> mAdapter.deleteCheckedView(deleteItems -> mPresenter.deleteItems(deleteItems)));
-    }
-
-    public boolean isManualSortModeEnable() {
-        return mAdapter.isManualSortModeEnable();
-    }
-
-    public void disableManualSort() {
-        mAdapter.setManualSortModeEnable(false);
-        mAdapter.notifyDataSetChanged();
     }
 }

@@ -40,7 +40,6 @@ import java.util.List;
 public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     protected Context mContext;
-    protected boolean isManualSortModeEnable;
     protected ShoppistRecyclerView.OnItemClickListener mItemClickListener;
     protected ActionModeInteractionListener mActionModeInteractionListener;
 
@@ -183,14 +182,6 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         deleteState = true;
         resultListener.onAnimationEnd(getCheckedItems());
         finishDelete();
-    }
-
-    public boolean isManualSortModeEnable() {
-        return isManualSortModeEnable;
-    }
-
-    public void setManualSortModeEnable(boolean isManualSortEnable) {
-        this.isManualSortModeEnable = isManualSortEnable;
     }
 
     public ShoppistRecyclerView.OnItemClickListener getClickListener() {

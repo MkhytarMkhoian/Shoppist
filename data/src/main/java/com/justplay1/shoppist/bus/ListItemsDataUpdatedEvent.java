@@ -14,28 +14,10 @@
  *   limitations under the License.
  */
 
-package com.justplay1.shoppist.view;
-
-import android.support.annotation.ColorInt;
-
-import com.justplay1.shoppist.models.ProductViewModel;
-
-import java.util.Map;
+package com.justplay1.shoppist.bus;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-public interface SearchView extends BaseMvpView {
-
-    String JUST_NAME = "just_name";
-
-    void fadeInSignal(@ColorInt int color);
-
-    void closeSearch();
-
-    void showEditGoodsDialog(String name);
-
-    void showEditGoodsDialog(ProductViewModel product);
-
-    void showData(Map<String, ProductViewModel> data);
+public class ListItemsDataUpdatedEvent {
 }

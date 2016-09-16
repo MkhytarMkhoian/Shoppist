@@ -24,12 +24,11 @@ import android.widget.TextView;
 
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.CategoryViewModel;
-import com.justplay1.shoppist.utils.DraggableUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseDraggableItemViewHolder;
+import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 
 import java.util.Locale;
 
@@ -54,12 +53,6 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel> {
         CategoryItemViewHolder holder = (CategoryItemViewHolder) viewHolder;
         CategoryViewModel item = getItem(position);
 
-        if (isManualSortModeEnable) {
-            holder.dragHandle.setVisibility(View.VISIBLE);
-        } else {
-            holder.dragHandle.setVisibility(View.GONE);
-        }
-
         holder.name.setText(item.getName());
         holder.selectBox.setNormalStateColor(item.getColor());
         holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
@@ -69,11 +62,9 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel> {
         });
         holder.selectBox.setChecked(item.isChecked());
         holder.setActivated(item.isChecked());
-
-        DraggableUtils.clearSelector(holder, holder.container);
     }
 
-    public static class CategoryItemViewHolder extends BaseDraggableItemViewHolder {
+    public static class CategoryItemViewHolder extends BaseItemHolder {
         protected TextView name;
 
         public CategoryItemViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
@@ -82,7 +73,6 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel> {
 
         @Override
         protected void init(View itemView) {
-            dragHandle = itemView.findViewById(R.id.drag_handle);
             container = itemView.findViewById(R.id.swipe_container);
             selectBox = (SelectBoxView) itemView.findViewById(R.id.select_box);
             name = (TextView) itemView.findViewById(R.id.item_name);

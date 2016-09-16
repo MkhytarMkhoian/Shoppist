@@ -31,7 +31,5 @@ public interface ListItemsView extends LoadDataView, ContextView {
 
     void showData(List<Pair<HeaderViewModel, List<ListItemViewModel>>> data);
 
-    void setManualSortModeEnable(boolean enable);
-
     void showEmailShareDialog(String listName);
 }
