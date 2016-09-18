@@ -70,7 +70,7 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
         if (holder == null) return;
         HeaderViewModel model = getGroupItem(groupPosition);
         HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
-        if (mSort == SortType.SORT_BY_PRIORITY) {
+        if (mPreferences.getSortForLists() == SortType.SORT_BY_PRIORITY) {
             setPriorityTextColor(model.getPriority(), headerHolder.name);
         } else {
             headerHolder.name.setTextColor(mPreferences.getColorPrimary());
@@ -83,6 +83,7 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
     public void onBindChildViewHolder(BaseItemHolder viewHolder, int groupPosition, int childPosition, int viewType) {
         ListViewHolder holder = (ListViewHolder) viewHolder;
         ListViewModel item = getChildItem(groupPosition, childPosition);
+        item.setChecked(isItemChecked(item.getId()));
 
         holder.childPosition = childPosition;
         holder.groupPosition = groupPosition;

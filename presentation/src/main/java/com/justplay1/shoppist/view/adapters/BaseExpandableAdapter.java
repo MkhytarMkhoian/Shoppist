@@ -64,10 +64,6 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
     @ColorInt
     int mMediumPriority;
 
-    protected
-    @SortType
-    int mSort = SortType.SORT_BY_NAME;
-
     public BaseExpandableAdapter(Context context, ActionModeInteractionListener listener,
                                  RecyclerView recyclerView) {
         super(context, listener, recyclerView);
@@ -87,15 +83,6 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
 
     public void setData(List<Pair<HeaderViewModel, List<T>>> data) {
         this.mData = data;
-    }
-
-    public void invalidData() {
-        mData.clear();
-        notifyItemRangeRemoved(0, getItemCount());
-    }
-
-    public void setSort(@SortType int sort) {
-        this.mSort = sort;
     }
 
     protected void setPriorityTextColor(@Priority int priority, TextView view) {

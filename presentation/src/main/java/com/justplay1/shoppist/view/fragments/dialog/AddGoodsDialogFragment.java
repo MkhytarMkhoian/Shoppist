@@ -263,12 +263,6 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
         mProgressDialog.dismiss();
     }
 
-
-    @Override
-    public void showError(String message) {
-
-    }
-
     public void setCompleteListener(OnCompleteListener listener) {
         mCompleteListener = listener;
     }

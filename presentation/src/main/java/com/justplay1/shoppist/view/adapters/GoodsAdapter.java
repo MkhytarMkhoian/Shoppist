@@ -59,7 +59,7 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
         if (holder == null) return;
         HeaderViewModel model = getGroupItem(groupPosition);
         HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
-        if (mSort == SortType.SORT_BY_PRIORITY) {
+        if (mPreferences.getSortForGoods() == SortType.SORT_BY_PRIORITY) {
             setPriorityTextColor(model.getPriority(), headerHolder.name);
         } else {
             headerHolder.name.setTextColor(mPreferences.getColorPrimary());
@@ -72,13 +72,14 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
     @Override
     public void onBindChildViewHolder(GoodsViewHolder holder, int groupPosition, int childPosition, int viewType) {
         ProductViewModel item = getChildItem(groupPosition, childPosition);
+        item.setChecked(isItemChecked(item.getId()));
 
         holder.childPosition = childPosition;
         holder.groupPosition = groupPosition;
 
         holder.name.setText(item.getName());
 
-        if (mSort == SortType.SORT_BY_CATEGORIES) {
+        if (mPreferences.getSortForGoods() == SortType.SORT_BY_CATEGORIES) {
             holder.categoryName.setVisibility(View.GONE);
         } else {
             holder.categoryName.setVisibility(View.VISIBLE);

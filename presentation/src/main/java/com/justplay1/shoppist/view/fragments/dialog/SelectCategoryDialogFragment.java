@@ -151,9 +151,4 @@ public class SelectCategoryDialogFragment extends BaseSelectItemDialogFragment<C
     public void hideLoading() {
 
     }
-
-    @Override
-    public void showError(String message) {
-
-    }
 }

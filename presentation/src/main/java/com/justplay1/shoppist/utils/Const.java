@@ -24,7 +24,6 @@ public interface Const {
     String PARENT_LIST_ID = "parent_list_id";
     String SEARCH_CONTEXT_TYPE = "context_type";
     String NEW_NAME = "new_name";
-    String NEW_DATA = "NEW_DATA";
     String SETTING_ID = "setting_id";
     String SELECTED_COLOR = "selectedColor";
 

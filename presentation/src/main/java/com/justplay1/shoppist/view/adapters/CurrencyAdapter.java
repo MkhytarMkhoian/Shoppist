@@ -61,9 +61,9 @@ public class CurrencyAdapter extends BaseListAdapter<CurrencyViewModel> {
             case ItemType.LIST_ITEM:
                 CurrencyItemViewHolder holder = (CurrencyItemViewHolder) viewHolder;
                 CurrencyViewModel item = getItem(position);
+                item.setChecked(isItemChecked(item.getId()));
 
                 holder.name.setText(item.getName());
-
                 holder.selectBox.setNormalStateColor(ContextCompat.getColor(mContext, R.color.blue_grey_500));
                 holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
                 holder.selectBox.setEventListener(isChecked -> {

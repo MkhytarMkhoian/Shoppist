@@ -56,6 +56,7 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
             case ItemType.LIST_ITEM:
                 UnitItemViewHolder holder = (UnitItemViewHolder) viewHolder;
                 UnitViewModel item = getItem(position);
+                item.setChecked(isItemChecked(item.getId()));
 
                 holder.name.setText(String.format("%s (%s)", item.getName(), item.getShortName()));
 

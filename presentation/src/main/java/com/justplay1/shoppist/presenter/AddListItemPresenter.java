@@ -491,6 +491,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
             listItem.setTimeCreated(mItem.getTimeCreated());
             listItem.setStatus(mItem.getStatus());
         } else {
+            listItem.setId(ModelUtils.generateId());
             listItem.setStatus(false);
             listItem.setTimeCreated(System.currentTimeMillis());
             listItem.setId(ModelUtils.generateId());

@@ -161,11 +161,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
 
     @Override
     public boolean onItemLongClick(BaseItemHolder holder, int position, long id) {
-        if (mPreferences.getLongItemClickAction() == 0) {
-            holder.toggle();
-        } else {
-            mPresenter.onItemLongClick(mAdapter.getChildItem(holder.groupPosition, holder.childPosition));
-        }
+        holder.toggle();
         return true;
     }
 
@@ -229,11 +225,6 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     @Override
     public void hideLoadingDialog() {
         mProgressDialog.dismiss();
-    }
-
-    @Override
-    public void showError(String message) {
-
     }
 
     public void onEditItemClick() {

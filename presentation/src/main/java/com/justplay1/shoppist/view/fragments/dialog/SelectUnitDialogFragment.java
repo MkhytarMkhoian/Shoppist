@@ -165,9 +165,4 @@ public class SelectUnitDialogFragment extends BaseSelectItemDialogFragment<UnitV
     public void hideLoading() {
 
     }
-
-    @Override
-    public void showError(String message) {
-
-    }
 }

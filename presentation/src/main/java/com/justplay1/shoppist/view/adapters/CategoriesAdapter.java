@@ -52,6 +52,7 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel> {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         CategoryItemViewHolder holder = (CategoryItemViewHolder) viewHolder;
         CategoryViewModel item = getItem(position);
+        item.setChecked(isItemChecked(item.getId()));
 
         holder.name.setText(item.getName());
         holder.selectBox.setNormalStateColor(item.getColor());

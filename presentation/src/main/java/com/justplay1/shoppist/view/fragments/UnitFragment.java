@@ -171,9 +171,4 @@ public class UnitFragment extends BaseListFragment
     public void hideLoading() {
         mProgressDialog.dismiss();
     }
-
-    @Override
-    public void showError(String message) {
-
-    }
 }

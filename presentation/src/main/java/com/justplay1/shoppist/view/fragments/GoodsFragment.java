@@ -237,11 +237,6 @@ public class GoodsFragment extends BaseExpandableListFragment
     }
 
     @Override
-    public void showError(String message) {
-
-    }
-
-    @Override
     public Context context() {
         return getContext();
     }

@@ -79,7 +79,7 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
         mDataBusSubscription = DataEventBus.instanceOf().observable().subscribe(new DefaultSubscriber<Object>() {
             @Override
             public void onNext(Object o) {
-                loadData();
+                loadData(false);
             }
         });
     }
@@ -94,25 +94,31 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
         if (mPreferences.isNeedShowRateDialog()) {
             showRateDialog();
         }
-        loadData();
+        loadData(true);
     }
 
     @SuppressWarnings("ResourceType")
-    public void loadData() {
-        showLoading();
+    public void loadData(boolean showProgress) {
+        if (showProgress){
+            showLoading();
+        }
         mSubscriptions.add(mGetLists.get()
                 .map(mDataMapper::transformToViewModel)
                 .map(listViewModels -> sort(listViewModels, mPreferences.getSortForLists()))
                 .subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListViewModel>>>>() {
                     @Override
                     public void onNext(List<Pair<HeaderViewModel, List<ListViewModel>>> data) {
-                        hideLoading();
+                        if (showProgress){
+                            hideLoading();
+                        }
                         showData(data);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        hideLoading();
+                        if (showProgress){
+                            hideLoading();
+                        }
                         e.printStackTrace();
                     }
                 }));
@@ -172,12 +178,6 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
     public void onEditItemClick(ListViewModel list) {
         if (hasRouter()) {
             getRouter().openEditScreen(list);
-        }
-    }
-
-    public void onItemLongClick(ListViewModel list) {
-        if (hasRouter()) {
-            getRouter().openListDetailScreen(list);
         }
     }
 

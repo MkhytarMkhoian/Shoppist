@@ -145,10 +145,6 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
         }
     }
 
-    public void onListItemLongClick(ProductViewModel product) {
-
-    }
-
     public void onNavigationClick() {
         closeSearch();
     }

@@ -26,6 +26,7 @@ import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
 import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
+import com.justplay1.shoppist.utils.ModelUtils;
 import com.justplay1.shoppist.view.AddUnitView;
 
 import java.util.Collections;
@@ -98,7 +99,7 @@ public class AddUnitPresenter extends BaseRxPresenter<AddUnitView, Router> {
                 unit.setShortName(shortName);
                 updateUnit(unit);
             } else {
-                unit.setId(UUID.nameUUIDFromBytes((System.currentTimeMillis() + "").getBytes()).toString());
+                unit.setId(UUID.nameUUIDFromBytes((ModelUtils.generateId()).getBytes()).toString());
                 unit.setName(fullName);
                 unit.setShortName(shortName);
                 addUnit(unit);

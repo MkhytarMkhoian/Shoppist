@@ -183,12 +183,6 @@ public class AddUnitsDialogFragment extends BaseDialogFragment
         mProgressDialog.dismiss();
     }
 
-
-    @Override
-    public void showError(String message) {
-
-    }
-
     public void setCompleteListener(OnCompleteListener listener) {
         mCompleteListener = listener;
     }

@@ -108,19 +108,6 @@ public abstract class BaseFragment extends Fragment {
         return createGenericErrorDialog(context, context.getString(messageResource));
     }
 
-    public void startTextToSpeech(Activity context, String prompt, int requestCode) {
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, prompt);
-        try {
-            context.startActivityForResult(intent, requestCode);
-        } catch (ActivityNotFoundException a) {
-            Toast.makeText(context, context.getString(R.string.recognition_not_present),
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
-
     protected int getRandomColor() {
         Random random = new Random();
         int[] color1 = getResources().getIntArray(R.array.categories_colors);

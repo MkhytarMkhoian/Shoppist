@@ -102,7 +102,7 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
             case ItemType.HEADER_ITEM:
                 BaseViewModel model = getGroupItem(groupPosition);
                 HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
-                if (mSort == SortType.SORT_BY_PRIORITY) {
+                if (mPreferences.getSortForShoppingListItems() == SortType.SORT_BY_PRIORITY) {
                     if (model.getPriority() == Priority.NO_PRIORITY) {
                         headerViewHolder.name.setTextColor(ContextCompat.getColor(mContext, R.color.action_mode_toolbar_color));
                     } else {
@@ -143,14 +143,13 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
     @Override
     public void onBindChildViewHolder(BaseSwipeableItemViewHolder viewHolder, int groupPosition, int childPosition, int viewType) {
         ListItemViewHolder holder = (ListItemViewHolder) viewHolder;
-
         holder.childPosition = childPosition;
         holder.groupPosition = groupPosition;
 
         final ListItemViewModel item = getChildItem(groupPosition, childPosition);
+        item.setChecked(isItemChecked(item.getId()));
 
         holder.name.setText(item.getName());
-
         if (!item.getStatus()) {
             holder.note.setVisibility(View.GONE);
             holder.info2.setVisibility(View.INVISIBLE);
@@ -172,7 +171,7 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
             }
         }
 
-        if (mSort == SortType.SORT_BY_CATEGORIES) {
+        if (mPreferences.getSortForShoppingListItems() == SortType.SORT_BY_CATEGORIES) {
             holder.categoryName.setVisibility(View.GONE);
         } else {
             holder.categoryName.setVisibility(View.VISIBLE);

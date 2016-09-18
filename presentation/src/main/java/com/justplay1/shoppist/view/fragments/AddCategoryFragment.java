@@ -199,11 +199,6 @@ public class AddCategoryFragment extends BaseAddElementFragment
     }
 
     @Override
-    public void showError(String message) {
-        showToastMessage(message);
-    }
-
-    @Override
     public void setDefaultToolbarTitle() {
         mListener.setTitle(getString(R.string.title_activity_add_category));
     }

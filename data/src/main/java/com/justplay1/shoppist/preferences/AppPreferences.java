@@ -40,7 +40,6 @@ public class AppPreferences {
     public static final String IS_NEED_SHOW_RATE_DIALOG = "is_need_show_rate_dialog";
     public static final String DEFAULT_CURRENCY = "default_currency_id";
     public static final String CALCULATE_PRICE = "calculate_price";
-    public static final String LONG_ITEM_CLICK_ACTION = "long_item_click_action";
     public static final String ADD_BUTTON_CLICK_ACTION = "add_button_click_action";
 
     public static final String SORT_FOR_SHOPPING_LISTS = "sort_for_shopping_lists";
@@ -68,7 +67,6 @@ public class AppPreferences {
     private int mNeedShowRateDialog;
     private String mDefaultCurrency;
     private boolean mCalculatePrice;
-    private int mLongItemClickAction;
     private int mAddButtonClickAction;
 
     private int mLeftShoppingListItemSwipeAction;
@@ -92,7 +90,6 @@ public class AppPreferences {
             mNeedShowRateDialog = mPreference.getInt(IS_NEED_SHOW_RATE_DIALOG, 0);
             mDefaultCurrency = mPreference.getString(DEFAULT_CURRENCY, "1");
             mCalculatePrice = mPreference.getBoolean(CALCULATE_PRICE, true);
-            mLongItemClickAction = mPreference.getInt(LONG_ITEM_CLICK_ACTION, 0);
             mAddButtonClickAction = mPreference.getInt(ADD_BUTTON_CLICK_ACTION, 0);
 
             mLeftShoppingListItemSwipeAction = mPreference.getInt(LEFT_SHOPPING_LIST_ITEM_SWIPE_ACTION, 0);
@@ -249,17 +246,6 @@ public class AppPreferences {
         mRightShoppingListItemSwipeAction = action;
         SharedPreferences.Editor editor = mPreference.edit();
         editor.putInt(RIGHT_SHOPPING_LIST_ITEM_SWIPE_ACTION, action);
-        editor.apply();
-    }
-
-    public int getLongItemClickAction() {
-        return mLongItemClickAction;
-    }
-
-    public void setLongItemClickAction(int action) {
-        mLongItemClickAction = action;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putInt(LONG_ITEM_CLICK_ACTION, action);
         editor.apply();
     }
 

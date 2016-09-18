@@ -32,4 +32,8 @@ public interface ListItemsView extends LoadDataView, ContextView {
     void showData(List<Pair<HeaderViewModel, List<ListItemViewModel>>> data);
 
     void showEmailShareDialog(String listName);
+
+    void openMoveGoodsDialog(ListViewModel currentList, List<ListItemViewModel> data);
+
+    void openCopyGoodsDialog(ListViewModel currentList, List<ListItemViewModel> data);
 }

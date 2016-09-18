@@ -91,10 +91,4 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment
         super.onActivityCreated(savedInstanceState);
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
-
-
-    protected void showError(EditText editText) {
-        ShoppistUtils.hideKeyboard(getContext(), editText);
-        dismiss();
-    }
 }

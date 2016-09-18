@@ -181,6 +181,7 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
             list.setChecked(mItem.isChecked());
             list.setTimeCreated(mItem.getTimeCreated());
         } else {
+            list.setId(ModelUtils.generateId());
             list.setTimeCreated(System.currentTimeMillis());
             list.setId(ModelUtils.generateId());
         }

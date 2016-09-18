@@ -17,6 +17,7 @@
 package com.justplay1.shoppist.view.fragments;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -36,6 +37,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
@@ -59,6 +61,7 @@ import com.justplay1.shoppist.view.fragments.dialog.AddGoodsDialogFragment;
 import com.justplay1.shoppist.view.fragments.dialog.AddUnitsDialogFragment;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -248,8 +251,7 @@ public class SearchFragment extends BaseFragment
 
     @Override
     public boolean onItemLongClick(BaseItemHolder holder, int position, long id) {
-        mPresenter.onListItemLongClick(mAdapter.getItem(position));
-        return true;
+        return false;
     }
 
     public void clearSearch() {
@@ -278,7 +280,20 @@ public class SearchFragment extends BaseFragment
     }
 
     public void openVoiceSearch() {
-        startTextToSpeech(getActivity(), null, Const.REQ_CODE_SPEECH_INPUT);
+        startTextToSpeech(null, Const.REQ_CODE_SPEECH_INPUT);
+    }
+
+    private void startTextToSpeech(String prompt, int requestCode) {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, prompt);
+        try {
+            startActivityForResult(intent, requestCode);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getContext(), getString(R.string.recognition_not_present),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

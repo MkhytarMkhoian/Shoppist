@@ -225,12 +225,8 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         openEditScreen(mParentList, editItem);
     }
 
-    public void onListItemLongClick(ListItemViewModel item) {
-
-    }
-
     public void onListItemClick(ListItemViewModel item) {
-
+        openEditScreen(mParentList, item);
     }
 
     public void onAddButtonClick() {
@@ -260,11 +256,11 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         }
     }
 
-    public void onReturnAllToListClick(List<ListItemViewModel> items) {
+    public void returnItemsToList(List<ListItemViewModel> items) {
         strikeOut(items, false);
     }
 
-    public void onStrikeOutAllClick(List<ListItemViewModel> items) {
+    public void strikeOutItems(List<ListItemViewModel> items) {
         strikeOut(items, true);
     }
 
@@ -276,12 +272,16 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
                 }).subscribe(new DefaultSubscriber<Boolean>()));
     }
 
-    public void copyItems(ListViewModel newList, List<ListItemViewModel> items) {
-
+    public void onCopyItemsClick(List<ListItemViewModel> items) {
+        if (isViewAttached()) {
+            getView().openCopyGoodsDialog(mParentList, items);
+        }
     }
 
-    public void moveItems(ListViewModel newList, List<ListItemViewModel> items) {
-
+    public void onMoveItemsClick(List<ListItemViewModel> items) {
+        if (isViewAttached()) {
+            getView().openMoveGoodsDialog(mParentList, items);
+        }
     }
 
     public void onEmailShareClick() {

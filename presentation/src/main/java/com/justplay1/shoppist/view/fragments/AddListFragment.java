@@ -265,11 +265,6 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
     }
 
     @Override
-    public void showError(String message) {
-        showToastMessage(message);
-    }
-
-    @Override
     public boolean onLongClick(View v) {
         mPresenter.onDoneButtonLongClick(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
         return true;

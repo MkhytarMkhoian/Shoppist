@@ -127,11 +127,6 @@ public class CurrencyFragment extends BaseListFragment
     }
 
     @Override
-    public void showError(String message) {
-
-    }
-
-    @Override
     public void showCurrencyEditDialog(CurrencyViewModel currency) {
         FragmentManager fm = getFragmentManager();
         AddCurrencyDialogFragment dialog = AddCurrencyDialogFragment.newInstance(currency);

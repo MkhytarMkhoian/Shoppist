@@ -22,16 +22,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Checkable;
 
-import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.utils.AnimationResultListener;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
-import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -47,6 +47,7 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
     protected boolean deleteState = false;
     protected int mCheckedCount = 0;
     protected LinearLayoutManager mLinearLayoutManager;
+    protected Map<String, Boolean> mCheckedItems;
 
     public BaseAdapter(Context context, ActionModeInteractionListener listener,
                        RecyclerView recyclerView) {
@@ -55,6 +56,7 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         this.mActionModeInteractionListener = listener;
         this.mRecyclerView = recyclerView;
         mLinearLayoutManager = ((LinearLayoutManager) mRecyclerView.getLayoutManager());
+        mCheckedItems = new HashMap<>();
     }
 
     protected abstract List<T> getCheckedItems();
@@ -108,6 +110,7 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         if (mActionModeInteractionListener.isActionModeShowing()) {
             mActionModeInteractionListener.closeActionMode();
         }
+        mCheckedItems.clear();
         List<Checkable> visibleItems = findVisibleItems();
         for (Checkable checkable : visibleItems) {
             if (checkable.isChecked()) {
@@ -121,6 +124,8 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
 
     public void checkAllItems() {
         List<Checkable> visibleItems = findVisibleItems();
+        if (visibleItems.size() == 0) return;
+
         for (Checkable checkable : visibleItems) {
             if (!checkable.isChecked()) {
                 checkable.setChecked(true);
@@ -137,13 +142,25 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
             if (item instanceof HeaderViewModel) continue;
             if (item.isChecked() != check) {
                 item.setChecked(check);
+                mCheckedItems.put(item.getId(), check);
             }
         }
+    }
+
+    protected boolean isItemChecked(String id) {
+        Boolean isChecked = mCheckedItems.get(id);
+        if (isChecked == null) return false;
+        return isChecked;
     }
 
     protected void onCheckItem(T item, boolean isChecked) {
         item.setChecked(isChecked);
         updateCount(item.isChecked());
+        if (isChecked) {
+            mCheckedItems.put(item.getId(), true);
+        } else {
+            mCheckedItems.remove(item.getId());
+        }
     }
 
     public void updateCount(final boolean isChecked) {

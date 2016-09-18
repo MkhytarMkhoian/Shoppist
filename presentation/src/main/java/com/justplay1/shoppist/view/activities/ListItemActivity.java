@@ -69,7 +69,7 @@ public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragme
         mToolbar.setBackgroundColor(mPreferences.getColorPrimary());
         mToolbar.setOnMenuItemClickListener(this);
         mToolbar.setNavigationIcon(R.drawable.ic_back_white);
-        mToolbar.setNavigationOnClickListener(v -> finishWithResult());
+        mToolbar.setNavigationOnClickListener(v -> finish());
         mToolbar.inflateMenu(R.menu.shopping_list_toolbar);
         mToolbar.getMenu().findItem(R.id.action_settings).setVisible(false);
 //        if (mData == null) {
@@ -144,10 +144,10 @@ public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragme
                 mFragment.onUnCheckAllItemsClick();
                 break;
             case R.id.action_return_to_list:
-                mFragment.onReturnAllToListClick();
+                mFragment.onReturnCheckedItemsToListClick();
                 break;
             case R.id.action_strike_out:
-                mFragment.onStrikeOutAllClick();
+                mFragment.onStrikeOutCheckedItemsClick();
                 break;
         }
         return true;
@@ -193,32 +193,7 @@ public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragme
         if (isActionModeShowing()) {
             closeActionMode();
         } else {
-            finishWithResult();
+            super.onBackPressed();
         }
-    }
-
-//    public void onLoadFinished(Loader<Map<String, Object>> loader, Map<String, Object> data) {
-//
-//        ListItemAdapter adapter = (ListItemAdapter) mAdapter;
-//        if (mData == null) {
-//            if (data.get(ListViewModel.class.getName()) != null) {
-//                mData = (ListViewModel) data.get(ListViewModel.class.getName());
-//            }
-//            mToolbar.setTitle(mData.getName());
-//            mToolbar.getMenu().findItem(R.id.menu_sort).setEnabled(true);
-//            mToolbar.getMenu().findItem(R.id.action_menu).setEnabled(true);
-//        }
-//        if (data.get(Cursor.class.getName()) != null) {
-//            adapter.changeCursor((Cursor) data.get(Cursor.class.getName()));
-//            mRecyclerViewExpandableItemManager.expandAll();
-//        } else {
-//            adapter.invalidData();
-//        }
-//    }
-
-    private void finishWithResult() {
-        Intent data = new Intent();
-        data.putExtra(Const.NEW_DATA, true);
-        finishActivityWithResult(this, RESULT_OK, data);
     }
 }

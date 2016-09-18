@@ -161,9 +161,4 @@ public class SelectCurrencyDialogFragment extends BaseSelectItemDialogFragment<C
     public void hideLoading() {
 
     }
-
-    @Override
-    public void showError(String message) {
-
-    }
 }

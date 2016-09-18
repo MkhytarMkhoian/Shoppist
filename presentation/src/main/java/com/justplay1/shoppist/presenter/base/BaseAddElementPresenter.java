@@ -62,12 +62,6 @@ public abstract class BaseAddElementPresenter<V extends AddElementView> extends 
         }
     }
 
-    protected void showError(String message) {
-        if (isViewAttached()) {
-            getView().showError(message);
-        }
-    }
-
     protected void showNameIsRequiredError() {
         if (isViewAttached()) {
             getView().showNameIsRequiredError();

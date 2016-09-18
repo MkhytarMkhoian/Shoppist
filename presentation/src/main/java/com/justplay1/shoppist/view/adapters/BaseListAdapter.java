@@ -62,18 +62,6 @@ public abstract class BaseListAdapter<T extends BaseViewModel>
         return getItem(position).getItemType();
     }
 
-    public void remove(T item) {
-        if (mData != null && mData.contains(item)) {
-            mData.remove(item);
-        }
-    }
-
-    public void removeAll(List<T> items) {
-        if (mData != null) {
-            mData.removeAll(items);
-        }
-    }
-
     public List<T> getItemsWithoutHeaders() {
         List<T> items = new ArrayList<>();
         for (T item : mData) {

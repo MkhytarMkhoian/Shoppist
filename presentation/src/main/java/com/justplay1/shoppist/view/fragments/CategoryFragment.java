@@ -96,11 +96,6 @@ public class CategoryFragment extends BaseListFragment
     }
 
     @Override
-    public void showError(String message) {
-
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();

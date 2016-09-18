@@ -22,7 +22,7 @@ import com.justplay1.shoppist.models.ListViewModel;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public interface ListItemsRouter extends Router{
+public interface ListItemsRouter extends Router {
 
     void openQuickMode(String parentListId);
 

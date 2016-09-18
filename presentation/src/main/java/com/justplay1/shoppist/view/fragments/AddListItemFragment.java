@@ -452,11 +452,6 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
     }
 
     @Override
-    public void showError(String message) {
-
-    }
-
-    @Override
     public void setDefaultCategory() {
         mCurrencyList.selectItem(CategoryViewModel.NO_CATEGORY_ID);
     }

@@ -16,17 +16,15 @@
 
 package com.justplay1.shoppist.view;
 
-/**
- * Interface representing a View that will use to load data.
- */
-public interface LoadDataView extends BaseMvpView {
-    /**
-     * Show a view with a progress bar indicating a loading process.
-     */
-    void showLoading();
+import java.util.ArrayList;
+import java.util.Map;
 
-    /**
-     * Hide a loading view.
-     */
-    void hideLoading();
+/**
+ * Created by Mkhytar Mkhoian.
+ */
+public interface MoveListItemsView extends LoadDataView {
+
+    void showData(ArrayList<Map<String, Object>> data);
+
+    void closeDialog();
 }
