@@ -55,14 +55,14 @@ public class GoodsActivity extends SingleListFragmentActivity<GoodsFragment>
     }
 
     protected void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(R.string.goods);
-        mToolbar.setBackgroundColor(mPreferences.getColorPrimary());
-        mToolbar.inflateMenu(R.menu.goods_toolbar);
-        mToolbar.setOnMenuItemClickListener(this);
-        ViewCompat.setElevation(mToolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
-        mToolbar.setNavigationIcon(R.drawable.ic_back_white);
-        mToolbar.setNavigationOnClickListener(v -> finishActivity());
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.goods);
+        toolbar.setBackgroundColor(mPreferences.getColorPrimary());
+        toolbar.inflateMenu(R.menu.goods_toolbar);
+        toolbar.setOnMenuItemClickListener(this);
+        ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
+        toolbar.setNavigationIcon(R.drawable.ic_back_white);
+        toolbar.setNavigationOnClickListener(v -> finishActivity());
     }
 
     @Override

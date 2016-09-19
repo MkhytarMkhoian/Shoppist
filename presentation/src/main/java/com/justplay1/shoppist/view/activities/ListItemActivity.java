@@ -63,18 +63,18 @@ public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragme
     }
 
     private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(mParentList.getName());
-        ViewCompat.setElevation(mToolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
-        mToolbar.setBackgroundColor(mPreferences.getColorPrimary());
-        mToolbar.setOnMenuItemClickListener(this);
-        mToolbar.setNavigationIcon(R.drawable.ic_back_white);
-        mToolbar.setNavigationOnClickListener(v -> finish());
-        mToolbar.inflateMenu(R.menu.shopping_list_toolbar);
-        mToolbar.getMenu().findItem(R.id.action_settings).setVisible(false);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(mParentList.getName());
+        ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
+        toolbar.setBackgroundColor(mPreferences.getColorPrimary());
+        toolbar.setOnMenuItemClickListener(this);
+        toolbar.setNavigationIcon(R.drawable.ic_back_white);
+        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbar.inflateMenu(R.menu.shopping_list_toolbar);
+        toolbar.getMenu().findItem(R.id.action_settings).setVisible(false);
 //        if (mData == null) {
-//            mToolbar.getMenu().findItem(R.id.menu_sort).setEnabled(true);
-//            mToolbar.getMenu().findItem(R.id.action_menu).setEnabled(true);
+//            toolbar.getMenu().findItem(R.id.menu_sort).setEnabled(true);
+//            toolbar.getMenu().findItem(R.id.action_menu).setEnabled(true);
 //        }
     }
 

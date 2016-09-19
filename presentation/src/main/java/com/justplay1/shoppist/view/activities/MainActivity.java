@@ -50,6 +50,7 @@ public class MainActivity extends BaseListActivity
     private MenuFragment mMenuFragment;
     private ListFragment mListFragment;
 
+    private Toolbar mToolbar;
     private ActionBarDrawerToggle mToggle;
     private DrawerLayout mMenuDrawer;
 
