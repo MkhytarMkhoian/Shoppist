@@ -25,7 +25,6 @@ import android.widget.TextView;
 
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.CurrencyViewModel;
-import com.justplay1.shoppist.models.ItemType;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
@@ -48,33 +47,24 @@ public class CurrencyAdapter extends BaseListAdapter<CurrencyViewModel> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
-        switch (viewType) {
-            case ItemType.LIST_ITEM:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_currency, parent, false);
-                return new CurrencyItemViewHolder(view, mItemClickListener);
-        }
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_currency, parent, false);
+        return new CurrencyItemViewHolder(view, mItemClickListener);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        switch (viewHolder.getItemViewType()) {
-            case ItemType.LIST_ITEM:
-                CurrencyItemViewHolder holder = (CurrencyItemViewHolder) viewHolder;
-                CurrencyViewModel item = getItem(position);
-                item.setChecked(isItemChecked(item.getId()));
+        CurrencyItemViewHolder holder = (CurrencyItemViewHolder) viewHolder;
+        CurrencyViewModel item = getItem(position);
+        item.setChecked(isItemChecked(item.getId()));
 
-                holder.name.setText(item.getName());
-                holder.selectBox.setNormalStateColor(ContextCompat.getColor(mContext, R.color.blue_grey_500));
-                holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
-                holder.selectBox.setEventListener(isChecked -> {
-                    onCheckItem(item, isChecked);
-                    holder.setActivated(isChecked);
-                });
-                holder.selectBox.setChecked(item.isChecked());
-                break;
-        }
+        holder.name.setText(item.getName());
+        holder.selectBox.setNormalStateColor(ContextCompat.getColor(mContext, R.color.blue_grey_500));
+        holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
+        holder.selectBox.setEventListener(isChecked -> {
+            onCheckItem(item, isChecked);
+            holder.setActivated(isChecked);
+        });
+        holder.selectBox.setChecked(item.isChecked());
     }
 
     public static class CurrencyItemViewHolder extends BaseItemHolder {

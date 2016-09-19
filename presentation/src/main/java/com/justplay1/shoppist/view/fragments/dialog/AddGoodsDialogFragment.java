@@ -20,7 +20,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.justplay1.shoppist.App;
@@ -136,34 +135,12 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
         mUnitList = (UnitsSpinnerView) view.findViewById(R.id.units_spinner_view);
         mUnitList.setOnAddBtnClickListener(this);
         mUnitList.setOnEditBtnClickListener(this);
-        mUnitList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mPresenter.onUnitSelected(mUnitList.getSelectedItem());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
     private void initCategoryList(View parent) {
         mCategoryList = (CategorySpinnerView) parent.findViewById(R.id.category_spinner_view);
         mCategoryList.setEditBtnVisibility(View.GONE);
         mCategoryList.setAddBtnVisibility(View.GONE);
-        mCategoryList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mPresenter.onCategorySelected(mCategoryList.getSelectedItem());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
     @Override
@@ -176,6 +153,8 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.positive_button:
+                mPresenter.setCategory(mCategoryList.getSelectedItem());
+                mPresenter.setUnit(mUnitList.getSelectedItem());
                 final String name = ShoppistUtils.filterSpace(mNameEdit.getText().toString());
                 mPresenter.onPositiveButtonClick(name);
                 break;

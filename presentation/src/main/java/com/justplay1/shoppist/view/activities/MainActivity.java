@@ -58,7 +58,6 @@ public class MainActivity extends BaseListActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mMenuFragment = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.menu_fragment);
         initToolbar();
     }

@@ -162,11 +162,11 @@ public class UnitFragment extends BaseListFragment
 
     @Override
     public void showLoading() {
-        mProgressDialog.show();
+        mEmptyView.showProgressBar();
     }
 
     @Override
     public void hideLoading() {
-        mProgressDialog.dismiss();
+        mEmptyView.hideProgressBar();
     }
 }

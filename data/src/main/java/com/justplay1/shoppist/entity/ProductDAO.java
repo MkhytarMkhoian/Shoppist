@@ -37,7 +37,7 @@ public class ProductDAO extends BaseDAO {
     public static final String TIME_CREATED = "product_time_created";
     public static final String UNIT_ID = "product_unit_id";
 
-    public static final String WHERE_PRODUCT_ID = PRODUCT_ID + "=?";
+    public static final String WHERE_PRODUCT_ID = PRODUCT_ID + " IN(?)";
 
     private CategoryDAO category;
     private boolean isCreateByUser;

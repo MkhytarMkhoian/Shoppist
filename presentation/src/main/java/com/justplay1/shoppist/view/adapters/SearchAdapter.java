@@ -36,6 +36,7 @@ import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.utils.Const;
+import com.justplay1.shoppist.utils.ViewUtils;
 import com.justplay1.shoppist.view.SearchView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
@@ -85,7 +86,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         OvalShape ovalShape = new OvalShape();
         ShapeDrawable drawable = new ShapeDrawable(ovalShape);
         drawable.getPaint().setColor(item.getCategory().getColor());
-        holder.typeIcon.setBackgroundDrawable(drawable);
+        ViewUtils.setBackground(holder.typeIcon, drawable);
         if (!item.getId().equals(SearchView.JUST_NAME)) {
             holder.text2.setText(item.getCategory().getName());
         } else {
@@ -94,7 +95,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         switch (mContextType) {
             case Const.CONTEXT_QUICK_ADD_GOODS_TO_LIST:
-                holder.iconEnd.setBackgroundDrawable(iconEndDrawable);
+                ViewUtils.setBackground(holder.iconEnd, iconEndDrawable);
                 break;
             case Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST:
                 holder.iconEnd.setVisibility(View.GONE);
@@ -106,7 +107,6 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         mItems = items;
         mItemsToDisplay.clear();
         mItemsToDisplay.addAll(mItems.values());
-        ;
     }
 
     public ProductViewModel getItem(int position) {

@@ -40,6 +40,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Mkhytar Mkhoian.
  */
@@ -90,10 +93,8 @@ public class AutoCompleteTextAdapter extends BaseAdapter implements Filterable {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.view_avto_complete_text, parent, false);
-            holder.name = (TextView) convertView.findViewById(R.id.title);
-            holder.addBtn = (ImageView) convertView.findViewById(R.id.add_btn);
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -198,7 +199,13 @@ public class AutoCompleteTextAdapter extends BaseAdapter implements Filterable {
     }
 
     public static class ViewHolder {
-        public TextView name;
-        public ImageView addBtn;
+        @Bind(R.id.title)
+        TextView name;
+        @Bind(R.id.add_btn)
+        ImageView addBtn;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }

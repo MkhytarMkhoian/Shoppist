@@ -36,10 +36,6 @@ public abstract class BaseHeaderHolder extends BaseViewHolder implements Expanda
     protected ShoppistRecyclerView.OnHeaderClickListener mClickListener;
     private int mExpandStateFlags;
 
-    public BaseHeaderHolder(View itemView) {
-        super(itemView);
-    }
-
     public BaseHeaderHolder(View itemView, ShoppistRecyclerView.OnHeaderClickListener clickListener) {
         super(itemView);
         ButterKnife.bind(this, itemView);

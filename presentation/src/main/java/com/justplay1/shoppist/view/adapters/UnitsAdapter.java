@@ -24,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.models.ItemType;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
@@ -54,24 +53,20 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        switch (viewHolder.getItemViewType()) {
-            case ItemType.LIST_ITEM:
-                UnitItemViewHolder holder = (UnitItemViewHolder) viewHolder;
-                UnitViewModel item = getItem(position);
-                item.setChecked(isItemChecked(item.getId()));
+        UnitItemViewHolder holder = (UnitItemViewHolder) viewHolder;
+        UnitViewModel item = getItem(position);
+        item.setChecked(isItemChecked(item.getId()));
 
-                holder.name.setText(String.format("%s (%s)", item.getName(), item.getShortName()));
+        holder.name.setText(String.format("%s (%s)", item.getName(), item.getShortName()));
 
-                holder.selectBox.setNormalStateColor(ContextCompat.getColor(mContext, R.color.blue_grey_500));
-                holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
-                holder.selectBox.setEventListener(isChecked -> {
-                    onCheckItem(item, isChecked);
-                    holder.setActivated(isChecked);
-                });
-                holder.selectBox.setChecked(item.isChecked());
-                holder.setActivated(item.isChecked());
-                break;
-        }
+        holder.selectBox.setNormalStateColor(ContextCompat.getColor(mContext, R.color.blue_grey_500));
+        holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
+        holder.selectBox.setEventListener(isChecked -> {
+            onCheckItem(item, isChecked);
+            holder.setActivated(isChecked);
+        });
+        holder.selectBox.setChecked(item.isChecked());
+        holder.setActivated(item.isChecked());
     }
 
     public static class UnitItemViewHolder extends BaseItemHolder {

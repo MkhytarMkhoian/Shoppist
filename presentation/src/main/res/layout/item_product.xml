@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2016 Mkhytar Mkhoian
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,11 +16,12 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingPrefix"
+    android:id="@+id/swipe_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/list_view_selector"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:ignore="MissingPrefix">
 
     <com.justplay1.shoppist.view.component.animboxes.SelectBoxView
         android:id="@+id/select_box"

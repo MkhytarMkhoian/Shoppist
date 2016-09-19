@@ -127,11 +127,11 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
         showUnitDialog(unit);
     }
 
-    public void onCategorySelected(CategoryViewModel category) {
+    public void setCategory(CategoryViewModel category) {
         mCategoryModel = category;
     }
 
-    public void onUnitSelected(UnitViewModel unit) {
+    public void setUnit(UnitViewModel unit) {
         mUnitModel = unit;
     }
 
@@ -313,6 +313,7 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
 
         @Override
         public void onError(Throwable e) {
+            e.printStackTrace();
             hideLoading();
         }
 

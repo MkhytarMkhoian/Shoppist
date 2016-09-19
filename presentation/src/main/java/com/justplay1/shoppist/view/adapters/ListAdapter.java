@@ -62,8 +62,7 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
     @Override
     public BaseItemHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shopping_list, parent, false);
-        ListViewHolder holder = new ListViewHolder(view, mItemClickListener);
-        return holder;
+        return new ListViewHolder(view, mItemClickListener);
     }
 
     @Override
