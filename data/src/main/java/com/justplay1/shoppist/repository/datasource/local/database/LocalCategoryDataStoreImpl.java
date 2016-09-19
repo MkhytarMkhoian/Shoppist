@@ -19,6 +19,8 @@ package com.justplay1.shoppist.repository.datasource.local.database;
 import android.content.ContentValues;
 import android.content.Context;
 
+import com.justplay1.shoppist.bus.DataEventBus;
+import com.justplay1.shoppist.bus.ListItemsDataUpdatedEvent;
 import com.justplay1.shoppist.data.R;
 import com.justplay1.shoppist.entity.CategoryDAO;
 import com.justplay1.shoppist.repository.datasource.local.LocalCategoryDataStore;
@@ -100,6 +102,7 @@ public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> 
         } finally {
             transaction.end();
         }
+        notifyShoppingListItemsChange();
     }
 
     @Override
@@ -118,6 +121,7 @@ public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> 
         } finally {
             transaction.end();
         }
+        notifyShoppingListItemsChange();
     }
 
     @Override
@@ -137,6 +141,7 @@ public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> 
         } finally {
             transaction.end();
         }
+        notifyShoppingListItemsChange();
     }
 
     @Override
@@ -160,6 +165,10 @@ public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> 
             builder.position(data.getPosition());
         }
         return builder.build();
+    }
+
+    private void notifyShoppingListItemsChange() {
+        DataEventBus.instanceOf().post(new ListItemsDataUpdatedEvent());
     }
 
     private Observable<List<CategoryDAO>> getAllCategories() {

@@ -190,7 +190,6 @@ public class SearchFragment extends BaseFragment
     }
 
     private void search(String query) {
-        //   showProgressBar(mSearchView.isActivated());
         mAdapter.getFilter().filter(query);
     }
 

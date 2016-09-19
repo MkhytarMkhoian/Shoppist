@@ -51,7 +51,7 @@ public class CategoryFragment extends BaseListFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.takeRouter((CategoryRouter) getActivity());
+        mPresenter.attachRouter((CategoryRouter) getActivity());
         mPresenter.attachView(this);
         mPresenter.init();
     }
@@ -99,7 +99,7 @@ public class CategoryFragment extends BaseListFragment
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
-        mPresenter.dropRouter((CategoryRouter) getActivity());
+        mPresenter.detachRouter();
     }
 
     @Override

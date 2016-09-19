@@ -81,7 +81,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
-        mPresenter.takeRouter((ListRouter) getActivity());
+        mPresenter.attachRouter((ListRouter) getActivity());
         mPresenter.init();
     }
 
@@ -90,7 +90,7 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
         super.onDestroyView();
         mUiBusSubscription.unsubscribe();
         mPresenter.detachView();
-        mPresenter.takeRouter((ListRouter) getActivity());
+        mPresenter.attachRouter((ListRouter) getActivity());
     }
 
     @Override

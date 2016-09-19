@@ -31,6 +31,7 @@ import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.Priority;
+import com.justplay1.shoppist.models.ProductModel;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
@@ -142,11 +143,11 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
             setViewNote(String.valueOf(mItem.getNote()));
             setToolbarTitle(mItem.getName());
             setName(mItem.getName());
-            setPriority(mItem.getPriority());
+            selectPriority(mItem.getPriority());
         } else {
             setViewPrice("0");
             setViewQuantity("0");
-            setPriority(Priority.NO_PRIORITY);
+            selectPriority(Priority.NO_PRIORITY);
             setDefaultToolbarTitle();
         }
         loadCategories();
@@ -155,23 +156,36 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         loadGoods();
     }
 
-    public void onPrioritySelected(@Priority int priority) {
-        mPriority = priority;
+    public void setPriority(int position) {
+        switch (position) {
+            case 0:
+                mPriority = Priority.NO_PRIORITY;
+                break;
+            case 1:
+                mPriority = Priority.LOW;
+                break;
+            case 2:
+                mPriority = Priority.MEDIUM;
+                break;
+            case 3:
+                mPriority = Priority.HIGH;
+                break;
+        }
     }
 
-    public void onCategorySelected(CategoryViewModel category) {
+    public void setCategory(CategoryViewModel category) {
         mCategoryModel = category;
     }
 
-    public void onUnitSelected(UnitViewModel unit) {
+    public void setUnit(UnitViewModel unit) {
         mUnitModel = unit;
     }
 
-    public void onProductSelected(ProductViewModel product) {
+    public void setProduct(ProductViewModel product) {
         mProductModel = product;
     }
 
-    public void onCurrencySelected(CurrencyViewModel currency) {
+    public void setCurrency(CurrencyViewModel currency) {
         mCurrencyModel = currency;
     }
 
@@ -179,16 +193,16 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         mProductModel = product;
         if (product != null) {
             selectUnit(product.getUnit().getId());
-            selectCategory(product.getUnit().getId());
+            selectCategory(product.getCategory().getId());
         } else {
             selectUnit(UnitViewModel.NO_UNIT_ID);
             selectCategory(CategoryViewModel.NO_CATEGORY_ID);
         }
     }
 
-    private void setPriority(@Priority int priority) {
+    private void selectPriority(@Priority int priority) {
         if (isViewAttached()) {
-            getView().setPriority(priority);
+            getView().selectPriority(priority);
         }
     }
 
@@ -243,12 +257,6 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     private void selectCurrency(String id) {
         if (isViewAttached()) {
             getView().selectCurrency(id);
-        }
-    }
-
-    private void selectProduct(String id) {
-        if (isViewAttached()) {
-            getView().selectProduct(id);
         }
     }
 
@@ -340,7 +348,6 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
                     @Override
                     public void onNext(List<CategoryViewModel> category) {
                         setCategory(category);
-
                         if (mItem != null) {
                             selectCategory(mItem.getCategory().getId());
                         } else {
@@ -397,8 +404,8 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
                 .map(mGoodsModelDataMapper::transformToViewModel)
                 .map(productViewModels -> {
                     Map<String, ProductViewModel> result = new HashMap<>();
-                    for (ProductViewModel item : productViewModels){
-                        result.put(item.getName(), item);
+                    for (ProductViewModel item : productViewModels) {
+                        result.put(item.getName().toLowerCase(), item);
                     }
                     return result;
                 })
@@ -431,20 +438,22 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
                             mUpdateListItems.setData(Collections.singletonList(list));
                             return mUpdateListItems.get();
                         })
-                        .filter(result -> result && mProductModel != null)
-                        .flatMap(result -> Observable.fromCallable(() -> {
-                            mProductModel.setUnit(mUnitModel);
-                            return mGoodsModelDataMapper.transform(mProductModel);
-                        }).flatMap(product -> {
-                            mUpdateGoods.setData(Collections.singletonList(product));
-                            return mUpdateListItems.get();
-                        }))
+                        .flatMap(result -> {
+                            if (mProductModel != null) {
+                                mProductModel.setUnit(mUnitModel);
+                                ProductModel product = mGoodsModelDataMapper.transform(mProductModel);
+                                mUpdateGoods.setData(Collections.singletonList(product));
+                                return mUpdateGoods.get();
+                            } else {
+                                return Observable.just(result);
+                            }
+                        })
                         .subscribe(new SaveListItemSubscriber(isLongClick, false)));
     }
 
     private void clearUI() {
         setName("");
-        setPriority(Priority.NO_PRIORITY);
+        selectPriority(Priority.NO_PRIORITY);
         setViewNote("");
         setDefaultUnit();
         setDefaultCurrency();
@@ -554,7 +563,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
 
         @Override
         public void onError(Throwable e) {
-//            showError(new DefaultErrorBundle((Exception) e));
+            e.printStackTrace();
         }
 
         @Override

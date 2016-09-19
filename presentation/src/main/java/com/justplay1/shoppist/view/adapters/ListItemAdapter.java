@@ -150,7 +150,7 @@ public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel,
         item.setChecked(isItemChecked(item.getId()));
 
         holder.name.setText(item.getName());
-        if (!item.getStatus()) {
+        if (item.getStatus()) {
             holder.note.setVisibility(View.GONE);
             holder.info2.setVisibility(View.INVISIBLE);
         } else {

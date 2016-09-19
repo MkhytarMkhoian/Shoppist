@@ -91,19 +91,6 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         return visibleItems;
     }
 
-    public List<T> findInvisibleCheckedItems() {
-        findVisibleItems();
-        List<T> boxViews = new ArrayList<>();
-        for (int i = 0; i < getCheckedItems().size(); i++) {
-            if (i < mLinearLayoutManager.findFirstVisibleItemPosition()) {
-                boxViews.add(getCheckedItems().get(i));
-            } else if (i > mLinearLayoutManager.findLastVisibleItemPosition()) {
-                boxViews.add(getCheckedItems().get(i));
-            }
-        }
-        return boxViews;
-    }
-
     public void unCheckAllItems() {
         if (deleteState) return;
 

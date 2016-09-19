@@ -77,7 +77,7 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
             CategoryDAO category = new CategoryDAO(productsName[1]);
             UnitDAO unit = new UnitDAO(UnitDAO.NO_UNIT_ID);
 
-            ProductDAO product = new ProductDAO(UUID.nameUUIDFromBytes((productsName[0]).getBytes()).toString(),
+            ProductDAO product = new ProductDAO(UUID.nameUUIDFromBytes((System.nanoTime() + "").getBytes()).toString(),
                     productsName[0], category, false, System.currentTimeMillis(), unit);
             newProducts.put(product.getId(), product);
         }

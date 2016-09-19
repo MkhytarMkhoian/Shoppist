@@ -83,7 +83,7 @@ public class ListItemsFragment extends BaseEDSListFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
-        mPresenter.takeRouter((ListItemsRouter) getActivity());
+        mPresenter.attachRouter((ListItemsRouter) getActivity());
         mPresenter.init();
     }
 
@@ -97,7 +97,7 @@ public class ListItemsFragment extends BaseEDSListFragment
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
-        mPresenter.dropRouter((ListItemsRouter) getActivity());
+        mPresenter.detachRouter();
     }
 
     @Override
@@ -164,12 +164,12 @@ public class ListItemsFragment extends BaseEDSListFragment
 
     @Override
     public void showLoading() {
-        mProgressDialog.show();
+        mEmptyView.showProgressBar();
     }
 
     @Override
     public void hideLoading() {
-        mProgressDialog.dismiss();
+        mEmptyView.hideProgressBar();
     }
 
     @Override

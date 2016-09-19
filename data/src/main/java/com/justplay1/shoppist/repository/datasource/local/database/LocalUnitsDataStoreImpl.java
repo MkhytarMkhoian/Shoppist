@@ -158,7 +158,7 @@ public class LocalUnitsDataStoreImpl extends BaseLocalDataStore<UnitDAO> impleme
         return clear(UnitDAO.TABLE);
     }
 
-    private void notifyShoppingListItemsChange() { // TODO
+    private void notifyShoppingListItemsChange() {
         DataEventBus.instanceOf().post(new ListItemsDataUpdatedEvent());
     }
 

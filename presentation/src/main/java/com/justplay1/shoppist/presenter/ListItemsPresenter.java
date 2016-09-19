@@ -120,7 +120,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         mDataBusSubscription = DataEventBus.instanceOf().observable().subscribe(new DefaultSubscriber<Object>() {
             @Override
             public void onNext(Object o) {
-                loadData();
+                loadData(false);
             }
         });
     }
@@ -132,7 +132,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     }
 
     public void init() {
-        loadData();
+        loadData(true);
     }
 
     @SuppressWarnings("ResourceType")
@@ -143,7 +143,10 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
                 .map(listItems -> sort(listItems, mPreferences.getSortForShoppingListItems()));
     }
 
-    public void loadData() {
+    public void loadData(boolean showProgress) {
+        if (showProgress) {
+            showLoading();
+        }
         mSubscriptions.add(Observable.zip(loadDefaultUnit(), loadDefaultCategory(), loadDefaultCurrency(),
                 (unit, category, currency) -> {
                     Map<String, BaseViewModel> map = new HashMap<>();
@@ -174,7 +177,18 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
                         })).subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListItemViewModel>>>>() {
                     @Override
                     public void onNext(List<Pair<HeaderViewModel, List<ListItemViewModel>>> data) {
+                        if (showProgress) {
+                            hideLoading();
+                        }
                         showData(data);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (showProgress) {
+                            hideLoading();
+                        }
+                        e.printStackTrace();
                     }
                 }));
     }
@@ -360,6 +374,18 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     private void openEditScreen(ListViewModel list, ListItemViewModel item) {
         if (hasRouter()) {
             getRouter().openEditScreen(list, item);
+        }
+    }
+
+    private void showLoading() {
+        if (isViewAttached()) {
+            getView().showLoading();
+        }
+    }
+
+    private void hideLoading() {
+        if (isViewAttached()) {
+            getView().hideLoading();
         }
     }
 }

@@ -17,13 +17,11 @@
 package com.justplay1.shoppist.view.fragments;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
@@ -81,7 +79,7 @@ public class GoodsFragment extends BaseExpandableListFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
-        mPresenter.takeRouter((GoodsRouter) getActivity());
+        mPresenter.attachRouter((GoodsRouter) getActivity());
         mPresenter.init();
     }
 
@@ -89,7 +87,7 @@ public class GoodsFragment extends BaseExpandableListFragment
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
-        mPresenter.dropRouter((GoodsRouter) getActivity());
+        mPresenter.detachRouter();
     }
 
     @Override

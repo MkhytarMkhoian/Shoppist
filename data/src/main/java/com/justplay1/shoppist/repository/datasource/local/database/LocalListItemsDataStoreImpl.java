@@ -89,7 +89,7 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
         } finally {
             transaction.end();
         }
-        notifyParentListChange();
+        notifyListsChange();
     }
 
     @Override
@@ -108,7 +108,7 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
         } finally {
             transaction.end();
         }
-        notifyParentListChange();
+        notifyListsChange();
     }
 
     @Override
@@ -127,7 +127,7 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
         } finally {
             transaction.end();
         }
-        notifyParentListChange();
+        notifyListsChange();
     }
 
     @Override
@@ -140,7 +140,7 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
         return clear(ListItemDAO.TABLE);
     }
 
-    private void notifyParentListChange() {//TODO
+    private void notifyListsChange() {
         DataEventBus.instanceOf().post(new ListsDataUpdatedEvent());
     }
 

@@ -16,10 +16,8 @@
 
 package com.justplay1.shoppist.view.fragments;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
@@ -72,7 +70,7 @@ public class UnitFragment extends BaseListFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
-        mPresenter.takeRouter(this);
+        mPresenter.attachRouter(this);
         mPresenter.init();
     }
 
@@ -80,7 +78,7 @@ public class UnitFragment extends BaseListFragment
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
-        mPresenter.dropRouter(this);
+        mPresenter.detachRouter();
     }
 
     @Override

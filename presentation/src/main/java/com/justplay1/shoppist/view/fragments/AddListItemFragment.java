@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -40,7 +39,6 @@ import com.justplay1.shoppist.di.modules.UnitsModule;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.ListItemViewModel;
-import com.justplay1.shoppist.models.Priority;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.presenter.AddListItemPresenter;
@@ -170,8 +168,6 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
         mQuantityEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
         mNote.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
 
-        mActionButton.requestFocus();
-
         ImageButton incrementPriceBtn = (ImageButton) view.findViewById(R.id.increment_price_button);
         ImageButton decrementPriceBtn = (ImageButton) view.findViewById(R.id.decrement_price_button);
         ImageButton incrementUnitBtn = (ImageButton) view.findViewById(R.id.increment_quantity_button);
@@ -218,7 +214,7 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
     }
 
     @Override
-    public void setPriority(int priority) {
+    public void selectPriority(int priority) {
         mPriorityList.setSelection(priority);
     }
 
@@ -229,90 +225,42 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
 
         mPriorityList = (Spinner) view.findViewById(R.id.priority);
         mPriorityList.setAdapter(adapter);
-        mPriorityList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        mPresenter.onPrioritySelected(Priority.NO_PRIORITY);
-                        break;
-                    case 1:
-                        mPresenter.onPrioritySelected(Priority.LOW);
-                        break;
-                    case 2:
-                        mPresenter.onPrioritySelected(Priority.MEDIUM);
-                        break;
-                    case 3:
-                        mPresenter.onPrioritySelected(Priority.HIGH);
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
     private void initializeCategoryList(View view) {
         mCategoryList = (CategorySpinnerView) view.findViewById(R.id.category_spinner_view);
         mCategoryList.setOnAddBtnClickListener(v -> mListItemListener.openAddCategoryScreen(null));
         mCategoryList.setOnEditBtnClickListener(v -> mListItemListener.openAddCategoryScreen(mCategoryList.getSelectedItem()));
-        mCategoryList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mPresenter.onCategorySelected(mCategoryList.getSelectedItem());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
     private void initializeUnitList(View view) {
         mUnitList = (UnitsSpinnerView) view.findViewById(R.id.units_spinner_view);
         mUnitList.setOnAddBtnClickListener(v -> showUnitDialog(null));
         mUnitList.setOnEditBtnClickListener(v -> showUnitDialog(mUnitList.getSelectedItem()));
-        mUnitList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mPresenter.onUnitSelected(mUnitList.getSelectedItem());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
     private void initializeCurrencyList(View view) {
         mCurrencyList = (CurrencySpinnerView) view.findViewById(R.id.currency_spinner_view);
         mCurrencyList.setOnAddBtnClickListener(v -> showCurrencyDialog(null));
         mCurrencyList.setOnEditBtnClickListener(v -> showCurrencyDialog(mCurrencyList.getSelectedItem()));
-        mCurrencyList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mPresenter.onCurrencySelected(mCurrencyList.getSelectedItem());
-            }
+    }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+    private void setPresenterData() {
+        ProductViewModel product = mAutoCompleteTextAdapter.getProduct(mNameEdit.getText().toString());
+        mPresenter.setProduct(product);
 
-            }
-        });
+        mPresenter.setPriority(mPriorityList.getSelectedItemPosition());
+        mPresenter.setUnit(mUnitList.getSelectedItem());
+        mPresenter.setCurrency(mCurrencyList.getSelectedItem());
+        mPresenter.setCategory(mCategoryList.getSelectedItem());
+        mPresenter.setNote(ShoppistUtils.filterSpace(mNote.getText().toString()));
+        mPresenter.setPrice(mPriceEdit.getText().toString());
+        mPresenter.setQuantity(mQuantityEdit.getText().toString());
     }
 
     @Override
     public boolean onLongClick(View v) {
-        ProductViewModel product = mAutoCompleteTextAdapter.getProduct(mNameEdit.getText().toString());
-        mPresenter.onProductSelected(product);
-        mPresenter.setNote(ShoppistUtils.filterSpace(mNote.getText().toString()));
-        mPresenter.setPrice(mPriceEdit.getText().toString());
-        mPresenter.setQuantity(mQuantityEdit.getText().toString());
+        setPresenterData();
         mPresenter.onDoneButtonLongClick(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
         return true;
     }
@@ -321,9 +269,7 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.done_button:
-                mPresenter.setNote(ShoppistUtils.filterSpace(mNote.getText().toString()));
-                mPresenter.setPrice(mPriceEdit.getText().toString());
-                mPresenter.setQuantity(mQuantityEdit.getText().toString());
+                setPresenterData();
                 mPresenter.onDoneButtonClick(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
                 break;
             case R.id.decrement_price_button:
@@ -387,11 +333,6 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
     @Override
     public void selectCurrency(String id) {
         mCurrencyList.selectItem(id);
-    }
-
-    @Override
-    public void selectProduct(String id) {
-
     }
 
     @Override

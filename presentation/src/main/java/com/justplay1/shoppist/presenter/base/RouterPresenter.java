@@ -30,21 +30,13 @@ public abstract class RouterPresenter<V extends BaseMvpView, R extends Router> e
     /**
      * Called to surrender control of taken router.
      * <p>
-     * It is expected that this method will be called with the same argument as {@link #takeRouter}. Mismatched routers
-     * are ignored. This is to provide protection in the not uncommon case that {@code dropRouter} and {@code takeRouter}
+     * It is expected that this method will be called with the same argument as {@link #attachRouter}. Mismatched routers
+     * are ignored. This is to provide protection in the not uncommon case that {@code detachRouter} and {@code attachRouter}
      * are called out of order.
      * <p>
-     * Calls {@link #onDropRouter} before the reference to the router is cleared.
-     *
-     * @param router router is going to be dropped
      */
-    public final void dropRouter(R router) {
-        Preconditions.checkNotNull(router, "router");
-
-        if (getRouter() == router) {
-            onDropRouter(router);
-            releaseRouter();
-        }
+    public final void detachRouter() {
+        releaseRouter();
     }
 
     /**
@@ -59,28 +51,24 @@ public abstract class RouterPresenter<V extends BaseMvpView, R extends Router> e
 
     /**
      * Called to give this presenter control of a router.
-     * <p>
-     * As soon as the reference to the router is assigned, it calls {@link #onTakeRouter} callback.
      *
      * @param router router that will be returned from {@link #getRouter()}.
-     * @see #dropRouter(Router)
      */
-    public final void takeRouter(R router) {
+    public final void attachRouter(R router) {
         Preconditions.checkNotNull(router, "router");
 
         final R currentRouter = getRouter();
         if (currentRouter != router) {
             if (currentRouter != null) {
-                dropRouter(currentRouter);
+                detachRouter();
             }
             assignRouter(router);
-            onTakeRouter(router);
         }
     }
 
     /**
-     * Returns the router managed by this presenter, or {@code null} if {@link #takeRouter} has never been called, or
-     * after {@link #dropRouter}.
+     * Returns the router managed by this presenter, or {@code null} if {@link #attachRouter} has never been called, or
+     * after {@link #detachRouter}.
      * <p>
      * You should always call {@link #hasRouter} to check if the router is taken to avoid NullPointerExceptions.
      *
@@ -88,24 +76,6 @@ public abstract class RouterPresenter<V extends BaseMvpView, R extends Router> e
      */
     protected final R getRouter() {
         return mRouterRef == null ? null : mRouterRef.get();
-    }
-
-    /**
-     * Called before router is dropped.
-     *
-     * @param router router is going to be dropped
-     * @see #dropRouter(Router)
-     */
-    protected void onDropRouter(R router) {
-    }
-
-    /**
-     * Called after router is taken.
-     *
-     * @param router router attached to this presenter
-     * @see #takeRouter(Router)
-     */
-    protected void onTakeRouter(R router) {
     }
 
     void assignRouter(R router) {

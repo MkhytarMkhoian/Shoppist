@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public interface AddListItemView extends AddElementView {
 
-    void setPriority(@Priority int priority);
+    void selectPriority(@Priority int priority);
 
     void setPrice(String price);
 
@@ -49,8 +49,6 @@ public interface AddListItemView extends AddElementView {
     void selectCurrency(String id);
 
     void setCurrency(List<CurrencyViewModel> currency);
-
-    void selectProduct(String id);
 
     void setGoods(Map<String, ProductViewModel> goods);
 
