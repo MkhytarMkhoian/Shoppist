@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.view.component.recyclerview.holders;
 
 import android.view.View;
@@ -10,7 +26,7 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableI
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 
 /**
- * Created by Mkhytar on 10.10.2015.
+ * Created by Mkhytar Mkhoian.
  */
 public abstract class BaseSwipeableItemViewHolder extends BaseItemHolder implements SwipeableItemViewHolder {
     @SwipeableItemStateFlags
@@ -25,10 +41,6 @@ public abstract class BaseSwipeableItemViewHolder extends BaseItemHolder impleme
     private float mMaxUpSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_TOP;
     private float mMaxRightSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_RIGHT;
     private float mMaxDownSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_BOTTOM;
-
-    public BaseSwipeableItemViewHolder(View itemView) {
-        super(itemView);
-    }
 
     public BaseSwipeableItemViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
         super(itemView, clickListener);

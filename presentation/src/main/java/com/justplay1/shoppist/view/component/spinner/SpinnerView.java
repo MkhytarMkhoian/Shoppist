@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.view.component.spinner;
 
 import android.annotation.TargetApi;
@@ -20,15 +36,22 @@ import com.justplay1.shoppist.models.BaseViewModel;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
- * Created by Mkhytar on 02.02.2016.
+ * Created by Mkhytar Mkhoian.
  */
 public class SpinnerView<T extends BaseViewModel> extends FrameLayout {
 
+    @Bind(R.id.spinner)
     protected Spinner mSpinner;
-    protected SpinnerAdapter<T> mAdapter;
+    @Bind(R.id.add_button)
     protected ImageButton mAddBtn;
+    @Bind(R.id.edit_button)
     protected ImageButton mEditBtn;
+
+    protected SpinnerAdapter<T> mAdapter;
 
     public SpinnerView(Context context) {
         super(context);
@@ -53,10 +76,7 @@ public class SpinnerView<T extends BaseViewModel> extends FrameLayout {
 
     public void init() {
         inflate(getContext(), R.layout.view_custom_spinner, this);
-
-        mAddBtn = (ImageButton) findViewById(R.id.add_button);
-        mEditBtn = (ImageButton) findViewById(R.id.edit_button);
-        mSpinner = (Spinner) findViewById(R.id.spinner);
+        ButterKnife.bind(this);
     }
 
     public void setData(List<T> data) {

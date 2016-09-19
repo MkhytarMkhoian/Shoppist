@@ -47,6 +47,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Mkhytar Mkhoian.
  */
@@ -195,20 +198,18 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public static class SearchViewHolder extends BaseItemHolder {
-
-        ImageView typeIcon, iconEnd;
-        TextView text1, text2;
+        @Bind(R.id.icon_end)
+        ImageView iconEnd;
+        @Bind(R.id.type_icon)
+        ImageView typeIcon;
+        @Bind(R.id.text2)
+        TextView text2;
+        @Bind(R.id.text1)
+        TextView text1;
 
         public SearchViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
             super(itemView, clickListener);
-        }
-
-        @Override
-        protected void init(View itemView) {
-            typeIcon = (ImageView) itemView.findViewById(R.id.type_icon);
-            iconEnd = (ImageView) itemView.findViewById(R.id.icon_end);
-            text1 = (TextView) itemView.findViewById(R.id.text1);
-            text2 = (TextView) itemView.findViewById(R.id.text2);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

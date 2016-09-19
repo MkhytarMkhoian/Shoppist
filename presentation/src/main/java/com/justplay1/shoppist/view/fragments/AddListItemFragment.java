@@ -59,21 +59,31 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Mkhytar Mkhoian.
  */
 public class AddListItemFragment extends BaseAddElementFragment implements AddListItemView {
 
-    private MaterialEditText mPriceEdit;
-    private MaterialEditText mQuantityEdit;
-    private MaterialEditText mNote;
+    @Bind(R.id.price_edit)
+    MaterialEditText mPriceEdit;
+    @Bind(R.id.quantity_edit)
+    MaterialEditText mQuantityEdit;
+    @Bind(R.id.description_edit)
+    MaterialEditText mNote;
 
-    private Spinner mPriorityList;
-    private CategorySpinnerView mCategoryList;
-    private UnitsSpinnerView mUnitList;
-    private CurrencySpinnerView mCurrencyList;
+    @Bind(R.id.priority)
+    Spinner mPriorityList;
+    @Bind(R.id.category_spinner_view)
+    CategorySpinnerView mCategoryList;
+    @Bind(R.id.units_spinner_view)
+    UnitsSpinnerView mUnitList;
+    @Bind(R.id.currency_spinner_view)
+    CurrencySpinnerView mCurrencyList;
+
     private AutoCompleteTextAdapter mAutoCompleteTextAdapter;
-
     private AddListItemListener mListItemListener;
     private AddListItemsComponent mComponent;
 
@@ -109,6 +119,7 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
         mPresenter.attachView(this);
         mPresenter.init();
     }
@@ -117,6 +128,7 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
+        ButterKnife.unbind(this);
     }
 
     @Override
@@ -161,9 +173,6 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
             mPresenter.onProductClick(product);
         });
 
-        mPriceEdit = (MaterialEditText) view.findViewById(R.id.price_edit);
-        mQuantityEdit = (MaterialEditText) view.findViewById(R.id.quantity_edit);
-        mNote = (MaterialEditText) view.findViewById(R.id.description_edit);
         mPriceEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
         mQuantityEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
         mNote.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
@@ -192,10 +201,10 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
         mQuantityEdit.setPrimaryColor(mPreferences.getColorPrimary());
         mNote.setPrimaryColor(mPreferences.getColorPrimary());
 
-        initializePriorityList(view);
-        initializeCategoryList(view);
-        initializeUnitList(view);
-        initializeCurrencyList(view);
+        initializePriorityList();
+        initializeCategoryList();
+        initializeUnitList();
+        initializeCurrencyList();
     }
 
     @Override
@@ -218,29 +227,24 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
         mPriorityList.setSelection(priority);
     }
 
-    private void initializePriorityList(View view) {
+    private void initializePriorityList() {
         String[] data = getResources().getStringArray(R.array.priority);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, data);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        mPriorityList = (Spinner) view.findViewById(R.id.priority);
         mPriorityList.setAdapter(adapter);
     }
 
-    private void initializeCategoryList(View view) {
-        mCategoryList = (CategorySpinnerView) view.findViewById(R.id.category_spinner_view);
+    private void initializeCategoryList() {
         mCategoryList.setOnAddBtnClickListener(v -> mListItemListener.openAddCategoryScreen(null));
         mCategoryList.setOnEditBtnClickListener(v -> mListItemListener.openAddCategoryScreen(mCategoryList.getSelectedItem()));
     }
 
-    private void initializeUnitList(View view) {
-        mUnitList = (UnitsSpinnerView) view.findViewById(R.id.units_spinner_view);
+    private void initializeUnitList() {
         mUnitList.setOnAddBtnClickListener(v -> showUnitDialog(null));
         mUnitList.setOnEditBtnClickListener(v -> showUnitDialog(mUnitList.getSelectedItem()));
     }
 
-    private void initializeCurrencyList(View view) {
-        mCurrencyList = (CurrencySpinnerView) view.findViewById(R.id.currency_spinner_view);
+    private void initializeCurrencyList() {
         mCurrencyList.setOnAddBtnClickListener(v -> showCurrencyDialog(null));
         mCurrencyList.setOnEditBtnClickListener(v -> showCurrencyDialog(mCurrencyList.getSelectedItem()));
     }

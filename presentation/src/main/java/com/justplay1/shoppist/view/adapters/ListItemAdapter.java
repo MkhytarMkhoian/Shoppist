@@ -28,14 +28,15 @@ import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.ExpandUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.utils.ViewUtils;
-import com.justplay1.shoppist.view.component.ExpandIndicator;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
-import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseSwipeableItemViewHolder;
 
 import java.util.Locale;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 /**
@@ -239,78 +240,53 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
     }
 
     public static class CartViewHolder extends BaseHeaderHolder {
-        public TextView cart;
-        public TextView priceInfo;
+        @Bind(R.id.header_name)
+        TextView cart;
+        @Bind(R.id.header_price_info)
+        TextView priceInfo;
 
         public CartViewHolder(View itemView, ShoppistRecyclerView.OnHeaderClickListener clickListener) {
             super(itemView, clickListener);
-        }
-
-        public CartViewHolder(View itemView) {
-            super(itemView, null);
+            ButterKnife.bind(this, itemView);
+            itemView.findViewById(R.id.line).setVisibility(View.GONE);
         }
 
         public void setColor(@ColorInt int color) {
             itemView.setBackgroundColor(color);
         }
-
-        @Override
-        protected void init(View itemView) {
-            itemView.findViewById(R.id.line).setVisibility(View.GONE);
-            cart = (TextView) itemView.findViewById(R.id.header_name);
-            priceInfo = (TextView) itemView.findViewById(R.id.header_price_info);
-            indicator = (ExpandIndicator) itemView.findViewById(R.id.indicator);
-        }
     }
 
     public static class HeaderViewHolder extends BaseHeaderHolder {
-        public TextView name;
+        @Bind(R.id.header_name)
+        TextView name;
 
         public HeaderViewHolder(View itemView, ShoppistRecyclerView.OnHeaderClickListener clickListener) {
             super(itemView, clickListener);
-        }
-
-        public HeaderViewHolder(View itemView) {
-            super(itemView, null);
-        }
-
-        @Override
-        protected void init(View itemView) {
-            name = (TextView) itemView.findViewById(R.id.header_name);
-            indicator = (ExpandIndicator) itemView.findViewById(R.id.indicator);
+            ButterKnife.bind(this, itemView);
         }
     }
 
     public static class ListItemViewHolder extends BaseSwipeableItemViewHolder implements ExpandableItemViewHolder {
-        public ImageView priorityIndicator;
-        public ImageView note;
-        public TextView name;
-        public TextView quantityAndUnit;
-        public TextView priceAndCurrency;
-        public TextView categoryName;
-        public LinearLayout info2;
+        @Bind(R.id.priority_indicator)
+        ImageView priorityIndicator;
+        @Bind(R.id.note_image)
+        ImageView note;
+        @Bind(R.id.item_name)
+        TextView name;
+        @Bind(R.id.quantity_unit)
+        TextView quantityAndUnit;
+        @Bind(R.id.price_currency)
+        TextView priceAndCurrency;
+        @Bind(R.id.category_name)
+        TextView categoryName;
+        @Bind(R.id.info2)
+        LinearLayout info2;
 
         private int mExpandStateFlags;
 
         public ListItemViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
             super(itemView, clickListener);
-        }
-
-        public ListItemViewHolder(View itemView) {
-            super(itemView, null);
-        }
-
-        @Override
-        protected void init(View itemView) {
-            container = itemView.findViewById(R.id.swipe_container);
-            info2 = (LinearLayout) itemView.findViewById(R.id.info2);
-            note = (ImageView) itemView.findViewById(R.id.note_image);
-            name = (TextView) itemView.findViewById(R.id.item_name);
-            priceAndCurrency = (TextView) itemView.findViewById(R.id.price_currency);
-            quantityAndUnit = (TextView) itemView.findViewById(R.id.quantity_unit);
-            categoryName = (TextView) itemView.findViewById(R.id.category_name);
-            priorityIndicator = (ImageView) itemView.findViewById(R.id.priority_indicator);
-            selectBox = (SelectBoxView) itemView.findViewById(R.id.select_box);
+            ButterKnife.bind(this, itemView);
         }
 
         @Override

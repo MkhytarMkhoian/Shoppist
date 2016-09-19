@@ -25,15 +25,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.preferences.AppPreferences;
-import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.CustomProgressDialog;
 
 import javax.inject.Inject;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Mkhytar Mkhoian.
@@ -43,7 +44,9 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment
 
     @Inject
     protected AppPreferences mPreferences;
+    @Bind(R.id.positive_button)
     protected Button mPositiveButton;
+    @Bind(R.id.negative_button)
     protected Button mNegativeButton;
     protected CustomProgressDialog mProgressDialog;
 
@@ -66,8 +69,6 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment
     }
 
     public void init(View view) {
-        mPositiveButton = (Button) view.findViewById(R.id.positive_button);
-        mNegativeButton = (Button) view.findViewById(R.id.negative_button);
         mPositiveButton.setTextColor(mPreferences.getColorPrimary());
         mNegativeButton.setTextColor(mPreferences.getColorPrimary());
         mPositiveButton.setOnClickListener(this);
@@ -82,6 +83,7 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.rounded_corners_dialog);
         View view = inflater.inflate(getLayoutId(), container, false);
+        ButterKnife.bind(this, view);
         init(view);
         return view;
     }
@@ -90,5 +92,11 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

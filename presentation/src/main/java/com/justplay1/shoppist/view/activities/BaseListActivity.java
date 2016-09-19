@@ -20,7 +20,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.view.ActionMode;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -33,7 +32,6 @@ import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionLis
 public abstract class BaseListActivity extends BaseActivity
         implements ActionModeInteractionListener, ActionMode.Callback {
 
-    protected Toolbar mToolbar;
     protected ActionMode mActionMode;
     protected boolean isActionModeShowing;
 

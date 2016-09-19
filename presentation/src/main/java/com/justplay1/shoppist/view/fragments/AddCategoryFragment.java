@@ -37,6 +37,9 @@ import com.justplay1.shoppist.view.component.ColorPickerDialog;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Mkhytar Mkhoian.
  */
@@ -47,7 +50,8 @@ public class AddCategoryFragment extends BaseAddElementFragment
     AddCategoryPresenter mPresenter;
 
     private CategoryComponent mComponent;
-    private ImageView mColorBtn;
+    @Bind(R.id.color_button)
+    ImageView mColorBtn;
 
     public static AddCategoryFragment newInstance(CategoryViewModel category) {
         Bundle args = new Bundle();
@@ -67,6 +71,7 @@ public class AddCategoryFragment extends BaseAddElementFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
         mPresenter.attachView(this);
         mPresenter.init();
     }
@@ -75,6 +80,7 @@ public class AddCategoryFragment extends BaseAddElementFragment
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
+        ButterKnife.unbind(this);
     }
 
     @Override
@@ -102,7 +108,6 @@ public class AddCategoryFragment extends BaseAddElementFragment
     @Override
     protected void init(View view) {
         super.init(view);
-
         TextView colorLabel = (TextView) view.findViewById(R.id.color_label);
         colorLabel.setTextColor(mPreferences.getColorPrimary());
 
@@ -115,8 +120,6 @@ public class AddCategoryFragment extends BaseAddElementFragment
             }
             return false;
         });
-
-        mColorBtn = (ImageView) view.findViewById(R.id.color_button);
         mColorBtn.setOnClickListener(this);
     }
 

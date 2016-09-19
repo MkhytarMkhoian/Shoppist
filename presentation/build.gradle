@@ -94,6 +94,7 @@ dependencies {
     compile presentationDependencies.design
     compile presentationDependencies.recyclerView
     compile presentationDependencies.calligraphy
+    compile presentationDependencies.butterKnife
 
     compile (presentationDependencies.advRecyclerView){
         transitive = true

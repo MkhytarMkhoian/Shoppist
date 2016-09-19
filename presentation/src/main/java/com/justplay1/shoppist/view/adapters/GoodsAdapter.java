@@ -31,14 +31,15 @@ import com.justplay1.shoppist.models.SortType;
 import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.ExpandUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
-import com.justplay1.shoppist.view.component.ExpandIndicator;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
-import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 
 import java.util.Locale;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Mkhytar Mkhoian.
@@ -50,7 +51,6 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
     public GoodsAdapter(Context context, ActionModeInteractionListener listener,
                         RecyclerView recyclerView, AppPreferences preferences) {
         super(context, listener, recyclerView);
-        setHasStableIds(true);
         mPreferences = preferences;
     }
 
@@ -124,42 +124,26 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
     }
 
     public static class HeaderViewHolder extends BaseHeaderHolder {
-        protected TextView name;
+        @Bind(R.id.header_name)
+        TextView name;
 
         public HeaderViewHolder(View itemView, ShoppistRecyclerView.OnHeaderClickListener clickListener) {
             super(itemView, clickListener);
-        }
-
-        public HeaderViewHolder(View itemView) {
-            super(itemView);
-        }
-
-        @Override
-        protected void init(View itemView) {
-            name = (TextView) itemView.findViewById(R.id.header_name);
-            indicator = (ExpandIndicator) itemView.findViewById(R.id.indicator);
+            ButterKnife.bind(this, itemView);
         }
     }
 
     public static class GoodsViewHolder extends BaseItemHolder implements ExpandableItemViewHolder {
-        public TextView name;
-        public TextView categoryName;
+        @Bind(R.id.item_name)
+        TextView name;
+        @Bind(R.id.category_name)
+        TextView categoryName;
 
         private int mExpandStateFlags;
 
         public GoodsViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
             super(itemView, clickListener);
-        }
-
-        public GoodsViewHolder(View itemView) {
-            super(itemView, null);
-        }
-
-        @Override
-        protected void init(View itemView) {
-            selectBox = (SelectBoxView) itemView.findViewById(R.id.select_box);
-            name = (TextView) itemView.findViewById(R.id.item_name);
-            categoryName = (TextView) itemView.findViewById(R.id.category_name);
+            ButterKnife.bind(this, itemView);
         }
 
         @Override

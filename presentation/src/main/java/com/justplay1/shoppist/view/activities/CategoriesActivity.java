@@ -54,14 +54,14 @@ public class CategoriesActivity extends SingleListFragmentActivity<CategoryFragm
     }
 
     protected void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(R.string.title_activity_category);
-        mToolbar.setBackgroundColor(mPreferences.getColorPrimary());
-        mToolbar.setNavigationIcon(R.drawable.ic_back_white);
-        mToolbar.setNavigationOnClickListener(v -> finishActivity());
-        mToolbar.setOnMenuItemClickListener(this);
-        mToolbar.inflateMenu(R.menu.category_list_toolbar);
-        ViewCompat.setElevation(mToolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_activity_category);
+        toolbar.setBackgroundColor(mPreferences.getColorPrimary());
+        toolbar.setNavigationIcon(R.drawable.ic_back_white);
+        toolbar.setNavigationOnClickListener(v -> finishActivity());
+        toolbar.setOnMenuItemClickListener(this);
+        toolbar.inflateMenu(R.menu.category_list_toolbar);
+        ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
     }
 
     @Override

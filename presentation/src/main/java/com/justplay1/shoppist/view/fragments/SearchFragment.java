@@ -66,6 +66,9 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Mkhytar Mkhoian.
  */
@@ -78,9 +81,11 @@ public class SearchFragment extends BaseFragment
     @Inject
     SearchPresenter mPresenter;
 
+    @Bind(R.id.search_view)
+    FloatingSearchView mSearchView;
+
     private SearchComponent mComponent;
     private int mContextType;
-    private FloatingSearchView mSearchView;
     private SearchAdapter mAdapter;
 
     public static SearchFragment newInstance(String parentListId, int contextType) {
@@ -110,6 +115,7 @@ public class SearchFragment extends BaseFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
         mPresenter.attachView(this);
         init(view);
     }
@@ -117,6 +123,7 @@ public class SearchFragment extends BaseFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        ButterKnife.unbind(this);
         mPresenter.detachView();
     }
 
@@ -143,7 +150,6 @@ public class SearchFragment extends BaseFragment
         mAdapter = new SearchAdapter(getContext(), mContextType);
         mAdapter.setClickListener(this);
 
-        mSearchView = (FloatingSearchView) view.findViewById(R.id.search_view);
         mSearchView.setAdapter(mAdapter);
         updateNavigationIcon();
         mSearchView.showIcon(true);

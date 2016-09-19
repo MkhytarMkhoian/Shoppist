@@ -41,6 +41,9 @@ import com.justplay1.shoppist.view.component.ColorPickerDialog;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Mkhytar Mkhoian.
  */
@@ -48,10 +51,12 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
 
     @Inject
     AddListPresenter mPresenter;
-
     private ListsComponent mComponent;
-    private Spinner mPriorityList;
-    private ImageView mColorBtn;
+
+    @Bind(R.id.priority)
+    Spinner mPriorityList;
+    @Bind(R.id.color_button)
+    ImageView mColorBtn;
 
     public static AddListFragment newInstance(ListViewModel list) {
         Bundle args = new Bundle();
@@ -71,6 +76,7 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
         mPresenter.attachView(this);
         mPresenter.init();
     }
@@ -79,6 +85,7 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
+        ButterKnife.unbind(this);
     }
 
     @Override
@@ -122,7 +129,6 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, data);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        mPriorityList = (Spinner) view.findViewById(R.id.priority);
         mPriorityList.setAdapter(adapter);
         mPriorityList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -149,7 +155,6 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
             }
         });
 
-        mColorBtn = (ImageView) view.findViewById(R.id.color_button);
         mColorBtn.setOnClickListener(this);
     }
 

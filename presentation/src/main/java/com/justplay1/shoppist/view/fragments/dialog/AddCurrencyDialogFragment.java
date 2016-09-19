@@ -18,9 +18,7 @@ package com.justplay1.shoppist.view.fragments.dialog;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
@@ -36,6 +34,9 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Mkhytar Mkhoian.
  */
@@ -44,9 +45,9 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
 
     @Inject
     AddCurrencyPresenter mPresenter;
-
+    @Bind(R.id.name_edit)
+    MaterialEditText mNameEdit;
     private CurrencyComponent mComponent;
-    private MaterialEditText mNameEdit;
     private OnCompleteListener mCompleteListener;
 
     public static AddCurrencyDialogFragment newInstance(CurrencyViewModel currency) {
@@ -71,7 +72,6 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
     @Override
     public void init(View view) {
         super.init(view);
-        mNameEdit = (MaterialEditText) view.findViewById(R.id.name_edit);
         mNameEdit.setPrimaryColor(mPreferences.getColorPrimary());
         mNameEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
     }
@@ -85,6 +85,7 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
         mPresenter.attachView(this);
         mPresenter.init();
     }
@@ -106,6 +107,7 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
         super.onDestroyView();
         mPresenter.detachView();
         mPresenter.onDestroy();
+        ButterKnife.unbind(this);
     }
 
     @Override

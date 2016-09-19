@@ -53,14 +53,14 @@ public class CurrencyActivity extends SingleListFragmentActivity<CurrencyFragmen
     }
 
     private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(R.string.currency);
-        mToolbar.setBackgroundColor(mPreferences.getColorPrimary());
-        mToolbar.setNavigationIcon(R.drawable.ic_back_white);
-        mToolbar.setNavigationOnClickListener(v -> finishActivity());
-        mToolbar.setOnMenuItemClickListener(this);
-        mToolbar.inflateMenu(R.menu.units_and_currency_menu);
-        ViewCompat.setElevation(mToolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.currency);
+        toolbar.setBackgroundColor(mPreferences.getColorPrimary());
+        toolbar.setNavigationIcon(R.drawable.ic_back_white);
+        toolbar.setNavigationOnClickListener(v -> finishActivity());
+        toolbar.setOnMenuItemClickListener(this);
+        toolbar.inflateMenu(R.menu.units_and_currency_menu);
+        ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
     }
 
     @Override

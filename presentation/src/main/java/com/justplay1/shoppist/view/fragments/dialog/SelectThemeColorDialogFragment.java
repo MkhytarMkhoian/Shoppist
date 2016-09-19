@@ -32,6 +32,9 @@ import com.justplay1.shoppist.view.component.themedialog.ColorPickerPalette;
 import com.justplay1.shoppist.view.component.themedialog.ColorPickerSwatch;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 
 /**
  * A dialog which takes in as input an array of colors and creates a palette allowing the user to
@@ -51,8 +54,10 @@ public class SelectThemeColorDialogFragment extends DialogFragment implements Co
     private int mColumns = 4;
     private int mSize;
 
-    private ColorPickerPalette mPalette;
-    private ProgressBar mProgress;
+    @Bind(R.id.color_button)
+    ColorPickerPalette mPalette;
+    @Bind(android.R.id.progress)
+    ProgressBar mProgress;
     private ColorPickerSwatch.OnColorSelectedListener mListener;
 
     public static SelectThemeColorDialogFragment newInstance(@ColorInt int selectedColor) {
@@ -90,10 +95,9 @@ public class SelectThemeColorDialogFragment extends DialogFragment implements Co
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.rounded_corners_dialog);
         View view = inflater.inflate(R.layout.dialog_calendar_color_picker, container, false);
-        mProgress = (ProgressBar) view.findViewById(android.R.id.progress);
-        mPalette = (ColorPickerPalette) view.findViewById(R.id.color_picker);
-        mPalette.init(mSize, mColumns, this);
+        ButterKnife.bind(this, view);
 
+        mPalette.init(mSize, mColumns, this);
         if (mColorsPrimary != null) {
             showPaletteView();
         }

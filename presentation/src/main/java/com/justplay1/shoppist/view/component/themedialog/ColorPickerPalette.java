@@ -1,23 +1,20 @@
-package com.justplay1.shoppist.view.component.themedialog;
-
 /*
- * Copyright (C) 2013 The Android Open Source Project
+ * Copyright (C) 2016 Mkhytar Mkhoian
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * 
- * You can find source here:
- * https://android.googlesource.com/platform/frameworks/opt/colorpicker/+/master/src/com/android/colorpicker
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
  */
+
+package com.justplay1.shoppist.view.component.themedialog;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -139,8 +136,7 @@ public class ColorPickerPalette extends TableLayout {
      * in an opposite direction from their left->right/top->bottom order, which is how the system
      * will arrange them for accessibility purposes.
      */
-    private void setSwatchDescription(int rowNumber, int index, int rowElements, boolean selected,
-                                      View swatch) {
+    private void setSwatchDescription(int rowNumber, int index, int rowElements, boolean selected, View swatch) {
         int accessibilityIndex;
         if (rowNumber % 2 == 0) {
             // We're in a regular-ordered row

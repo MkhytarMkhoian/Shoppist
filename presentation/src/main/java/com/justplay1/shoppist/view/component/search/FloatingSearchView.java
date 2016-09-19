@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.view.component.search;
 
 import android.animation.Animator;
@@ -179,7 +195,7 @@ public class FloatingSearchView extends RelativeLayout {
         suggestionsContainer.getLayoutParams().width = searchBarWidth;
 
         // Divider
-        mDivider.setBackgroundDrawable(a.getDrawable(R.styleable.FloatingSearchView_android_divider));
+        ViewUtils.setBackground(mDivider, a.getDrawable(R.styleable.FloatingSearchView_android_divider));
         int dividerHeight = a.getDimensionPixelSize(R.styleable.FloatingSearchView_android_dividerHeight, -1);
 
         MarginLayoutParams dividerLP = (MarginLayoutParams) mDivider.getLayoutParams();
@@ -224,7 +240,7 @@ public class FloatingSearchView extends RelativeLayout {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
             mSearchContainer.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
 
-        mSearchContainer.setBackgroundDrawable(mSearchBackground);
+        ViewUtils.setBackground(mSearchContainer, mSearchBackground);
         mSearchContainer.setMinimumHeight((int) mSearchBackground.getMinHeight());
         mSearchContainer.setMinimumWidth((int) mSearchBackground.getMinWidth());
 
@@ -241,7 +257,7 @@ public class FloatingSearchView extends RelativeLayout {
             mBackgroundDrawable = new ColorDrawable(DEFAULT_BACKGROUND_COLOR);
         }
 
-        setBackgroundDrawable(mBackgroundDrawable);
+        ViewUtils.setBackground(this, mBackgroundDrawable);
         mBackgroundDrawable.setAlpha(0);
 
         mNavButtonView.setOnClickListener(v -> {
@@ -308,13 +324,10 @@ public class FloatingSearchView extends RelativeLayout {
     }
 
     public void setOnSearchListener(final OnSearchListener listener) {
-        mSearchInput.setOnKeyListener(new OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode != KeyEvent.KEYCODE_ENTER) return false;
-                listener.onSearchAction(mSearchInput.getText());
-                return true;
-            }
+        mSearchInput.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode != KeyEvent.KEYCODE_ENTER) return false;
+            listener.onSearchAction(mSearchInput.getText());
+            return true;
         });
     }
 
@@ -430,16 +443,13 @@ public class FloatingSearchView extends RelativeLayout {
     private void fadeIn(boolean enter) {
         ValueAnimator backgroundAnim;
 
-        if (Build.VERSION.SDK_INT >= 19)
+        if (Build.VERSION.SDK_INT >= 19) {
             backgroundAnim = ObjectAnimator.ofInt(mBackgroundDrawable, "alpha", enter ? 255 : 0);
-        else {
+        } else {
             backgroundAnim = ValueAnimator.ofInt(enter ? 0 : 255, enter ? 255 : 0);
-            backgroundAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    int value = (Integer) animation.getAnimatedValue();
-                    mBackgroundDrawable.setAlpha(value);
-                }
+            backgroundAnim.addUpdateListener(animation -> {
+                int value = (Integer) animation.getAnimatedValue();
+                mBackgroundDrawable.setAlpha(value);
             });
         }
 
@@ -518,16 +528,13 @@ public class FloatingSearchView extends RelativeLayout {
         int childCount = mRecyclerView.getChildCount();
         int translation = 0;
 
-        final Runnable endAction = new Runnable() {
-            @Override
-            public void run() {
-                if (show)
-                    updateDivider();
-                else {
-                    showDivider(false);
-                    mRecyclerView.setVisibility(View.INVISIBLE);
-                    mRecyclerView.setTranslationY(-mRecyclerView.getHeight());
-                }
+        final Runnable endAction = () -> {
+            if (show) {
+                updateDivider();
+            } else {
+                showDivider(false);
+                mRecyclerView.setVisibility(View.INVISIBLE);
+                mRecyclerView.setTranslationY(-mRecyclerView.getHeight());
             }
         };
 
@@ -536,10 +543,11 @@ public class FloatingSearchView extends RelativeLayout {
             mRecyclerView.setVisibility(VISIBLE);
             if (mRecyclerView.getTranslationY() == 0)
                 mRecyclerView.setTranslationY(-mRecyclerView.getHeight());
-        } else if (childCount > 0)
+        } else if (childCount > 0) {
             translation = -mRecyclerView.getChildAt(childCount - 1).getBottom();
-        else
+        } else {
             showDivider(false);
+        }
 
         ViewPropertyAnimatorCompat listAnim = ViewCompat.animate(mRecyclerView)
                 .translationY(translation)
@@ -548,10 +556,11 @@ public class FloatingSearchView extends RelativeLayout {
                 .withLayer()
                 .withEndAction(endAction);
 
-        if (show || childCount > 0)
+        if (show || childCount > 0) {
             listAnim.start();
-        else
+        } else {
             endAction.run();
+        }
     }
 
     private void showDivider(boolean visible) {
@@ -706,10 +715,11 @@ public class FloatingSearchView extends RelativeLayout {
         }
 
         public void setLogo(@DrawableRes int res) {
-            if (res == 0)
+            if (res == 0) {
                 setLogo(null);
-            else
+            } else {
                 setLogo(ResourcesCompat.getDrawable(getResources(), res, getContext().getTheme()));
+            }
         }
 
         public void setLogo(Drawable logo) {
@@ -725,8 +735,9 @@ public class FloatingSearchView extends RelativeLayout {
                     dirty = false;
                 }
                 logo.draw(canvas);
-            } else
+            } else {
                 super.onDraw(canvas);
+            }
         }
 
         // fit center

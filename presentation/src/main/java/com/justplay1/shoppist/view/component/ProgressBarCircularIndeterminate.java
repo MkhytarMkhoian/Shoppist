@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.view.component;
 
 import android.content.Context;
@@ -14,16 +30,13 @@ import com.justplay1.shoppist.utils.ShoppistUtils;
 
 public class ProgressBarCircularIndeterminate extends CustomView {
 
-
     final static String ANDROIDXML = "http://schemas.android.com/apk/res/android";
 
     int backgroundColor = Color.parseColor("#1E88E5");
 
-
     public ProgressBarCircularIndeterminate(Context context, AttributeSet attrs) {
         super(context, attrs);
         setAttributes(attrs);
-
     }
 
     // Set atributtes of XML to View
@@ -47,14 +60,10 @@ public class ProgressBarCircularIndeterminate extends CustomView {
         }
 
         setMinimumHeight(ShoppistUtils.dpToPx(3, getResources()));
-
-
     }
 
     /**
      * Make a dark color to ripple effect
-     *
-     * @return
      */
     protected int makePressColor() {
         int r = (this.backgroundColor >> 16) & 0xFF;
@@ -66,7 +75,6 @@ public class ProgressBarCircularIndeterminate extends CustomView {
         return Color.argb(128, r, g, b);
     }
 
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -75,7 +83,6 @@ public class ProgressBarCircularIndeterminate extends CustomView {
         if (cont > 0)
             drawSecondAnimation(canvas);
         invalidate();
-
     }
 
     float radius1 = 0;
@@ -85,8 +92,6 @@ public class ProgressBarCircularIndeterminate extends CustomView {
 
     /**
      * Draw first animation of view
-     *
-     * @param canvas
      */
     private void drawFirstAnimation(Canvas canvas) {
         if (radius1 < getWidth() / 2) {
@@ -127,8 +132,6 @@ public class ProgressBarCircularIndeterminate extends CustomView {
 
     /**
      * Draw second animation of view
-     *
-     * @param canvas
      */
     private void drawSecondAnimation(Canvas canvas) {
         if (arcO == limite)
@@ -165,8 +168,9 @@ public class ProgressBarCircularIndeterminate extends CustomView {
     // Set color of background
     public void setBackgroundColor(int color) {
         super.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-        if (isEnabled())
+        if (isEnabled()) {
             beforeBackground = backgroundColor;
+        }
         this.backgroundColor = color;
     }
 

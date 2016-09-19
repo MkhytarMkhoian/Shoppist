@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 Mkhytar Mkhoian
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.justplay1.shoppist.view.component;
 
 import android.app.Dialog;
@@ -13,8 +29,10 @@ import android.widget.TextView;
 
 import com.justplay1.shoppist.R;
 
+import java.util.Locale;
+
 /**
- * Created by Mkhytar on 17.01.2016.
+ * Created by Mkhytar Mkhoian.
  */
 public class ColorPickerDialog extends Dialog implements SeekBar.OnSeekBarChangeListener {
 
@@ -76,31 +94,31 @@ public class ColorPickerDialog extends Dialog implements SeekBar.OnSeekBarChange
 
         redToolTip.setX(seekBarLeft + thumbRect.left);
         if (red < 10)
-            redToolTip.setText(String.format("  %d", red));
+            redToolTip.setText(String.format(Locale.getDefault(), "  %d", red));
         else if (red < 100)
-            redToolTip.setText(String.format(" %d", red));
+            redToolTip.setText(String.format(Locale.getDefault(), " %d", red));
         else
-            redToolTip.setText(String.format("%d", red));
+            redToolTip.setText(String.format(Locale.getDefault(), "%d", red));
 
         thumbRect = greenSeekBar.getSeekBarThumb().getBounds();
 
         greenToolTip.setX(seekBarLeft + thumbRect.left);
         if (green < 10)
-            greenToolTip.setText(String.format("  %d", green));
+            greenToolTip.setText(String.format(Locale.getDefault(), "  %d", green));
         else if (red < 100)
-            greenToolTip.setText(String.format(" %d", green));
+            greenToolTip.setText(String.format(Locale.getDefault(), " %d", green));
         else
-            greenToolTip.setText(String.format("%d", green));
+            greenToolTip.setText(String.format(Locale.getDefault(), "%d", green));
 
         thumbRect = blueSeekBar.getSeekBarThumb().getBounds();
 
         blueToolTip.setX(seekBarLeft + thumbRect.left);
         if (blue < 10)
-            blueToolTip.setText(String.format("  %d", blue));
+            blueToolTip.setText(String.format(Locale.getDefault(), "  %d", blue));
         else if (blue < 100)
-            blueToolTip.setText(String.format(" %d", blue));
+            blueToolTip.setText(String.format(Locale.getDefault(), " %d", blue));
         else
-            blueToolTip.setText(String.format("%d", blue));
+            blueToolTip.setText(String.format(Locale.getDefault(), "%d", blue));
 
     }
 
@@ -114,11 +132,11 @@ public class ColorPickerDialog extends Dialog implements SeekBar.OnSeekBarChange
             redToolTip.setX(seekBarLeft + thumbRect.left);
 
             if (progress < 10)
-                redToolTip.setText(String.format("  %d", red));
+                redToolTip.setText(String.format(Locale.getDefault(), "  %d", red));
             else if (progress < 100)
-                redToolTip.setText(String.format(" %d", red));
+                redToolTip.setText(String.format(Locale.getDefault(), " %d", red));
             else
-                redToolTip.setText(String.format("%d", red));
+                redToolTip.setText(String.format(Locale.getDefault(), "%d", red));
 
         } else if (seekBar.getId() == R.id.greenSeekBar) {
 
@@ -127,11 +145,11 @@ public class ColorPickerDialog extends Dialog implements SeekBar.OnSeekBarChange
 
             greenToolTip.setX(seekBar.getPaddingLeft() + thumbRect.left);
             if (progress < 10)
-                greenToolTip.setText(String.format("  %d", green));
+                greenToolTip.setText(String.format(Locale.getDefault(), "  %d", green));
             else if (progress < 100)
-                greenToolTip.setText(String.format(" %d", green));
+                greenToolTip.setText(String.format(Locale.getDefault(), " %d", green));
             else
-                greenToolTip.setText(String.format("%d", green));
+                greenToolTip.setText(String.format(Locale.getDefault(), "%d", green));
 
         } else if (seekBar.getId() == R.id.blueSeekBar) {
 
@@ -140,11 +158,11 @@ public class ColorPickerDialog extends Dialog implements SeekBar.OnSeekBarChange
 
             blueToolTip.setX(seekBarLeft + thumbRect.left);
             if (progress < 10)
-                blueToolTip.setText(String.format("  %d", blue));
+                blueToolTip.setText(String.format(Locale.getDefault(), "  %d", blue));
             else if (progress < 100)
-                blueToolTip.setText(String.format(" %d", blue));
+                blueToolTip.setText(String.format(Locale.getDefault(), " %d", blue));
             else
-                blueToolTip.setText(String.format("%d", blue));
+                blueToolTip.setText(String.format(Locale.getDefault(), "%d", blue));
 
         }
         colorView.setBackgroundColor(Color.rgb(red, green, blue));

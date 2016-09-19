@@ -33,14 +33,15 @@ import com.justplay1.shoppist.models.SortType;
 import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.ExpandUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
-import com.justplay1.shoppist.view.component.ExpandIndicator;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
-import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 
 import java.util.Locale;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Mkhytar Mkhoian.
@@ -104,41 +105,32 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
     }
 
     public static class HeaderViewHolder extends BaseHeaderHolder {
-        protected TextView name;
+        @Bind(R.id.header_name)
+        TextView name;
 
         public HeaderViewHolder(View itemView, ShoppistRecyclerView.OnHeaderClickListener clickListener) {
             super(itemView, clickListener);
-        }
-
-        @Override
-        protected void init(View itemView) {
-            name = (TextView) itemView.findViewById(R.id.header_name);
-            indicator = (ExpandIndicator) itemView.findViewById(R.id.indicator);
+            ButterKnife.bind(this, itemView);
         }
     }
 
     public static class ListViewHolder extends BaseItemHolder implements ExpandableItemViewHolder {
-        public ImageView priorityIndicator;
-        public TextView name;
-        public TextView size;
+        @Bind(R.id.priority_indicator)
+        ImageView priorityIndicator;
+        @Bind(R.id.item_name)
+        TextView name;
+        @Bind(R.id.list_count)
+        TextView size;
 
         private int mExpandStateFlags;
 
         public ListViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
             super(itemView, clickListener);
+            ButterKnife.bind(this, itemView);
         }
 
         public void setColor(@ColorInt int color) {
             itemView.setBackgroundColor(color);
-        }
-
-        @Override
-        protected void init(View itemView) {
-            container = itemView.findViewById(R.id.swipe_container);
-            selectBox = (SelectBoxView) itemView.findViewById(R.id.select_box);
-            priorityIndicator = (ImageView) itemView.findViewById(R.id.priority_indicator);
-            name = (TextView) itemView.findViewById(R.id.item_name);
-            size = (TextView) itemView.findViewById(R.id.list_count);
         }
 
         @Override

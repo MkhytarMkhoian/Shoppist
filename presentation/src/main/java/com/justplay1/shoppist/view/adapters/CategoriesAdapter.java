@@ -26,11 +26,13 @@ import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
-import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 
 import java.util.Locale;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Mkhytar Mkhoian.
@@ -66,17 +68,12 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel> {
     }
 
     public static class CategoryItemViewHolder extends BaseItemHolder {
-        protected TextView name;
+        @Bind(R.id.item_name)
+        TextView name;
 
         public CategoryItemViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
             super(itemView, clickListener);
-        }
-
-        @Override
-        protected void init(View itemView) {
-            container = itemView.findViewById(R.id.swipe_container);
-            selectBox = (SelectBoxView) itemView.findViewById(R.id.select_box);
-            name = (TextView) itemView.findViewById(R.id.item_name);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

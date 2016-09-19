@@ -37,17 +37,24 @@ import com.justplay1.shoppist.view.component.EmptyView;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseListFragment extends BaseFragment implements View.OnClickListener{
+public abstract class BaseListFragment extends BaseFragment implements View.OnClickListener {
 
+    @Bind(android.R.id.empty)
     protected EmptyView mEmptyView;
-    protected CustomProgressDialog mProgressDialog;
+    @Bind(R.id.recycler_view)
     protected ShoppistRecyclerView mRecyclerView;
+    @Bind(R.id.add_button)
+    protected FloatingActionButton mActionButton;
+
+    protected CustomProgressDialog mProgressDialog;
     protected LinearLayoutManager mLayoutManager;
     protected ActionModeInteractionListener mActionModeInteractionListener;
-    protected FloatingActionButton mActionButton;
 
     protected abstract
     @LayoutRes
@@ -70,6 +77,7 @@ public abstract class BaseListFragment extends BaseFragment implements View.OnCl
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
+        ButterKnife.bind(this, view);
         init(view);
         initRecyclerView(view, savedInstanceState);
         return view;
@@ -80,26 +88,23 @@ public abstract class BaseListFragment extends BaseFragment implements View.OnCl
         mProgressDialog = new CustomProgressDialog(getContext());
         mProgressDialog.setMessage(getString(R.string.please_wait));
         mProgressDialog.setColor(mPreferences.getColorPrimary());
-        mEmptyView = (EmptyView) view.findViewById(android.R.id.empty);
 
-        mActionButton = (FloatingActionButton) view.findViewById(R.id.add_button);
         mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
         mActionButton.setOnClickListener(this);
     }
 
     protected void initRecyclerView(View view, Bundle savedInstanceState) {
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView = (ShoppistRecyclerView) view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setEmptyView(mEmptyView);
-
         initAdapter();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        ButterKnife.unbind(this);
         if (mRecyclerView != null) {
             mRecyclerView.setItemAnimator(null);
             mRecyclerView.setAdapter(null);

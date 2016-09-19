@@ -31,18 +31,22 @@ import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.view.component.CustomProgressDialog;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Mkhytar Mkhoian.
  */
 public abstract class BaseAddElementFragment extends BaseFragment
         implements View.OnLongClickListener, View.OnClickListener {
 
-    public static final int SEARCH_REQUEST = 100;
-
-    protected AddElementListener mListener;
+    @Bind(R.id.name_edit)
     protected MaterialAutoCompleteTextView mNameEdit;
+    @Bind(R.id.done_button)
     protected FloatingActionButton mActionButton;
+
     protected CustomProgressDialog mProgressDialog;
+    protected AddElementListener mListener;
 
     protected abstract boolean isItemEdit();
 
@@ -77,6 +81,7 @@ public abstract class BaseAddElementFragment extends BaseFragment
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
                     | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         }
+        ButterKnife.bind(this, view);
         init(view);
     }
 
@@ -86,14 +91,18 @@ public abstract class BaseAddElementFragment extends BaseFragment
         mProgressDialog.setMessage(getString(R.string.please_wait));
         mProgressDialog.setCancelable(false);
 
-        mNameEdit = (MaterialAutoCompleteTextView) view.findViewById(R.id.name_edit);
         mNameEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
         mNameEdit.setPrimaryColor(mPreferences.getColorPrimary());
 
-        mActionButton = (FloatingActionButton) view.findViewById(R.id.done_button);
         mActionButton.setOnLongClickListener(this);
         mActionButton.setOnClickListener(this);
         mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     public interface AddElementListener {
