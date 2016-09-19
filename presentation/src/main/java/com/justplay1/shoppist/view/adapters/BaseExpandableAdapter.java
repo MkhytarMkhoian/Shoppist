@@ -29,9 +29,7 @@ import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemAdapte
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.models.HeaderViewModel;
-import com.justplay1.shoppist.models.ItemType;
 import com.justplay1.shoppist.models.Priority;
-import com.justplay1.shoppist.models.SortType;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 
@@ -161,10 +159,6 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
         return getItems(true);
     }
 
-    public ShoppistRecyclerView.OnHeaderClickListener getHeaderClickListener() {
-        return mHeaderClickListener;
-    }
-
     public void setHeaderClickListener(ShoppistRecyclerView.OnHeaderClickListener headerClickListener) {
         this.mHeaderClickListener = headerClickListener;
     }
@@ -178,7 +172,7 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
 
     public HeaderViewModel getGroupItem(int groupPosition) {
         if (groupPosition < 0 || groupPosition >= getGroupCount()) {
-            throw new IndexOutOfBoundsException("groupPosition = " + groupPosition);
+            throw new IndexOutOfBoundsException("groupPosition = " + groupPosition + " getGroupCount()" + getGroupCount());
         }
         return mData.get(groupPosition).first;
     }
@@ -226,43 +220,6 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
     public long getChildId(int groupPosition, int childPosition) {
         return getChildItem(groupPosition, childPosition).hashCode();
     }
-
-    protected int findFirstSectionItem(int position) {
-        HeaderViewModel item = getGroupItem(position);
-
-        if (item.getItemType() == ItemType.CART_HEADER) {
-            throw new IllegalStateException("section item is expected");
-        }
-
-        while (position > 0) {
-            HeaderViewModel prevItem = getGroupItem(position - 1);
-            if (prevItem.getItemType() == ItemType.CART_HEADER) {
-                break;
-            }
-            position -= 1;
-        }
-        return position;
-    }
-
-    protected int findLastSectionItem(int position) {
-        HeaderViewModel item = getGroupItem(position);
-
-        if (item.getItemType() == ItemType.CART_HEADER) {
-            throw new IllegalStateException("section item is expected");
-        }
-        final int lastIndex = getGroupCount() - 1;
-
-        while (position < lastIndex) {
-            HeaderViewModel nextItem = getGroupItem(position + 1);
-
-            if (nextItem.getItemType() == ItemType.CART_HEADER) {
-                break;
-            }
-            position += 1;
-        }
-        return position;
-    }
-
 
     /**
      * This method will not be called.

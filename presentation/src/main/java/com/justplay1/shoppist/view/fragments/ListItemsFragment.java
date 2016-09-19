@@ -39,7 +39,7 @@ import com.justplay1.shoppist.navigation.ListItemsRouter;
 import com.justplay1.shoppist.presenter.ListItemsPresenter;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.ListItemsView;
-import com.justplay1.shoppist.view.adapters.BaseListItemGroupAdapter;
+import com.justplay1.shoppist.view.adapters.BaseGroupSwipeableItemAdapter;
 import com.justplay1.shoppist.view.adapters.ListItemAdapter;
 import com.justplay1.shoppist.view.component.recyclerview.DeleteSwipeResultListener;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
@@ -55,7 +55,7 @@ import javax.inject.Inject;
  * Created by Mkhytar Mkhoian.
  */
 public class ListItemsFragment extends BaseEDSListFragment
-        implements BaseListItemGroupAdapter.SwipeEventListener<ListItemViewModel>,
+        implements BaseGroupSwipeableItemAdapter.SwipeEventListener<ListItemViewModel>,
         ShoppistRecyclerView.OnItemClickListener, View.OnClickListener, View.OnLongClickListener,
         ListItemsView, ListItemAdapter.NoteClickListener {
 
@@ -128,6 +128,12 @@ public class ListItemsFragment extends BaseEDSListFragment
         mAdapter.setClickListener(this);
         mAdapter.setSwipeEventListener(this);
         mAdapter.setNoteClickListener(this);
+    }
+
+    @Override
+    protected void initRecyclerView(View view, Bundle savedInstanceState) {
+        super.initRecyclerView(view, savedInstanceState);
+        mAdapter.setExpandableItemManager(mRecyclerViewExpandableItemManager);
     }
 
     @Override

@@ -41,7 +41,7 @@ import java.util.Locale;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class ListItemAdapter extends BaseListItemGroupAdapter<ListItemViewModel, BaseHeaderHolder, BaseSwipeableItemViewHolder> {
+public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewModel, BaseHeaderHolder, BaseSwipeableItemViewHolder> {
 
     private NoteClickListener mNoteClickListener;
 

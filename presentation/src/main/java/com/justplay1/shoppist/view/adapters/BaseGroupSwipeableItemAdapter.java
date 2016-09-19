@@ -24,6 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableSwipeableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
@@ -40,15 +41,24 @@ import com.justplay1.shoppist.view.component.recyclerview.holders.BaseSwipeableI
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH extends BaseHeaderHolder, CVH extends BaseSwipeableItemViewHolder>
+public abstract class BaseGroupSwipeableItemAdapter<T extends BaseViewModel, GVH extends BaseHeaderHolder, CVH extends BaseSwipeableItemViewHolder>
         extends BaseListGroupAdapter<T, GVH, CVH>
         implements ExpandableSwipeableItemAdapter<GVH, CVH> {
 
     private SwipeEventListener<T> mSwipeEventListener;
+    private RecyclerViewExpandableItemManager mExpandableItemManager;
 
-    public BaseListItemGroupAdapter(Context context, ActionModeInteractionListener listener,
-                                    RecyclerView recyclerView, AppPreferences preferences) {
+    public BaseGroupSwipeableItemAdapter(Context context, ActionModeInteractionListener listener,
+                                         RecyclerView recyclerView, AppPreferences preferences) {
         super(context, listener, recyclerView, preferences);
+    }
+
+    public void setExpandableItemManager(RecyclerViewExpandableItemManager expandableItemManager) {
+        this.mExpandableItemManager = expandableItemManager;
+    }
+
+    public RecyclerViewExpandableItemManager getExpandableItemManager() {
+        return mExpandableItemManager;
     }
 
     @Override
@@ -133,7 +143,7 @@ public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH exte
 
     @Override
     public SwipeResultAction onSwipeGroupItem(GVH holder, int groupPosition, int result) {
-        return new GroupUnpinResultAction(this, groupPosition);
+        return new GroupUnpinResultAction();
     }
 
     @Override
@@ -204,41 +214,25 @@ public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH exte
     protected abstract int getRightSwipeActionType();
 
     private class GroupUnpinResultAction extends SwipeResultActionDefault {
-        private BaseListItemGroupAdapter<T, GVH, CVH> mAdapter;
-        private final int mGroupPosition;
+        GroupUnpinResultAction() {
 
-        GroupUnpinResultAction(BaseListItemGroupAdapter<T, GVH, CVH> adapter, int groupPosition) {
-            mAdapter = adapter;
-            mGroupPosition = groupPosition;
-        }
-
-        @Override
-        protected void onPerformAction() {
-            super.onPerformAction();
-        }
-
-        @Override
-        protected void onCleanUp() {
-            super.onCleanUp();
-            mAdapter = null;
         }
     }
 
     private class ChildSwipeEditAction extends BaseSwipeAction {
         private boolean mSetPinned;
 
-        ChildSwipeEditAction(BaseListItemGroupAdapter<T, GVH, CVH> adapter, int groupPosition, int childPosition) {
+        ChildSwipeEditAction(BaseGroupSwipeableItemAdapter<T, GVH, CVH> adapter, int groupPosition, int childPosition) {
             super(RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION, adapter, groupPosition, childPosition);
         }
 
         @Override
         protected void onPerformAction() {
             super.onPerformAction();
-
             mCurrentItem = getChildItem(mGroupPosition, mChildPosition);
             if (!mCurrentItem.isPinned()) {
                 mCurrentItem.setPinned(true);
-//                mAdapter.mExpandableItemManager.notifyGroupItemChanged(mGroupPosition); TODO
+                mAdapter.getExpandableItemManager().notifyGroupItemChanged(mGroupPosition);
                 mSetPinned = true;
             }
         }
@@ -254,7 +248,7 @@ public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH exte
 
     private abstract class BaseChildSwipeMoveAction extends BaseSwipeAction {
 
-        BaseChildSwipeMoveAction(int resultAction, BaseListItemGroupAdapter<T, GVH, CVH> adapter, int groupPosition, int childPosition) {
+        BaseChildSwipeMoveAction(int resultAction, BaseGroupSwipeableItemAdapter<T, GVH, CVH> adapter, int groupPosition, int childPosition) {
             super(resultAction, adapter, groupPosition, childPosition);
         }
 
@@ -264,18 +258,18 @@ public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH exte
 
             mCurrentItem = getChildItem(mGroupPosition, mChildPosition);
             mAdapter.removeChildItem(mGroupPosition, mChildPosition);
-//            mAdapter.mExpandableItemManager.notifyChildItemRemoved(mGroupPosition, mChildPosition); TODO
+            mAdapter.getExpandableItemManager().notifyChildItemRemoved(mGroupPosition, mChildPosition);
 
             if (mAdapter.mData.get(mGroupPosition).second.size() == 0) {
                 mAdapter.removeGroupItem(mGroupPosition);
-//                mAdapter.mExpandableItemManager.notifyGroupItemRemoved(mGroupPosition); TODO
+                mAdapter.getExpandableItemManager().notifyGroupItemRemoved(mGroupPosition);
             }
         }
     }
 
     private class ChildSwipeMoveAction extends BaseChildSwipeMoveAction {
 
-        ChildSwipeMoveAction(BaseListItemGroupAdapter<T, GVH, CVH> adapter, int groupPosition, int childPosition) {
+        ChildSwipeMoveAction(BaseGroupSwipeableItemAdapter<T, GVH, CVH> adapter, int groupPosition, int childPosition) {
             super(RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM, adapter, groupPosition, childPosition);
         }
 
@@ -290,7 +284,7 @@ public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH exte
 
     private class ChildSwipeRemoveAction extends BaseChildSwipeMoveAction {
 
-        ChildSwipeRemoveAction(BaseListItemGroupAdapter<T, GVH, CVH> adapter, int groupPosition, int childPosition) {
+        ChildSwipeRemoveAction(BaseGroupSwipeableItemAdapter<T, GVH, CVH> adapter, int groupPosition, int childPosition) {
             super(RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION, adapter, groupPosition, childPosition);
         }
 
@@ -302,7 +296,7 @@ public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH exte
                 mCurrentItem = getChildItem(mGroupPosition, mChildPosition);
                 if (!mCurrentItem.isPinned()) {
                     mCurrentItem.setPinned(true);
-//                    mAdapter.mExpandableItemManager.notifyGroupItemChanged(mGroupPosition); TODO
+                    mAdapter.mExpandableItemManager.notifyGroupItemChanged(mGroupPosition);
                 }
             }
         }
@@ -317,11 +311,11 @@ public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH exte
     }
 
     private class ChildUnpinResultAction extends SwipeResultActionDefault {
-        protected BaseListItemGroupAdapter<T, GVH, CVH> mAdapter;
+        protected BaseGroupSwipeableItemAdapter<T, GVH, CVH> mAdapter;
         private final int mGroupPosition;
         private final int mChildPosition;
 
-        ChildUnpinResultAction(BaseListItemGroupAdapter<T, GVH, CVH> adapter, int groupPosition, int childPosition) {
+        ChildUnpinResultAction(BaseGroupSwipeableItemAdapter<T, GVH, CVH> adapter, int groupPosition, int childPosition) {
             mAdapter = adapter;
             mGroupPosition = groupPosition;
             mChildPosition = childPosition;
@@ -334,28 +328,26 @@ public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH exte
             T item = mAdapter.getChildItem(mGroupPosition, mChildPosition);
             if (item.isPinned()) {
                 item.setPinned(false);
-//                mAdapter.mExpandableItemManager.notifyChildItemChanged(mGroupPosition, mChildPosition); TODO
+                mAdapter.getExpandableItemManager().notifyChildItemChanged(mGroupPosition, mChildPosition);
             }
         }
 
         @Override
         protected void onCleanUp() {
             super.onCleanUp();
-            // clear the references
             mAdapter = null;
         }
     }
 
     private abstract class BaseSwipeAction extends SwipeResultAction {
 
-        protected BaseListItemGroupAdapter<T, GVH, CVH> mAdapter;
+        protected BaseGroupSwipeableItemAdapter<T, GVH, CVH> mAdapter;
         protected final int mGroupPosition;
         protected final int mChildPosition;
         protected T mCurrentItem;
 
-        public BaseSwipeAction(int resultAction, BaseListItemGroupAdapter<T, GVH, CVH> adapter, int groupPosition, int childPosition) {
+        public BaseSwipeAction(int resultAction, BaseGroupSwipeableItemAdapter<T, GVH, CVH> adapter, int groupPosition, int childPosition) {
             super(resultAction);
-
             mAdapter = adapter;
             mGroupPosition = groupPosition;
             mChildPosition = childPosition;
@@ -364,7 +356,6 @@ public abstract class BaseListItemGroupAdapter<T extends BaseViewModel, GVH exte
         @Override
         protected void onCleanUp() {
             super.onCleanUp();
-            // clear the references
             mAdapter = null;
             mCurrentItem = null;
         }
