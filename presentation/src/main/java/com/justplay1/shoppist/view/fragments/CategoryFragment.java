@@ -26,7 +26,7 @@ import javax.inject.Inject;
  * Created by Mkhytar Mkhoian.
  */
 public class CategoryFragment extends BaseListFragment
-        implements CategoryView, ShoppistRecyclerView.OnItemClickListener, View.OnClickListener {
+        implements CategoryView, ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, View.OnClickListener {
 
     @Inject
     CategoryPresenter mPresenter;

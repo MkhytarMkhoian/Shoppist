@@ -55,7 +55,7 @@ import com.justplay1.shoppist.view.SearchView;
 import com.justplay1.shoppist.view.activities.BaseActivity;
 import com.justplay1.shoppist.view.adapters.SearchAdapter;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
+import com.justplay1.shoppist.view.component.recyclerview.holders.BaseViewHolder;
 import com.justplay1.shoppist.view.component.search.FloatingSearchView;
 import com.justplay1.shoppist.view.fragments.dialog.AddGoodsDialogFragment;
 import com.justplay1.shoppist.view.fragments.dialog.AddUnitsDialogFragment;
@@ -76,7 +76,7 @@ public class SearchFragment extends BaseFragment
         implements FloatingSearchView.OnIconClickListener,
         FloatingSearchView.OnSearchListener, ActionMenuView.OnMenuItemClickListener,
         FloatingSearchView.OnSearchFocusChangedListener, FloatingSearchView.OnContainerTouchClickListener,
-        ShoppistRecyclerView.OnItemClickListener, SearchView {
+        ShoppistRecyclerView.OnItemClickListener<BaseViewHolder>, SearchView {
 
     @Inject
     SearchPresenter mPresenter;
@@ -123,7 +123,6 @@ public class SearchFragment extends BaseFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
         mPresenter.detachView();
     }
 
@@ -131,6 +130,7 @@ public class SearchFragment extends BaseFragment
     public void onDestroy() {
         super.onDestroy();
         mPresenter.onDestroy();
+        ButterKnife.unbind(this);
     }
 
     @Override
@@ -250,12 +250,12 @@ public class SearchFragment extends BaseFragment
     }
 
     @Override
-    public void onItemClick(BaseItemHolder holder, int position, long id) {
+    public void onItemClick(BaseViewHolder holder, int position, long id) {
         mPresenter.onListItemClick(mAdapter.getItem(position));
     }
 
     @Override
-    public boolean onItemLongClick(BaseItemHolder holder, int position, long id) {
+    public boolean onItemLongClick(BaseViewHolder holder, int position, long id) {
         return false;
     }
 

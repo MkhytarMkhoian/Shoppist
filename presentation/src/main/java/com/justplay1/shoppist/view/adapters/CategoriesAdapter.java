@@ -47,7 +47,9 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
-        return new CategoryItemViewHolder(view, mItemClickListener);
+        CategoryItemViewHolder holder = new CategoryItemViewHolder(view);
+        holder.setClickListener(mItemClickListener);
+        return holder;
     }
 
     @Override
@@ -71,8 +73,8 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel> {
         @Bind(R.id.item_name)
         TextView name;
 
-        public CategoryItemViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
-            super(itemView, clickListener);
+        public CategoryItemViewHolder(View itemView) {
+            super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }

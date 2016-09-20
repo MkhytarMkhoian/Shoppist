@@ -44,7 +44,7 @@ import javax.inject.Inject;
  * Created by Mkhytar Mkhoian.
  */
 public class CurrencyFragment extends BaseListFragment
-        implements CurrencyView, ShoppistRecyclerView.OnItemClickListener, CurrencyRouter {
+        implements CurrencyView, ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, CurrencyRouter {
 
     @Inject
     CurrencyPresenter mPresenter;

@@ -56,7 +56,7 @@ import javax.inject.Inject;
  */
 public class ListItemsFragment extends BaseEDSListFragment
         implements BaseGroupSwipeableItemAdapter.SwipeEventListener<ListItemViewModel>,
-        ShoppistRecyclerView.OnItemClickListener, View.OnClickListener, View.OnLongClickListener,
+        ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, View.OnClickListener, View.OnLongClickListener,
         ListItemsView, ListItemAdapter.NoteClickListener {
 
     @Inject

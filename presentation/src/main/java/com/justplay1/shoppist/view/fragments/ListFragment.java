@@ -46,7 +46,6 @@ import com.justplay1.shoppist.view.ListView;
 import com.justplay1.shoppist.view.activities.MainActivity;
 import com.justplay1.shoppist.view.adapters.ListAdapter;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 
 import java.util.List;
@@ -58,8 +57,8 @@ import rx.Subscription;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class ListFragment extends BaseEDSListFragment implements ShoppistRecyclerView.OnItemClickListener,
-        ShoppistRecyclerView.OnHeaderClickListener, ListView, View.OnClickListener {
+public class ListFragment extends BaseEDSListFragment
+        implements ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, ListView, View.OnClickListener {
 
     @Inject
     ListPresenter mPresenter;
@@ -131,7 +130,6 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     protected void initAdapter() {
         mAdapter = new ListAdapter(getContext(), mActionModeInteractionListener, mRecyclerView, mPreferences);
         mAdapter.setClickListener(this);
-        mAdapter.setHeaderClickListener(this);
     }
 
     @Override
@@ -147,16 +145,6 @@ public class ListFragment extends BaseEDSListFragment implements ShoppistRecycle
     @Override
     public void onItemClick(BaseItemHolder holder, int position, long id) {
         mPresenter.onItemClick(mAdapter.getChildItem(holder.groupPosition, holder.childPosition));
-    }
-
-    @Override
-    public void onHeaderClick(BaseHeaderHolder holder, int position, long id) {
-
-    }
-
-    @Override
-    public boolean onHeaderLongClick(BaseHeaderHolder holder, int position, long id) {
-        return false;
     }
 
     @Override

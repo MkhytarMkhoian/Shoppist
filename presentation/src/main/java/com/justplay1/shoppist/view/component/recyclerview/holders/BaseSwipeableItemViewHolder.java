@@ -23,12 +23,16 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemViewHold
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemReactions;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemResults;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemStateFlags;
-import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
+import com.justplay1.shoppist.R;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 public abstract class BaseSwipeableItemViewHolder extends BaseItemHolder implements SwipeableItemViewHolder {
+
     @SwipeableItemStateFlags
     private int mSwipeStateFlags;
     @SwipeableItemResults
@@ -42,8 +46,16 @@ public abstract class BaseSwipeableItemViewHolder extends BaseItemHolder impleme
     private float mMaxRightSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_RIGHT;
     private float mMaxDownSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_BOTTOM;
 
-    public BaseSwipeableItemViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
-        super(itemView, clickListener);
+    @Bind(R.id.swipe_container)
+    public View container;
+
+    public BaseSwipeableItemViewHolder(View itemView) {
+        super(itemView);
+        ButterKnife.bind(this, itemView);
+    }
+
+    public void setActivated(boolean isChecked) {
+        container.setActivated(isChecked);
     }
 
     @Override

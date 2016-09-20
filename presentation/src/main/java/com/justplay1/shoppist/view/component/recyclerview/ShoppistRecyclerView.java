@@ -43,16 +43,10 @@ public class ShoppistRecyclerView extends RecyclerView {
         super(context, attrs, defStyle);
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(BaseItemHolder holder, int position, long id);
+    public interface OnItemClickListener<H extends RecyclerView.ViewHolder> {
+        void onItemClick(H holder, int position, long id);
 
-        boolean onItemLongClick(BaseItemHolder holder, int position, long id);
-    }
-
-    public interface OnHeaderClickListener {
-        void onHeaderClick(BaseHeaderHolder holder, int position, long id);
-
-        boolean onHeaderLongClick(BaseHeaderHolder holder, int position, long id);
+        boolean onItemLongClick(H holder, int position, long id);
     }
 
     final private AdapterDataObserver observer = new AdapterDataObserver() {

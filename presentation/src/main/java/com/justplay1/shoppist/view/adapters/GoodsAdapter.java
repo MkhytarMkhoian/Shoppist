@@ -32,7 +32,6 @@ import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.ExpandUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
-import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 
@@ -99,13 +98,15 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
     @Override
     public GoodsViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product, parent, false);
-        return new GoodsViewHolder(view, mItemClickListener);
+        GoodsViewHolder holder = new GoodsViewHolder(view);
+        holder.setClickListener(mItemClickListener);
+        return holder;
     }
 
     @Override
     public BaseHeaderHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_header, parent, false);
-        return new HeaderViewHolder(view, mHeaderClickListener);
+        return new HeaderViewHolder(view);
     }
 
     @Override
@@ -127,8 +128,8 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
         @Bind(R.id.header_name)
         TextView name;
 
-        public HeaderViewHolder(View itemView, ShoppistRecyclerView.OnHeaderClickListener clickListener) {
-            super(itemView, clickListener);
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
@@ -141,8 +142,8 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
 
         private int mExpandStateFlags;
 
-        public GoodsViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
-            super(itemView, clickListener);
+        public GoodsViewHolder(View itemView) {
+            super(itemView);
             ButterKnife.bind(this, itemView);
         }
 

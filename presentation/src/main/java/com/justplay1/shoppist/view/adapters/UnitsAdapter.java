@@ -27,7 +27,6 @@ import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
-import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 
 import java.util.Locale;
@@ -48,7 +47,9 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_currency, parent, false);
-        return new UnitItemViewHolder(view, mItemClickListener);
+        UnitItemViewHolder holder = new UnitItemViewHolder(view);
+        holder.setClickListener(mItemClickListener);
+        return holder;
     }
 
     @Override
@@ -73,8 +74,8 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
         @Bind(R.id.item_name)
         TextView name;
 
-        public UnitItemViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
-            super(itemView, clickListener);
+        public UnitItemViewHolder(View itemView) {
+            super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }

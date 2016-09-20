@@ -16,12 +16,12 @@
 
 package com.justplay1.shoppist.view.component.recyclerview.holders;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.view.component.ExpandIndicator;
-import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,33 +29,15 @@ import butterknife.ButterKnife;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseHeaderHolder extends BaseViewHolder implements ExpandableItemViewHolder {
+public abstract class BaseHeaderHolder extends RecyclerView.ViewHolder implements ExpandableItemViewHolder {
 
     @Bind(R.id.indicator)
     public ExpandIndicator indicator;
-    protected ShoppistRecyclerView.OnHeaderClickListener mClickListener;
     private int mExpandStateFlags;
 
-    public BaseHeaderHolder(View itemView, ShoppistRecyclerView.OnHeaderClickListener clickListener) {
+    public BaseHeaderHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        mClickListener = clickListener;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (mClickListener != null) {
-            mClickListener.onHeaderClick(this, getLayoutPosition(), getItemId());
-        }
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-        if (mClickListener != null) {
-            mClickListener.onHeaderLongClick(this, getLayoutPosition(), getItemId());
-            return true;
-        }
-        return false;
     }
 
     @Override

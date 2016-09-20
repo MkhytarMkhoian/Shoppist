@@ -19,6 +19,8 @@ package com.justplay1.shoppist.view.component.recyclerview.holders;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
+
 
 /**
  * Created by Mkhytar Mkhoian.
@@ -26,10 +28,36 @@ import android.view.View;
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener, View.OnLongClickListener {
 
+    private ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> mClickListener;
+
     public BaseViewHolder(View itemView) {
         super(itemView);
         itemView.setClickable(true);
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
+    }
+
+    public ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> getClickListener() {
+        return mClickListener;
+    }
+
+    public void setClickListener(ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> mClickListener) {
+        this.mClickListener = mClickListener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mClickListener != null) {
+            mClickListener.onItemClick(this, getLayoutPosition(), getItemId());
+        }
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        if (mClickListener != null) {
+            mClickListener.onItemLongClick(this, getLayoutPosition(), getItemId());
+            return true;
+        }
+        return false;
     }
 }

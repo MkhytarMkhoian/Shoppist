@@ -39,7 +39,6 @@ import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.utils.ViewUtils;
 import com.justplay1.shoppist.view.SearchView;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseViewHolder;
 
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private Map<String, ProductViewModel> mItems;
     private List<ProductViewModel> mItemsToDisplay;
-    private ShoppistRecyclerView.OnItemClickListener mItemClickListener;
+    private ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> mItemClickListener;
     private final int mContextType;
     private final Drawable iconEndDrawable;
 
@@ -74,7 +73,9 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_suggestion, parent, false);
-        return new SearchViewHolder(view, mItemClickListener);
+        SearchViewHolder holder = new SearchViewHolder(view);
+        holder.setClickListener(mItemClickListener);
+        return holder;
     }
 
     @Override
@@ -197,7 +198,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.mItemClickListener = clickListener;
     }
 
-    public static class SearchViewHolder extends BaseItemHolder {
+    public static class SearchViewHolder extends BaseViewHolder {
         @Bind(R.id.icon_end)
         ImageView iconEnd;
         @Bind(R.id.type_icon)
@@ -207,8 +208,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         @Bind(R.id.text1)
         TextView text1;
 
-        public SearchViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
-            super(itemView, clickListener);
+        public SearchViewHolder(View itemView) {
+            super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }

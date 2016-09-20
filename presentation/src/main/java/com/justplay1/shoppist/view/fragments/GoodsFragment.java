@@ -58,7 +58,7 @@ import javax.inject.Inject;
  * Created by Mkhytar Mkhoian.
  */
 public class GoodsFragment extends BaseExpandableListFragment
-        implements ShoppistRecyclerView.OnItemClickListener, View.OnClickListener, GoodsView {
+        implements ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, View.OnClickListener, GoodsView {
 
     @Inject
     GoodsPresenter mPresenter;

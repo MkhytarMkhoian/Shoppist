@@ -21,7 +21,6 @@ import android.widget.Checkable;
 
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.view.component.animboxes.SelectBoxView;
-import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,39 +30,15 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseItemHolder extends BaseViewHolder implements Checkable {
 
-    protected ShoppistRecyclerView.OnItemClickListener mClickListener;
-
     @Bind(R.id.select_box)
     public SelectBoxView selectBox;
-    @Bind(R.id.swipe_container)
-    public View container;
+
     public int groupPosition = -1;
     public int childPosition = -1;
 
     public BaseItemHolder(View itemView) {
         super(itemView);
-    }
-
-    public BaseItemHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
-        super(itemView);
         ButterKnife.bind(this, itemView);
-        mClickListener = clickListener;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (mClickListener != null) {
-            mClickListener.onItemClick(this, getLayoutPosition(), getItemId());
-        }
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-        if (mClickListener != null) {
-            mClickListener.onItemLongClick(this, getLayoutPosition(), getItemId());
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -82,10 +57,6 @@ public abstract class BaseItemHolder extends BaseViewHolder implements Checkable
     }
 
     public void setActivated(boolean isChecked) {
-        if (container != null) {
-            container.setActivated(isChecked);
-        } else {
-            itemView.setActivated(isChecked);
-        }
+        itemView.setActivated(isChecked);
     }
 }

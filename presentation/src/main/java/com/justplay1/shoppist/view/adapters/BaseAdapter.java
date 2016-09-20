@@ -27,6 +27,7 @@ import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.utils.AnimationResultListener;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
+import com.justplay1.shoppist.view.component.recyclerview.holders.BaseViewHolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +41,7 @@ import java.util.Map;
 public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     protected Context mContext;
-    protected ShoppistRecyclerView.OnItemClickListener mItemClickListener;
+    protected ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> mItemClickListener;
     protected ActionModeInteractionListener mActionModeInteractionListener;
 
     protected RecyclerView mRecyclerView;

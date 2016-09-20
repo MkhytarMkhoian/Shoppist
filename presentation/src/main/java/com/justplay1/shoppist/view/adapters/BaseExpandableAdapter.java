@@ -44,7 +44,6 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
         implements ExpandableItemAdapter<GVH, CVH> {
 
     protected List<Pair<HeaderViewModel, List<T>>> mData;
-    protected ShoppistRecyclerView.OnHeaderClickListener mHeaderClickListener;
 
     protected
     @ColorInt
@@ -157,10 +156,6 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
 
     public List<T> getCheckedItems() {
         return getItems(true);
-    }
-
-    public void setHeaderClickListener(ShoppistRecyclerView.OnHeaderClickListener headerClickListener) {
-        this.mHeaderClickListener = headerClickListener;
     }
 
     public int getGroupItemCount(int groupPosition) {

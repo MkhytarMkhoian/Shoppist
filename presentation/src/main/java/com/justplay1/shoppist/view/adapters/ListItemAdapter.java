@@ -29,7 +29,6 @@ import com.justplay1.shoppist.utils.ExpandUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.utils.ViewUtils;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
-import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseSwipeableItemViewHolder;
 
@@ -81,10 +80,10 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
         switch (viewType) {
             case ItemType.HEADER_ITEM:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_header, parent, false);
-                return new HeaderViewHolder(view, mHeaderClickListener);
+                return new HeaderViewHolder(view);
             case ItemType.CART_HEADER:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_header, parent, false);
-                CartViewHolder holder = new CartViewHolder(view, mHeaderClickListener);
+                CartViewHolder holder = new CartViewHolder(view);
                 holder.setColor(mPreferences.getColorPrimary());
                 return holder;
         }
@@ -94,7 +93,9 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
     @Override
     public BaseSwipeableItemViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shopping_list_item, parent, false);
-        return new ListItemViewHolder(view, mItemClickListener);
+        ListItemViewHolder holder = new ListItemViewHolder(view);
+        holder.setClickListener(mItemClickListener);
+        return holder;
     }
 
     @Override
@@ -245,8 +246,8 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
         @Bind(R.id.header_price_info)
         TextView priceInfo;
 
-        public CartViewHolder(View itemView, ShoppistRecyclerView.OnHeaderClickListener clickListener) {
-            super(itemView, clickListener);
+        public CartViewHolder(View itemView) {
+            super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.findViewById(R.id.line).setVisibility(View.GONE);
         }
@@ -260,8 +261,8 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
         @Bind(R.id.header_name)
         TextView name;
 
-        public HeaderViewHolder(View itemView, ShoppistRecyclerView.OnHeaderClickListener clickListener) {
-            super(itemView, clickListener);
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
@@ -284,8 +285,8 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
 
         private int mExpandStateFlags;
 
-        public ListItemViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
-            super(itemView, clickListener);
+        public ListItemViewHolder(View itemView) {
+            super(itemView);
             ButterKnife.bind(this, itemView);
         }
 

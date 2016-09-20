@@ -44,7 +44,7 @@ import javax.inject.Inject;
  * Created by Mkhytar Mkhoian.
  */
 public class UnitFragment extends BaseListFragment
-        implements UnitsView, ShoppistRecyclerView.OnItemClickListener, View.OnClickListener, UnitRouter {
+        implements UnitsView, ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, View.OnClickListener, UnitRouter {
 
     @Inject
     UnitsPresenter mPresenter;

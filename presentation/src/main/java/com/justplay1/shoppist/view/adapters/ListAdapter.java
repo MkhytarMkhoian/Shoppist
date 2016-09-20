@@ -34,7 +34,6 @@ import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.ExpandUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
-import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 
@@ -56,13 +55,15 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
     @Override
     public BaseHeaderHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_header, parent, false);
-        return new HeaderViewHolder(view, mHeaderClickListener);
+        return new HeaderViewHolder(view);
     }
 
     @Override
     public BaseItemHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shopping_list, parent, false);
-        return new ListViewHolder(view, mItemClickListener);
+        ListViewHolder holder = new ListViewHolder(view);
+        holder.setClickListener(mItemClickListener);
+        return holder;
     }
 
     @Override
@@ -107,8 +108,8 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
         @Bind(R.id.header_name)
         TextView name;
 
-        public HeaderViewHolder(View itemView, ShoppistRecyclerView.OnHeaderClickListener clickListener) {
-            super(itemView, clickListener);
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
@@ -123,8 +124,8 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
 
         private int mExpandStateFlags;
 
-        public ListViewHolder(View itemView, ShoppistRecyclerView.OnItemClickListener clickListener) {
-            super(itemView, clickListener);
+        public ListViewHolder(View itemView) {
+            super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
