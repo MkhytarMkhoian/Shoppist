@@ -1,6 +1,7 @@
 # Shoppist
 
-Simple and functional shopping list. Have server side based on Parse cloud service and synchronization account between devices.
+Shoppist is a showcase of simple and functional shopping list. 
+It demonstrates how to implement Clean Architecture and MVP for presentation layer.
 
 ### Download the app
 
