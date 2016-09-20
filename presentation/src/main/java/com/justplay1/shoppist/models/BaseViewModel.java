@@ -102,12 +102,4 @@ public abstract class BaseViewModel implements Parcelable {
     public boolean getStatus() {
         throw new UnsupportedOperationException();
     }
-
-    public int getPosition() {
-        throw new UnsupportedOperationException();
-    }
-
-    public void setPosition(int position) {
-        throw new UnsupportedOperationException();
-    }
 }

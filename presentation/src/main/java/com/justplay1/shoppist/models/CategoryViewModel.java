@@ -30,7 +30,6 @@ public class CategoryViewModel extends BaseViewModel {
     private int color;
     private boolean isChecked;
     private boolean isCreateByUser;
-    private int position = -1;
 
     public CategoryViewModel() {
         color = Color.DKGRAY;
@@ -42,7 +41,6 @@ public class CategoryViewModel extends BaseViewModel {
         setName(category.getName());
         setColor(category.getColor());
         setCreateByUser(category.isCreateByUser());
-        setPosition(category.getPosition());
     }
 
     public CategoryViewModel(Parcel parcel) {
@@ -52,17 +50,6 @@ public class CategoryViewModel extends BaseViewModel {
         isChecked = parcel.readByte() != 0;
         id = parcel.readString();
         isCreateByUser = parcel.readByte() != 0;
-        position = parcel.readInt();
-    }
-
-    @Override
-    public int getPosition() {
-        return position;
-    }
-
-    @Override
-    public void setPosition(int position) {
-        this.position = position;
     }
 
     public int getColor() {
@@ -107,7 +94,6 @@ public class CategoryViewModel extends BaseViewModel {
         dest.writeByte((byte) (isChecked ? 1 : 0));
         dest.writeString(id);
         dest.writeByte((byte) (isCreateByUser ? 1 : 0));
-        dest.writeInt(position);
     }
 
     public static final Parcelable.Creator<CategoryViewModel> CREATOR = new Creator<CategoryViewModel>() {

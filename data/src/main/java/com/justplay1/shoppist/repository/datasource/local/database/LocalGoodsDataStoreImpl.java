@@ -44,7 +44,7 @@ import rx.Observable;
 @Singleton
 public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> implements LocalGoodsDataStore {
 
-    public static String PRODUCTS_QUERY(String selection) {
+    private static String PRODUCTS_QUERY(String selection) {
         String query = "SELECT * FROM " + ProductDAO.TABLE +
                 " LEFT OUTER JOIN " + CategoryDAO.TABLE
                 + " ON " + ProductDAO.CATEGORY_ID + " = " + CategoryDAO.TABLE
@@ -92,7 +92,7 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
     @Override
     public Observable<ProductDAO> getItem(String id) {
         return db.createQuery(ProductDAO.TABLE, PRODUCTS_QUERY(ProductDAO.WHERE_PRODUCT_ID), id)
-                .mapToOne(ProductDAO.MAPPER::call);
+                .mapToOne(ProductDAO.MAPPER);
     }
 
     @Override
@@ -166,8 +166,8 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
         return clear(ProductDAO.TABLE);
     }
 
-    public Observable<List<ProductDAO>> getAllProducts() {
+    private Observable<List<ProductDAO>> getAllProducts() {
         return db.createQuery(ProductDAO.TABLE, PRODUCTS_QUERY(null), new String[]{})
-                .mapToList(ProductDAO.MAPPER::call);
+                .mapToList(ProductDAO.MAPPER);
     }
 }

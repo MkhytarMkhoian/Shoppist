@@ -59,7 +59,6 @@ public class ListItemsDAODataMapper {
             item.setUnit(mUnitsDAODataMapper.transformFromDAO(itemDAO.getUnit()));
             item.setQuantity(itemDAO.getQuantity());
             item.setTimeCreated(itemDAO.getTimeCreated());
-            item.setPosition(itemDAO.getPosition());
         }
         return item;
     }
@@ -90,8 +89,7 @@ public class ListItemsDAODataMapper {
                     listItem.getQuantity(),
                     mUnitsDAODataMapper.transformToDAO(listItem.getUnit()),
                     listItem.getTimeCreated(),
-                    mCurrencyDAODataMapper.transformToDAO(listItem.getCurrency()),
-                    listItem.getPosition());
+                    mCurrencyDAODataMapper.transformToDAO(listItem.getCurrency()));
         }
         return item;
     }

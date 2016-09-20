@@ -35,7 +35,6 @@ public class ListItemViewModel extends BaseViewModel {
     private UnitViewModel unit;
     private long timeCreated;
     private CurrencyViewModel currency;
-    private int position = -1;
 
     public ListItemViewModel() {
 
@@ -55,7 +54,6 @@ public class ListItemViewModel extends BaseViewModel {
         setStatus(item.getStatus());
         setPriority(item.getPriority());
         setCategory(item.getCategory());
-        setPosition(item.getPosition());
         setPinned(item.isPinned());
     }
 
@@ -75,7 +73,6 @@ public class ListItemViewModel extends BaseViewModel {
         unit = parcel.readParcelable(ListItemViewModel.class.getClassLoader());
         timeCreated = parcel.readLong();
         currency = parcel.readParcelable(ListItemViewModel.class.getClassLoader());
-        position = parcel.readInt();
         mPinned = parcel.readByte() != 0;
     }
 
@@ -85,16 +82,6 @@ public class ListItemViewModel extends BaseViewModel {
 
     public void setParentListId(String parentListId) {
         this.parentListId = parentListId;
-    }
-
-    @Override
-    public int getPosition() {
-        return position;
-    }
-
-    @Override
-    public void setPosition(int position) {
-        this.position = position;
     }
 
     public String getNote() {
@@ -234,7 +221,6 @@ public class ListItemViewModel extends BaseViewModel {
         dest.writeParcelable(unit, flags);
         dest.writeLong(timeCreated);
         dest.writeParcelable(currency, flags);
-        dest.writeInt(position);
         dest.writeByte((byte) (mPinned ? 1 : 0));
     }
 

@@ -26,32 +26,11 @@ public class ListModel extends BaseModel {
     private int priority;
     private int color;
     private int size;
-    private int position = -1;
 
     public ListModel() {
         priority = 0;
         boughtCount = 0;
         size = 0;
-    }
-
-    public ListModel(ListModel list) {
-        this();
-        setId(list.getId());
-        setName(list.getName());
-        setColor(list.getColor());
-        setTimeCreated(list.getTimeCreated());
-        setPriority(list.getPriority());
-        setSize(list.getSize());
-        setBoughtCount(list.getBoughtCount());
-        setPosition(list.getPosition());
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
     }
 
     public int getSize() {

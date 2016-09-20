@@ -47,8 +47,8 @@ import javax.inject.Singleton;
 @Singleton
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final String DB_NAME = "shopping_list_db";
-    public static final int DB_VERSION = 7;
+    private static final String DB_NAME = "shopping_list_db";
+    private static final int DB_VERSION = 7;
 
     private static final String COLUMN_ID = "_id";
 
@@ -67,7 +67,6 @@ public class DBHelper extends SQLiteOpenHelper {
             CategoryDAO.NAME + " text, " +
             CategoryDAO.COLOR + " integer, " +
             CategoryDAO.CREATE_BY_USER + " integer DEFAULT 0, " +
-            CategoryDAO.MANUAL_SORT_POSITION + " integer DEFAULT 0, " +
             CategoryDAO.CATEGORY_ID + " text " +
             ");";
 
@@ -97,8 +96,7 @@ public class DBHelper extends SQLiteOpenHelper {
             ListItemDAO.UNIT_ID + " text, " +
             ListItemDAO.CURRENCY_ID + " text, " +
             ListItemDAO.CATEGORY_ID + " text, " +
-            ListItemDAO.TIME_CREATED + " integer, " +
-            ListItemDAO.MANUAL_SORT_POSITION + " integer DEFAULT 0 " +
+            ListItemDAO.TIME_CREATED + " integer " +
             ");";
 
     private static final String CREATE_LISTS_TABLE = "create table " + ListDAO.TABLE + "(" +
@@ -107,7 +105,6 @@ public class DBHelper extends SQLiteOpenHelper {
             ListDAO.LIST_NAME + " text, " +
             ListDAO.PRIORITY + " integer, " +
             ListDAO.COLOR + " integer, " +
-            ListDAO.MANUAL_SORT_POSITION + " integer DEFAULT 0, " +
             ListDAO.TIME_CREATED + " integer " +
             ");";
 
@@ -180,7 +177,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    protected void createTables(SQLiteDatabase db) {
+    private void createTables(SQLiteDatabase db) {
         try {
             db.beginTransaction();
             db.execSQL(CREATE_PRODUCTS_TABLE);
@@ -207,12 +204,6 @@ public class DBHelper extends SQLiteOpenHelper {
                         db.beginTransaction();
                         db.execSQL("ALTER TABLE " + ProductDAO.TABLE + " ADD COLUMN "
                                 + ProductDAO.IS_CREATE_BY_USER + " integer DEFAULT 0");
-                        db.execSQL("ALTER TABLE " + CategoryDAO.TABLE + " ADD COLUMN "
-                                + CategoryDAO.MANUAL_SORT_POSITION + " integer DEFAULT 0");
-                        db.execSQL("ALTER TABLE " + ListDAO.TABLE + " ADD COLUMN "
-                                + ListDAO.MANUAL_SORT_POSITION + " integer DEFAULT 0");
-                        db.execSQL("ALTER TABLE " + ListItemDAO.TABLE + " ADD COLUMN "
-                                + ListItemDAO.MANUAL_SORT_POSITION + " integer DEFAULT 0");
                         db.setTransactionSuccessful();
                     } finally {
                         db.endTransaction();
@@ -330,7 +321,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public void updateCategoriesToVersion5(SQLiteDatabase db) {
+    private void updateCategoriesToVersion5(SQLiteDatabase db) {
         try {
             db.beginTransaction();
             db.execSQL("ALTER TABLE " + CategoryDAO.TABLE + " RENAME TO " + CategoryDAO.TABLE + "_backup");
@@ -340,7 +331,6 @@ public class DBHelper extends SQLiteOpenHelper {
                     CategoryDAO.NAME + "," +
                     CategoryDAO.COLOR + "," +
                     CategoryDAO.CREATE_BY_USER + "," +
-                    CategoryDAO.MANUAL_SORT_POSITION + "," +
                     "CAST(" + CategoryDAO.CATEGORY_ID + " AS TEXT)" +
                     " FROM " + CategoryDAO.TABLE + "_backup;");
             db.execSQL("DROP TABLE " + CategoryDAO.TABLE + "_backup;");
@@ -351,7 +341,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void updateUnitsToVersion5(SQLiteDatabase db) {
+    private void updateUnitsToVersion5(SQLiteDatabase db) {
         try {
             db.beginTransaction();
             db.execSQL("ALTER TABLE " + UnitDAO.TABLE + " RENAME TO " + UnitDAO.TABLE + "_backup");
@@ -370,7 +360,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void updateCurrenciesToVersion5(SQLiteDatabase db) {
+    private void updateCurrenciesToVersion5(SQLiteDatabase db) {
         try {
             db.beginTransaction();
             db.execSQL("ALTER TABLE " + CurrencyDAO.TABLE + " RENAME TO " + CurrencyDAO.TABLE + "_backup");
@@ -388,7 +378,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void updateGoodsToVersion5(SQLiteDatabase db) throws RemoteException, OperationApplicationException {
+    private void updateGoodsToVersion5(SQLiteDatabase db) throws RemoteException, OperationApplicationException {
         try {
             db.beginTransaction();
             db.execSQL("ALTER TABLE " + ProductDAO.TABLE + " RENAME TO " + ProductDAO.TABLE + "_backup");
@@ -439,7 +429,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Map<String, String> updateShoppingListToVersion5(SQLiteDatabase db) {
+    private Map<String, String> updateShoppingListToVersion5(SQLiteDatabase db) {
         try {
             db.beginTransaction();
             db.execSQL("ALTER TABLE " + ListDAO.TABLE + " ADD COLUMN "
@@ -481,7 +471,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void updateShoppingListItemsToVersion5(SQLiteDatabase db, Map<String, String> shoppingLists) {
+    private void updateShoppingListItemsToVersion5(SQLiteDatabase db, Map<String, String> shoppingLists) {
         try {
             db.beginTransaction();
             db.execSQL("ALTER TABLE " + ListItemDAO.TABLE + " RENAME TO " + ListItemDAO.TABLE + "_backup");
@@ -509,7 +499,6 @@ public class DBHelper extends SQLiteOpenHelper {
                         cv.price(DbUtil.getDouble(cursor, ListItemDAO.PRICE));
                         cv.timeCreated(DbUtil.getLong(cursor, ListItemDAO.TIME_CREATED));
                         cv.quantity(DbUtil.getDouble(cursor, ListItemDAO.QUANTITY));
-                        cv.position(DbUtil.getInt(cursor, ListItemDAO.MANUAL_SORT_POSITION));
                         cv.status(DbUtil.getBoolean(cursor, ListItemDAO.STATUS));
                         cv.priority(DbUtil.getInt(cursor, ListItemDAO.PRIORITY));
                         cv.categoryId(DbUtil.getString(cursor, ListItemDAO.CATEGORY_ID));

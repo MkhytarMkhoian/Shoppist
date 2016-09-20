@@ -44,7 +44,6 @@ public class CategoryModelDataMapper {
             categoryModel.setName(category.getName());
             categoryModel.setColor(category.getColor());
             categoryModel.setCreateByUser(category.isCreateByUser());
-            categoryModel.setPosition(category.getPosition());
         }
         return categoryModel;
     }
@@ -69,7 +68,6 @@ public class CategoryModelDataMapper {
             entity.setName(category.getName());
             entity.setColor(category.getColor());
             entity.setCreateByUser(category.isCreateByUser());
-            entity.setPosition(category.getPosition());
         }
         return entity;
     }

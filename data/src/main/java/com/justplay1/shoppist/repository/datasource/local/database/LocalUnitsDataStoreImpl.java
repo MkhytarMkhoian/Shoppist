@@ -21,7 +21,6 @@ import android.content.Context;
 
 import com.justplay1.shoppist.bus.DataEventBus;
 import com.justplay1.shoppist.bus.ListItemsDataUpdatedEvent;
-import com.justplay1.shoppist.bus.ListsDataUpdatedEvent;
 import com.justplay1.shoppist.data.R;
 import com.justplay1.shoppist.entity.UnitDAO;
 import com.justplay1.shoppist.repository.datasource.local.LocalUnitsDataStore;
@@ -45,7 +44,7 @@ import rx.Observable;
 public class LocalUnitsDataStoreImpl extends BaseLocalDataStore<UnitDAO> implements LocalUnitsDataStore {
 
     private static String UNIT_QUERY(String selection) {
-        if (selection == null){
+        if (selection == null) {
             return "SELECT * FROM " + UnitDAO.TABLE;
         }
         return "SELECT * FROM " + UnitDAO.TABLE +
@@ -93,7 +92,7 @@ public class LocalUnitsDataStoreImpl extends BaseLocalDataStore<UnitDAO> impleme
     @Override
     public Observable<UnitDAO> getItem(String id) {
         return db.createQuery(UnitDAO.TABLE, UNIT_QUERY(UnitDAO.WHERE_STRING), id)
-                .mapToOne(UnitDAO.MAPPER::call);
+                .mapToOne(UnitDAO.MAPPER);
     }
 
     @Override
@@ -164,6 +163,6 @@ public class LocalUnitsDataStoreImpl extends BaseLocalDataStore<UnitDAO> impleme
 
     private Observable<List<UnitDAO>> getAllUnits() {
         return db.createQuery(UnitDAO.TABLE, UNIT_QUERY(null), new String[]{})
-                .mapToList(UnitDAO.MAPPER::call);
+                .mapToList(UnitDAO.MAPPER);
     }
 }

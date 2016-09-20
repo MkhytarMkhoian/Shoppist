@@ -42,7 +42,7 @@ import rx.Observable;
 @Singleton
 public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO> implements LocalListItemsDataStore {
 
-    public static final String ALL_LIST_ITEMS =
+    private static final String ALL_LIST_ITEMS =
             "SELECT * FROM " + ListItemDAO.TABLE +
                     " LEFT OUTER JOIN " + CategoryDAO.TABLE
                     + " ON " + ListItemDAO.CATEGORY_ID + " = " + CategoryDAO.TABLE + "." + CategoryDAO.CATEGORY_ID +
@@ -51,7 +51,7 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
                     " LEFT OUTER JOIN " + CurrencyDAO.TABLE
                     + " ON " + ListItemDAO.CURRENCY_ID + " = " + CurrencyDAO.TABLE + "." + CurrencyDAO.CURRENCY_ID;
 
-    public static String LIST_ITEMS_QUERY(String selection) {
+    private static String LIST_ITEMS_QUERY(String selection) {
         if (selection == null){
             return ALL_LIST_ITEMS;
         }
@@ -144,16 +144,16 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
         DataEventBus.instanceOf().post(new ListsDataUpdatedEvent());
     }
 
-    public Observable<List<ListItemDAO>> getAllShoppingListItems() {
+    private Observable<List<ListItemDAO>> getAllShoppingListItems() {
         return db.createQuery(ListItemDAO.TABLE, LIST_ITEMS_QUERY(null), new String[]{})
-                .mapToList(ListItemDAO.MAPPER::call);
+                .mapToList(ListItemDAO.MAPPER);
     }
 
-    public Observable<List<ListItemDAO>> getListItems(String listId) {
+    private Observable<List<ListItemDAO>> getListItems(String listId) {
         return db.createQuery(ListItemDAO.TABLE,
                 LIST_ITEMS_QUERY(ListItemDAO.PARENT_LIST_ID + "=?"),
                 listId)
-                .mapToList(ListItemDAO.MAPPER::call);
+                .mapToList(ListItemDAO.MAPPER);
     }
 
     @Override
@@ -171,9 +171,6 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
         builder.priority(item.getPriority());
         builder.timeCreated(item.getTimeCreated());
         builder.categoryId(item.getCategory().getId());
-        if (item.getPosition() != -1) {
-            builder.position(item.getPosition());
-        }
         return builder.build();
     }
 }

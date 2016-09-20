@@ -31,12 +31,10 @@ public class ListItemModel extends BaseModel {
     private UnitModel unit;
     private long timeCreated;
     private CurrencyModel currency;
-    private int position;
 
     public ListItemModel() {
         note = "";
         quantity = 1;
-        position = -1;
     }
 
     public ListItemModel(ListItemModel item) {
@@ -53,7 +51,6 @@ public class ListItemModel extends BaseModel {
         setStatus(item.getStatus());
         setPriority(item.getPriority());
         setCategory(item.getCategory());
-        setPosition(item.getPosition());
     }
 
     public String getParentListId() {
@@ -62,14 +59,6 @@ public class ListItemModel extends BaseModel {
 
     public void setParentListId(String parentListId) {
         this.parentListId = parentListId;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
     }
 
     public String getNote() {
@@ -90,18 +79,6 @@ public class ListItemModel extends BaseModel {
 
     public CategoryModel getCategory() {
         return category;
-    }
-
-    public boolean isCategoryEmpty() {
-        return category == null || category.getId() == null || category.getName() == null;
-    }
-
-    public boolean isCurrencyEmpty() {
-        return currency == null || currency.getId() == null || currency.getName() == null;
-    }
-
-    public boolean isUnitEmpty() {
-        return unit == null || unit.getId() == null || unit.getName() == null;
     }
 
     public void setCategory(CategoryModel category) {

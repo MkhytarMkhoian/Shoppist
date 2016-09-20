@@ -38,7 +38,7 @@ import rx.Observable;
 @Singleton
 public class LocalListDataStoreImpl extends BaseLocalDataStore<ListDAO> implements LocalListDataStore {
 
-    public static String LIST_QUERY(String selection) {
+    private static String LIST_QUERY(String selection) {
         String query = "SELECT *, COUNT(i." + ListItemDAO.STATUS + ") " + ListDAO.SIZE
                 + ", SUM(i." + ListItemDAO.STATUS + ") " + ListDAO.BOUGHT_COUNT +
                 " FROM " + ListDAO.TABLE + " s" +
@@ -64,7 +64,7 @@ public class LocalListDataStoreImpl extends BaseLocalDataStore<ListDAO> implemen
     @Override
     public Observable<ListDAO> getItem(String id) {
         return db.createQuery(ListDAO.TABLE, LIST_QUERY(ListDAO.WHERE_STRING), id)
-                .mapToOne(ListDAO.MAPPER::call);
+                .mapToOne(ListDAO.MAPPER);
     }
 
     @Override
@@ -141,7 +141,7 @@ public class LocalListDataStoreImpl extends BaseLocalDataStore<ListDAO> implemen
 
     private Observable<List<ListDAO>> getAllLists() {
         return db.createQuery(ListDAO.TABLE, LIST_QUERY(null), new String[]{})
-                .mapToList(ListDAO.MAPPER::call);
+                .mapToList(ListDAO.MAPPER);
     }
 
     @Override
@@ -152,9 +152,6 @@ public class LocalListDataStoreImpl extends BaseLocalDataStore<ListDAO> implemen
         builder.color(list.getColor());
         builder.priority(list.getPriority());
         builder.timeCreated(list.getTimeCreated());
-        if (list.getPosition() != -1) {
-            builder.position(list.getPosition());
-        }
         return builder.build();
     }
 }

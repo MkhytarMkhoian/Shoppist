@@ -47,7 +47,6 @@ public class ListDAODataMapper {
             list.setBoughtCount(listEntity.getBoughtCount());
             list.setColor(listEntity.getColor());
             list.setSize(listEntity.getSize());
-            list.setPosition(listEntity.getPosition());
         }
         return list;
     }
@@ -73,8 +72,7 @@ public class ListDAODataMapper {
                     list.getTimeCreated(),
                     list.getPriority(),
                     list.getColor(),
-                    list.getSize(),
-                    list.getPosition());
+                    list.getSize());
         }
         return entity;
     }

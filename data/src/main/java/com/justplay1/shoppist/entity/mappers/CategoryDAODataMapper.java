@@ -44,7 +44,6 @@ public class CategoryDAODataMapper {
             category.setName(categoryEntity.getName());
             category.setColor(categoryEntity.getColor());
             category.setCreateByUser(categoryEntity.isCreateByUser());
-            category.setPosition(categoryEntity.getPosition());
         }
         return category;
     }
@@ -67,8 +66,7 @@ public class CategoryDAODataMapper {
             entity = new CategoryDAO(category.getId(),
                     category.getName(),
                     category.getColor(),
-                    category.isCreateByUser(),
-                    category.getPosition());
+                    category.isCreateByUser());
         }
         return entity;
     }

@@ -25,7 +25,6 @@ public class CategoryModel extends BaseModel {
 
     private int color;
     private boolean isCreateByUser;
-    private int position = -1;
 
     public CategoryModel() {
     }
@@ -36,15 +35,6 @@ public class CategoryModel extends BaseModel {
         setName(category.getName());
         setColor(category.getColor());
         setCreateByUser(category.isCreateByUser());
-        setPosition(category.getPosition());
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
     }
 
     public int getColor() {

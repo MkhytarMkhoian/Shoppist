@@ -60,7 +60,6 @@ public class ListItemsModelDataMapper {
             itemModel.setUnit(mUnitsDataMapper.transformToViewModel(item.getUnit()));
             itemModel.setQuantity(item.getQuantity());
             itemModel.setTimeCreated(item.getTimeCreated());
-            itemModel.setPosition(item.getPosition());
         }
         return itemModel;
     }
@@ -93,7 +92,6 @@ public class ListItemsModelDataMapper {
             item.setUnit(mUnitsDataMapper.transform(itemModel.getUnit()));
             item.setQuantity(itemModel.getQuantity());
             item.setTimeCreated(itemModel.getTimeCreated());
-            item.setPosition(itemModel.getPosition());
         }
         return item;
     }

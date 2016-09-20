@@ -37,27 +37,20 @@ public class CategoryDAO extends BaseDAO {
     public static final String CATEGORY_ID = "main_category_id";
     public static final String COLOR = "category_color";
     public static final String CREATE_BY_USER = "category_create_by_user";
-    public static final String MANUAL_SORT_POSITION = "category_manual_sort_position";
 
     public static final String WHERE_CATEGORY_ID = CATEGORY_ID + " IN(?)";
 
     private int color = Color.DKGRAY;
     private boolean isCreateByUser;
-    private int position = -1;
 
     public CategoryDAO(String id) {
         super(id, null);
     }
 
-    public CategoryDAO(String id, String name, int color, boolean isCreateByUser, int position) {
+    public CategoryDAO(String id, String name, int color, boolean isCreateByUser) {
         super(id, name);
         this.color = color;
         this.isCreateByUser = isCreateByUser;
-        this.position = position;
-    }
-
-    public int getPosition() {
-        return position;
     }
 
     public int getColor() {
@@ -89,8 +82,7 @@ public class CategoryDAO extends BaseDAO {
         String name = DbUtil.getString(cursor, NAME);
         int color = DbUtil.getInt(cursor, COLOR);
         boolean createByUser = DbUtil.getBoolean(cursor, CREATE_BY_USER);
-        int position = DbUtil.getInt(cursor, MANUAL_SORT_POSITION);
-        return new CategoryDAO(id, name, color, createByUser, position);
+        return new CategoryDAO(id, name, color, createByUser);
     }
 
     public static final class Builder {
@@ -113,11 +105,6 @@ public class CategoryDAO extends BaseDAO {
 
         public Builder createByUser(boolean create) {
             values.put(CREATE_BY_USER, create ? 1 : 0);
-            return this;
-        }
-
-        public Builder position(int position) {
-            values.put(MANUAL_SORT_POSITION, position);
             return this;
         }
 

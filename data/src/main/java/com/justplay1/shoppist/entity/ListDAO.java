@@ -38,7 +38,6 @@ public class ListDAO extends BaseDAO {
     public static final String TIME_CREATED = "shopping_list_time_created";
     public static final String BOUGHT_COUNT = "shopping_list_bought_count";
     public static final String SIZE = "shopping_list_size";
-    public static final String MANUAL_SORT_POSITION = "shopping_list_manual_sort_position";
 
     public static final String WHERE_STRING = LIST_ID + " IN(?)";
 
@@ -47,21 +46,15 @@ public class ListDAO extends BaseDAO {
     private int priority = PriorityDAO.NO_PRIORITY;
     private int color = Color.DKGRAY;
     private int size;
-    private int position = -1;
 
     public ListDAO(String id, String name, int boughtCount, long timeCreated,
-                   int priority, int color, int size, int position) {
+                   int priority, int color, int size) {
         super(id, name);
         this.boughtCount = boughtCount;
         this.timeCreated = timeCreated;
         this.priority = priority;
         this.color = color;
         this.size = size;
-        this.position = position;
-    }
-
-    public int getPosition() {
-        return position;
     }
 
     public int getSize() {
@@ -104,12 +97,11 @@ public class ListDAO extends BaseDAO {
         String id = DbUtil.getString(cursor, LIST_ID);
         String name = DbUtil.getString(cursor, LIST_NAME);
         int color = DbUtil.getInt(cursor, COLOR);
-        int position = DbUtil.getInt(cursor, MANUAL_SORT_POSITION);
         long timeCreated = DbUtil.getLong(cursor, TIME_CREATED);
         int size = DbUtil.getInt(cursor, SIZE);
         int boughtCount = DbUtil.getInt(cursor, BOUGHT_COUNT);
         int priority = DbUtil.getInt(cursor, PRIORITY);
-        return new ListDAO(id, name, boughtCount, timeCreated, priority, color, size, position);
+        return new ListDAO(id, name, boughtCount, timeCreated, priority, color, size);
     };
 
     public static final class Builder {
@@ -132,11 +124,6 @@ public class ListDAO extends BaseDAO {
 
         public Builder priority(int priority) {
             values.put(PRIORITY, priority);
-            return this;
-        }
-
-        public Builder position(int position) {
-            values.put(MANUAL_SORT_POSITION, position);
             return this;
         }
 

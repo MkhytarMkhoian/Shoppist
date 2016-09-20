@@ -32,7 +32,6 @@ public class ListViewModel extends BaseViewModel {
     private int color;
     private boolean isChecked;
     private int size;
-    private int position = -1;
 
     public ListViewModel() {
         name = "";
@@ -49,7 +48,6 @@ public class ListViewModel extends BaseViewModel {
         setPriority(shoppingList.getPriority());
         setSize(shoppingList.getSize());
         setBoughtCount(shoppingList.getBoughtCount());
-        setPosition(shoppingList.getPosition());
         setPinned(shoppingList.isPinned());
     }
 
@@ -64,18 +62,7 @@ public class ListViewModel extends BaseViewModel {
         color = parcel.readInt();
         isChecked = parcel.readByte() != 0;
         size = parcel.readInt();
-        position = parcel.readInt();
         mPinned = parcel.readByte() != 0;
-    }
-
-    @Override
-    public int getPosition() {
-        return position;
-    }
-
-    @Override
-    public void setPosition(int position) {
-        this.position = position;
     }
 
     @Override
@@ -163,7 +150,6 @@ public class ListViewModel extends BaseViewModel {
         dest.writeInt(color);
         dest.writeByte((byte) (isChecked ? 1 : 0));
         dest.writeInt(size);
-        dest.writeInt(position);
         dest.writeByte((byte) (mPinned ? 1 : 0));
     }
 

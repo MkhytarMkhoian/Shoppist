@@ -48,7 +48,6 @@ public class ListModelDataMapper {
             listModel.setBoughtCount(list.getBoughtCount());
             listModel.setColor(list.getColor());
             listModel.setSize(list.getSize());
-            listModel.setPosition(list.getPosition());
         }
         return listModel;
     }
@@ -76,7 +75,6 @@ public class ListModelDataMapper {
             list.setBoughtCount(listModel.getBoughtCount());
             list.setColor(listModel.getColor());
             list.setSize(listModel.getSize());
-            list.setPosition(listModel.getPosition());
         }
         return list;
     }

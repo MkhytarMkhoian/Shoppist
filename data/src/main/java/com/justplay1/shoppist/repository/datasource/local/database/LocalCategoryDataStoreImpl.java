@@ -72,9 +72,8 @@ public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> 
             String name = categoriesName[0];
             int color = categoriesColors[i];
             boolean isCreateByUser = false;
-            int position = -1;
             CategoryDAO category = new CategoryDAO(id, name,
-                    color, isCreateByUser, position);
+                    color, isCreateByUser);
             categoryList.put(category.getId(), category);
         }
         return Observable.just(categoryList);
@@ -161,9 +160,6 @@ public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> 
         builder.name(data.getName());
         builder.color(data.getColor());
         builder.createByUser(data.isCreateByUser());
-        if (data.getPosition() != -1) {
-            builder.position(data.getPosition());
-        }
         return builder.build();
     }
 

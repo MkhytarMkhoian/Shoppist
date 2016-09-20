@@ -42,7 +42,6 @@ public class ListItemDAO extends BaseDAO {
     public static final String CURRENCY_ID = "shopping_list_item_currency_id";
     public static final String TIME_CREATED = "shopping_list_item_time_created";
     public static final String CATEGORY_ID = "shopping_list_item_category_id";
-    public static final String MANUAL_SORT_POSITION = "shopping_list_item_manual_sort_position";
 
     public static final String WHERE_STRING = PARENT_LIST_ID + "=? and " + LIST_ITEM_ID + " IN(?)";
 
@@ -50,18 +49,16 @@ public class ListItemDAO extends BaseDAO {
     private String note;
     private boolean status = false;
     private CategoryDAO category;
-    @PriorityDAO
     private int priority = PriorityDAO.NO_PRIORITY;
     private double price;
     private double quantity = 1;
     private UnitDAO unit;
     private long timeCreated;
     private CurrencyDAO currency;
-    private int position = -1;
 
     public ListItemDAO(String id, String name, String parentListId, String note, boolean status, CategoryDAO category,
                        int priority, double price, double quantity, UnitDAO unit, long timeCreated,
-                       CurrencyDAO currency, int position) {
+                       CurrencyDAO currency) {
         super(id, name);
         this.parentListId = parentListId;
         this.note = note;
@@ -73,15 +70,10 @@ public class ListItemDAO extends BaseDAO {
         this.unit = unit;
         this.timeCreated = timeCreated;
         this.currency = currency;
-        this.position = position;
     }
 
     public String getParentListId() {
         return parentListId;
-    }
-
-    public int getPosition() {
-        return position;
     }
 
     public String getNote() {
@@ -154,7 +146,6 @@ public class ListItemDAO extends BaseDAO {
         String parentId = DbUtil.getString(cursor, PARENT_LIST_ID);
         String name = DbUtil.getString(cursor, LIST_ITEM_NAME);
         boolean status = DbUtil.getBoolean(cursor, STATUS);
-        int position = DbUtil.getInt(cursor, MANUAL_SORT_POSITION);
         long timeCreated = DbUtil.getLong(cursor, TIME_CREATED);
         double price = DbUtil.getDouble(cursor, PRICE);
         double quantity = DbUtil.getDouble(cursor, QUANTITY);
@@ -164,7 +155,7 @@ public class ListItemDAO extends BaseDAO {
         UnitDAO unit = UnitDAO.MAPPER.call(cursor);
         CurrencyDAO currency = CurrencyDAO.MAPPER.call(cursor);
         return new ListItemDAO(id, name, parentId, note, status, category, priority,
-                price, quantity, unit, timeCreated, currency, position);
+                price, quantity, unit, timeCreated, currency);
     };
 
     public static final class Builder {
@@ -192,11 +183,6 @@ public class ListItemDAO extends BaseDAO {
 
         public Builder priority(int priority) {
             values.put(PRIORITY, priority);
-            return this;
-        }
-
-        public Builder position(int position) {
-            values.put(MANUAL_SORT_POSITION, position);
             return this;
         }
 
