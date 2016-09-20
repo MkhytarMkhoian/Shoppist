@@ -25,6 +25,7 @@ import com.justplay1.shoppist.interactor.goods.DeleteGoods;
 import com.justplay1.shoppist.interactor.goods.GetGoods;
 import com.justplay1.shoppist.interactor.goods.UpdateGoods;
 import com.justplay1.shoppist.interactor.units.GetUnit;
+import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
@@ -39,7 +40,9 @@ import com.justplay1.shoppist.presenter.base.BaseSortablePresenter;
 import com.justplay1.shoppist.view.GoodsView;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -125,31 +128,40 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
 
     public void loadData() {
         showLoading();
-        mSubscriptions.add(Observable.zip(loadDefaultUnit(), loadDefaultCategory(), loadGoods(), (unitViewModel, categoryViewModel, goods) -> {
-            for (Pair<HeaderViewModel, List<ProductViewModel>> pair : goods) {
-                for (ProductViewModel product : pair.second) {
-                    if (product.isCategoryEmpty()) {
-                        product.setCategory(categoryViewModel);
+        mSubscriptions.add(Observable.zip(loadDefaultUnit(), loadDefaultCategory(), (unit, category) -> {
+            Map<String, BaseViewModel> map = new HashMap<>();
+            map.put(CategoryViewModel.NO_CATEGORY_ID, category);
+            map.put(UnitViewModel.NO_UNIT_ID, unit);
+            return map;
+        }).flatMap(map -> loadGoods()
+                .map(goods -> {
+                    CategoryViewModel category = (CategoryViewModel) map.get(CategoryViewModel.NO_CATEGORY_ID);
+                    UnitViewModel unit = (UnitViewModel) map.get(UnitViewModel.NO_UNIT_ID);
+                    for (Pair<HeaderViewModel, List<ProductViewModel>> pair : goods) {
+                        for (ProductViewModel product : pair.second) {
+                            if (product.isCategoryEmpty()) {
+                                product.setCategory(category);
+                            }
+                            if (product.isUnitEmpty()) {
+                                product.setUnit(unit);
+                            }
+                        }
                     }
-                    if (product.isUnitEmpty()) {
-                        product.setUnit(unitViewModel);
+                    return goods;
+                }))
+                .subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ProductViewModel>>>>() {
+                    @Override
+                    public void onNext(List<Pair<HeaderViewModel, List<ProductViewModel>>> data) {
+                        hideLoading();
+                        showData(data);
                     }
-                }
-            }
-            return goods;
-        }).subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ProductViewModel>>>>() {
-            @Override
-            public void onNext(List<Pair<HeaderViewModel, List<ProductViewModel>>> data) {
-                hideLoading();
-                showData(data);
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                hideLoading();
-                e.printStackTrace();
-            }
-        }));
+                    @Override
+                    public void onError(Throwable e) {
+                        hideLoading();
+                        e.printStackTrace();
+                    }
+                }));
     }
 
     @SuppressWarnings("ResourceType")

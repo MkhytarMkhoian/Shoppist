@@ -100,7 +100,7 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
         BriteDatabase.Transaction transaction = db.newTransaction();
         try {
             for (ProductDAO product : data) {
-                db.insert(UnitDAO.TABLE, getValue(product));
+                db.insert(ProductDAO.TABLE, getValue(product));
             }
             transaction.markSuccessful();
         } finally {
@@ -118,7 +118,7 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
         BriteDatabase.Transaction transaction = db.newTransaction();
         try {
             for (ProductDAO product : data) {
-                db.delete(UnitDAO.TABLE, ProductDAO.WHERE_PRODUCT_ID, product.getId());
+                db.delete(ProductDAO.TABLE, ProductDAO.WHERE_PRODUCT_ID, product.getId());
             }
             transaction.markSuccessful();
         } finally {
@@ -136,7 +136,7 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
         BriteDatabase.Transaction transaction = db.newTransaction();
         try {
             for (ProductDAO product : data) {
-                db.update(UnitDAO.TABLE, getValue(product), ProductDAO.WHERE_PRODUCT_ID, product.getId());
+                db.update(ProductDAO.TABLE, getValue(product), ProductDAO.WHERE_PRODUCT_ID, product.getId());
             }
             transaction.markSuccessful();
         } finally {
