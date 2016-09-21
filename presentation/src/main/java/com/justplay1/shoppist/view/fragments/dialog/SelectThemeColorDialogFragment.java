@@ -54,7 +54,7 @@ public class SelectThemeColorDialogFragment extends DialogFragment implements Co
     private int mColumns = 4;
     private int mSize;
 
-    @Bind(R.id.color_button)
+    @Bind(R.id.color_picker)
     ColorPickerPalette mPalette;
     @Bind(android.R.id.progress)
     ProgressBar mProgress;
