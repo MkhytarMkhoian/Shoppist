@@ -31,7 +31,6 @@ import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.Priority;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
-import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,21 +44,11 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
 
     protected List<Pair<HeaderViewModel, List<T>>> mData;
 
-    protected
-    @ColorInt
-    int mNoPriority;
-    protected
-    @ColorInt
-    int mNoPriorityBackground;
-    protected
-    @ColorInt
-    int mHighPriority;
-    protected
-    @ColorInt
-    int mLowPriority;
-    protected
-    @ColorInt
-    int mMediumPriority;
+    @ColorInt private int mNoPriority;
+    @ColorInt private int mNoPriorityBackground;
+    @ColorInt private int mHighPriority;
+    @ColorInt private int mLowPriority;
+    @ColorInt private int mMediumPriority;
 
     public BaseExpandableAdapter(Context context, ActionModeInteractionListener listener,
                                  RecyclerView recyclerView) {
