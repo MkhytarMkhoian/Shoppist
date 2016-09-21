@@ -56,32 +56,17 @@ public class UnitsDataRepository implements UnitsRepository {
     }
 
     @Override
-    public void save(Collection<UnitModel> data) throws Exception {
+    public void save(Collection<UnitModel> data) {
         mDataStore.save(mDataMapper.transformToDAO(data));
     }
 
     @Override
-    public void save(UnitModel data) throws Exception {
-        mDataStore.save(mDataMapper.transformToDAO(data));
-    }
-
-    @Override
-    public void delete(Collection<UnitModel> data) throws Exception {
+    public void delete(Collection<UnitModel> data) {
         mDataStore.delete(mDataMapper.transformToDAO(data));
     }
 
     @Override
-    public void delete(UnitModel data) throws Exception {
-        mDataStore.delete(mDataMapper.transformToDAO(data));
-    }
-
-    @Override
-    public void update(Collection<UnitModel> data) throws Exception {
-        mDataStore.update(mDataMapper.transformToDAO(data));
-    }
-
-    @Override
-    public void update(UnitModel data) throws Exception {
+    public void update(Collection<UnitModel> data) {
         mDataStore.update(mDataMapper.transformToDAO(data));
     }
 

@@ -32,17 +32,11 @@ public interface ListRepository {
 
     void deleteListItems(String id);
 
-    void save(Collection<ListModel> data) throws Exception;
+    void save(Collection<ListModel> data);
 
-    void save(ListModel data) throws Exception;
+    void delete(Collection<ListModel> data);
 
-    void delete(Collection<ListModel> data) throws Exception;
-
-    void delete(ListModel data) throws Exception;
-
-    void update(Collection<ListModel> data) throws Exception;
-
-    void update(ListModel data) throws Exception;
+    void update(Collection<ListModel> data);
 
     int clear();
 }

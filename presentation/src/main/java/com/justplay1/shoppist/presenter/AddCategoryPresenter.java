@@ -107,7 +107,7 @@ public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryVie
         mSubscriptions.add(
                 Observable.fromCallable(() -> mDataMapper.transform(data))
                         .flatMap(category -> {
-                            mAddCategory.setData(category);
+                            mAddCategory.setData(Collections.singletonList(category));
                             return mAddCategory.get();
                         }).subscribe(new SaveCategorySubscriber(isLongClick, true)));
     }

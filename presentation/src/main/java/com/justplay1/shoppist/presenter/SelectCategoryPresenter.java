@@ -19,7 +19,7 @@ package com.justplay1.shoppist.presenter;
 import android.os.Bundle;
 
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
-import com.justplay1.shoppist.interactor.category.GetCategories;
+import com.justplay1.shoppist.interactor.category.GetCategoryList;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
 import com.justplay1.shoppist.navigation.Router;
@@ -36,14 +36,14 @@ import javax.inject.Inject;
 public class SelectCategoryPresenter extends BaseRxPresenter<SelectCategoryView, Router> {
 
     private final CategoryModelDataMapper mDataMapper;
-    private final GetCategories mGetCategories;
+    private final GetCategoryList mGetCategoryList;
 
     private CategoryViewModel mItem;
 
     @Inject
-    public SelectCategoryPresenter(CategoryModelDataMapper dataMapper, GetCategories getCategories) {
+    public SelectCategoryPresenter(CategoryModelDataMapper dataMapper, GetCategoryList getCategoryList) {
         this.mDataMapper = dataMapper;
-        this.mGetCategories = getCategories;
+        this.mGetCategoryList = getCategoryList;
     }
 
     @Override
@@ -75,7 +75,7 @@ public class SelectCategoryPresenter extends BaseRxPresenter<SelectCategoryView,
 
 
     public void loadCategories() {
-        mSubscriptions.add(mGetCategories.get()
+        mSubscriptions.add(mGetCategoryList.get()
                 .map(mDataMapper::transformToViewModel)
                 .subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
 

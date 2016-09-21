@@ -20,7 +20,7 @@ import com.justplay1.shoppist.di.scope.PerActivity;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.interactor.units.AddUnits;
-import com.justplay1.shoppist.interactor.units.GetUnits;
+import com.justplay1.shoppist.interactor.units.GetUnitsList;
 import com.justplay1.shoppist.interactor.units.DeleteUnits;
 import com.justplay1.shoppist.interactor.units.UpdateUnits;
 import com.justplay1.shoppist.repository.UnitsRepository;
@@ -44,9 +44,9 @@ public class UnitsModule {
 
     @Provides
     @PerActivity
-    GetUnits provideGetUnits(UnitsRepository repository, ThreadExecutor threadExecutor,
-                             PostExecutionThread postExecutionThread) {
-        return new GetUnits(repository, threadExecutor, postExecutionThread);
+    GetUnitsList provideGetUnits(UnitsRepository repository, ThreadExecutor threadExecutor,
+                                 PostExecutionThread postExecutionThread) {
+        return new GetUnitsList(repository, threadExecutor, postExecutionThread);
     }
 
 

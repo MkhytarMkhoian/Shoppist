@@ -29,14 +29,6 @@ public class CategoryModel extends BaseModel {
     public CategoryModel() {
     }
 
-    public CategoryModel(CategoryModel category) {
-        this();
-        setId(category.getId());
-        setName(category.getName());
-        setColor(category.getColor());
-        setCreateByUser(category.isCreateByUser());
-    }
-
     public int getColor() {
         return color;
     }

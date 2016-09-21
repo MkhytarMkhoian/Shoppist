@@ -34,17 +34,11 @@ public interface ListItemsRepository {
 
     Observable<ListItemModel> getItem(final String id);
 
-    void save(Collection<ListItemModel> data) throws Exception;
+    void save(Collection<ListItemModel> data);
 
-    void save(ListItemModel data) throws Exception;
+    void delete(Collection<ListItemModel> data);
 
-    void delete(Collection<ListItemModel> data) throws Exception;
-
-    void delete(ListItemModel data) throws Exception;
-
-    void update(Collection<ListItemModel> data) throws Exception;
-
-    void update(ListItemModel data) throws Exception;
+    void update(Collection<ListItemModel> data);
 
     int clear();
 }

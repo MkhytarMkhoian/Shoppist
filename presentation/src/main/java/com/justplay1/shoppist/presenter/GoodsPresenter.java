@@ -22,7 +22,7 @@ import com.justplay1.shoppist.di.scope.PerActivity;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.GetCategory;
 import com.justplay1.shoppist.interactor.goods.DeleteGoods;
-import com.justplay1.shoppist.interactor.goods.GetGoods;
+import com.justplay1.shoppist.interactor.goods.GetGoodsList;
 import com.justplay1.shoppist.interactor.goods.UpdateGoods;
 import com.justplay1.shoppist.interactor.units.GetUnit;
 import com.justplay1.shoppist.models.BaseViewModel;
@@ -60,14 +60,14 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
 
     private final GetCategory mGetCategory;
     private final GetUnit mGetUnit;
-    private final GetGoods mGetGoods;
+    private final GetGoodsList mGetGoodsList;
     private final DeleteGoods mDeleteGoods;
     private final UpdateGoods mUpdateGoods;
 
     @Inject
     public GoodsPresenter(AppPreferences preferences,
                           GoodsModelDataMapper dataMapper,
-                          GetGoods getGoods,
+                          GetGoodsList getGoodsList,
                           DeleteGoods deleteGoods,
                           UpdateGoods updateGoods,
                           GetCategory getCategory,
@@ -76,7 +76,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
                           UnitsDataModelMapper unitsDataModelMapper) {
         super(preferences);
         this.mGoodsModelDataMapper = dataMapper;
-        this.mGetGoods = getGoods;
+        this.mGetGoodsList = getGoodsList;
         this.mDeleteGoods = deleteGoods;
         this.mUpdateGoods = updateGoods;
         this.mGetCategory = getCategory;
@@ -166,7 +166,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
 
     @SuppressWarnings("ResourceType")
     private Observable<List<Pair<HeaderViewModel, List<ProductViewModel>>>> loadGoods() {
-        return mGetGoods.get()
+        return mGetGoodsList.get()
                 .map(mGoodsModelDataMapper::transformToViewModel)
                 .map(goods -> sort(goods, mPreferences.getSortForGoods()));
     }

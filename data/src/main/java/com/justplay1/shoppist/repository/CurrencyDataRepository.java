@@ -56,32 +56,17 @@ public class CurrencyDataRepository implements CurrencyRepository {
     }
 
     @Override
-    public void save(Collection<CurrencyModel> data) throws Exception {
+    public void save(Collection<CurrencyModel> data) {
         mDataStore.save(mDataMapper.transformToDAO(data));
     }
 
     @Override
-    public void save(CurrencyModel data) throws Exception {
-        mDataStore.save(mDataMapper.transformToDAO(data));
-    }
-
-    @Override
-    public void delete(Collection<CurrencyModel> data) throws Exception {
+    public void delete(Collection<CurrencyModel> data) {
         mDataStore.delete(mDataMapper.transformToDAO(data));
     }
 
     @Override
-    public void delete(CurrencyModel data) throws Exception {
-        mDataStore.delete(mDataMapper.transformToDAO(data));
-    }
-
-    @Override
-    public void update(Collection<CurrencyModel> data) throws Exception {
-        mDataStore.update(mDataMapper.transformToDAO(data));
-    }
-
-    @Override
-    public void update(CurrencyModel data) throws Exception {
+    public void update(Collection<CurrencyModel> data) {
         mDataStore.update(mDataMapper.transformToDAO(data));
     }
 

@@ -14,29 +14,36 @@
  *   limitations under the License.
  */
 
-package com.justplay1.shoppist.repository;
+package com.justplay1.shoppist.interactor.units;
 
+import com.justplay1.shoppist.executor.PostExecutionThread;
+import com.justplay1.shoppist.executor.ThreadExecutor;
+import com.justplay1.shoppist.interactor.UseCase;
 import com.justplay1.shoppist.models.UnitModel;
+import com.justplay1.shoppist.repository.UnitsRepository;
 
 import java.util.Collection;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-public interface UnitsRepository {
+public class GetUnitsList extends UseCase<List<UnitModel>> {
 
-    Observable<List<UnitModel>> getItems();
+    private final UnitsRepository mRepository;
 
-    Observable<UnitModel> getItem(final String id);
+    @Inject
+    public GetUnitsList(UnitsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+        super(threadExecutor, postExecutionThread);
+        mRepository = repository;
+    }
 
-    void save(Collection<UnitModel> data);
-
-    void delete(Collection<UnitModel> data);
-
-    void update(Collection<UnitModel> data);
-
-    int clear();
+    @Override
+    protected Observable<List<UnitModel>> buildUseCaseObservable() {
+        return mRepository.getItems();
+    }
 }

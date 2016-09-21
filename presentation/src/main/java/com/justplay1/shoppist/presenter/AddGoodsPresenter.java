@@ -20,10 +20,10 @@ import android.os.Bundle;
 
 import com.justplay1.shoppist.di.scope.PerActivity;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
-import com.justplay1.shoppist.interactor.category.GetCategories;
+import com.justplay1.shoppist.interactor.category.GetCategoryList;
 import com.justplay1.shoppist.interactor.goods.AddGoods;
 import com.justplay1.shoppist.interactor.goods.UpdateGoods;
-import com.justplay1.shoppist.interactor.units.GetUnits;
+import com.justplay1.shoppist.interactor.units.GetUnitsList;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.UnitViewModel;
@@ -38,7 +38,6 @@ import com.justplay1.shoppist.view.AddGoodsView;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -56,8 +55,8 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
 
     private final UpdateGoods mUpdateGoods;
     private final AddGoods mAddGoods;
-    private final GetUnits mGetUnits;
-    private final GetCategories mGetCategories;
+    private final GetUnitsList mGetUnitsList;
+    private final GetCategoryList mGetCategoryList;
 
     private CategoryViewModel mCategoryModel;
     private UnitViewModel mUnitModel;
@@ -68,15 +67,15 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
     public AddGoodsPresenter(GoodsModelDataMapper dataMapper,
                              UpdateGoods updateGoods,
                              AddGoods addGoods,
-                             GetUnits getUnits,
-                             GetCategories getCategories,
+                             GetUnitsList getUnitsList,
+                             GetCategoryList getCategoryList,
                              CategoryModelDataMapper categoryModelDataMapper,
                              UnitsDataModelMapper unitsDataModelMapper) {
         this.mGoodsModelDataMapper = dataMapper;
         this.mUpdateGoods = updateGoods;
         this.mAddGoods = addGoods;
-        this.mGetUnits = getUnits;
-        this.mGetCategories = getCategories;
+        this.mGetUnitsList = getUnitsList;
+        this.mGetCategoryList = getCategoryList;
         this.mUnitsDataModelMapper = unitsDataModelMapper;
         this.mCategoryModelDataMapper = categoryModelDataMapper;
     }
@@ -136,7 +135,7 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
     }
 
     public void loadCategories() {
-        mSubscriptions.add(mGetCategories.get()
+        mSubscriptions.add(mGetCategoryList.get()
                 .map(mCategoryModelDataMapper::transformToViewModel)
                 .subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
 
@@ -153,7 +152,7 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
     }
 
     public void loadUnits() {
-        mSubscriptions.add(mGetUnits.get()
+        mSubscriptions.add(mGetUnitsList.get()
                 .map(mUnitsDataModelMapper::transformToViewModel)
                 .subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
 
@@ -200,7 +199,7 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
         mSubscriptions.add(
                 Observable.fromCallable(() -> mGoodsModelDataMapper.transform(data))
                         .flatMap(currency -> {
-                            mAddGoods.setData(currency);
+                            mAddGoods.setData(Collections.singletonList(currency));
                             return mAddGoods.get();
                         }).subscribe(new SaveGoodsSubscriber(true)));
     }

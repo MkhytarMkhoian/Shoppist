@@ -21,7 +21,7 @@ import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.interactor.category.AddCategory;
 import com.justplay1.shoppist.interactor.category.DeleteCategory;
-import com.justplay1.shoppist.interactor.category.GetCategories;
+import com.justplay1.shoppist.interactor.category.GetCategoryList;
 import com.justplay1.shoppist.interactor.category.UpdateCategory;
 import com.justplay1.shoppist.repository.CategoryRepository;
 
@@ -43,9 +43,9 @@ public class CategoryModule {
 
     @Provides
     @PerActivity
-    GetCategories provideGetCategories(CategoryRepository repository, ThreadExecutor threadExecutor,
-                                       PostExecutionThread postExecutionThread) {
-        return new GetCategories(repository, threadExecutor, postExecutionThread);
+    GetCategoryList provideGetCategories(CategoryRepository repository, ThreadExecutor threadExecutor,
+                                         PostExecutionThread postExecutionThread) {
+        return new GetCategoryList(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides

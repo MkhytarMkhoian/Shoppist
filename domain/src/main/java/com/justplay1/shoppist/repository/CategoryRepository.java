@@ -32,17 +32,11 @@ public interface CategoryRepository {
 
     Observable<CategoryModel> getItem(final String id);
 
-    void save(Collection<CategoryModel> data) throws Exception;
+    void save(Collection<CategoryModel> data);
 
-    void save(CategoryModel data) throws Exception;
+    void delete(Collection<CategoryModel> data);
 
-    void delete(Collection<CategoryModel> data) throws Exception;
-
-    void delete(CategoryModel data) throws Exception;
-
-    void update(Collection<CategoryModel> data) throws Exception;
-
-    void update(CategoryModel data) throws Exception;
+    void update(Collection<CategoryModel> data);
 
     int clear();
 }

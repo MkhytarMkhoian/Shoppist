@@ -19,7 +19,7 @@ package com.justplay1.shoppist.presenter;
 import com.justplay1.shoppist.di.scope.PerActivity;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.currency.DeleteCurrency;
-import com.justplay1.shoppist.interactor.currency.GetCurrencies;
+import com.justplay1.shoppist.interactor.currency.GetCurrencyList;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
 import com.justplay1.shoppist.navigation.CurrencyRouter;
@@ -40,14 +40,14 @@ import rx.Observable;
 public class CurrencyPresenter extends BaseRxPresenter<CurrencyView, CurrencyRouter> {
 
     private final CurrencyModelDataMapper mDataMapper;
-    private final GetCurrencies mGetCurrencies;
+    private final GetCurrencyList mGetCurrencyList;
     private final DeleteCurrency mDeleteCurrency;
 
     @Inject
-    public CurrencyPresenter(GetCurrencies getCurrencies,
+    public CurrencyPresenter(GetCurrencyList getCurrencyList,
                              DeleteCurrency deleteCurrency,
                              CurrencyModelDataMapper dataMapper) {
-        this.mGetCurrencies = getCurrencies;
+        this.mGetCurrencyList = getCurrencyList;
         this.mDeleteCurrency = deleteCurrency;
         this.mDataMapper = dataMapper;
     }
@@ -57,7 +57,7 @@ public class CurrencyPresenter extends BaseRxPresenter<CurrencyView, CurrencyRou
     }
 
     public void loadData() {
-        mSubscriptions.add(mGetCurrencies.get()
+        mSubscriptions.add(mGetCurrencyList.get()
                 .map(mDataMapper::transformToViewModel)
                 .subscribe(new DefaultSubscriber<List<CurrencyViewModel>>() {
                     @Override

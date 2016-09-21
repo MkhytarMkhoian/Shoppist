@@ -22,7 +22,7 @@ import com.justplay1.shoppist.interactor.UseCase;
 import com.justplay1.shoppist.models.UnitModel;
 import com.justplay1.shoppist.repository.UnitsRepository;
 
-import java.util.UUID;
+import java.util.Collection;
 
 import javax.inject.Inject;
 
@@ -34,7 +34,7 @@ import rx.Observable;
 public class AddUnits extends UseCase<Boolean> {
 
     private final UnitsRepository mRepository;
-    private UnitModel mData;
+    private Collection<UnitModel> mData;
 
     @Inject
     public AddUnits(UnitsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
@@ -42,13 +42,14 @@ public class AddUnits extends UseCase<Boolean> {
         mRepository = repository;
     }
 
-    public void setData(UnitModel data) {
+    public void setData(Collection<UnitModel> data) {
         this.mData = data;
     }
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
-        return Observable.fromCallable(() -> {;
+        return Observable.fromCallable(() -> {
+            ;
             mRepository.save(mData);
             return true;
         });

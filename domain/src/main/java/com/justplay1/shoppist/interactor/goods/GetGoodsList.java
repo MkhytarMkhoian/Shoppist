@@ -32,26 +32,18 @@ import rx.Observable;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class AddGoods extends UseCase<Boolean> {
+public class GetGoodsList extends UseCase<List<ProductModel>> {
 
     private final GoodsRepository mRepository;
-    private Collection<ProductModel> mData;
 
     @Inject
-    public AddGoods(GoodsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    public GetGoodsList(GoodsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         mRepository = repository;
     }
 
-    public void setData(Collection<ProductModel> data) {
-        this.mData = data;
-    }
-
     @Override
-    protected Observable<Boolean> buildUseCaseObservable() {
-        return Observable.fromCallable(() -> {
-            mRepository.save(mData);
-            return true;
-        });
+    protected Observable<List<ProductModel>> buildUseCaseObservable() {
+        return mRepository.getItems();
     }
 }

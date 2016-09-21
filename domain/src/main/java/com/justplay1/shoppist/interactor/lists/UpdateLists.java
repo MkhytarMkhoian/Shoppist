@@ -22,7 +22,7 @@ import com.justplay1.shoppist.interactor.UseCase;
 import com.justplay1.shoppist.models.ListModel;
 import com.justplay1.shoppist.repository.ListRepository;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.inject.Inject;
 
@@ -34,7 +34,7 @@ import rx.Observable;
 public class UpdateLists extends UseCase<Boolean> {
 
     private final ListRepository mRepository;
-    private List<ListModel> mData;
+    private Collection<ListModel> mData;
 
     @Inject
     public UpdateLists(ListRepository repository,
@@ -43,7 +43,7 @@ public class UpdateLists extends UseCase<Boolean> {
         mRepository = repository;
     }
 
-    public void setData(List<ListModel> data) {
+    public void setData(Collection<ListModel> data) {
         this.mData = data;
     }
 

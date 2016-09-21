@@ -22,6 +22,8 @@ import com.justplay1.shoppist.interactor.UseCase;
 import com.justplay1.shoppist.models.ListModel;
 import com.justplay1.shoppist.repository.ListRepository;
 
+import java.util.Collection;
+
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -32,7 +34,7 @@ import rx.Observable;
 public class AddList extends UseCase<Boolean> {
 
     private final ListRepository mRepository;
-    private ListModel mData;
+    private Collection<ListModel> mData;
 
     @Inject
     public AddList(ListRepository repository,
@@ -41,7 +43,7 @@ public class AddList extends UseCase<Boolean> {
         mRepository = repository;
     }
 
-    public void setData(ListModel data) {
+    public void setData(Collection<ListModel> data) {
         this.mData = data;
     }
 

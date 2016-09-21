@@ -62,32 +62,17 @@ public class ListItemsDataRepository implements ListItemsRepository {
     }
 
     @Override
-    public void save(Collection<ListItemModel> data) throws Exception {
+    public void save(Collection<ListItemModel> data) {
         mDataStore.save(mDataMapper.transformToDAO(data));
     }
 
     @Override
-    public void save(ListItemModel data) throws Exception {
-        mDataStore.save(mDataMapper.transformToDAO(data));
-    }
-
-    @Override
-    public void delete(Collection<ListItemModel> data) throws Exception {
+    public void delete(Collection<ListItemModel> data) {
         mDataStore.delete(mDataMapper.transformToDAO(data));
     }
 
     @Override
-    public void delete(ListItemModel data) throws Exception {
-        mDataStore.delete(mDataMapper.transformToDAO(data));
-    }
-
-    @Override
-    public void update(Collection<ListItemModel> data) throws Exception {
-        mDataStore.update(mDataMapper.transformToDAO(data));
-    }
-
-    @Override
-    public void update(ListItemModel data) throws Exception {
+    public void update(Collection<ListItemModel> data) {
         mDataStore.update(mDataMapper.transformToDAO(data));
     }
 

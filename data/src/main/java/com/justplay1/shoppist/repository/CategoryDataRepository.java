@@ -56,32 +56,17 @@ public class CategoryDataRepository implements CategoryRepository {
     }
 
     @Override
-    public void save(Collection<CategoryModel> data) throws Exception {
+    public void save(Collection<CategoryModel> data) {
         mDataStore.save(mDataMapper.transformToDAO(data));
     }
 
     @Override
-    public void save(CategoryModel data) throws Exception {
-        mDataStore.save(mDataMapper.transformToDAO(data));
-    }
-
-    @Override
-    public void delete(Collection<CategoryModel> data) throws Exception {
+    public void delete(Collection<CategoryModel> data) {
         mDataStore.delete(mDataMapper.transformToDAO(data));
     }
 
     @Override
-    public void delete(CategoryModel data) throws Exception {
-        mDataStore.delete(mDataMapper.transformToDAO(data));
-    }
-
-    @Override
-    public void update(Collection<CategoryModel> data) throws Exception {
-        mDataStore.update(mDataMapper.transformToDAO(data));
-    }
-
-    @Override
-    public void update(CategoryModel data) throws Exception {
+    public void update(Collection<CategoryModel> data) {
         mDataStore.update(mDataMapper.transformToDAO(data));
     }
 

@@ -20,13 +20,13 @@ import android.os.Bundle;
 
 import com.justplay1.shoppist.di.scope.PerActivity;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
-import com.justplay1.shoppist.interactor.category.GetCategories;
-import com.justplay1.shoppist.interactor.currency.GetCurrencies;
-import com.justplay1.shoppist.interactor.goods.GetGoods;
+import com.justplay1.shoppist.interactor.category.GetCategoryList;
+import com.justplay1.shoppist.interactor.currency.GetCurrencyList;
+import com.justplay1.shoppist.interactor.goods.GetGoodsList;
 import com.justplay1.shoppist.interactor.goods.UpdateGoods;
 import com.justplay1.shoppist.interactor.listitems.AddListItems;
 import com.justplay1.shoppist.interactor.listitems.UpdateListItems;
-import com.justplay1.shoppist.interactor.units.GetUnits;
+import com.justplay1.shoppist.interactor.units.GetUnitsList;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.ListItemViewModel;
@@ -70,10 +70,10 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
 
     private final AddListItems mAddListItems;
     private final UpdateListItems mUpdateListItems;
-    private final GetCategories mGetCategories;
-    private final GetCurrencies mGetCurrencies;
-    private final GetGoods mGetGoods;
-    private final GetUnits mGetUnits;
+    private final GetCategoryList mGetCategoryList;
+    private final GetCurrencyList mGetCurrencyList;
+    private final GetGoodsList mGetGoodsList;
+    private final GetUnitsList mGetUnitsList;
     private final UpdateGoods mUpdateGoods;
 
     private final AppPreferences mPreferences;
@@ -97,10 +97,10 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
                                 ListItemsModelDataMapper listItemsModelDataMapper,
                                 AddListItems addListItems,
                                 UpdateListItems updateListItems,
-                                GetCategories getCategories,
-                                GetCurrencies getCurrencies,
-                                GetGoods getGoods,
-                                GetUnits getUnits,
+                                GetCategoryList getCategoryList,
+                                GetCurrencyList getCurrencyList,
+                                GetGoodsList getGoodsList,
+                                GetUnitsList getUnitsList,
                                 UpdateGoods updateGoods,
                                 AppPreferences preferences) {
         this.mCategoryModelDataMapper = categoryModelDataMapper;
@@ -110,10 +110,10 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         this.mListItemsModelDataMapper = listItemsModelDataMapper;
         this.mAddListItems = addListItems;
         this.mUpdateListItems = updateListItems;
-        this.mGetCategories = getCategories;
-        this.mGetCurrencies = getCurrencies;
-        this.mGetGoods = getGoods;
-        this.mGetUnits = getUnits;
+        this.mGetCategoryList = getCategoryList;
+        this.mGetCurrencyList = getCurrencyList;
+        this.mGetGoodsList = getGoodsList;
+        this.mGetUnitsList = getUnitsList;
         this.mUpdateGoods = updateGoods;
         this.mPreferences = preferences;
     }
@@ -337,7 +337,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     }
 
     public void loadCategories() {
-        mSubscriptions.add(mGetCategories.get()
+        mSubscriptions.add(mGetCategoryList.get()
                 .map(mCategoryModelDataMapper::transformToViewModel)
                 .subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
                     @Override
@@ -358,7 +358,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     }
 
     public void loadUnits() {
-        mSubscriptions.add(mGetUnits.get()
+        mSubscriptions.add(mGetUnitsList.get()
                 .map(mUnitsDataModelMapper::transformToViewModel)
                 .subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
                     @Override
@@ -379,7 +379,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     }
 
     public void loadCurrency() {
-        mSubscriptions.add(mGetCurrencies.get()
+        mSubscriptions.add(mGetCurrencyList.get()
                 .map(mCurrencyModelDataMapper::transformToViewModel)
                 .subscribe(new DefaultSubscriber<List<CurrencyViewModel>>() {
                     @Override
@@ -400,7 +400,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     }
 
     public void loadGoods() {
-        mSubscriptions.add(mGetGoods.get()
+        mSubscriptions.add(mGetGoodsList.get()
                 .map(mGoodsModelDataMapper::transformToViewModel)
                 .map(productViewModels -> {
                     Map<String, ProductViewModel> result = new HashMap<>();

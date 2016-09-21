@@ -32,17 +32,11 @@ public interface GoodsRepository {
 
     Observable<ProductModel> getItem(final String id);
 
-    void save(Collection<ProductModel> data) throws Exception;
+    void save(Collection<ProductModel> data);
 
-    void save(ProductModel data) throws Exception;
+    void delete(Collection<ProductModel> data);
 
-    void delete(Collection<ProductModel> data) throws Exception;
-
-    void delete(ProductModel data) throws Exception;
-
-    void update(Collection<ProductModel> data) throws Exception;
-
-    void update(ProductModel data) throws Exception;
+    void update(Collection<ProductModel> data);
 
     int clear();
 }

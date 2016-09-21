@@ -22,6 +22,8 @@ import com.justplay1.shoppist.interactor.UseCase;
 import com.justplay1.shoppist.models.CurrencyModel;
 import com.justplay1.shoppist.repository.CurrencyRepository;
 
+import java.util.Collection;
+
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -32,7 +34,7 @@ import rx.Observable;
 public class AddCurrency extends UseCase<Boolean> {
 
     private final CurrencyRepository mRepository;
-    private CurrencyModel mData;
+    private Collection<CurrencyModel> mData;
 
     @Inject
     public AddCurrency(CurrencyRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
@@ -40,7 +42,7 @@ public class AddCurrency extends UseCase<Boolean> {
         mRepository = repository;
     }
 
-    public void setData(CurrencyModel data) {
+    public void setData(Collection<CurrencyModel> data) {
         this.mData = data;
     }
 

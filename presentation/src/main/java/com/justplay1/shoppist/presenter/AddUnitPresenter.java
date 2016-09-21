@@ -112,7 +112,7 @@ public class AddUnitPresenter extends BaseRxPresenter<AddUnitView, Router> {
         mSubscriptions.add(
                 Observable.fromCallable(() -> mDataMapper.transform(data))
                         .flatMap(unit -> {
-                            mAddUnits.setData(unit);
+                            mAddUnits.setData(Collections.singletonList(unit));
                             return mAddUnits.get();
                         }).subscribe(new SaveUnitSubscriber(true)));
     }

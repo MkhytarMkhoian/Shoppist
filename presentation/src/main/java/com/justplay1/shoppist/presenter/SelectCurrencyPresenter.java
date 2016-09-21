@@ -19,11 +19,9 @@ package com.justplay1.shoppist.presenter;
 import android.os.Bundle;
 
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
-import com.justplay1.shoppist.interactor.currency.GetCurrencies;
-import com.justplay1.shoppist.interactor.units.GetUnits;
+import com.justplay1.shoppist.interactor.currency.GetCurrencyList;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.CurrencyViewModel;
-import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
 import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
@@ -39,14 +37,14 @@ import javax.inject.Inject;
 public class SelectCurrencyPresenter extends BaseRxPresenter<SelectCurrencyView, Router> {
 
     private final CurrencyModelDataMapper mDataMapper;
-    private final GetCurrencies mGetCurrencies;
+    private final GetCurrencyList mGetCurrencyList;
 
     private CurrencyViewModel mItem;
 
     @Inject
-    public SelectCurrencyPresenter(CurrencyModelDataMapper dataMapper, GetCurrencies getCurrencies) {
+    public SelectCurrencyPresenter(CurrencyModelDataMapper dataMapper, GetCurrencyList getCurrencyList) {
         this.mDataMapper = dataMapper;
-        this.mGetCurrencies = getCurrencies;
+        this.mGetCurrencyList = getCurrencyList;
     }
 
     @Override
@@ -86,7 +84,7 @@ public class SelectCurrencyPresenter extends BaseRxPresenter<SelectCurrencyView,
     }
 
     public void loadCurrencies() {
-        mSubscriptions.add(mGetCurrencies.get()
+        mSubscriptions.add(mGetCurrencyList.get()
                 .map(mDataMapper::transformToViewModel)
                 .subscribe(new DefaultSubscriber<List<CurrencyViewModel>>() {
 

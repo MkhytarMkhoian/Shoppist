@@ -21,7 +21,7 @@ import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.interactor.goods.AddGoods;
 import com.justplay1.shoppist.interactor.goods.DeleteGoods;
-import com.justplay1.shoppist.interactor.goods.GetGoods;
+import com.justplay1.shoppist.interactor.goods.GetGoodsList;
 import com.justplay1.shoppist.interactor.goods.UpdateGoods;
 import com.justplay1.shoppist.repository.GoodsRepository;
 
@@ -42,8 +42,8 @@ public class GoodsModule {
 
     @Provides
     @PerActivity
-    GetGoods provideGetGoods(GoodsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-        return new GetGoods(repository, threadExecutor, postExecutionThread);
+    GetGoodsList provideGetGoods(GoodsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+        return new GetGoodsList(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides

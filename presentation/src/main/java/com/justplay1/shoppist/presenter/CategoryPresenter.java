@@ -19,7 +19,7 @@ package com.justplay1.shoppist.presenter;
 import com.justplay1.shoppist.di.scope.PerActivity;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.DeleteCategory;
-import com.justplay1.shoppist.interactor.category.GetCategories;
+import com.justplay1.shoppist.interactor.category.GetCategoryList;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
 import com.justplay1.shoppist.navigation.CategoryRouter;
@@ -40,13 +40,13 @@ import rx.Observable;
 public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRouter> {
 
     private final CategoryModelDataMapper mDataMapper;
-    private final GetCategories mGetCategories;
+    private final GetCategoryList mGetCategoryList;
     private final DeleteCategory mDeleteCategory;
 
     @Inject
-    public CategoryPresenter(GetCategories getCategories, DeleteCategory deleteCategory,
+    public CategoryPresenter(GetCategoryList getCategoryList, DeleteCategory deleteCategory,
                              CategoryModelDataMapper dataMapper) {
-        this.mGetCategories = getCategories;
+        this.mGetCategoryList = getCategoryList;
         this.mDeleteCategory = deleteCategory;
         this.mDataMapper = dataMapper;
     }
@@ -69,7 +69,7 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRou
 
     public void loadData() {
         showLoading();
-        mSubscriptions.add(mGetCategories.get()
+        mSubscriptions.add(mGetCategoryList.get()
                 .map(mDataMapper::transformToViewModel)
                 .subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
                     @Override

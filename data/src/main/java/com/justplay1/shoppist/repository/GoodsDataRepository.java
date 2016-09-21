@@ -56,33 +56,18 @@ public class GoodsDataRepository implements GoodsRepository {
     }
 
     @Override
-    public void save(Collection<ProductModel> data) throws Exception {
+    public void save(Collection<ProductModel> data) {
         mDataStore.save(mDataMapper.transformToDAO(data));
     }
 
     @Override
-    public void save(ProductModel data) throws Exception {
-        mDataStore.save(mDataMapper.transform(data));
-    }
-
-    @Override
-    public void delete(Collection<ProductModel> data) throws Exception {
+    public void delete(Collection<ProductModel> data) {
         mDataStore.delete(mDataMapper.transformToDAO(data));
     }
 
     @Override
-    public void delete(ProductModel data) throws Exception {
-        mDataStore.delete(mDataMapper.transform(data));
-    }
-
-    @Override
-    public void update(Collection<ProductModel> data) throws Exception {
+    public void update(Collection<ProductModel> data) {
         mDataStore.update(mDataMapper.transformToDAO(data));
-    }
-
-    @Override
-    public void update(ProductModel data) throws Exception {
-        mDataStore.update(mDataMapper.transform(data));
     }
 
     @Override

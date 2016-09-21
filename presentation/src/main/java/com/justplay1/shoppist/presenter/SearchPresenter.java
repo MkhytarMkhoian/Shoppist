@@ -22,7 +22,7 @@ import android.support.annotation.ColorInt;
 import com.justplay1.shoppist.di.scope.PerActivity;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.GetCategory;
-import com.justplay1.shoppist.interactor.goods.GetGoods;
+import com.justplay1.shoppist.interactor.goods.GetGoodsList;
 import com.justplay1.shoppist.interactor.listitems.AddListItems;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.CurrencyViewModel;
@@ -58,7 +58,7 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
     private final ListItemsModelDataMapper mListItemsModelDataMapper;
 
     private final GetCategory mGetCategory;
-    private final GetGoods mGetGoods;
+    private final GetGoodsList mGetGoodsList;
     private final AddListItems mAddListItems;
 
     private String mParentListId;
@@ -66,13 +66,13 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
 
     @Inject
     public SearchPresenter(GoodsModelDataMapper dataMapper,
-                           GetGoods getGoods,
+                           GetGoodsList getGoodsList,
                            AddListItems addListItems,
                            GetCategory getCategory,
                            CategoryModelDataMapper categoryModelDataMapper,
                            ListItemsModelDataMapper listItemsModelDataMapper) {
         this.mGoodsModelDataMapper = dataMapper;
-        this.mGetGoods = getGoods;
+        this.mGetGoodsList = getGoodsList;
         this.mGetCategory = getCategory;
         this.mCategoryModelDataMapper = categoryModelDataMapper;
         this.mAddListItems = addListItems;
@@ -120,7 +120,7 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
     }
 
     private Observable<List<ProductViewModel>> loadGoods() {
-        return mGetGoods.get()
+        return mGetGoodsList.get()
                 .map(mGoodsModelDataMapper::transformToViewModel);
     }
 

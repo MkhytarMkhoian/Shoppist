@@ -108,7 +108,7 @@ public class AddCurrencyPresenter extends BaseRxPresenter<AddCurrencyView, Route
         mSubscriptions.add(
                 Observable.fromCallable(() -> mDataMapper.transform(data))
                         .flatMap(currency -> {
-                            mAddCurrency.setData(currency);
+                            mAddCurrency.setData(Collections.singletonList(currency));
                             return mAddCurrency.get();
                         }).subscribe(new SaveCurrencySubscriber(true)));
     }

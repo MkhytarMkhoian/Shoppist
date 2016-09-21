@@ -32,17 +32,11 @@ public interface CurrencyRepository {
 
     Observable<CurrencyModel> getItem(final String id);
 
-    void save(Collection<CurrencyModel> data) throws Exception;
+    void save(Collection<CurrencyModel> data);
 
-    void save(CurrencyModel data) throws Exception;
+    void delete(Collection<CurrencyModel> data);
 
-    void delete(Collection<CurrencyModel> data) throws Exception;
-
-    void delete(CurrencyModel data) throws Exception;
-
-    void update(Collection<CurrencyModel> data) throws Exception;
-
-    void update(CurrencyModel data) throws Exception;
+    void update(Collection<CurrencyModel> data);
 
     int clear();
 }

@@ -14,13 +14,13 @@
  *   limitations under the License.
  */
 
-package com.justplay1.shoppist.interactor.goods;
+package com.justplay1.shoppist.interactor.category;
 
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.interactor.UseCase;
-import com.justplay1.shoppist.models.ProductModel;
-import com.justplay1.shoppist.repository.GoodsRepository;
+import com.justplay1.shoppist.models.CategoryModel;
+import com.justplay1.shoppist.repository.CategoryRepository;
 
 import java.util.Collection;
 import java.util.List;
@@ -32,26 +32,18 @@ import rx.Observable;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class AddGoods extends UseCase<Boolean> {
+public class GetCategoryList extends UseCase<List<CategoryModel>> {
 
-    private final GoodsRepository mRepository;
-    private Collection<ProductModel> mData;
+    private final CategoryRepository repository;
 
     @Inject
-    public AddGoods(GoodsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    public GetCategoryList(CategoryRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mRepository = repository;
-    }
-
-    public void setData(Collection<ProductModel> data) {
-        this.mData = data;
+        this.repository = repository;
     }
 
     @Override
-    protected Observable<Boolean> buildUseCaseObservable() {
-        return Observable.fromCallable(() -> {
-            mRepository.save(mData);
-            return true;
-        });
+    protected Observable<List<CategoryModel>> buildUseCaseObservable() {
+        return repository.getItems();
     }
 }

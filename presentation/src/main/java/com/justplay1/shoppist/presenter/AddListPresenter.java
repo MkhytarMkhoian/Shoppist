@@ -126,7 +126,7 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
         mSubscriptions.add(
                 Observable.fromCallable(() -> mDataMapper.transform(data))
                         .flatMap(list -> {
-                            mAddList.setData(list);
+                            mAddList.setData(Collections.singletonList(list));
                             return mAddList.get();
                         }).subscribe(new SaveListSubscriber(isLongClick, true)));
     }
