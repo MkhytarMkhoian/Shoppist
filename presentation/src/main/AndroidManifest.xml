@@ -15,7 +15,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.justplay1.shoppist">
+          package="com.justplay1.shoppist">
 
     <application
         android:name=".App"
@@ -29,8 +29,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentStatusBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
@@ -38,7 +38,7 @@
             android:name=".view.activities.SearchActivity"
             android:label="@string/search"
             android:screenOrientation="portrait"
-            android:theme="@style/ShoppingList.noAnimTheme" />
+            android:theme="@style/ShoppingList.noAnimTheme"/>
 
         <activity
             android:name=".view.activities.CurrencyActivity"
@@ -55,7 +55,7 @@
         <activity
             android:name=".view.activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".view.activities.CategoriesActivity"
@@ -66,7 +66,7 @@
         <activity
             android:name=".view.activities.ListItemActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".view.activities.AddElementActivity"
@@ -78,43 +78,5 @@
             android:label="@string/goods"
             android:screenOrientation="portrait">
         </activity>
-
-        <activity
-            android:name=".widget.SelectListDialogActivity"
-            android:excludeFromRecents="true"
-            android:label="@string/select_list_dialog"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:taskAffinity=".widget.AddDialogWidgetActivity"
-            android:theme="@style/ShoppingList.Dialog">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".widget.SortWidgetActivity"
-            android:excludeFromRecents="true"
-            android:label="@string/select_sort"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:taskAffinity=".widget.AddDialogWidgetActivity"
-            android:theme="@style/ShoppingList.Dialog" />
-
-        <service
-            android:name=".widget.ShoppistWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
-
-        <receiver
-            android:name=".widget.ShoppistWidgetProvider"
-            android:icon="@drawable/ic_launcher"
-            android:label="@string/shoppist_widget">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/shoppist_widget_metadata" />
-        </receiver>
     </application>
 </manifest>
