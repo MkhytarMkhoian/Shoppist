@@ -32,22 +32,22 @@ import javax.inject.Singleton;
 @Singleton
 public class AppPreferences {
 
-    public static final String COLOR_PRIMARY = "color_theme";
-    public static final String COLOR_PRIMARY_DARK = "color_status_bar_theme";
-    public static final String LOCK_SCREEN = "LockScreen";
+    private static final String COLOR_PRIMARY = "color_theme";
+    private static final String COLOR_PRIMARY_DARK = "color_status_bar_theme";
+    private static final String LOCK_SCREEN = "LockScreen";
 
-    public static final String CONFIRM_DELETE_DIALOG = "confirm_delete_dialog";
-    public static final String IS_NEED_SHOW_RATE_DIALOG = "is_need_show_rate_dialog";
-    public static final String DEFAULT_CURRENCY = "default_currency_id";
-    public static final String CALCULATE_PRICE = "calculate_price";
-    public static final String ADD_BUTTON_CLICK_ACTION = "add_button_click_action";
+    private static final String CONFIRM_DELETE_DIALOG = "confirm_delete_dialog";
+    private static final String IS_NEED_SHOW_RATE_DIALOG = "is_need_show_rate_dialog";
+    private static final String DEFAULT_CURRENCY = "default_currency_id";
+    private static final String CALCULATE_PRICE = "calculate_price";
+    private static final String ADD_BUTTON_CLICK_ACTION = "add_button_click_action";
 
-    public static final String SORT_FOR_SHOPPING_LISTS = "sort_for_shopping_lists";
-    public static final String SORT_FOR_SHOPPING_LIST_ITEMS = "sort_for_shopping_list_items";
-    public static final String SORT_FOR_GOODS = "sort_for_goods";
+    private static final String SORT_FOR_SHOPPING_LISTS = "sort_for_shopping_lists";
+    private static final String SORT_FOR_SHOPPING_LIST_ITEMS = "sort_for_shopping_list_items";
+    private static final String SORT_FOR_GOODS = "sort_for_goods";
 
-    public static final String LEFT_SHOPPING_LIST_ITEM_SWIPE_ACTION = "left_shopping_list_item_swipe_action";
-    public static final String RIGHT_SHOPPING_LIST_ITEM_SWIPE_ACTION = "right_shopping_list_item_swipe_action";
+    private static final String LEFT_SHOPPING_LIST_ITEM_SWIPE_ACTION = "left_shopping_list_item_swipe_action";
+    private static final String RIGHT_SHOPPING_LIST_ITEM_SWIPE_ACTION = "right_shopping_list_item_swipe_action";
 
     private SharedPreferences mPreference;
     private Context mContext;
