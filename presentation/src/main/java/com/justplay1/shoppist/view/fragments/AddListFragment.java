@@ -83,12 +83,6 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDestroy();
-    }
-
-    @Override
     protected void injectDependencies() {
         super.injectDependencies();
         getInjector(ListsComponent.class).inject(this);

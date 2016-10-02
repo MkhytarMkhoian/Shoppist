@@ -103,7 +103,6 @@ public class MoveListItemsDialogFragment extends BaseDialogFragment implements M
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
-        mPresenter.onDestroy();
     }
 
     @Override

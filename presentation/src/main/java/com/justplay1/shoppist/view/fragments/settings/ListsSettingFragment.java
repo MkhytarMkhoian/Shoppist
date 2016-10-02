@@ -106,12 +106,6 @@ public class ListsSettingFragment extends BaseSettingFragment implements ListsSe
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDestroy();
-    }
-
-    @Override
     public void showDefaultCurrency(CurrencyViewModel data) {
         mDefaultCurrencyBtn.setSummary(data.getName());
     }

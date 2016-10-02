@@ -32,7 +32,4 @@ public interface Presenter<V> {
 
     @UiThread
     void onSaveInstanceState(Bundle bundle);
-
-    @UiThread
-    void onDestroy();
 }

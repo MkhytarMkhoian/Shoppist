@@ -40,7 +40,7 @@ import rx.subjects.BehaviorSubject;
 @NonConfigurationScope
 public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRouter> {
 
-    private final BehaviorSubject<List<CategoryViewModel>> subject = BehaviorSubject.create();
+    private final BehaviorSubject<List<CategoryViewModel>> cache = BehaviorSubject.create();
 
     private final CategoryModelDataMapper mDataMapper;
     private final GetCategoryList mGetCategoryList;
@@ -57,16 +57,22 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRou
     }
 
     private void loadData() {
-        showLoading();
         mGetCategoryList.get()
                 .map(mDataMapper::transformToViewModel)
-                .subscribe(subject);
+                .subscribe(cache);
     }
 
     @Override
     public void attachView(CategoryView view) {
         super.attachView(view);
-        subject.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
+        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                showLoading();
+            }
+
             @Override
             public void onNext(List<CategoryViewModel> categoryViewModels) {
                 hideLoading();
@@ -78,7 +84,7 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRou
                 hideLoading();
                 e.printStackTrace();
             }
-        });
+        }));
     }
 
     public void onAddButtonClick() {

@@ -81,9 +81,6 @@ public class AddElementActivity<C> extends BaseActivity
     @SuppressWarnings("ResourceType")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_single_fragment);
-        initToolbar();
         if (getIntent() != null) {
             mElementType = getIntent().getIntExtra(AddElementType.class.getName(), 0);
             mCategoryModel = getIntent().getParcelableExtra(CategoryViewModel.class.getName());
@@ -91,6 +88,9 @@ public class AddElementActivity<C> extends BaseActivity
             mListItemModel = getIntent().getParcelableExtra(ListItemViewModel.class.getName());
         }
         mComponent = (C) retrieveComponentOrCreateNew();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout_single_fragment);
+        initToolbar();
     }
 
     @Override

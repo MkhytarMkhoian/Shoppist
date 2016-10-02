@@ -24,7 +24,6 @@ import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.listitems.GetListItems;
 import com.justplay1.shoppist.interactor.lists.DeleteLists;
 import com.justplay1.shoppist.interactor.lists.GetLists;
-import com.justplay1.shoppist.interactor.lists.UpdateLists;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.SortType;
@@ -43,11 +42,14 @@ import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Subscription;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel, ListRouter> {
+
+    private final BehaviorSubject<List<Pair<HeaderViewModel, List<ListViewModel>>>> cache = BehaviorSubject.create();
 
     private final ListModelDataMapper mDataMapper;
     private final ListItemsModelDataMapper mListItemsModelDataMapper;
@@ -70,6 +72,8 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
         this.mDataMapper = listModelDataMapper;
         this.mListItemsModelDataMapper = listItemsModelDataMapper;
         this.mGetListItems = getListItems;
+
+        loadData();
     }
 
     @Override
@@ -79,9 +83,21 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
         mDataBusSubscription = DataEventBus.instanceOf().observable().subscribe(new DefaultSubscriber<Object>() {
             @Override
             public void onNext(Object o) {
-                loadData(false);
+                loadData();
             }
         });
+
+        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListViewModel>>>>() {
+            @Override
+            public void onNext(List<Pair<HeaderViewModel, List<ListViewModel>>> data) {
+                showData(data);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+        }));
     }
 
     @Override
@@ -94,34 +110,14 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
         if (mPreferences.isNeedShowRateDialog()) {
             showRateDialog();
         }
-        loadData(true);
     }
 
     @SuppressWarnings("ResourceType")
-    public void loadData(boolean showProgress) {
-        if (showProgress){
-            showLoading();
-        }
-        mSubscriptions.add(mGetLists.get()
+    private void loadData() {
+        mGetLists.get()
                 .map(mDataMapper::transformToViewModel)
                 .map(listViewModels -> sort(listViewModels, mPreferences.getSortForLists()))
-                .subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListViewModel>>>>() {
-                    @Override
-                    public void onNext(List<Pair<HeaderViewModel, List<ListViewModel>>> data) {
-                        if (showProgress){
-                            hideLoading();
-                        }
-                        showData(data);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (showProgress){
-                            hideLoading();
-                        }
-                        e.printStackTrace();
-                    }
-                }));
+                .subscribe(cache);
     }
 
     private void showRateDialog() {

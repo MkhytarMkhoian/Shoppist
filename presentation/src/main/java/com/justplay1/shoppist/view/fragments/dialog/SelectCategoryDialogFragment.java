@@ -86,7 +86,6 @@ public class SelectCategoryDialogFragment extends BaseSelectItemDialogFragment<C
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
-        mPresenter.onDestroy();
     }
 
     @Override

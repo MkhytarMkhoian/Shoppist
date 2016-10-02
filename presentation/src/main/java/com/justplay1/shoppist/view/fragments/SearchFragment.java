@@ -117,12 +117,6 @@ public class SearchFragment extends BaseFragment
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDestroy();
         ButterKnife.unbind(this);
     }
 

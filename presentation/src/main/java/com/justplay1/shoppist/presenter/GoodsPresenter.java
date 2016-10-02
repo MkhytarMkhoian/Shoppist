@@ -47,12 +47,15 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
 public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductViewModel, GoodsRouter> {
+
+    private final BehaviorSubject<List<Pair<HeaderViewModel, List<ProductViewModel>>>> subject = BehaviorSubject.create();
 
     private final GoodsModelDataMapper mGoodsModelDataMapper;
     private final CategoryModelDataMapper mCategoryModelDataMapper;
@@ -83,10 +86,33 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
         this.mGetUnit = getUnit;
         this.mCategoryModelDataMapper = categoryModelDataMapper;
         this.mUnitsDataModelMapper = unitsDataModelMapper;
+
+        loadData();
     }
 
-    public void init() {
-        loadData();
+    @Override
+    public void attachView(GoodsView view) {
+        super.attachView(view);
+        mSubscriptions.add(subject.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ProductViewModel>>>>() {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                showLoading();
+            }
+
+            @Override
+            public void onNext(List<Pair<HeaderViewModel, List<ProductViewModel>>> data) {
+                hideLoading();
+                showData(data);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                hideLoading();
+                e.printStackTrace();
+            }
+        }));
     }
 
     public void onAddButtonClick() {
@@ -126,8 +152,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
         }
     }
 
-    public void loadData() {
-        showLoading();
+    private void loadData() {
         mSubscriptions.add(Observable.zip(loadDefaultUnit(), loadDefaultCategory(), (unit, category) -> {
             Map<String, BaseViewModel> map = new HashMap<>();
             map.put(CategoryViewModel.NO_CATEGORY_ID, category);
@@ -149,19 +174,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
                     }
                     return goods;
                 }))
-                .subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ProductViewModel>>>>() {
-                    @Override
-                    public void onNext(List<Pair<HeaderViewModel, List<ProductViewModel>>> data) {
-                        hideLoading();
-                        showData(data);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        hideLoading();
-                        e.printStackTrace();
-                    }
-                }));
+                .subscribe(subject));
     }
 
     @SuppressWarnings("ResourceType")

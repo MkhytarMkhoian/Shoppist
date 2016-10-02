@@ -61,7 +61,6 @@ public class CurrencyFragment extends BaseListFragment
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
         mPresenter.attachRouter(this);
-        mPresenter.init();
     }
 
     @Override
@@ -69,12 +68,6 @@ public class CurrencyFragment extends BaseListFragment
         super.onDestroyView();
         mPresenter.detachView();
         mPresenter.detachRouter();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDestroy();
     }
 
     @Override

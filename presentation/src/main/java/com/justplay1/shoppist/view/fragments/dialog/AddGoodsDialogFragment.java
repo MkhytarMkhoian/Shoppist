@@ -104,7 +104,6 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
-        mPresenter.onDestroy();
     }
 
     @Override

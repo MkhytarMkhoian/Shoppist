@@ -76,7 +76,6 @@ public class GoodsFragment extends BaseExpandableListFragment
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
         mPresenter.attachRouter((GoodsRouter) getActivity());
-        mPresenter.init();
     }
 
     @Override
@@ -84,12 +83,6 @@ public class GoodsFragment extends BaseExpandableListFragment
         super.onDestroyView();
         mPresenter.detachView();
         mPresenter.detachRouter();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDestroy();
     }
 
     @Override

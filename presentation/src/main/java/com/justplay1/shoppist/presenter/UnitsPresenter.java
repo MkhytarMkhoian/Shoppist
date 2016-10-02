@@ -31,46 +31,59 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
 
+    private final BehaviorSubject<List<UnitViewModel>> subject = BehaviorSubject.create();
+
     private final UnitsDataModelMapper mDataMapper;
     private final GetUnitsList mGetUnitsList;
     private final DeleteUnits mDeleteUnits;
 
     @Inject
-    public UnitsPresenter(UnitsDataModelMapper unitsDataModelMapper,
-                          GetUnitsList getUnitsList,
-                          DeleteUnits deleteUnits) {
+    UnitsPresenter(UnitsDataModelMapper unitsDataModelMapper,
+                   GetUnitsList getUnitsList,
+                   DeleteUnits deleteUnits) {
         this.mDataMapper = unitsDataModelMapper;
         this.mGetUnitsList = getUnitsList;
         this.mDeleteUnits = deleteUnits;
-    }
 
-    public void init() {
         loadData();
     }
 
-    public void loadData() {
-        showLoading();
-        mSubscriptions.add(mGetUnitsList.get()
-                .map(mDataMapper::transformToViewModel)
-                .subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
-                    @Override
-                    public void onNext(List<UnitViewModel> currencyViewModels) {
-                        hideLoading();
-                        showData(currencyViewModels);
-                    }
+    @Override
+    public void attachView(UnitsView view) {
+        super.attachView(view);
+        mSubscriptions.add(subject.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
 
-                    @Override
-                    public void onError(Throwable e) {
-                        hideLoading();
-                        e.printStackTrace();
-                    }
-                }));
+            @Override
+            public void onStart() {
+                super.onStart();
+                showLoading();
+            }
+
+            @Override
+            public void onNext(List<UnitViewModel> currencyViewModels) {
+                hideLoading();
+                showData(currencyViewModels);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                hideLoading();
+                e.printStackTrace();
+            }
+        }));
+    }
+
+    private void loadData() {
+        mGetUnitsList.get()
+                .map(mDataMapper::transformToViewModel)
+                .subscribe(subject);
     }
 
     public void deleteItems(Collection<UnitViewModel> data) {
@@ -82,13 +95,13 @@ public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
     }
 
     public void onAddButtonClick() {
-        if (hasRouter()){
+        if (hasRouter()) {
             getRouter().openUnitEditDialog(null);
         }
     }
 
     public void onListItemClick(UnitViewModel unit) {
-        if (hasRouter()){
+        if (hasRouter()) {
             getRouter().openUnitEditDialog(unit);
         }
     }

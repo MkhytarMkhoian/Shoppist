@@ -32,12 +32,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
 public class CurrencyPresenter extends BaseRxPresenter<CurrencyView, CurrencyRouter> {
+
+    private final BehaviorSubject<List<CurrencyViewModel>> cache = BehaviorSubject.create();
 
     private final CurrencyModelDataMapper mDataMapper;
     private final GetCurrencyList mGetCurrencyList;
@@ -50,21 +53,26 @@ public class CurrencyPresenter extends BaseRxPresenter<CurrencyView, CurrencyRou
         this.mGetCurrencyList = getCurrencyList;
         this.mDeleteCurrency = deleteCurrency;
         this.mDataMapper = dataMapper;
-    }
 
-    public void init() {
         loadData();
     }
 
-    public void loadData() {
-        mSubscriptions.add(mGetCurrencyList.get()
+    private void loadData() {
+        mGetCurrencyList.get()
                 .map(mDataMapper::transformToViewModel)
-                .subscribe(new DefaultSubscriber<List<CurrencyViewModel>>() {
-                    @Override
-                    public void onNext(List<CurrencyViewModel> currencyViewModels) {
-                        showData(currencyViewModels);
-                    }
-                }));
+                .subscribe(cache);
+    }
+
+    @Override
+    public void attachView(CurrencyView view) {
+        super.attachView(view);
+        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<CurrencyViewModel>>() {
+
+            @Override
+            public void onNext(List<CurrencyViewModel> currencyViewModels) {
+                showData(currencyViewModels);
+            }
+        }));
     }
 
     public void onAddButtonClick() {

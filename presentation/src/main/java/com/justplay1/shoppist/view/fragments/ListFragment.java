@@ -82,15 +82,11 @@ public class ListFragment extends BaseEDSListFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUiBusSubscription.unsubscribe();
+        if (mUiBusSubscription != null){
+            mUiBusSubscription.unsubscribe();
+        }
         mPresenter.detachView();
         mPresenter.attachRouter((ListRouter) getActivity());
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDestroy();
     }
 
     @Override

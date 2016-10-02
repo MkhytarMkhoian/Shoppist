@@ -39,9 +39,9 @@ public class ListsSettingPresenter extends BaseRxPresenter<ListsSettingView, Rou
     private final AppPreferences mPreferences;
 
     @Inject
-    public ListsSettingPresenter(CurrencyModelDataMapper currencyModelDataMapper,
-                                 GetCurrency getCurrency,
-                                 AppPreferences preferences) {
+    ListsSettingPresenter(CurrencyModelDataMapper currencyModelDataMapper,
+                          GetCurrency getCurrency,
+                          AppPreferences preferences) {
         this.mCurrencyModelDataMapper = currencyModelDataMapper;
         this.mGetCurrency = getCurrency;
         this.mPreferences = preferences;

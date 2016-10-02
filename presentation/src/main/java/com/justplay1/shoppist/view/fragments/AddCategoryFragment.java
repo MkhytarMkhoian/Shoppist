@@ -79,12 +79,6 @@ public class AddCategoryFragment extends BaseAddElementFragment
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDestroy();
-    }
-
-    @Override
     protected void injectDependencies() {
         super.injectDependencies();
         getInjector(CategoryComponent.class).inject(this);

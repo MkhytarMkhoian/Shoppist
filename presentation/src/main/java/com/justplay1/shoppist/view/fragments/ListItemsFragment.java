@@ -79,7 +79,6 @@ public class ListItemsFragment extends BaseEDSListFragment
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
         mPresenter.attachRouter((ListItemsRouter) getActivity());
-        mPresenter.init();
     }
 
     @Override
@@ -93,12 +92,6 @@ public class ListItemsFragment extends BaseEDSListFragment
         super.onDestroyView();
         mPresenter.detachView();
         mPresenter.detachRouter();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDestroy();
     }
 
     @Override

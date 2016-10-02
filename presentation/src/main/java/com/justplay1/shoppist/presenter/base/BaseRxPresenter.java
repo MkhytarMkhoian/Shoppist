@@ -53,9 +53,4 @@ public abstract class BaseRxPresenter<V extends BaseMvpView, R extends Router> e
         super.detachView();
         mSubscriptions.clear();
     }
-
-    @UiThread
-    @Override
-    public void onDestroy() {
-    }
 }

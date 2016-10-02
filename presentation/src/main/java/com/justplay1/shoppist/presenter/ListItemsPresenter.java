@@ -57,12 +57,15 @@ import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Subscription;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
 public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, ListItemViewModel, ListItemsRouter> {
+
+    private final BehaviorSubject<List<Pair<HeaderViewModel, List<ListItemViewModel>>>> cache = BehaviorSubject.create();
 
     private final CategoryModelDataMapper mCategoryModelDataMapper;
     private final UnitsDataModelMapper mUnitsDataModelMapper;
@@ -103,6 +106,8 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         this.mGetListItems = getListItems;
         this.mUpdateListItems = updateListItems;
         this.mDeleteListItems = deleteListItems;
+
+        loadData();
     }
 
     @Override
@@ -120,19 +125,27 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         mDataBusSubscription = DataEventBus.instanceOf().observable().subscribe(new DefaultSubscriber<Object>() {
             @Override
             public void onNext(Object o) {
-                loadData(false);
+                loadData();
             }
         });
+
+        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListItemViewModel>>>>() {
+            @Override
+            public void onNext(List<Pair<HeaderViewModel, List<ListItemViewModel>>> data) {
+                showData(data);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+        }));
     }
 
     @Override
     public void detachView() {
         super.detachView();
         mDataBusSubscription.unsubscribe();
-    }
-
-    public void init() {
-        loadData(true);
     }
 
     @SuppressWarnings("ResourceType")
@@ -143,11 +156,8 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
                 .map(listItems -> sort(listItems, mPreferences.getSortForShoppingListItems()));
     }
 
-    public void loadData(boolean showProgress) {
-        if (showProgress) {
-            showLoading();
-        }
-        mSubscriptions.add(Observable.zip(loadDefaultUnit(), loadDefaultCategory(), loadDefaultCurrency(),
+    private void loadData() {
+        Observable.zip(loadDefaultUnit(), loadDefaultCategory(), loadDefaultCurrency(),
                 (unit, category, currency) -> {
                     Map<String, BaseViewModel> map = new HashMap<>();
                     map.put(CategoryViewModel.NO_CATEGORY_ID, category);
@@ -174,23 +184,8 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
                                 }
                             }
                             return listItems;
-                        })).subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListItemViewModel>>>>() {
-                    @Override
-                    public void onNext(List<Pair<HeaderViewModel, List<ListItemViewModel>>> data) {
-                        if (showProgress) {
-                            hideLoading();
-                        }
-                        showData(data);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (showProgress) {
-                            hideLoading();
-                        }
-                        e.printStackTrace();
-                    }
-                }));
+                        }))
+                .subscribe(cache);
     }
 
     private Observable<CurrencyViewModel> loadDefaultCurrency() {

@@ -92,7 +92,6 @@ public class AddUnitsDialogFragment extends BaseDialogFragment
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
-        mPresenter.onDestroy();
     }
 
     @Override

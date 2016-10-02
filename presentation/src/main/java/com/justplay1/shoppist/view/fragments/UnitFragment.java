@@ -66,7 +66,6 @@ public class UnitFragment extends BaseListFragment
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
         mPresenter.attachRouter(this);
-        mPresenter.init();
     }
 
     @Override

@@ -55,12 +55,18 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
 public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemView> {
+
+    private final BehaviorSubject<List<CategoryViewModel>> categoryCache = BehaviorSubject.create();
+    private final BehaviorSubject<List<CurrencyViewModel>> currencyCache = BehaviorSubject.create();
+    private final BehaviorSubject<List<UnitViewModel>> unitsCache = BehaviorSubject.create();
+    private final BehaviorSubject<Map<String, ProductViewModel>> goodsCache = BehaviorSubject.create();
 
     private final CategoryModelDataMapper mCategoryModelDataMapper;
     private final UnitsDataModelMapper mUnitsDataModelMapper;
@@ -116,6 +122,11 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         this.mGetUnitsList = getUnitsList;
         this.mUpdateGoods = updateGoods;
         this.mPreferences = preferences;
+
+        loadCategories();
+        loadUnits();
+        loadCurrency();
+        loadGoods();
     }
 
     @Override
@@ -150,10 +161,57 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
             selectPriority(Priority.NO_PRIORITY);
             setDefaultToolbarTitle();
         }
-        loadCategories();
-        loadUnits();
-        loadCurrency();
-        loadGoods();
+    }
+
+    @Override
+    public void attachView(AddListItemView view) {
+        super.attachView(view);
+        mSubscriptions.add(categoryCache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
+
+            @Override
+            public void onNext(List<CategoryViewModel> category) {
+                setCategory(category);
+                if (mItem != null) {
+                    selectCategory(mItem.getCategory().getId());
+                } else {
+                    selectCategory(CategoryViewModel.NO_CATEGORY_ID);
+                }
+            }
+        }));
+
+        mSubscriptions.add(unitsCache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
+
+            @Override
+            public void onNext(List<UnitViewModel> unitViewModels) {
+                setUnits(unitViewModels);
+                if (mItem != null) {
+                    selectUnit(mItem.getUnit().getId());
+                } else {
+                    selectUnit(UnitViewModel.NO_UNIT_ID);
+                }
+            }
+        }));
+
+        mSubscriptions.add(currencyCache.subscribe(new DefaultSubscriber<List<CurrencyViewModel>>() {
+
+            @Override
+            public void onNext(List<CurrencyViewModel> currency) {
+                setCurrency(currency);
+                if (mItem != null) {
+                    selectCurrency(mItem.getCurrency().getId());
+                } else {
+                    selectCurrency(mPreferences.getDefaultCurrency());
+                }
+            }
+        }));
+
+        mSubscriptions.add(goodsCache.subscribe(new DefaultSubscriber<Map<String, ProductViewModel>>() {
+
+            @Override
+            public void onNext(Map<String, ProductViewModel> map) {
+                setGoods(map);
+            }
+        }));
     }
 
     public void setPriority(int position) {
@@ -197,90 +255,6 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         } else {
             selectUnit(UnitViewModel.NO_UNIT_ID);
             selectCategory(CategoryViewModel.NO_CATEGORY_ID);
-        }
-    }
-
-    private void selectPriority(@Priority int priority) {
-        if (isViewAttached()) {
-            getView().selectPriority(priority);
-        }
-    }
-
-    private void setViewNote(String note) {
-        if (isViewAttached()) {
-            getView().setNote(note);
-        }
-    }
-
-    private void setViewPrice(String price) {
-        if (isViewAttached()) {
-            getView().setPrice(price);
-        }
-    }
-
-    private void setViewQuantity(String quantity) {
-        if (isViewAttached()) {
-            getView().setQuantity(quantity);
-        }
-    }
-
-    private void setCategory(List<CategoryViewModel> category) {
-        if (isViewAttached()) {
-            getView().setCategory(category);
-        }
-    }
-
-    private void setCurrency(List<CurrencyViewModel> currency) {
-        if (isViewAttached()) {
-            getView().setCurrency(currency);
-        }
-    }
-
-    private void setUnits(List<UnitViewModel> units) {
-        if (isViewAttached()) {
-            getView().setUnits(units);
-        }
-    }
-
-    private void setGoods(Map<String, ProductViewModel> goods) {
-        if (isViewAttached()) {
-            getView().setGoods(goods);
-        }
-    }
-
-    private void selectCategory(String id) {
-        if (isViewAttached()) {
-            getView().selectCategory(id);
-        }
-    }
-
-    private void selectCurrency(String id) {
-        if (isViewAttached()) {
-            getView().selectCurrency(id);
-        }
-    }
-
-    private void selectUnit(String id) {
-        if (isViewAttached()) {
-            getView().selectUnit(id);
-        }
-    }
-
-    private void setDefaultCategory() {
-        if (isViewAttached()) {
-            getView().setDefaultCategory();
-        }
-    }
-
-    private void setDefaultCurrency() {
-        if (isViewAttached()) {
-            getView().setDefaultCurrency();
-        }
-    }
-
-    private void setDefaultUnit() {
-        if (isViewAttached()) {
-            getView().setDefaultUnit();
         }
     }
 
@@ -336,71 +310,26 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         }
     }
 
-    public void loadCategories() {
-        mSubscriptions.add(mGetCategoryList.get()
+    private void loadCategories() {
+        mGetCategoryList.get()
                 .map(mCategoryModelDataMapper::transformToViewModel)
-                .subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<CategoryViewModel> category) {
-                        setCategory(category);
-                        if (mItem != null) {
-                            selectCategory(mItem.getCategory().getId());
-                        } else {
-                            selectCategory(CategoryViewModel.NO_CATEGORY_ID);
-                        }
-                    }
-                }));
+                .subscribe(categoryCache);
     }
 
-    public void loadUnits() {
-        mSubscriptions.add(mGetUnitsList.get()
+    private void loadUnits() {
+        mGetUnitsList.get()
                 .map(mUnitsDataModelMapper::transformToViewModel)
-                .subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<UnitViewModel> unitViewModels) {
-                        setUnits(unitViewModels);
-                        if (mItem != null) {
-                            selectUnit(mItem.getUnit().getId());
-                        } else {
-                            selectUnit(UnitViewModel.NO_UNIT_ID);
-                        }
-                    }
-                }));
+                .subscribe(unitsCache);
     }
 
-    public void loadCurrency() {
-        mSubscriptions.add(mGetCurrencyList.get()
+    private void loadCurrency() {
+        mGetCurrencyList.get()
                 .map(mCurrencyModelDataMapper::transformToViewModel)
-                .subscribe(new DefaultSubscriber<List<CurrencyViewModel>>() {
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<CurrencyViewModel> currency) {
-                        setCurrency(currency);
-                        if (mItem != null) {
-                            selectCurrency(mItem.getCurrency().getId());
-                        } else {
-                            selectCurrency(mPreferences.getDefaultCurrency());
-                        }
-                    }
-                }));
+                .subscribe(currencyCache);
     }
 
-    public void loadGoods() {
-        mSubscriptions.add(mGetGoodsList.get()
+    private void loadGoods() {
+        mGetGoodsList.get()
                 .map(mGoodsModelDataMapper::transformToViewModel)
                 .map(productViewModels -> {
                     Map<String, ProductViewModel> result = new HashMap<>();
@@ -409,17 +338,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
                     }
                     return result;
                 })
-                .subscribe(new DefaultSubscriber<Map<String, ProductViewModel>>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onNext(Map<String, ProductViewModel> map) {
-                        setGoods(map);
-                    }
-                }));
+                .subscribe(goodsCache);
     }
 
     private void addListItem(ListItemViewModel data, boolean isLongClick) {
@@ -546,7 +465,91 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         return 0;
     }
 
-    protected final class SaveListItemSubscriber extends DefaultSubscriber<Boolean> {
+    private void selectPriority(@Priority int priority) {
+        if (isViewAttached()) {
+            getView().selectPriority(priority);
+        }
+    }
+
+    private void setViewNote(String note) {
+        if (isViewAttached()) {
+            getView().setNote(note);
+        }
+    }
+
+    private void setViewPrice(String price) {
+        if (isViewAttached()) {
+            getView().setPrice(price);
+        }
+    }
+
+    private void setViewQuantity(String quantity) {
+        if (isViewAttached()) {
+            getView().setQuantity(quantity);
+        }
+    }
+
+    private void setCategory(List<CategoryViewModel> category) {
+        if (isViewAttached()) {
+            getView().setCategory(category);
+        }
+    }
+
+    private void setCurrency(List<CurrencyViewModel> currency) {
+        if (isViewAttached()) {
+            getView().setCurrency(currency);
+        }
+    }
+
+    private void setUnits(List<UnitViewModel> units) {
+        if (isViewAttached()) {
+            getView().setUnits(units);
+        }
+    }
+
+    private void setGoods(Map<String, ProductViewModel> goods) {
+        if (isViewAttached()) {
+            getView().setGoods(goods);
+        }
+    }
+
+    private void selectCategory(String id) {
+        if (isViewAttached()) {
+            getView().selectCategory(id);
+        }
+    }
+
+    private void selectCurrency(String id) {
+        if (isViewAttached()) {
+            getView().selectCurrency(id);
+        }
+    }
+
+    private void selectUnit(String id) {
+        if (isViewAttached()) {
+            getView().selectUnit(id);
+        }
+    }
+
+    private void setDefaultCategory() {
+        if (isViewAttached()) {
+            getView().setDefaultCategory();
+        }
+    }
+
+    private void setDefaultCurrency() {
+        if (isViewAttached()) {
+            getView().setDefaultCurrency();
+        }
+    }
+
+    private void setDefaultUnit() {
+        if (isViewAttached()) {
+            getView().setDefaultUnit();
+        }
+    }
+
+    private final class SaveListItemSubscriber extends DefaultSubscriber<Boolean> {
 
         private boolean isLongClick;
         private boolean isAddAction;

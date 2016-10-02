@@ -103,7 +103,6 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();
-        mPresenter.onDestroy();
         ButterKnife.unbind(this);
     }
 
