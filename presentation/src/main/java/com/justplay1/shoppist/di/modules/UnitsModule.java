@@ -16,7 +16,7 @@
 
 package com.justplay1.shoppist.di.modules;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.interactor.units.AddUnits;
@@ -35,7 +35,7 @@ import dagger.Provides;
 public class UnitsModule {
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     AddUnits provideAddUnits(UnitsRepository repository, ThreadExecutor threadExecutor,
                              PostExecutionThread postExecutionThread) {
         return new AddUnits(repository, threadExecutor, postExecutionThread);
@@ -43,7 +43,7 @@ public class UnitsModule {
 
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     GetUnitsList provideGetUnits(UnitsRepository repository, ThreadExecutor threadExecutor,
                                  PostExecutionThread postExecutionThread) {
         return new GetUnitsList(repository, threadExecutor, postExecutionThread);
@@ -51,7 +51,7 @@ public class UnitsModule {
 
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     DeleteUnits provideSoftDeleteUnits(UnitsRepository repository, ThreadExecutor threadExecutor,
                                        PostExecutionThread postExecutionThread) {
         return new DeleteUnits(repository, threadExecutor, postExecutionThread);
@@ -59,7 +59,7 @@ public class UnitsModule {
 
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     UpdateUnits provideUpdateUnits(UnitsRepository repository, ThreadExecutor threadExecutor,
                                    PostExecutionThread postExecutionThread) {
         return new UpdateUnits(repository, threadExecutor, postExecutionThread);

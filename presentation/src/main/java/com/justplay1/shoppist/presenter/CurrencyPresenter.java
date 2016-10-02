@@ -16,7 +16,7 @@
 
 package com.justplay1.shoppist.presenter;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.currency.DeleteCurrency;
 import com.justplay1.shoppist.interactor.currency.GetCurrencyList;
@@ -36,7 +36,7 @@ import rx.Observable;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
+@NonConfigurationScope
 public class CurrencyPresenter extends BaseRxPresenter<CurrencyView, CurrencyRouter> {
 
     private final CurrencyModelDataMapper mDataMapper;

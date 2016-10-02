@@ -16,7 +16,7 @@
 
 package com.justplay1.shoppist.di.modules;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.interactor.currency.AddCurrency;
@@ -36,31 +36,31 @@ import dagger.Provides;
 public class CurrencyModule {
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     UpdateCurrency provideUpdateCurrency(CurrencyRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new UpdateCurrency(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     DeleteCurrency provideSoftDeleteCurrency(CurrencyRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new DeleteCurrency(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     GetCurrencyList provideGetCurrencies(CurrencyRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new GetCurrencyList(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     GetCurrency provideGetCurrency(CurrencyRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new GetCurrency(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     AddCurrency provideAddCurrency(CurrencyRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new AddCurrency(repository, threadExecutor, postExecutionThread);
     }

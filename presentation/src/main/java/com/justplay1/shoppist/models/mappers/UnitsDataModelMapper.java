@@ -16,7 +16,7 @@
 
 package com.justplay1.shoppist.models.mappers;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.models.UnitModel;
 import com.justplay1.shoppist.models.UnitViewModel;
 
@@ -29,7 +29,7 @@ import javax.inject.Inject;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
+@NonConfigurationScope
 public class UnitsDataModelMapper {
 
     @Inject

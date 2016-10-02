@@ -16,7 +16,7 @@
 
 package com.justplay1.shoppist.di.modules;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.interactor.goods.AddGoods;
@@ -35,25 +35,25 @@ import dagger.Provides;
 public class GoodsModule {
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     AddGoods provideAddGoods(GoodsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new AddGoods(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     GetGoodsList provideGetGoods(GoodsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new GetGoodsList(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     DeleteGoods provideSoftDeleteGoods(GoodsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new DeleteGoods(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     UpdateGoods provideUpdateGoods(GoodsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new UpdateGoods(repository, threadExecutor, postExecutionThread);
     }

@@ -28,7 +28,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.di.components.AppComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
 import com.justplay1.shoppist.navigation.Navigator;
 import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.ShoppistUtils;
@@ -49,23 +48,19 @@ public abstract class BaseActivity extends AppCompatActivity {
     AppPreferences mPreferences;
 
     @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(context));
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getAppComponent().inject(this);
         setStatusBarColor();
     }
 
-    @Override
-    protected void attachBaseContext(Context context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(context));
-    }
-
     protected AppComponent getAppComponent() {
         return ((App) getApplication()).getAppComponent();
-    }
-
-    protected ActivityModule getActivityModule() {
-        return new ActivityModule(this);
     }
 
     public void replaceFragment(int id, Fragment frag, String tag) {

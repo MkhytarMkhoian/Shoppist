@@ -16,9 +16,8 @@
 
 package com.justplay1.shoppist.di.components;
 
-import com.justplay1.shoppist.di.modules.ActivityModule;
 import com.justplay1.shoppist.di.modules.GoodsModule;
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.view.fragments.GoodsFragment;
 import com.justplay1.shoppist.view.fragments.dialog.AddGoodsDialogFragment;
 
@@ -27,9 +26,9 @@ import dagger.Component;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
-@Component(dependencies = AppComponent.class, modules = {ActivityModule.class, GoodsModule.class})
-public interface GoodsComponent extends ActivityComponent {
+@NonConfigurationScope
+@Component(dependencies = AppComponent.class, modules = {GoodsModule.class})
+public interface GoodsComponent {
 
     void inject(GoodsFragment fragment);
 

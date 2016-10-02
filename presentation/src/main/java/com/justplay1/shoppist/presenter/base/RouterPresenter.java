@@ -78,11 +78,11 @@ public abstract class RouterPresenter<V extends BaseMvpView, R extends Router> e
         return mRouterRef == null ? null : mRouterRef.get();
     }
 
-    void assignRouter(R router) {
+    private void assignRouter(R router) {
         mRouterRef = new WeakReference<>(router);
     }
 
-    void releaseRouter() {
+    private void releaseRouter() {
         if (mRouterRef != null) {
             mRouterRef.clear();
             mRouterRef = null;

@@ -16,7 +16,7 @@
 
 package com.justplay1.shoppist.di.modules;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.interactor.listitems.AddListItems;
@@ -37,42 +37,42 @@ import dagger.Provides;
 public class ListItemsModule {
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     AddListItems provideAddShoppingListItems(ListItemsRepository repository,
                                              ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new AddListItems(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     GetListItems provideGetShoppingListItems(ListItemsRepository repository,
                                              ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new GetListItems(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     UpdateListItems provideUpdateShoppingListItems(ListItemsRepository repository,
                                                    ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new UpdateListItems(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     MoveProductToCart provideMoveProductToCart(ListItemsRepository repository,
                                                ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new MoveProductToCart(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
-    MoveToList provideMoveToList(ListItemsRepository repository,
+    @NonConfigurationScope
+    MoveToList provideMoveToList(DeleteListItems deleteListItems, AddListItems addListItems,
                                  ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-        return new MoveToList(repository, threadExecutor, postExecutionThread);
+        return new MoveToList(deleteListItems, addListItems, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     DeleteListItems provideSoftDeleteShoppingListItems(ListItemsRepository repository,
                                                        ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new DeleteListItems(repository, threadExecutor, postExecutionThread);

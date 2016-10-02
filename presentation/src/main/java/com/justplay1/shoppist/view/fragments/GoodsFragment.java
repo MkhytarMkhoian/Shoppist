@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -31,12 +32,8 @@ import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.RefactoredDefaultItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.di.components.DaggerGoodsComponent;
 import com.justplay1.shoppist.di.components.GoodsComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.GoodsModule;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.navigation.GoodsRouter;
@@ -63,7 +60,6 @@ public class GoodsFragment extends BaseExpandableListFragment
     @Inject
     GoodsPresenter mPresenter;
 
-    private GoodsComponent mComponent;
     private GoodsAdapter mAdapter;
 
     public static GoodsFragment newInstance() {
@@ -104,12 +100,7 @@ public class GoodsFragment extends BaseExpandableListFragment
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerGoodsComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .goodsModule(new GoodsModule())
-                .build();
-        mComponent.inject(this);
+        getInjector(GoodsComponent.class).inject(this);
     }
 
     @Override
@@ -134,7 +125,7 @@ public class GoodsFragment extends BaseExpandableListFragment
         mRecyclerView.setItemAnimator(animator);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z1)));
+            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z1)));
         }
 
         mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);

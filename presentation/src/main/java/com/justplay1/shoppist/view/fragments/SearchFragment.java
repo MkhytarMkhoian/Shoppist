@@ -39,14 +39,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.di.components.DaggerSearchComponent;
 import com.justplay1.shoppist.di.components.SearchComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.CategoryModule;
-import com.justplay1.shoppist.di.modules.GoodsModule;
-import com.justplay1.shoppist.di.modules.ListItemsModule;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.presenter.SearchPresenter;
 import com.justplay1.shoppist.utils.Const;
@@ -84,7 +78,6 @@ public class SearchFragment extends BaseFragment
     @Bind(R.id.search_view)
     FloatingSearchView mSearchView;
 
-    private SearchComponent mComponent;
     private int mContextType;
     private SearchAdapter mAdapter;
 
@@ -135,14 +128,8 @@ public class SearchFragment extends BaseFragment
 
     @Override
     protected void injectDependencies() {
-        mComponent = DaggerSearchComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .categoryModule(new CategoryModule())
-                .listItemsModule(new ListItemsModule())
-                .goodsModule(new GoodsModule())
-                .build();
-        mComponent.inject(this);
+        super.injectDependencies();
+        getInjector(SearchComponent.class).inject(this);
     }
 
     @Override

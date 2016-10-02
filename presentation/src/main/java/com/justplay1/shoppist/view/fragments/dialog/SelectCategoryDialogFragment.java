@@ -24,8 +24,6 @@ import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.di.components.CategoryComponent;
 import com.justplay1.shoppist.di.components.DaggerCategoryComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.CategoryModule;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.presenter.SelectCategoryPresenter;
 import com.justplay1.shoppist.view.SelectCategoryView;
@@ -61,8 +59,6 @@ public class SelectCategoryDialogFragment extends BaseSelectItemDialogFragment<C
         super.injectDependencies();
         mComponent = DaggerCategoryComponent.builder()
                 .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .categoryModule(new CategoryModule())
                 .build();
         mComponent.inject(this);
     }

@@ -26,16 +26,8 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.di.components.AddListItemsComponent;
-import com.justplay1.shoppist.di.components.DaggerAddListItemsComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.CategoryModule;
-import com.justplay1.shoppist.di.modules.CurrencyModule;
-import com.justplay1.shoppist.di.modules.GoodsModule;
-import com.justplay1.shoppist.di.modules.ListItemsModule;
-import com.justplay1.shoppist.di.modules.UnitsModule;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.ListItemViewModel;
@@ -85,7 +77,6 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
 
     private AutoCompleteTextAdapter mAutoCompleteTextAdapter;
     private AddListItemListener mListItemListener;
-    private AddListItemsComponent mComponent;
 
     @Inject
     AddListItemPresenter mPresenter;
@@ -140,16 +131,7 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerAddListItemsComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .listItemsModule(new ListItemsModule())
-                .goodsModule(new GoodsModule())
-                .unitsModule(new UnitsModule())
-                .categoryModule(new CategoryModule())
-                .currencyModule(new CurrencyModule())
-                .build();
-        mComponent.inject(this);
+        getInjector(AddListItemsComponent.class).inject(this);
     }
 
     @Override

@@ -16,10 +16,8 @@
 
 package com.justplay1.shoppist.di.components;
 
-import com.justplay1.shoppist.di.modules.ActivityModule;
 import com.justplay1.shoppist.di.modules.CategoryModule;
-import com.justplay1.shoppist.di.modules.RepositoryModule;
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.view.fragments.AddCategoryFragment;
 import com.justplay1.shoppist.view.fragments.CategoryFragment;
 import com.justplay1.shoppist.view.fragments.dialog.SelectCategoryDialogFragment;
@@ -29,9 +27,9 @@ import dagger.Component;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
-@Component(dependencies = AppComponent.class, modules = {ActivityModule.class, CategoryModule.class})
-public interface CategoryComponent extends ActivityComponent {
+@NonConfigurationScope
+@Component(dependencies = AppComponent.class, modules = {CategoryModule.class})
+public interface CategoryComponent {
 
     void inject(CategoryFragment fragment);
 

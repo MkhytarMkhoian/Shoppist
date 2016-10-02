@@ -19,7 +19,7 @@ package com.justplay1.shoppist.presenter;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.lists.AddList;
 import com.justplay1.shoppist.interactor.lists.UpdateLists;
@@ -39,7 +39,7 @@ import rx.Observable;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
+@NonConfigurationScope
 public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
 
     private final ListModelDataMapper mDataMapper;

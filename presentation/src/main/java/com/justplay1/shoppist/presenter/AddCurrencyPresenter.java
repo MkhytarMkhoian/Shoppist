@@ -18,7 +18,7 @@ package com.justplay1.shoppist.presenter;
 
 import android.os.Bundle;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.currency.AddCurrency;
 import com.justplay1.shoppist.interactor.currency.UpdateCurrency;
@@ -38,7 +38,7 @@ import rx.Observable;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
+@NonConfigurationScope
 public class AddCurrencyPresenter extends BaseRxPresenter<AddCurrencyView, Router> {
 
     private final CurrencyModelDataMapper mDataMapper;

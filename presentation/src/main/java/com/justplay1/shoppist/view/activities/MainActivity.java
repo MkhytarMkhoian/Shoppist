@@ -31,7 +31,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.components.DaggerListsComponent;
+import com.justplay1.shoppist.di.components.ListsComponent;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.navigation.ListRouter;
 import com.justplay1.shoppist.utils.ShoppistUtils;
@@ -41,7 +44,7 @@ import com.justplay1.shoppist.view.fragments.MenuFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class MainActivity extends BaseListActivity
+public class MainActivity extends BaseListActivity<ListsComponent>
         implements MenuFragment.MenuFragmentInteraction, Toolbar.OnMenuItemClickListener,
         ListRouter {
 
@@ -62,19 +65,19 @@ public class MainActivity extends BaseListActivity
         initToolbar();
     }
 
+    @Override
+    protected ListsComponent getNewComponentInstance() {
+        return DaggerListsComponent.builder()
+                .appComponent(App.get().getAppComponent())
+                .build();
+    }
+
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mToggle.syncState();
 
-        if (savedInstanceState != null) {
-            mListFragment = (ListFragment) getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_TAG);
-        }
-        if (mListFragment == null) {
-            mListFragment = ListFragment.newInstance();
-            if (mListFragment != null) {
-                replaceFragment(R.id.container, mListFragment, FRAGMENT_TAG);
-            }
-        }
+        mListFragment = ListFragment.newInstance();
+        replaceFragment(R.id.container, mListFragment, FRAGMENT_TAG);
     }
 
     protected void onSaveInstanceState(Bundle outState) {

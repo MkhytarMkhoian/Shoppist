@@ -68,6 +68,7 @@ public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView, Router>
 
     public void onPositiveButtonClick(UnitViewModel unit) {
         onComplete(unit, false);
+        closeDialog();
     }
 
     public void onNegativeButtonClick() {

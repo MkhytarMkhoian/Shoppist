@@ -24,8 +24,6 @@ import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.di.components.DaggerUnitsComponent;
 import com.justplay1.shoppist.di.components.UnitsComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.UnitsModule;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.presenter.AddUnitPresenter;
 import com.justplay1.shoppist.utils.ShoppistUtils;
@@ -61,8 +59,6 @@ public class AddUnitsDialogFragment extends BaseDialogFragment
         super.injectDependencies();
         mComponent = DaggerUnitsComponent.builder()
                 .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .unitsModule(new UnitsModule())
                 .build();
         mComponent.inject(this);
     }

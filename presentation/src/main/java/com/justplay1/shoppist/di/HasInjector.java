@@ -13,26 +13,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-
-package com.justplay1.shoppist.di.components;
-
-import android.app.Activity;
-
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.scope.PerActivity;
-
-import dagger.Component;
+package com.justplay1.shoppist.di;
 
 /**
- * A base component upon which mFragment's components may depend.
- * Activity-level components should extend this component.
- * <p>
- * Subtypes of ActivityComponent should be decorated with annotation:
- * {@link com.justplay1.shoppist.di.scope.PerActivity}
+ * Interface representing a contract for clients that contains a component for dependency injection.
  */
-@PerActivity
-@Component(dependencies = AppComponent.class, modules = ActivityModule.class)
-public interface ActivityComponent{
-
-    Activity activity();
+public interface HasInjector<C> {
+  C getInjector();
 }

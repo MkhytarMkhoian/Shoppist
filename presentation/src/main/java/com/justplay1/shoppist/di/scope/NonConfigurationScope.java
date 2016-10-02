@@ -14,23 +14,19 @@
  *   limitations under the License.
  */
 
-package com.justplay1.shoppist.di.components;
+package com.justplay1.shoppist.di.scope;
 
-import com.justplay1.shoppist.di.modules.ListItemsModule;
-import com.justplay1.shoppist.di.scope.NonConfigurationScope;
-import com.justplay1.shoppist.view.fragments.AddListItemFragment;
-import com.justplay1.shoppist.view.fragments.ListItemsFragment;
+import java.lang.annotation.Retention;
 
-import dagger.Component;
+import javax.inject.Scope;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Created by Mkhytar Mkhoian.
+ * A scoping annotation to permit objects whose lifetime should
+ * conform to the life of the activity to be memorized in the
+ * correct component.
  */
-@NonConfigurationScope
-@Component(dependencies = AppComponent.class, modules = {ListItemsModule.class})
-public interface ListItemsComponent {
-
-    void inject(ListItemsFragment fragment);
-
-    void inject(AddListItemFragment fragment);
-}
+@Scope
+@Retention(RUNTIME)
+public @interface NonConfigurationScope {}

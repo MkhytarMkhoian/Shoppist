@@ -18,11 +18,10 @@ package com.justplay1.shoppist.presenter;
 
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.units.DeleteUnits;
-import com.justplay1.shoppist.interactor.units.GetUnits;
+import com.justplay1.shoppist.interactor.units.GetUnitsList;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
 import com.justplay1.shoppist.navigation.UnitRouter;
-import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
 import com.justplay1.shoppist.view.UnitsView;
 
@@ -39,15 +38,15 @@ import rx.Observable;
 public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
 
     private final UnitsDataModelMapper mDataMapper;
-    private final GetUnits mGetUnits;
+    private final GetUnitsList mGetUnitsList;
     private final DeleteUnits mDeleteUnits;
 
     @Inject
     public UnitsPresenter(UnitsDataModelMapper unitsDataModelMapper,
-                          GetUnits getUnits,
+                          GetUnitsList getUnitsList,
                           DeleteUnits deleteUnits) {
         this.mDataMapper = unitsDataModelMapper;
-        this.mGetUnits = getUnits;
+        this.mGetUnitsList = getUnitsList;
         this.mDeleteUnits = deleteUnits;
     }
 
@@ -57,7 +56,7 @@ public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
 
     public void loadData() {
         showLoading();
-        mSubscriptions.add(mGetUnits.get()
+        mSubscriptions.add(mGetUnitsList.get()
                 .map(mDataMapper::transformToViewModel)
                 .subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
                     @Override

@@ -23,7 +23,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.HasInjector;
+import com.justplay1.shoppist.di.components.DaggerAddListItemsComponent;
+import com.justplay1.shoppist.di.components.DaggerCategoryComponent;
+import com.justplay1.shoppist.di.components.DaggerListsComponent;
 import com.justplay1.shoppist.models.AddElementType;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.ListItemViewModel;
@@ -36,13 +41,15 @@ import com.justplay1.shoppist.view.fragments.BaseAddElementFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class AddElementActivity extends SingleFragmentActivity<BaseAddElementFragment>
-        implements BaseAddElementFragment.AddElementListener, AddListItemFragment.AddListItemListener {
+public class AddElementActivity<C> extends BaseActivity
+        implements BaseAddElementFragment.AddElementListener, AddListItemFragment.AddListItemListener,
+        HasInjector<C> {
+
+    private BaseAddElementFragment mFragment;
+    private C mComponent;
 
     private Toolbar mToolbar;
-    private
-    @AddElementType
-    int mElementType;
+    @AddElementType private int mElementType;
 
     private CategoryViewModel mCategoryModel;
     private ListViewModel mListModel;
@@ -59,7 +66,6 @@ public class AddElementActivity extends SingleFragmentActivity<BaseAddElementFra
         return callingIntent;
     }
 
-    @Override
     public BaseAddElementFragment createFragment() {
         switch (mElementType) {
             case AddElementType.CATEGORY:
@@ -84,6 +90,14 @@ public class AddElementActivity extends SingleFragmentActivity<BaseAddElementFra
             mListModel = getIntent().getParcelableExtra(ListViewModel.class.getName());
             mListItemModel = getIntent().getParcelableExtra(ListItemViewModel.class.getName());
         }
+        mComponent = (C) retrieveComponentOrCreateNew();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mFragment = createFragment();
+        replaceFragment(R.id.container, mFragment, BaseAddElementFragment.class.getName());
     }
 
     protected void initToolbar() {
@@ -92,6 +106,39 @@ public class AddElementActivity extends SingleFragmentActivity<BaseAddElementFra
         mToolbar.setNavigationIcon(R.drawable.ic_back_white);
         mToolbar.setNavigationOnClickListener(v -> finishWithResult());
         ViewCompat.setElevation(mToolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
+    }
+
+    private Object retrieveComponentOrCreateNew() {
+        Object lastNonConfInstance = getLastCustomNonConfigurationInstance();
+        if (lastNonConfInstance == null) {
+            switch (mElementType) {
+                case AddElementType.CATEGORY:
+                    return DaggerCategoryComponent.builder()
+                            .appComponent(App.get().getAppComponent())
+                            .build();
+                case AddElementType.LIST:
+                    return DaggerListsComponent.builder()
+                            .appComponent(App.get().getAppComponent())
+                            .build();
+                case AddElementType.LIST_ITEM:
+                    return DaggerAddListItemsComponent.builder()
+                            .appComponent(App.get().getAppComponent())
+                            .build();
+            }
+        } else {
+            return lastNonConfInstance;
+        }
+        return null;
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return mComponent;
+    }
+
+    @Override
+    public C getInjector() {
+        return mComponent;
     }
 
     @Override

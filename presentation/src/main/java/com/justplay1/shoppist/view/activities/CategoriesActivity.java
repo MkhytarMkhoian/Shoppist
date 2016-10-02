@@ -26,7 +26,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.components.CategoryComponent;
+import com.justplay1.shoppist.di.components.DaggerCategoryComponent;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.navigation.CategoryRouter;
 import com.justplay1.shoppist.view.fragments.CategoryFragment;
@@ -34,14 +37,15 @@ import com.justplay1.shoppist.view.fragments.CategoryFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class CategoriesActivity extends SingleListFragmentActivity<CategoryFragment>
+public class CategoriesActivity extends BaseListActivity<CategoryComponent>
         implements Toolbar.OnMenuItemClickListener, CategoryRouter {
+
+    private CategoryFragment mFragment;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, CategoriesActivity.class);
     }
 
-    @Override
     public CategoryFragment createFragment() {
         return CategoryFragment.newInstance();
     }
@@ -53,6 +57,13 @@ public class CategoriesActivity extends SingleListFragmentActivity<CategoryFragm
         initToolbar();
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mFragment = createFragment();
+        replaceFragment(R.id.container, mFragment, CategoryFragment.class.getName());
+    }
+
     protected void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_category);
@@ -62,6 +73,13 @@ public class CategoriesActivity extends SingleListFragmentActivity<CategoryFragm
         toolbar.setOnMenuItemClickListener(this);
         toolbar.inflateMenu(R.menu.category_list_toolbar);
         ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
+    }
+
+    @Override
+    protected CategoryComponent getNewComponentInstance() {
+        return DaggerCategoryComponent.builder()
+                .appComponent(App.get().getAppComponent())
+                .build();
     }
 
     @Override

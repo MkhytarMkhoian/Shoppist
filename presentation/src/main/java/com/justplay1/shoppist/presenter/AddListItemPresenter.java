@@ -18,7 +18,7 @@ package com.justplay1.shoppist.presenter;
 
 import android.os.Bundle;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.GetCategoryList;
 import com.justplay1.shoppist.interactor.currency.GetCurrencyList;
@@ -59,7 +59,7 @@ import rx.Observable;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
+@NonConfigurationScope
 public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemView> {
 
     private final CategoryModelDataMapper mCategoryModelDataMapper;

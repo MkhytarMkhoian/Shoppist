@@ -17,23 +17,54 @@
 package com.justplay1.shoppist.view.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.HasInjector;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseListActivity extends BaseActivity
-        implements ActionModeInteractionListener, ActionMode.Callback {
+public abstract class BaseListActivity<C> extends BaseActivity
+        implements ActionModeInteractionListener, ActionMode.Callback, HasInjector<C> {
 
     protected ActionMode mActionMode;
     protected boolean isActionModeShowing;
+    protected C mComponent;
+
+    protected abstract C getNewComponentInstance();
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        mComponent = retrieveComponentOrCreateNew();
+        super.onCreate(savedInstanceState);
+    }
+
+    private C retrieveComponentOrCreateNew() {
+        Object lastNonConfInstance = getLastCustomNonConfigurationInstance();
+        if (lastNonConfInstance == null) {
+            return getNewComponentInstance();
+        } else {
+            return (C) lastNonConfInstance;
+        }
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return mComponent;
+    }
+
+    @Override
+    public C getInjector() {
+        return mComponent;
+    }
 
     @Override
     public boolean isActionModeShowing() {

@@ -18,7 +18,7 @@ package com.justplay1.shoppist.presenter;
 
 import android.support.v4.util.Pair;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.GetCategory;
 import com.justplay1.shoppist.interactor.goods.DeleteGoods;
@@ -51,7 +51,7 @@ import rx.Observable;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
+@NonConfigurationScope
 public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductViewModel, GoodsRouter> {
 
     private final GoodsModelDataMapper mGoodsModelDataMapper;

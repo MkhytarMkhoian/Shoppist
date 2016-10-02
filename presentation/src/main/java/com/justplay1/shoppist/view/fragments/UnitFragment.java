@@ -21,12 +21,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.di.components.DaggerUnitsComponent;
 import com.justplay1.shoppist.di.components.UnitsComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.UnitsModule;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.navigation.UnitRouter;
 import com.justplay1.shoppist.presenter.UnitsPresenter;
@@ -49,7 +45,6 @@ public class UnitFragment extends BaseListFragment
     @Inject
     UnitsPresenter mPresenter;
 
-    private UnitsComponent mComponent;
     private UnitsAdapter mAdapter;
 
     public static UnitFragment newInstance() {
@@ -90,12 +85,7 @@ public class UnitFragment extends BaseListFragment
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerUnitsComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .unitsModule(new UnitsModule())
-                .build();
-        mComponent.inject(this);
+        getInjector(UnitsComponent.class).inject(this);
     }
 
     @Override

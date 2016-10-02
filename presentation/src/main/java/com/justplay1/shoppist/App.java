@@ -21,12 +21,6 @@ import android.app.Application;
 import com.justplay1.shoppist.di.components.AppComponent;
 import com.justplay1.shoppist.di.components.DaggerAppComponent;
 import com.justplay1.shoppist.di.modules.AppModule;
-import com.justplay1.shoppist.di.modules.DataDAOMapperModule;
-import com.justplay1.shoppist.di.modules.DatabaseModule;
-import com.justplay1.shoppist.di.modules.LocalDataStoreModule;
-import com.justplay1.shoppist.di.modules.PreferenceModule;
-import com.justplay1.shoppist.di.modules.RepositoryModule;
-import com.justplay1.shoppist.di.modules.ThreadExecutorModule;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -56,12 +50,6 @@ public class App extends Application {
     private void initializeInjector() {
         mAppComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
-                .repositoryModule(new RepositoryModule())
-                .threadExecutorModule(new ThreadExecutorModule())
-                .databaseModule(new DatabaseModule())
-                .dataDAOMapperModule(new DataDAOMapperModule())
-                .localDataStoreModule(new LocalDataStoreModule())
-                .preferenceModule(new PreferenceModule())
                 .build();
     }
 

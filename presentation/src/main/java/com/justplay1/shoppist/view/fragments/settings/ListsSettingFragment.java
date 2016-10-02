@@ -32,8 +32,6 @@ import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.di.components.CurrencyComponent;
 import com.justplay1.shoppist.di.components.DaggerCurrencyComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.CurrencyModule;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.presenter.ListsSettingPresenter;
 import com.justplay1.shoppist.view.ListsSettingView;
@@ -90,8 +88,6 @@ public class ListsSettingFragment extends BaseSettingFragment implements ListsSe
         super.injectDependencies();
         mComponent = DaggerCurrencyComponent.builder()
                 .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .currencyModule(new CurrencyModule())
                 .build();
         mComponent.inject(this);
     }

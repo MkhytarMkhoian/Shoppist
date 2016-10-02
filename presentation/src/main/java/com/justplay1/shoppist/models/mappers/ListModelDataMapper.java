@@ -16,7 +16,7 @@
 
 package com.justplay1.shoppist.models.mappers;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.models.ListModel;
 import com.justplay1.shoppist.models.ListViewModel;
 
@@ -29,7 +29,7 @@ import javax.inject.Inject;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
+@NonConfigurationScope
 public class ListModelDataMapper {
 
     @Inject

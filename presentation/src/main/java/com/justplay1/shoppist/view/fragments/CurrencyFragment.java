@@ -21,12 +21,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.di.components.CurrencyComponent;
-import com.justplay1.shoppist.di.components.DaggerCurrencyComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.CurrencyModule;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.navigation.CurrencyRouter;
 import com.justplay1.shoppist.presenter.CurrencyPresenter;
@@ -49,7 +45,6 @@ public class CurrencyFragment extends BaseListFragment
     @Inject
     CurrencyPresenter mPresenter;
 
-    private CurrencyComponent mComponent;
     private CurrencyAdapter mAdapter;
 
     public static CurrencyFragment newInstance() {
@@ -85,12 +80,7 @@ public class CurrencyFragment extends BaseListFragment
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerCurrencyComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .currencyModule(new CurrencyModule())
-                .build();
-        mComponent.inject(this);
+        getInjector(CurrencyComponent.class).inject(this);
     }
 
     @Override

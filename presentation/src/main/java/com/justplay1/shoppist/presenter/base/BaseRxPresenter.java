@@ -22,7 +22,6 @@ import android.support.annotation.UiThread;
 import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.view.BaseMvpView;
 
-import rx.Observable;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -42,6 +41,7 @@ public abstract class BaseRxPresenter<V extends BaseMvpView, R extends Router> e
 
     }
 
+    @UiThread
     @Override
     public void onSaveInstanceState(Bundle bundle) {
 
@@ -49,13 +49,13 @@ public abstract class BaseRxPresenter<V extends BaseMvpView, R extends Router> e
 
     @UiThread
     @Override
-    public void onDestroy() {
+    public void detachView() {
+        super.detachView();
         mSubscriptions.clear();
     }
 
-    public static <T> Observable.Transformer<T, T> applyOpBeforeAndAfter(Runnable before, Runnable after) {
-        return tObservable -> tObservable
-                .doOnSubscribe(before::run)
-                .doOnTerminate(after::run);
+    @UiThread
+    @Override
+    public void onDestroy() {
     }
 }

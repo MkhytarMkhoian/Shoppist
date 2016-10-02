@@ -16,7 +16,7 @@
 
 package com.justplay1.shoppist.di.modules;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.interactor.category.AddCategory;
@@ -35,28 +35,28 @@ import dagger.Provides;
 public class CategoryModule {
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     AddCategory provideAddCategory(CategoryRepository repository, ThreadExecutor threadExecutor,
                                    PostExecutionThread postExecutionThread) {
         return new AddCategory(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     GetCategoryList provideGetCategories(CategoryRepository repository, ThreadExecutor threadExecutor,
                                          PostExecutionThread postExecutionThread) {
         return new GetCategoryList(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     UpdateCategory provideUpdateCategory(CategoryRepository repository, ThreadExecutor threadExecutor,
                                          PostExecutionThread postExecutionThread) {
         return new UpdateCategory(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     DeleteCategory provideSoftDeleteCategory(CategoryRepository repository, ThreadExecutor threadExecutor,
                                              PostExecutionThread postExecutionThread) {
         return new DeleteCategory(repository, threadExecutor, postExecutionThread);

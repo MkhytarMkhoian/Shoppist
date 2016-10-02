@@ -10,32 +10,43 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.components.DaggerUnitsComponent;
+import com.justplay1.shoppist.di.components.UnitsComponent;
 import com.justplay1.shoppist.view.fragments.UnitFragment;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class UnitsActivity extends SingleListFragmentActivity<UnitFragment>
+public class UnitsActivity extends BaseListActivity<UnitsComponent>
         implements Toolbar.OnMenuItemClickListener {
+
+    private UnitFragment mFragment;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, UnitsActivity.class);
+    }
+
+    public UnitFragment createFragment() {
+        return UnitFragment.newInstance();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_single_fragment);
-        initializeToolbar();
+        initToolbar();
     }
 
     @Override
-    public UnitFragment createFragment() {
-        return UnitFragment.newInstance();
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mFragment = createFragment();
+        replaceFragment(R.id.container, mFragment, UnitFragment.class.getName());
     }
 
-    private void initializeToolbar() {
+    private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.units);
         toolbar.setBackgroundColor(mPreferences.getColorPrimary());
@@ -44,6 +55,13 @@ public class UnitsActivity extends SingleListFragmentActivity<UnitFragment>
         toolbar.setOnMenuItemClickListener(this);
         toolbar.inflateMenu(R.menu.units_and_currency_menu);
         ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
+    }
+
+    @Override
+    protected UnitsComponent getNewComponentInstance() {
+        return DaggerUnitsComponent.builder()
+                .appComponent(App.get().getAppComponent())
+                .build();
     }
 
     @Override

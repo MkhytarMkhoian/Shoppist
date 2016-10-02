@@ -21,7 +21,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.HasInjector;
+import com.justplay1.shoppist.di.components.DaggerSearchComponent;
+import com.justplay1.shoppist.di.components.SearchComponent;
 import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.component.search.FloatingSearchView;
 import com.justplay1.shoppist.view.fragments.SearchFragment;
@@ -29,7 +33,10 @@ import com.justplay1.shoppist.view.fragments.SearchFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class SearchActivity extends SingleFragmentActivity<SearchFragment> {
+public class SearchActivity extends BaseActivity implements HasInjector<SearchComponent> {
+
+    private SearchFragment mFragment;
+    private SearchComponent mComponent;
 
     private int mContextType;
     private String mParentListId;
@@ -41,7 +48,6 @@ public class SearchActivity extends SingleFragmentActivity<SearchFragment> {
         return callingIntent;
     }
 
-    @Override
     public SearchFragment createFragment() {
         return SearchFragment.newInstance(mParentListId, mContextType);
     }
@@ -51,6 +57,7 @@ public class SearchActivity extends SingleFragmentActivity<SearchFragment> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_fragment_container);
         setStatusBarColor(FloatingSearchView.DEFAULT_BACKGROUND_COLOR);
+        mComponent = retrieveComponentOrCreateNew();
 
         if (getIntent() != null) {
             mContextType = getIntent().getIntExtra(Const.SEARCH_CONTEXT_TYPE, Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST);
@@ -62,6 +69,34 @@ public class SearchActivity extends SingleFragmentActivity<SearchFragment> {
                     break;
             }
         }
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mFragment = createFragment();
+        replaceFragment(R.id.container, mFragment, SearchFragment.class.getName());
+    }
+
+    private SearchComponent retrieveComponentOrCreateNew() {
+        Object lastNonConfInstance = getLastCustomNonConfigurationInstance();
+        if (lastNonConfInstance == null) {
+            return DaggerSearchComponent.builder()
+                    .appComponent(App.get().getAppComponent())
+                    .build();
+        } else {
+            return (SearchComponent) lastNonConfInstance;
+        }
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return mComponent;
+    }
+
+    @Override
+    public SearchComponent getInjector() {
+        return mComponent;
     }
 
     @Override

@@ -16,12 +16,9 @@
 
 package com.justplay1.shoppist.di.components;
 
-import com.justplay1.shoppist.di.modules.ActivityModule;
 import com.justplay1.shoppist.di.modules.ListItemsModule;
 import com.justplay1.shoppist.di.modules.ListsModule;
-import com.justplay1.shoppist.di.scope.PerActivity;
-import com.justplay1.shoppist.view.fragments.AddListItemFragment;
-import com.justplay1.shoppist.view.fragments.ListItemsFragment;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.view.fragments.dialog.MoveListItemsDialogFragment;
 
 import dagger.Component;
@@ -29,10 +26,10 @@ import dagger.Component;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
+@NonConfigurationScope
 @Component(dependencies = AppComponent.class,
-        modules = {ActivityModule.class, ListItemsModule.class, ListsModule.class})
-public interface MoveListItemsComponent extends ActivityComponent {
+        modules = {ListItemsModule.class, ListsModule.class})
+public interface MoveListItemsComponent {
 
     void inject(MoveListItemsDialogFragment fragment);
 }

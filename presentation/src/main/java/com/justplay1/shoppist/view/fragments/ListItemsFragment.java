@@ -26,12 +26,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.di.components.DaggerListItemsComponent;
 import com.justplay1.shoppist.di.components.ListItemsComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.ListItemsModule;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
@@ -62,7 +58,6 @@ public class ListItemsFragment extends BaseEDSListFragment
     @Inject
     ListItemsPresenter mPresenter;
 
-    private ListItemsComponent mComponent;
     private ListItemAdapter mAdapter;
 
     public static ListItemsFragment newInstance(ListViewModel parentList) {
@@ -109,12 +104,7 @@ public class ListItemsFragment extends BaseEDSListFragment
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerListItemsComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .listItemsModule(new ListItemsModule())
-                .build();
-        mComponent.inject(this);
+        getInjector(ListItemsComponent.class).inject(this);
     }
 
     @Override

@@ -18,7 +18,7 @@ package com.justplay1.shoppist.presenter;
 
 import android.os.Bundle;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.listitems.MoveToList;
 import com.justplay1.shoppist.interactor.lists.GetLists;
@@ -41,7 +41,7 @@ import rx.Observable;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
+@NonConfigurationScope
 public class MoveListItemsPresenter extends BaseRxPresenter<MoveListItemsView, Router> {
 
     private final ListModelDataMapper mDataMapper;

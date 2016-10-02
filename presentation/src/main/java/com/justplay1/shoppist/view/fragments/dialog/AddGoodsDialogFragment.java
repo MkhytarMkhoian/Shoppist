@@ -26,8 +26,6 @@ import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.di.components.DaggerGoodsComponent;
 import com.justplay1.shoppist.di.components.GoodsComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.GoodsModule;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.UnitViewModel;
@@ -79,8 +77,6 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
         super.injectDependencies();
         mComponent = DaggerGoodsComponent.builder()
                 .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .goodsModule(new GoodsModule())
                 .build();
         mComponent.inject(this);
     }

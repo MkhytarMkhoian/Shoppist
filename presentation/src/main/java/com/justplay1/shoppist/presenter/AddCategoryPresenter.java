@@ -19,7 +19,7 @@ package com.justplay1.shoppist.presenter;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.exception.DefaultErrorBundle;
 import com.justplay1.shoppist.exception.ErrorBundle;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
@@ -40,7 +40,7 @@ import rx.Observable;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
+@NonConfigurationScope
 public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryView> {
 
     private final CategoryModelDataMapper mDataMapper;

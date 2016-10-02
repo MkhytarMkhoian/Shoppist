@@ -26,7 +26,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.components.DaggerListItemsComponent;
+import com.justplay1.shoppist.di.components.ListItemsComponent;
 import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.navigation.ListItemsRouter;
@@ -36,9 +39,10 @@ import com.justplay1.shoppist.view.fragments.ListItemsFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragment>
+public class ListItemActivity extends BaseListActivity<ListItemsComponent>
         implements Toolbar.OnMenuItemClickListener, ListItemsRouter {
 
+    private ListItemsFragment mFragment;
     private ListViewModel mParentList;
 
     public static Intent getCallingIntent(Context context, ListViewModel parentList) {
@@ -47,7 +51,6 @@ public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragme
         return callingIntent;
     }
 
-    @Override
     public ListItemsFragment createFragment() {
         return ListItemsFragment.newInstance(mParentList);
     }
@@ -60,6 +63,13 @@ public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragme
             mParentList = getIntent().getParcelableExtra(ListViewModel.class.getName());
         }
         initToolbar();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mFragment = createFragment();
+        replaceFragment(R.id.container, mFragment, ListItemsFragment.class.getName());
     }
 
     private void initToolbar() {
@@ -76,6 +86,13 @@ public class ListItemActivity extends SingleListFragmentActivity<ListItemsFragme
 //            toolbar.getMenu().findItem(R.id.menu_sort).setEnabled(true);
 //            toolbar.getMenu().findItem(R.id.action_menu).setEnabled(true);
 //        }
+    }
+
+    @Override
+    protected ListItemsComponent getNewComponentInstance() {
+        return DaggerListItemsComponent.builder()
+                .appComponent(App.get().getAppComponent())
+                .build();
     }
 
     @Override

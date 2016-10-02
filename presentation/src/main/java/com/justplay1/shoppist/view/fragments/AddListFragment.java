@@ -26,12 +26,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.di.components.DaggerListsComponent;
 import com.justplay1.shoppist.di.components.ListsComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.ListsModule;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.Priority;
 import com.justplay1.shoppist.presenter.AddListPresenter;
@@ -51,8 +47,6 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
 
     @Inject
     AddListPresenter mPresenter;
-    private ListsComponent mComponent;
-
     @Bind(R.id.priority)
     Spinner mPriorityList;
     @Bind(R.id.color_button)
@@ -97,12 +91,7 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerListsComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .listsModule(new ListsModule())
-                .build();
-        mComponent.inject(this);
+        getInjector(ListsComponent.class).inject(this);
     }
 
     @Override

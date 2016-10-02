@@ -21,7 +21,7 @@ import android.support.v4.util.Pair;
 
 import com.justplay1.shoppist.bus.DataEventBus;
 import com.justplay1.shoppist.bus.ListItemsDataUpdatedEvent;
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.GetCategory;
 import com.justplay1.shoppist.interactor.currency.GetCurrency;
@@ -61,7 +61,7 @@ import rx.Subscription;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
+@NonConfigurationScope
 public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, ListItemViewModel, ListItemsRouter> {
 
     private final CategoryModelDataMapper mCategoryModelDataMapper;

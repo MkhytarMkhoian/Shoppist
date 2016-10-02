@@ -67,6 +67,7 @@ public class SelectCategoryPresenter extends BaseRxPresenter<SelectCategoryView,
 
     public void onPositiveButtonClick(CategoryViewModel category) {
         onComplete(category, false);
+        closeDialog();
     }
 
     public void onNegativeButtonClick() {

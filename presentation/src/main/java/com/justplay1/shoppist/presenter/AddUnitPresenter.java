@@ -18,7 +18,7 @@ package com.justplay1.shoppist.presenter;
 
 import android.os.Bundle;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.units.AddUnits;
 import com.justplay1.shoppist.interactor.units.UpdateUnits;
@@ -39,7 +39,7 @@ import rx.Observable;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
+@NonConfigurationScope
 public class AddUnitPresenter extends BaseRxPresenter<AddUnitView, Router> {
 
     private final UnitsDataModelMapper mDataMapper;

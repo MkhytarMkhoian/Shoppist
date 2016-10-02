@@ -26,7 +26,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.components.DaggerGoodsComponent;
+import com.justplay1.shoppist.di.components.GoodsComponent;
 import com.justplay1.shoppist.navigation.GoodsRouter;
 import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.fragments.GoodsFragment;
@@ -34,15 +37,15 @@ import com.justplay1.shoppist.view.fragments.GoodsFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class GoodsActivity extends SingleListFragmentActivity<GoodsFragment>
+public class GoodsActivity extends BaseListActivity<GoodsComponent>
         implements Toolbar.OnMenuItemClickListener, GoodsRouter {
 
+    private GoodsFragment mFragment;
+
     public static Intent getCallingIntent(Context context) {
-        Intent callingIntent = new Intent(context, GoodsActivity.class);
-        return callingIntent;
+        return new Intent(context, GoodsActivity.class);
     }
 
-    @Override
     public GoodsFragment createFragment() {
         return GoodsFragment.newInstance();
     }
@@ -54,6 +57,13 @@ public class GoodsActivity extends SingleListFragmentActivity<GoodsFragment>
         initToolbar();
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mFragment = createFragment();
+        replaceFragment(R.id.container, mFragment, GoodsFragment.class.getName());
+    }
+
     protected void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.goods);
@@ -63,6 +73,13 @@ public class GoodsActivity extends SingleListFragmentActivity<GoodsFragment>
         ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
         toolbar.setNavigationIcon(R.drawable.ic_back_white);
         toolbar.setNavigationOnClickListener(v -> finishActivity());
+    }
+
+    @Override
+    protected GoodsComponent getNewComponentInstance() {
+        return DaggerGoodsComponent.builder()
+                .appComponent(App.get().getAppComponent())
+                .build();
     }
 
     @Override

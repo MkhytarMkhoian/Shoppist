@@ -27,9 +27,6 @@ import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.di.components.DaggerMoveListItemsComponent;
 import com.justplay1.shoppist.di.components.MoveListItemsComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.ListItemsModule;
-import com.justplay1.shoppist.di.modules.ListsModule;
 import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.presenter.MoveListItemsPresenter;
@@ -69,9 +66,6 @@ public class MoveListItemsDialogFragment extends BaseDialogFragment implements M
         super.injectDependencies();
         mComponent = DaggerMoveListItemsComponent.builder()
                 .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .listsModule(new ListsModule())
-                .listItemsModule(new ListItemsModule())
                 .build();
         mComponent.inject(this);
     }

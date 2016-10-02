@@ -26,21 +26,25 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.components.CurrencyComponent;
+import com.justplay1.shoppist.di.components.DaggerCurrencyComponent;
+import com.justplay1.shoppist.view.fragments.CategoryFragment;
 import com.justplay1.shoppist.view.fragments.CurrencyFragment;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class CurrencyActivity extends SingleListFragmentActivity<CurrencyFragment>
+public class CurrencyActivity extends BaseListActivity<CurrencyComponent>
         implements Toolbar.OnMenuItemClickListener {
 
+    private CurrencyFragment mFragment;
+
     public static Intent getCallingIntent(Context context) {
-        Intent callingIntent = new Intent(context, CurrencyActivity.class);
-        return callingIntent;
+        return new Intent(context, CurrencyActivity.class);
     }
 
-    @Override
     public CurrencyFragment createFragment() {
         return CurrencyFragment.newInstance();
     }
@@ -52,6 +56,13 @@ public class CurrencyActivity extends SingleListFragmentActivity<CurrencyFragmen
         initToolbar();
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mFragment = createFragment();
+        replaceFragment(R.id.container, mFragment, CurrencyFragment.class.getName());
+    }
+
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.currency);
@@ -61,6 +72,13 @@ public class CurrencyActivity extends SingleListFragmentActivity<CurrencyFragmen
         toolbar.setOnMenuItemClickListener(this);
         toolbar.inflateMenu(R.menu.units_and_currency_menu);
         ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
+    }
+
+    @Override
+    protected CurrencyComponent getNewComponentInstance() {
+        return DaggerCurrencyComponent.builder()
+                .appComponent(App.get().getAppComponent())
+                .build();
     }
 
     @Override

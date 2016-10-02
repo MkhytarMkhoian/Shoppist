@@ -19,7 +19,7 @@ package com.justplay1.shoppist.presenter;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.GetCategory;
 import com.justplay1.shoppist.interactor.goods.GetGoodsList;
@@ -50,7 +50,7 @@ import rx.Observable;
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
+@NonConfigurationScope
 public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
 
     private final GoodsModelDataMapper mGoodsModelDataMapper;

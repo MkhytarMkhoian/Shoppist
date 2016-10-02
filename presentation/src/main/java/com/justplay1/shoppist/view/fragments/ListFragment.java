@@ -30,14 +30,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.bus.ThemeUpdatedEvent;
 import com.justplay1.shoppist.bus.UiEventBus;
-import com.justplay1.shoppist.di.components.DaggerListsComponent;
 import com.justplay1.shoppist.di.components.ListsComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.ListsModule;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.navigation.ListRouter;
@@ -65,7 +61,6 @@ public class ListFragment extends BaseEDSListFragment
 
     private Subscription mUiBusSubscription;
 
-    private ListsComponent mComponent;
     private ListAdapter mAdapter;
 
     public static ListFragment newInstance() {
@@ -113,12 +108,7 @@ public class ListFragment extends BaseEDSListFragment
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerListsComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .listsModule(new ListsModule())
-                .build();
-        mComponent.inject(this);
+        getInjector(ListsComponent.class).inject(this);
     }
 
     @Override

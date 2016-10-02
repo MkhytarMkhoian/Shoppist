@@ -4,12 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.di.components.CategoryComponent;
-import com.justplay1.shoppist.di.components.DaggerCategoryComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.CategoryModule;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.navigation.CategoryRouter;
 import com.justplay1.shoppist.presenter.CategoryPresenter;
@@ -31,7 +27,6 @@ public class CategoryFragment extends BaseListFragment
     @Inject
     CategoryPresenter mPresenter;
 
-    private CategoryComponent mComponent;
     private CategoriesAdapter mAdapter;
 
     public static CategoryFragment newInstance() {
@@ -53,18 +48,13 @@ public class CategoryFragment extends BaseListFragment
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachRouter((CategoryRouter) getActivity());
         mPresenter.attachView(this);
-        mPresenter.init();
+//        mPresenter.init();
     }
 
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerCategoryComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .categoryModule(new CategoryModule())
-                .build();
-        mComponent.inject(this);
+        getInjector(CategoryComponent.class).inject(this);
     }
 
     @Override
@@ -100,12 +90,6 @@ public class CategoryFragment extends BaseListFragment
         super.onDestroyView();
         mPresenter.detachView();
         mPresenter.detachRouter();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDestroy();
     }
 
     @Override

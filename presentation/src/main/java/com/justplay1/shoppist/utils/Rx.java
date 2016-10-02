@@ -14,23 +14,19 @@
  *   limitations under the License.
  */
 
-package com.justplay1.shoppist.di.components;
+package com.justplay1.shoppist.utils;
 
-import com.justplay1.shoppist.di.modules.ListItemsModule;
-import com.justplay1.shoppist.di.scope.NonConfigurationScope;
-import com.justplay1.shoppist.view.fragments.AddListItemFragment;
-import com.justplay1.shoppist.view.fragments.ListItemsFragment;
-
-import dagger.Component;
+import rx.Observable;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-@NonConfigurationScope
-@Component(dependencies = AppComponent.class, modules = {ListItemsModule.class})
-public interface ListItemsComponent {
 
-    void inject(ListItemsFragment fragment);
+public final class Rx {
 
-    void inject(AddListItemFragment fragment);
+    public static <T> Observable.Transformer<T, T> applyOpBeforeAndAfter(Runnable before, Runnable after) {
+        return tObservable -> tObservable
+                .doOnSubscribe(before::run)
+                .doOnTerminate(after::run);
+    }
 }

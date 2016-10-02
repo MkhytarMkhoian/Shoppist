@@ -16,7 +16,7 @@
 
 package com.justplay1.shoppist.presenter;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.DeleteCategory;
 import com.justplay1.shoppist.interactor.category.GetCategoryList;
@@ -32,12 +32,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-@PerActivity
+@NonConfigurationScope
 public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRouter> {
+
+    private final BehaviorSubject<List<CategoryViewModel>> subject = BehaviorSubject.create();
 
     private final CategoryModelDataMapper mDataMapper;
     private final GetCategoryList mGetCategoryList;
@@ -49,10 +52,33 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRou
         this.mGetCategoryList = getCategoryList;
         this.mDeleteCategory = deleteCategory;
         this.mDataMapper = dataMapper;
+
+        loadData();
     }
 
-    public void init() {
-        loadData();
+    private void loadData() {
+        showLoading();
+        mGetCategoryList.get()
+                .map(mDataMapper::transformToViewModel)
+                .subscribe(subject);
+    }
+
+    @Override
+    public void attachView(CategoryView view) {
+        super.attachView(view);
+        subject.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
+            @Override
+            public void onNext(List<CategoryViewModel> categoryViewModels) {
+                hideLoading();
+                showData(categoryViewModels);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                hideLoading();
+                e.printStackTrace();
+            }
+        });
     }
 
     public void onAddButtonClick() {
@@ -65,25 +91,6 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRou
         if (hasRouter()) {
             getRouter().openEditCategoryScreen(category);
         }
-    }
-
-    public void loadData() {
-        showLoading();
-        mSubscriptions.add(mGetCategoryList.get()
-                .map(mDataMapper::transformToViewModel)
-                .subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
-                    @Override
-                    public void onNext(List<CategoryViewModel> categoryViewModels) {
-                        hideLoading();
-                        showData(categoryViewModels);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        hideLoading();
-                        e.printStackTrace();
-                    }
-                }));
     }
 
     public void deleteItems(Collection<CategoryViewModel> data) {

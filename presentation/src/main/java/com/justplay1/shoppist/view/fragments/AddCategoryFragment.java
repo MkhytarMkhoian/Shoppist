@@ -23,12 +23,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.di.components.CategoryComponent;
-import com.justplay1.shoppist.di.components.DaggerCategoryComponent;
-import com.justplay1.shoppist.di.modules.ActivityModule;
-import com.justplay1.shoppist.di.modules.CategoryModule;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.presenter.AddCategoryPresenter;
 import com.justplay1.shoppist.utils.ShoppistUtils;
@@ -49,7 +45,6 @@ public class AddCategoryFragment extends BaseAddElementFragment
     @Inject
     AddCategoryPresenter mPresenter;
 
-    private CategoryComponent mComponent;
     @Bind(R.id.color_button)
     ImageView mColorBtn;
 
@@ -92,12 +87,7 @@ public class AddCategoryFragment extends BaseAddElementFragment
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerCategoryComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .activityModule(new ActivityModule(getActivity()))
-                .categoryModule(new CategoryModule())
-                .build();
-        mComponent.inject(this);
+        getInjector(CategoryComponent.class).inject(this);
     }
 
     @Override

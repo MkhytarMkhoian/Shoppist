@@ -16,7 +16,7 @@
 
 package com.justplay1.shoppist.di.modules;
 
-import com.justplay1.shoppist.di.scope.PerActivity;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.interactor.lists.AddList;
@@ -35,28 +35,28 @@ import dagger.Provides;
 public class ListsModule {
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     DeleteLists provideSoftDeleteShoppingList(ListRepository repository, ThreadExecutor threadExecutor,
                                               PostExecutionThread postExecutionThread) {
         return new DeleteLists(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     UpdateLists provideSaveListsPosition(ListRepository repository, ThreadExecutor threadExecutor,
                                          PostExecutionThread postExecutionThread) {
         return new UpdateLists(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     GetLists provideGetShoppingList(ListRepository repository, ThreadExecutor threadExecutor,
                                     PostExecutionThread postExecutionThread) {
         return new GetLists(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides
-    @PerActivity
+    @NonConfigurationScope
     AddList provideAddShoppingList(ListRepository repository, ThreadExecutor threadExecutor,
                                    PostExecutionThread postExecutionThread) {
         return new AddList(repository, threadExecutor, postExecutionThread);
