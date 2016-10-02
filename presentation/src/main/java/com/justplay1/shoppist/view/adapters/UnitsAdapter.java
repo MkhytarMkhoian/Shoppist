@@ -56,7 +56,9 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         UnitItemViewHolder holder = (UnitItemViewHolder) viewHolder;
         UnitViewModel item = getItem(position);
-        item.setChecked(isItemChecked(item.getId()));
+        if (!item.isChecked()) {
+            item.setChecked(isItemChecked(item.getId()));
+        }
 
         holder.name.setText(String.format("%s (%s)", item.getName(), item.getShortName()));
 
@@ -70,11 +72,11 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
         holder.setActivated(item.isChecked());
     }
 
-    public static class UnitItemViewHolder extends BaseItemHolder {
+    static class UnitItemViewHolder extends BaseItemHolder {
         @Bind(R.id.item_name)
         TextView name;
 
-        public UnitItemViewHolder(View itemView) {
+        UnitItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

@@ -55,11 +55,6 @@ public class GoodsActivity extends BaseListActivity<GoodsComponent>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
         mFragment = createFragment();
         replaceFragment(R.id.container, mFragment, GoodsFragment.class.getName());
     }

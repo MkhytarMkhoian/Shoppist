@@ -67,6 +67,26 @@ public abstract class BaseListActivity<C> extends BaseActivity
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("isActionModeShowing", isActionModeShowing);
+        if (isActionModeShowing) {
+            outState.putInt("title", Integer.valueOf(mActionMode.getTitle().toString()));
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null){
+            isActionModeShowing = savedInstanceState.getBoolean("isActionModeShowing");
+            if (isActionModeShowing) {
+                openActionMode(savedInstanceState.getInt("title", 0));
+            }
+        }
+    }
+
+    @Override
     public boolean isActionModeShowing() {
         return isActionModeShowing;
     }

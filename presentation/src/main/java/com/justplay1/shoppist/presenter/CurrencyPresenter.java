@@ -47,9 +47,9 @@ public class CurrencyPresenter extends BaseRxPresenter<CurrencyView, CurrencyRou
     private final DeleteCurrency mDeleteCurrency;
 
     @Inject
-    public CurrencyPresenter(GetCurrencyList getCurrencyList,
-                             DeleteCurrency deleteCurrency,
-                             CurrencyModelDataMapper dataMapper) {
+    CurrencyPresenter(GetCurrencyList getCurrencyList,
+                      DeleteCurrency deleteCurrency,
+                      CurrencyModelDataMapper dataMapper) {
         this.mGetCurrencyList = getCurrencyList;
         this.mDeleteCurrency = deleteCurrency;
         this.mDataMapper = dataMapper;
@@ -98,6 +98,6 @@ public class CurrencyPresenter extends BaseRxPresenter<CurrencyView, CurrencyRou
                 .flatMap(items -> {
                     mDeleteCurrency.setData(items);
                     return mDeleteCurrency.get();
-                }).subscribe(new DefaultSubscriber<Boolean>()));
+                }).subscribe(new DefaultSubscriber<>()));
     }
 }

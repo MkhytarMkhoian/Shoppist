@@ -42,13 +42,13 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
 
     protected Context mContext;
     protected ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> mItemClickListener;
-    protected ActionModeInteractionListener mActionModeInteractionListener;
+    private ActionModeInteractionListener mActionModeInteractionListener;
 
     protected RecyclerView mRecyclerView;
-    protected boolean deleteState = false;
-    protected int mCheckedCount = 0;
+    private boolean deleteState = false;
+    private int mCheckedCount = 0;
     protected LinearLayoutManager mLinearLayoutManager;
-    protected Map<String, Boolean> mCheckedItems;
+    private Map<String, Boolean> mCheckedItems;
 
     public BaseAdapter(Context context, ActionModeInteractionListener listener,
                        RecyclerView recyclerView) {
@@ -70,11 +70,11 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         return getItemCount() == mCheckedCount;
     }
 
-    public int getCheckedCount() {
+    public int getCheckedItemsCount() {
         return mCheckedCount;
     }
 
-    protected List<Checkable> findVisibleItems() {
+    private List<Checkable> findVisibleItems() {
         List<Checkable> visibleItems = new ArrayList<>();
         final int firstPosition = mLinearLayoutManager.findFirstVisibleItemPosition();
         final int lastPosition = mLinearLayoutManager.findLastVisibleItemPosition();
@@ -125,7 +125,7 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         refreshInvisibleItems();
     }
 
-    protected void checkInvisibleItems(boolean check) {
+    private void checkInvisibleItems(boolean check) {
         for (T item : getItems()) {
             if (item instanceof HeaderViewModel) continue;
             if (item.isChecked() != check) {
@@ -176,7 +176,7 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         }
     }
 
-    protected void finishDelete() {
+    private void finishDelete() {
         mActionModeInteractionListener.closeActionMode();
         mRecyclerView.setEnabled(true);
         deleteState = false;
@@ -187,10 +187,6 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         deleteState = true;
         resultListener.onAnimationEnd(getCheckedItems());
         finishDelete();
-    }
-
-    public ShoppistRecyclerView.OnItemClickListener getClickListener() {
-        return mItemClickListener;
     }
 
     public void setClickListener(ShoppistRecyclerView.OnItemClickListener clickListener) {

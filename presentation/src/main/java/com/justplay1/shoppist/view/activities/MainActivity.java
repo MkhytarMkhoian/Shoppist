@@ -62,6 +62,8 @@ public class MainActivity extends BaseListActivity<ListsComponent>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initToolbar();
+        mListFragment = ListFragment.newInstance();
+        replaceFragment(R.id.container, mListFragment, FRAGMENT_TAG);
     }
 
     @Override
@@ -74,9 +76,6 @@ public class MainActivity extends BaseListActivity<ListsComponent>
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mToggle.syncState();
-
-        mListFragment = ListFragment.newInstance();
-        replaceFragment(R.id.container, mListFragment, FRAGMENT_TAG);
     }
 
     protected void onSaveInstanceState(Bundle outState) {

@@ -35,7 +35,6 @@ import com.justplay1.shoppist.view.fragments.SearchFragment;
  */
 public class SearchActivity extends BaseActivity implements HasInjector<SearchComponent> {
 
-    private SearchFragment mFragment;
     private SearchComponent mComponent;
 
     private int mContextType;
@@ -54,10 +53,10 @@ public class SearchActivity extends BaseActivity implements HasInjector<SearchCo
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        mComponent = retrieveComponentOrCreateNew();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_fragment_container);
         setStatusBarColor(FloatingSearchView.DEFAULT_BACKGROUND_COLOR);
-        mComponent = retrieveComponentOrCreateNew();
 
         if (getIntent() != null) {
             mContextType = getIntent().getIntExtra(Const.SEARCH_CONTEXT_TYPE, Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST);
@@ -69,13 +68,9 @@ public class SearchActivity extends BaseActivity implements HasInjector<SearchCo
                     break;
             }
         }
-    }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mFragment = createFragment();
-        replaceFragment(R.id.container, mFragment, SearchFragment.class.getName());
+        SearchFragment fragment = createFragment();
+        replaceFragment(R.id.container, fragment, SearchFragment.class.getName());
     }
 
     private SearchComponent retrieveComponentOrCreateNew() {

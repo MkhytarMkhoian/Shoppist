@@ -48,7 +48,6 @@ public class CategoryFragment extends BaseListFragment
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachRouter((CategoryRouter) getActivity());
         mPresenter.attachView(this);
-//        mPresenter.init();
     }
 
     @Override

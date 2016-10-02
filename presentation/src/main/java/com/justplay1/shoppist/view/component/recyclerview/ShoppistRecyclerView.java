@@ -21,9 +21,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
-
 /**
  * Created by Mkhytar Mkhoian.
  */
@@ -90,9 +87,5 @@ public class ShoppistRecyclerView extends RecyclerView {
     public void setEmptyView(View emptyView) {
         mEmptyView = emptyView;
         checkIfEmpty();
-    }
-
-    public View getEmptyView() {
-        return mEmptyView;
     }
 }

@@ -90,7 +90,7 @@ public abstract class BaseSortablePresenter<V extends ContextView, T extends Bas
                 }
                 header.setTotalPrice(ShoppistUtils.roundDouble(totalPrice, 2));
                 header.setItemType(ItemType.CART_HEADER);
-                result.add(0, Pair.create(header, (List<T>) new ArrayList<T>()));
+                result.add(0, Pair.create(header, new ArrayList<>()));
             }
         }
 

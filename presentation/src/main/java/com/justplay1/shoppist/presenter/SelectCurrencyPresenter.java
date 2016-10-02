@@ -18,6 +18,7 @@ package com.justplay1.shoppist.presenter;
 
 import android.os.Bundle;
 
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.currency.GetCurrencyList;
 import com.justplay1.shoppist.models.CategoryViewModel;
@@ -34,6 +35,7 @@ import javax.inject.Inject;
 /**
  * Created by Mkhytar Mkhoian.
  */
+@NonConfigurationScope
 public class SelectCurrencyPresenter extends BaseRxPresenter<SelectCurrencyView, Router> {
 
     private final CurrencyModelDataMapper mDataMapper;
@@ -42,7 +44,7 @@ public class SelectCurrencyPresenter extends BaseRxPresenter<SelectCurrencyView,
     private CurrencyViewModel mItem;
 
     @Inject
-    public SelectCurrencyPresenter(CurrencyModelDataMapper dataMapper, GetCurrencyList getCurrencyList) {
+    SelectCurrencyPresenter(CurrencyModelDataMapper dataMapper, GetCurrencyList getCurrencyList) {
         this.mDataMapper = dataMapper;
         this.mGetCurrencyList = getCurrencyList;
     }

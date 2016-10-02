@@ -325,7 +325,7 @@ public class ListItemsFragment extends BaseEDSListFragment
 
     public boolean isEditButtonEnable() {
         boolean editFlag = true;
-        if (mAdapter.getCheckedCount() != 1) {
+        if (mAdapter.getCheckedItemsCount() != 1) {
             editFlag = false;
         }
         return editFlag;

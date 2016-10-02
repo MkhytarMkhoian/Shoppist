@@ -47,8 +47,8 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRou
     private final DeleteCategory mDeleteCategory;
 
     @Inject
-    public CategoryPresenter(GetCategoryList getCategoryList, DeleteCategory deleteCategory,
-                             CategoryModelDataMapper dataMapper) {
+    CategoryPresenter(GetCategoryList getCategoryList, DeleteCategory deleteCategory,
+                      CategoryModelDataMapper dataMapper) {
         this.mGetCategoryList = getCategoryList;
         this.mDeleteCategory = deleteCategory;
         this.mDataMapper = dataMapper;
@@ -104,7 +104,7 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRou
                 .flatMap(items -> {
                     mDeleteCategory.setData(items);
                     return mDeleteCategory.get();
-                }).subscribe(new DefaultSubscriber<Boolean>()));
+                }).subscribe(new DefaultSubscriber<>()));
     }
 
     private void showData(List<CategoryViewModel> data) {

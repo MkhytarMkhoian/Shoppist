@@ -37,10 +37,6 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder
         itemView.setOnLongClickListener(this);
     }
 
-    public ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> getClickListener() {
-        return mClickListener;
-    }
-
     public void setClickListener(ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> mClickListener) {
         this.mClickListener = mClickListener;
     }

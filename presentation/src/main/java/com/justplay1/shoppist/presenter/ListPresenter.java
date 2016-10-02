@@ -20,6 +20,7 @@ import android.support.v4.util.Pair;
 
 import com.justplay1.shoppist.bus.DataEventBus;
 import com.justplay1.shoppist.bus.ListsDataUpdatedEvent;
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.listitems.GetListItems;
 import com.justplay1.shoppist.interactor.lists.DeleteLists;
@@ -47,6 +48,7 @@ import rx.subjects.BehaviorSubject;
 /**
  * Created by Mkhytar Mkhoian.
  */
+@NonConfigurationScope
 public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel, ListRouter> {
 
     private final BehaviorSubject<List<Pair<HeaderViewModel, List<ListViewModel>>>> cache = BehaviorSubject.create();
@@ -60,12 +62,12 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
     private Subscription mDataBusSubscription;
 
     @Inject
-    public ListPresenter(AppPreferences preferences,
-                         GetLists getLists,
-                         DeleteLists deleteLists,
-                         GetListItems getListItems,
-                         ListModelDataMapper listModelDataMapper,
-                         ListItemsModelDataMapper listItemsModelDataMapper) {
+    ListPresenter(AppPreferences preferences,
+                  GetLists getLists,
+                  DeleteLists deleteLists,
+                  GetListItems getListItems,
+                  ListModelDataMapper listModelDataMapper,
+                  ListItemsModelDataMapper listItemsModelDataMapper) {
         super(preferences);
         this.mGetLists = getLists;
         this.mDeleteLists = deleteLists;

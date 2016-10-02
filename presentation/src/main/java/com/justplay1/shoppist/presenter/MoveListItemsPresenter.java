@@ -54,7 +54,7 @@ public class MoveListItemsPresenter extends BaseRxPresenter<MoveListItemsView, R
     private ArrayList<ListItemViewModel> mListItems;
 
     @Inject
-    public MoveListItemsPresenter(ListModelDataMapper dataMapper,
+    MoveListItemsPresenter(ListModelDataMapper dataMapper,
                                   ListItemsModelDataMapper listItemsModelDataMapper,
                                   GetLists getLists,
                                   MoveToList moveToList) {

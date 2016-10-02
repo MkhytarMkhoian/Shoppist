@@ -26,7 +26,6 @@ import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
-import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 
 import java.util.Locale;
@@ -56,7 +55,9 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel> {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         CategoryItemViewHolder holder = (CategoryItemViewHolder) viewHolder;
         CategoryViewModel item = getItem(position);
-        item.setChecked(isItemChecked(item.getId()));
+        if (!item.isChecked()) {
+            item.setChecked(isItemChecked(item.getId()));
+        }
 
         holder.name.setText(item.getName());
         holder.selectBox.setNormalStateColor(item.getColor());
@@ -69,11 +70,11 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel> {
         holder.setActivated(item.isChecked());
     }
 
-    public static class CategoryItemViewHolder extends BaseItemHolder {
+    static class CategoryItemViewHolder extends BaseItemHolder {
         @Bind(R.id.item_name)
         TextView name;
 
-        public CategoryItemViewHolder(View itemView) {
+        CategoryItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

@@ -46,12 +46,15 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
 public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
+
+    private final BehaviorSubject<Map<String, ProductViewModel>> cache = BehaviorSubject.create();
 
     private final GoodsModelDataMapper mGoodsModelDataMapper;
     private final CategoryModelDataMapper mCategoryModelDataMapper;
@@ -65,18 +68,20 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
     private int mContextType;
 
     @Inject
-    public SearchPresenter(GoodsModelDataMapper dataMapper,
-                           GetGoodsList getGoodsList,
-                           AddListItems addListItems,
-                           GetCategory getCategory,
-                           CategoryModelDataMapper categoryModelDataMapper,
-                           ListItemsModelDataMapper listItemsModelDataMapper) {
+    SearchPresenter(GoodsModelDataMapper dataMapper,
+                    GetGoodsList getGoodsList,
+                    AddListItems addListItems,
+                    GetCategory getCategory,
+                    CategoryModelDataMapper categoryModelDataMapper,
+                    ListItemsModelDataMapper listItemsModelDataMapper) {
         this.mGoodsModelDataMapper = dataMapper;
         this.mGetGoodsList = getGoodsList;
         this.mGetCategory = getCategory;
         this.mCategoryModelDataMapper = categoryModelDataMapper;
         this.mAddListItems = addListItems;
         this.mListItemsModelDataMapper = listItemsModelDataMapper;
+
+        loadData();
     }
 
     @Override
@@ -97,12 +102,19 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
         bundle.putInt(Const.SEARCH_CONTEXT_TYPE, mContextType);
     }
 
-    public void init() {
-        loadData();
+    @Override
+    public void attachView(SearchView view) {
+        super.attachView(view);
+        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<Map<String, ProductViewModel>>() {
+            @Override
+            public void onNext(Map<String, ProductViewModel> data) {
+                showData(data);
+            }
+        }));
     }
 
     public void loadData() {
-        mSubscriptions.add(Observable.zip(loadDefaultCategory(), loadGoods(), (categoryViewModel, goods) -> {
+        Observable.zip(loadDefaultCategory(), loadGoods(), (categoryViewModel, goods) -> {
             Map<String, ProductViewModel> data = new HashMap<>(goods.size());
             for (ProductViewModel product : goods) {
                 if (product.isCategoryEmpty()) {
@@ -111,12 +123,7 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
                 data.put(product.getName(), product);
             }
             return data;
-        }).subscribe(new DefaultSubscriber<Map<String, ProductViewModel>>() {
-            @Override
-            public void onNext(Map<String, ProductViewModel> data) {
-                showData(data);
-            }
-        }));
+        }).subscribe(cache);
     }
 
     private Observable<List<ProductViewModel>> loadGoods() {

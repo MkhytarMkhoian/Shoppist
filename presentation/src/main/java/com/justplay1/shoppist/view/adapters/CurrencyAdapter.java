@@ -56,7 +56,9 @@ public class CurrencyAdapter extends BaseListAdapter<CurrencyViewModel> {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         CurrencyItemViewHolder holder = (CurrencyItemViewHolder) viewHolder;
         CurrencyViewModel item = getItem(position);
-        item.setChecked(isItemChecked(item.getId()));
+        if (!item.isChecked()) {
+            item.setChecked(isItemChecked(item.getId()));
+        }
 
         holder.name.setText(item.getName());
         holder.selectBox.setNormalStateColor(ContextCompat.getColor(mContext, R.color.blue_grey_500));
@@ -68,11 +70,11 @@ public class CurrencyAdapter extends BaseListAdapter<CurrencyViewModel> {
         holder.selectBox.setChecked(item.isChecked());
     }
 
-    public static class CurrencyItemViewHolder extends BaseItemHolder {
+    static class CurrencyItemViewHolder extends BaseItemHolder {
         @Bind(R.id.item_name)
         TextView name;
 
-        public CurrencyItemViewHolder(View itemView) {
+        CurrencyItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

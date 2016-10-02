@@ -68,7 +68,6 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
 
     @Override
     public void onBindGroupViewHolder(BaseHeaderHolder holder, int groupPosition, int viewType) {
-        if (holder == null) return;
         HeaderViewModel model = getGroupItem(groupPosition);
         HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
         if (mPreferences.getSortForLists() == SortType.SORT_BY_PRIORITY) {
@@ -84,8 +83,9 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
     public void onBindChildViewHolder(BaseItemHolder viewHolder, int groupPosition, int childPosition, int viewType) {
         ListViewHolder holder = (ListViewHolder) viewHolder;
         ListViewModel item = getChildItem(groupPosition, childPosition);
-        item.setChecked(isItemChecked(item.getId()));
-
+        if (!item.isChecked()) {
+            item.setChecked(isItemChecked(item.getId()));
+        }
         holder.childPosition = childPosition;
         holder.groupPosition = groupPosition;
 
@@ -104,17 +104,17 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
         holder.setActivated(item.isChecked());
     }
 
-    public static class HeaderViewHolder extends BaseHeaderHolder {
+    static class HeaderViewHolder extends BaseHeaderHolder {
         @Bind(R.id.header_name)
         TextView name;
 
-        public HeaderViewHolder(View itemView) {
+        HeaderViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    public static class ListViewHolder extends BaseItemHolder implements ExpandableItemViewHolder {
+    static class ListViewHolder extends BaseItemHolder implements ExpandableItemViewHolder {
         @Bind(R.id.priority_indicator)
         ImageView priorityIndicator;
         @Bind(R.id.item_name)
@@ -124,7 +124,7 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
 
         private int mExpandStateFlags;
 
-        public ListViewHolder(View itemView) {
+        ListViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

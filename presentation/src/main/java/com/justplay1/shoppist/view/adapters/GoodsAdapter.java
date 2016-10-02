@@ -55,7 +55,6 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
 
     @Override
     public void onBindGroupViewHolder(BaseHeaderHolder holder, int groupPosition, int viewType) {
-        if (holder == null) return;
         HeaderViewModel model = getGroupItem(groupPosition);
         HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
         if (mPreferences.getSortForGoods() == SortType.SORT_BY_PRIORITY) {
@@ -71,7 +70,9 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
     @Override
     public void onBindChildViewHolder(GoodsViewHolder holder, int groupPosition, int childPosition, int viewType) {
         ProductViewModel item = getChildItem(groupPosition, childPosition);
-        item.setChecked(isItemChecked(item.getId()));
+        if (!item.isChecked()) {
+            item.setChecked(isItemChecked(item.getId()));
+        }
 
         holder.childPosition = childPosition;
         holder.groupPosition = groupPosition;
@@ -124,17 +125,17 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
         return holder.itemView.isEnabled();
     }
 
-    public static class HeaderViewHolder extends BaseHeaderHolder {
+    static class HeaderViewHolder extends BaseHeaderHolder {
         @Bind(R.id.header_name)
         TextView name;
 
-        public HeaderViewHolder(View itemView) {
+        HeaderViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    public static class GoodsViewHolder extends BaseItemHolder implements ExpandableItemViewHolder {
+    static class GoodsViewHolder extends BaseItemHolder implements ExpandableItemViewHolder {
         @Bind(R.id.item_name)
         TextView name;
         @Bind(R.id.category_name)
@@ -142,7 +143,7 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
 
         private int mExpandStateFlags;
 
-        public GoodsViewHolder(View itemView) {
+        GoodsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

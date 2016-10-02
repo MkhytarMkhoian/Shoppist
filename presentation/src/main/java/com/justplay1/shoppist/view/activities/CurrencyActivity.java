@@ -30,7 +30,6 @@ import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.di.components.CurrencyComponent;
 import com.justplay1.shoppist.di.components.DaggerCurrencyComponent;
-import com.justplay1.shoppist.view.fragments.CategoryFragment;
 import com.justplay1.shoppist.view.fragments.CurrencyFragment;
 
 /**
@@ -54,11 +53,6 @@ public class CurrencyActivity extends BaseListActivity<CurrencyComponent>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
         mFragment = createFragment();
         replaceFragment(R.id.container, mFragment, CurrencyFragment.class.getName());
     }

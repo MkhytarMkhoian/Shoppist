@@ -16,6 +16,7 @@
 
 package com.justplay1.shoppist.presenter;
 
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.currency.GetCurrency;
 import com.justplay1.shoppist.models.CurrencyViewModel;
@@ -32,6 +33,7 @@ import rx.Observable;
 /**
  * Created by Mkhytar Mkhoian.
  */
+@NonConfigurationScope
 public class ListsSettingPresenter extends BaseRxPresenter<ListsSettingView, Router> {
 
     private final CurrencyModelDataMapper mCurrencyModelDataMapper;

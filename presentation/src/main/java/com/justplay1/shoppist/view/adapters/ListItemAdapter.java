@@ -149,7 +149,9 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
         holder.groupPosition = groupPosition;
 
         final ListItemViewModel item = getChildItem(groupPosition, childPosition);
-        item.setChecked(isItemChecked(item.getId()));
+        if (!item.isChecked()) {
+            item.setChecked(isItemChecked(item.getId()));
+        }
 
         holder.name.setText(item.getName());
         if (item.getStatus()) {
@@ -240,13 +242,13 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
         void onNoteClick(String note);
     }
 
-    public static class CartViewHolder extends BaseHeaderHolder {
+    static class CartViewHolder extends BaseHeaderHolder {
         @Bind(R.id.header_name)
         TextView cart;
         @Bind(R.id.header_price_info)
         TextView priceInfo;
 
-        public CartViewHolder(View itemView) {
+        CartViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.findViewById(R.id.line).setVisibility(View.GONE);
@@ -257,17 +259,17 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
         }
     }
 
-    public static class HeaderViewHolder extends BaseHeaderHolder {
+    static class HeaderViewHolder extends BaseHeaderHolder {
         @Bind(R.id.header_name)
         TextView name;
 
-        public HeaderViewHolder(View itemView) {
+        HeaderViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    public static class ListItemViewHolder extends BaseSwipeableItemViewHolder implements ExpandableItemViewHolder {
+    static class ListItemViewHolder extends BaseSwipeableItemViewHolder implements ExpandableItemViewHolder {
         @Bind(R.id.priority_indicator)
         ImageView priorityIndicator;
         @Bind(R.id.note_image)
@@ -285,7 +287,7 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
 
         private int mExpandStateFlags;
 
-        public ListItemViewHolder(View itemView) {
+        ListItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

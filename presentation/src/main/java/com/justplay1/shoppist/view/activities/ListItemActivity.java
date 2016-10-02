@@ -63,11 +63,6 @@ public class ListItemActivity extends BaseListActivity<ListItemsComponent>
             mParentList = getIntent().getParcelableExtra(ListViewModel.class.getName());
         }
         initToolbar();
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
         mFragment = createFragment();
         replaceFragment(R.id.container, mFragment, ListItemsFragment.class.getName());
     }

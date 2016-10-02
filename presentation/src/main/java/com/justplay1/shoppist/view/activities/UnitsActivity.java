@@ -37,11 +37,6 @@ public class UnitsActivity extends BaseListActivity<UnitsComponent>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
         mFragment = createFragment();
         replaceFragment(R.id.container, mFragment, UnitFragment.class.getName());
     }

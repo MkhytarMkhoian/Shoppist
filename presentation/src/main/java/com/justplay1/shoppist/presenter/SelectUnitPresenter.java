@@ -18,6 +18,7 @@ package com.justplay1.shoppist.presenter;
 
 import android.os.Bundle;
 
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.units.GetUnitsList;
 import com.justplay1.shoppist.models.CategoryViewModel;
@@ -34,6 +35,7 @@ import javax.inject.Inject;
 /**
  * Created by Mkhytar Mkhoian.
  */
+@NonConfigurationScope
 public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView, Router> {
 
     private final UnitsDataModelMapper mDataMapper;
@@ -42,7 +44,7 @@ public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView, Router>
     private UnitViewModel mItem;
 
     @Inject
-    public SelectUnitPresenter(UnitsDataModelMapper dataMapper, GetUnitsList getUnitsList) {
+    SelectUnitPresenter(UnitsDataModelMapper dataMapper, GetUnitsList getUnitsList) {
         this.mDataMapper = dataMapper;
         this.mGetUnitsList = getUnitsList;
     }

@@ -16,6 +16,7 @@
 
 package com.justplay1.shoppist.presenter;
 
+import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.units.DeleteUnits;
 import com.justplay1.shoppist.interactor.units.GetUnitsList;
@@ -36,9 +37,10 @@ import rx.subjects.BehaviorSubject;
 /**
  * Created by Mkhytar Mkhoian.
  */
+@NonConfigurationScope
 public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
 
-    private final BehaviorSubject<List<UnitViewModel>> subject = BehaviorSubject.create();
+    private final BehaviorSubject<List<UnitViewModel>> cache = BehaviorSubject.create();
 
     private final UnitsDataModelMapper mDataMapper;
     private final GetUnitsList mGetUnitsList;
@@ -58,13 +60,7 @@ public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
     @Override
     public void attachView(UnitsView view) {
         super.attachView(view);
-        mSubscriptions.add(subject.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
-
-            @Override
-            public void onStart() {
-                super.onStart();
-                showLoading();
-            }
+        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
 
             @Override
             public void onNext(List<UnitViewModel> currencyViewModels) {
@@ -83,7 +79,7 @@ public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
     private void loadData() {
         mGetUnitsList.get()
                 .map(mDataMapper::transformToViewModel)
-                .subscribe(subject);
+                .subscribe(cache);
     }
 
     public void deleteItems(Collection<UnitViewModel> data) {
@@ -91,7 +87,7 @@ public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
                 .flatMap(items -> {
                     mDeleteUnits.setData(items);
                     return mDeleteUnits.get();
-                }).subscribe(new DefaultSubscriber<Boolean>()));
+                }).subscribe(new DefaultSubscriber<>()));
     }
 
     public void onAddButtonClick() {

@@ -109,7 +109,6 @@ public class SearchFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        mPresenter.attachView(this);
         init(view);
     }
 
@@ -162,7 +161,7 @@ public class SearchFragment extends BaseFragment
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 mSearchView.removeOnLayoutChangeListener(this);
                 mSearchView.setActivated(true);
-                mPresenter.init();
+                mPresenter.attachView(SearchFragment.this);
             }
         });
         mSearchView.setHint(getString(R.string.search));
@@ -217,6 +216,7 @@ public class SearchFragment extends BaseFragment
 
     @Override
     public void onFocusChanged(boolean focused) {
+        if (mSearchView == null) return;
         boolean textEmpty = mSearchView.getText().length() == 0;
         showClearButton(focused && !textEmpty);
         showVoiceButton(focused && textEmpty);
