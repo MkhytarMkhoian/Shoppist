@@ -198,7 +198,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
                 } else if (mCurrencyModel != null) {
                     selectCurrency(mCurrencyModel.getId());
                 } else {
-                    selectCurrency(mPreferences.getDefaultCurrency());
+                    selectCurrency(CurrencyViewModel.NO_CURRENCY_ID);
                 }
             }
         }));

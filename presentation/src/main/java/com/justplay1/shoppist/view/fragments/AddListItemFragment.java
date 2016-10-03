@@ -441,7 +441,7 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
 
     @Override
     public void setDefaultCurrency() {
-        mCurrencyList.selectItem(mPreferences.getDefaultCurrency());
+        mCurrencyList.selectItem(CurrencyViewModel.NO_CURRENCY_ID);
     }
 
     public interface AddListItemListener {

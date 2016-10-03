@@ -189,7 +189,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     }
 
     private Observable<CurrencyViewModel> loadDefaultCurrency() {
-        mGetCurrency.setId(mPreferences.getDefaultCurrency());
+        mGetCurrency.setId(CurrencyViewModel.NO_CURRENCY_ID);
         return mGetCurrency.get()
                 .flatMap(currencyModel -> {
                     if (currencyModel == null) {

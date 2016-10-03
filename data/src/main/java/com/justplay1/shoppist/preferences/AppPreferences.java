@@ -38,8 +38,6 @@ public class AppPreferences {
 
     private static final String CONFIRM_DELETE_DIALOG = "confirm_delete_dialog";
     private static final String IS_NEED_SHOW_RATE_DIALOG = "is_need_show_rate_dialog";
-    private static final String DEFAULT_CURRENCY = "default_currency_id";
-    private static final String CALCULATE_PRICE = "calculate_price";
     private static final String ADD_BUTTON_CLICK_ACTION = "add_button_click_action";
 
     private static final String SORT_FOR_SHOPPING_LISTS = "sort_for_shopping_lists";
@@ -65,8 +63,6 @@ public class AppPreferences {
 
     private boolean mConfirmDeleteDialog;
     private int mNeedShowRateDialog;
-    private String mDefaultCurrency;
-    private boolean mCalculatePrice;
     private int mAddButtonClickAction;
 
     private int mLeftShoppingListItemSwipeAction;
@@ -88,8 +84,6 @@ public class AppPreferences {
 
             mConfirmDeleteDialog = mPreference.getBoolean(CONFIRM_DELETE_DIALOG, false);
             mNeedShowRateDialog = mPreference.getInt(IS_NEED_SHOW_RATE_DIALOG, 0);
-            mDefaultCurrency = mPreference.getString(DEFAULT_CURRENCY, "1");
-            mCalculatePrice = mPreference.getBoolean(CALCULATE_PRICE, true);
             mAddButtonClickAction = mPreference.getInt(ADD_BUTTON_CLICK_ACTION, 0);
 
             mLeftShoppingListItemSwipeAction = mPreference.getInt(LEFT_SHOPPING_LIST_ITEM_SWIPE_ACTION, 0);
@@ -108,17 +102,6 @@ public class AppPreferences {
 
     public int getColorPrimaryDark() {
         return mColorPrimaryDark;
-    }
-
-    public void setDefaultCurrency(String defaultCurrency) {
-        mDefaultCurrency = defaultCurrency;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putString(DEFAULT_CURRENCY, defaultCurrency);
-        editor.apply();
-    }
-
-    public String getDefaultCurrency() {
-        return mDefaultCurrency;
     }
 
     public void setColorPrimaryDark(int color) {
@@ -192,17 +175,6 @@ public class AppPreferences {
         mLockScreen = lockScreen;
         SharedPreferences.Editor editor = mPreference.edit();
         editor.putBoolean(LOCK_SCREEN, lockScreen);
-        editor.apply();
-    }
-
-    public boolean isCalculatePrice() {
-        return mCalculatePrice;
-    }
-
-    public void setCalculatePrice(boolean calculatePrice) {
-        mCalculatePrice = calculatePrice;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putBoolean(CALCULATE_PRICE, calculatePrice);
         editor.apply();
     }
 

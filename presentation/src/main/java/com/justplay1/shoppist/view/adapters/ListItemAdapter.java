@@ -130,13 +130,6 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
                 cartViewHolder.itemView.setBackgroundColor(mPreferences.getColorPrimary());
                 cartViewHolder.cart.setTextColor(Color.WHITE);
                 cartViewHolder.cart.setText(header.getName().toUpperCase(Locale.getDefault()));
-                if (header.getTotalPrice() > 0) {
-                    cartViewHolder.priceInfo.setText(String.format("%s %s", header.getTotalPrice(), "FFF"));
-                    cartViewHolder.priceInfo.setTextColor(Color.WHITE);
-                    cartViewHolder.priceInfo.setVisibility(View.VISIBLE);
-                } else {
-                    cartViewHolder.priceInfo.setVisibility(View.INVISIBLE);
-                }
                 break;
         }
         ExpandUtils.toggleIndicator(viewHolder);
@@ -186,12 +179,8 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
             holder.priceAndCurrency.setVisibility(View.GONE);
         } else {
             holder.priceAndCurrency.setVisibility(View.VISIBLE);
-            if (mPreferences.isCalculatePrice()) {
-                holder.priceAndCurrency.setText(String.format("%s %s", ShoppistUtils.roundDouble(item.getPrice() * item.getQuantity(), 2),
-                        item.getCurrency().getName()));
-            } else {
-                holder.priceAndCurrency.setText(String.format("%s %s", item.getPrice(), item.getCurrency().getName()));
-            }
+            holder.priceAndCurrency.setText(String.format("%s %s", ShoppistUtils.roundDouble(item.getPrice() * item.getQuantity(), 2),
+                    item.getCurrency().getName()));
         }
 
         if (item.getQuantity() == 0 || item.getUnit().getId().equals(UnitViewModel.NO_UNIT_ID)) {
@@ -245,8 +234,6 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
     static class CartViewHolder extends BaseHeaderHolder {
         @Bind(R.id.header_name)
         TextView cart;
-        @Bind(R.id.header_price_info)
-        TextView priceInfo;
 
         CartViewHolder(View itemView) {
             super(itemView);

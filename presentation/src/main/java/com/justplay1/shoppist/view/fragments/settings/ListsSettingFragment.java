@@ -19,49 +19,24 @@ package com.justplay1.shoppist.view.fragments.settings;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ArrayAdapter;
 
-import com.jenzz.materialpreference.CheckBoxPreference;
 import com.jenzz.materialpreference.Preference;
-import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.di.components.CurrencyComponent;
-import com.justplay1.shoppist.di.components.DaggerCurrencyComponent;
-import com.justplay1.shoppist.models.CurrencyViewModel;
-import com.justplay1.shoppist.presenter.ListsSettingPresenter;
-import com.justplay1.shoppist.view.ListsSettingView;
-import com.justplay1.shoppist.view.component.ColorCheckBoxPreference;
-import com.justplay1.shoppist.view.fragments.dialog.AddCurrencyDialogFragment;
-import com.justplay1.shoppist.view.fragments.dialog.SelectCurrencyDialogFragment;
-
-import javax.inject.Inject;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class ListsSettingFragment extends BaseSettingFragment implements ListsSettingView {
+public class ListsSettingFragment extends BaseSettingFragment {
 
-    public static final String DEFAULT_CURRENCY_ID = "default_currency";
-    public static final String CALCULATE_PRICE_ID = "calculate_price";
     public static final String SHOPPING_LIST_LEFT_SWIPE_ACTION_ID = "shopping_list_left_swipe_action_id";
     public static final String SHOPPING_LIST_RIGHT_SWIPE_ACTION_ID = "shopping_list_right_swipe_action_id";
     public static final String ADD_BUTTON_CLICK_ACTION_ID = "add_button_click_action";
 
-    private CheckBoxPreference mCalculatePriceBtn;
-
     private Preference mShoppingListLeftSwipeActionBtn;
     private Preference mShoppingListRightSwipeActionBtn;
-    private Preference mDefaultCurrencyBtn;
     private Preference mAddButtonClickAction;
-
-    @Inject
-    ListsSettingPresenter mPresenter;
-    private CurrencyComponent mComponent;
 
     public static ListsSettingFragment newInstance() {
         return new ListsSettingFragment();
@@ -75,39 +50,9 @@ public class ListsSettingFragment extends BaseSettingFragment implements ListsSe
     protected void initFrame() {
         super.initFrame();
         updateShoppingListCheckBox();
-        mDefaultCurrencyBtn.setOnPreferenceClickListener(this);
         mShoppingListLeftSwipeActionBtn.setOnPreferenceClickListener(this);
         mShoppingListRightSwipeActionBtn.setOnPreferenceClickListener(this);
         mAddButtonClickAction.setOnPreferenceClickListener(this);
-
-        mCalculatePriceBtn.setChecked(mPreferences.isCalculatePrice());
-    }
-
-    @Override
-    protected void injectDependencies() {
-        super.injectDependencies();
-        mComponent = DaggerCurrencyComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .build();
-        mComponent.inject(this);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mPresenter.attachView(this);
-        mPresenter.init();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mPresenter.detachView();
-    }
-
-    @Override
-    public void showDefaultCurrency(CurrencyViewModel data) {
-        mDefaultCurrencyBtn.setSummary(data.getName());
     }
 
     public void onClickPositiveBtn(String id, int[] selectedItem, ArrayAdapter<String> adapter) {
@@ -130,12 +75,6 @@ public class ListsSettingFragment extends BaseSettingFragment implements ListsSe
     @Override
     public boolean onPreferenceClick(android.preference.Preference preference) {
         switch (preference.getKey()) {
-            case DEFAULT_CURRENCY_ID:
-                showSelectCurrencyDialog();
-                break;
-            case CALCULATE_PRICE_ID:
-                mPreferences.setCalculatePrice(((CheckBoxPreference) preference).isChecked());
-                break;
             case SHOPPING_LIST_LEFT_SWIPE_ACTION_ID:
                 showChooseActionDialog(getActivity(), SHOPPING_LIST_LEFT_SWIPE_ACTION_ID);
                 break;
@@ -150,30 +89,6 @@ public class ListsSettingFragment extends BaseSettingFragment implements ListsSe
     }
 
     protected void updateShoppingListCheckBox() {
-        if (findPreference(DEFAULT_CURRENCY_ID) != null) {
-            getPreferenceScreen().removePreference(findPreference(DEFAULT_CURRENCY_ID));
-            getPreferenceScreen().removePreference(findPreference(CALCULATE_PRICE_ID));
-        }
-
-        if (mCalculatePriceBtn == null) {
-            mCalculatePriceBtn = new ColorCheckBoxPreference(getActivity(), mPreferences.getColorPrimary());
-            mCalculatePriceBtn.setKey(CALCULATE_PRICE_ID);
-            mCalculatePriceBtn.setTitle(getString(R.string.calculate_price));
-            mCalculatePriceBtn.setSummary(getString(R.string.calculate_price_summary));
-        }
-        getPreferenceScreen().removePreference(mCalculatePriceBtn);
-        getPreferenceScreen().addPreference(mCalculatePriceBtn);
-
-        if (mDefaultCurrencyBtn == null) {
-            mDefaultCurrencyBtn = new Preference(getActivity());
-            mDefaultCurrencyBtn.setKey(DEFAULT_CURRENCY_ID);
-            mDefaultCurrencyBtn.setTitle(getString(R.string.currency));
-        }
-        getPreferenceScreen().removePreference(mDefaultCurrencyBtn);
-        getPreferenceScreen().addPreference(mDefaultCurrencyBtn);
-
-        mCalculatePriceBtn.setOnPreferenceClickListener(this);
-
         if (mShoppingListLeftSwipeActionBtn == null) {
             mShoppingListLeftSwipeActionBtn = new Preference(getActivity());
             mShoppingListLeftSwipeActionBtn.setKey(SHOPPING_LIST_LEFT_SWIPE_ACTION_ID);
@@ -227,16 +142,6 @@ public class ListsSettingFragment extends BaseSettingFragment implements ListsSe
         }
         getPreferenceScreen().removePreference(mAddButtonClickAction);
         getPreferenceScreen().addPreference(mAddButtonClickAction);
-    }
-
-    private void showSelectCurrencyDialog() {
-        FragmentManager fm = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
-        SelectCurrencyDialogFragment dialog = SelectCurrencyDialogFragment.newInstance(null);
-        dialog.setCompleteListener((item, isUpdate) -> {
-            mDefaultCurrencyBtn.setSummary(item.getName());
-            mPreferences.setDefaultCurrency(item.getId());
-        });
-        dialog.show(fm, AddCurrencyDialogFragment.class.getName());
     }
 
     private void showChooseActionDialog(Context context, final String id) {

@@ -14,7 +14,8 @@
   ~   limitations under the License.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -24,44 +25,30 @@
         android:id="@+id/header_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/header_price_info"
-        android:layout_toStartOf="@+id/header_price_info"
         android:background="@android:color/transparent"
-        android:paddingBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp"
+        android:paddingBottom="@dimen/content2x"
+        android:paddingLeft="@dimen/content2x"
+        android:paddingRight="@dimen/content2x"
+        android:paddingTop="@dimen/content2x"
         android:text="Medium Text"
         android:textSize="14sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/header_price_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:textStyle="bold"
         android:layout_toLeftOf="@+id/indicator"
-        android:layout_toStartOf="@+id/indicator"
-        android:background="@android:color/transparent"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:textSize="14sp"
-        android:textStyle="bold" />
-
-    <com.justplay1.shoppist.view.component.ExpandIndicator
-        android:id="@+id/indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:background="@drawable/ic_expand_less" />
+        android:layout_toStartOf="@+id/indicator"/>
 
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/grey_300" />
+        android:background="@color/grey_300"/>
+
+    <com.justplay1.shoppist.view.component.ExpandIndicator
+        android:id="@+id/indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_expand_less"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 </RelativeLayout>
