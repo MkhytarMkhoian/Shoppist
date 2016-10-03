@@ -38,6 +38,8 @@ public class ListsSettingFragment extends BaseSettingFragment {
     private Preference mShoppingListRightSwipeActionBtn;
     private Preference mAddButtonClickAction;
 
+    private AlertDialog mDialog;
+
     public static ListsSettingFragment newInstance() {
         return new ListsSettingFragment();
     }
@@ -74,7 +76,12 @@ public class ListsSettingFragment extends BaseSettingFragment {
 
     @Override
     public boolean onPreferenceClick(android.preference.Preference preference) {
-        switch (preference.getKey()) {
+        onPreferenceClick(preference.getKey());
+        return true;
+    }
+
+    private void onPreferenceClick(String key) {
+        switch (key) {
             case SHOPPING_LIST_LEFT_SWIPE_ACTION_ID:
                 showChooseActionDialog(getActivity(), SHOPPING_LIST_LEFT_SWIPE_ACTION_ID);
                 break;
@@ -85,7 +92,6 @@ public class ListsSettingFragment extends BaseSettingFragment {
                 showChooseActionDialog(getActivity(), ADD_BUTTON_CLICK_ACTION_ID);
                 break;
         }
-        return true;
     }
 
     protected void updateShoppingListCheckBox() {
@@ -183,9 +189,17 @@ public class ListsSettingFragment extends BaseSettingFragment {
         builder.setTitle(R.string.choose_actions);
         builder.setPositiveButton(R.string.choose, listener);
         builder.setNegativeButton(R.string.cancel, listener);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-        dialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(mPreferences.getColorPrimary());
-        dialog.getButton(Dialog.BUTTON_NEGATIVE).setTextColor(mPreferences.getColorPrimary());
+        mDialog = builder.create();
+        mDialog.show();
+        mDialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(mPreferences.getColorPrimary());
+        mDialog.getButton(Dialog.BUTTON_NEGATIVE).setTextColor(mPreferences.getColorPrimary());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
     }
 }

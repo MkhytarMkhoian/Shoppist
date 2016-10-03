@@ -81,9 +81,9 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
     @Override
     public void attachView(ListView view) {
         super.attachView(view);
-//        if (mPreferences.isNeedShowRateDialog()) { TODO
-//            showRateDialog();
-//        }
+        if (mPreferences.isNeedShowMessageDialog()) {
+            showRateDialog();
+        }
 
         DataEventBus.instanceOf().filteredObservable(ListsDataUpdatedEvent.class);
         mDataBusSubscription = DataEventBus.instanceOf().observable().subscribe(new DefaultSubscriber<Object>() {

@@ -259,6 +259,9 @@
     <string name="billing_not_supported">In-App billing is not supported.\n\nProbable reasons:\n1. Google Play is not installed or is not updated\n2. The app is running in emulator\n3. Bug in the library</string>
     <string name="for_month">For Month</string>
     <string name="delete_account_message">All data on server and device will be deleted. Are you sure?</string>
-    <string name="important_m">Unfortunately, this point is not synchronized and available functional part too. Now I do not have time to develop the project, because he did not bring any income, and time for him, I spent a lot. Perhaps you should choose another application. Please do not put a bad score. Please accept my apologies and good luck! :) P.S. Now app is open source and now it is an example of the implementation of a shopping list.</string>
+    <string name="important_m">Unfortunately from this moment synchronization is no longer available, and some functionality too.
+        Now I do not have time to develop the project, because he did not bring any income, and time for him, I spent a lot.
+        Perhaps you should choose another application. Please do not put a bad score. Please accept my apologies and good luck!:)
+        \n\n P.S. Now app is open source and now it is an example of the implementation of a shopping list.</string>
     <string name="important">Important !!!</string>
 </resources>

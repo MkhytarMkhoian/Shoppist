@@ -32,6 +32,8 @@ import javax.inject.Singleton;
 @Singleton
 public class AppPreferences {
 
+    private static final String MESSAGE_DIALOG = "message_dialog";
+
     private static final String COLOR_PRIMARY = "color_theme";
     private static final String COLOR_PRIMARY_DARK = "color_status_bar_theme";
     private static final String LOCK_SCREEN = "LockScreen";
@@ -52,6 +54,9 @@ public class AppPreferences {
     /**
      * Mirror variables of preference
      */
+
+    private boolean mMessageDialog;
+
     private int mColorPrimary;
     private int mColorPrimaryDark;
     private boolean mLockScreen;
@@ -73,6 +78,8 @@ public class AppPreferences {
 
     private void loadFromPreference() {
         if (mPreference != null) {
+            mMessageDialog = mPreference.getBoolean(MESSAGE_DIALOG, true);
+
             mColorPrimary = mPreference.getInt(COLOR_PRIMARY, mContext.getResources().getColor(R.color.red_color));
             mColorPrimaryDark = mPreference.getInt(COLOR_PRIMARY_DARK, mContext.getResources().getColor(R.color.red_800));
             mSortForShoppingLists = mPreference.getInt(SORT_FOR_SHOPPING_LISTS, 4);
@@ -207,5 +214,16 @@ public class AppPreferences {
         editor.putInt(ADD_BUTTON_CLICK_ACTION, action);
         editor.apply();
 
+    }
+
+    public boolean isNeedShowMessageDialog() {
+        return mMessageDialog;
+    }
+
+    public void setMessageDialog(boolean messageDialog) {
+        mMessageDialog = messageDialog;
+        SharedPreferences.Editor editor = mPreference.edit();
+        editor.putBoolean(MESSAGE_DIALOG, messageDialog);
+        editor.apply();
     }
 }

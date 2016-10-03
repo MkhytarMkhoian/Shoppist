@@ -42,7 +42,6 @@ public abstract class BaseSettingFragment extends PreferenceFragment implements 
     public void onCreate(Bundle savedInstanceState) {
         injectDependencies();
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
         addPreferencesFromResource(getPreferencesResId());
         initFrame();
     }

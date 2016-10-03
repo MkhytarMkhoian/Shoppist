@@ -237,17 +237,18 @@ public class ListFragment extends BaseEDSListFragment
         DialogInterface.OnClickListener listener = (dialog, which) -> {
             switch (which) {
                 case Dialog.BUTTON_POSITIVE:
-
+                    mPreferences.setMessageDialog(false);
                     dialog.dismiss();
             }
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setCancelable(false);
         builder.setTitle(getString(R.string.important));
         builder.setMessage(getString(R.string.important_m));
         builder.setPositiveButton(R.string.ok, listener);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-        dialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(mPreferences.getColorPrimary());
+        mDialog = builder.create();
+        mDialog.show();
+        mDialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(mPreferences.getColorPrimary());
     }
 }

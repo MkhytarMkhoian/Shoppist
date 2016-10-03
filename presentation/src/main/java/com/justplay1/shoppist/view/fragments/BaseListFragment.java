@@ -55,10 +55,10 @@ public abstract class BaseListFragment extends BaseFragment implements View.OnCl
     protected CustomProgressDialog mProgressDialog;
     protected LinearLayoutManager mLayoutManager;
     protected ActionModeInteractionListener mActionModeInteractionListener;
+    protected AlertDialog mDialog;
 
-    protected abstract
     @LayoutRes
-    int getLayoutId();
+    protected abstract int getLayoutId();
 
     protected abstract void initAdapter();
 
@@ -104,6 +104,9 @@ public abstract class BaseListFragment extends BaseFragment implements View.OnCl
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
         ButterKnife.unbind(this);
         if (mRecyclerView != null) {
             mRecyclerView.setItemAnimator(null);
@@ -135,10 +138,10 @@ public abstract class BaseListFragment extends BaseFragment implements View.OnCl
         builder.setMessage(message);
         builder.setPositiveButton(R.string.action_delete, listener);
         builder.setNegativeButton(R.string.cancel, listener);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-        dialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(mPreferences.getColorPrimary());
-        dialog.getButton(Dialog.BUTTON_NEGATIVE).setTextColor(mPreferences.getColorPrimary());
+        mDialog = builder.create();
+        mDialog.show();
+        mDialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(mPreferences.getColorPrimary());
+        mDialog.getButton(Dialog.BUTTON_NEGATIVE).setTextColor(mPreferences.getColorPrimary());
     }
 
     public interface DeleteListener {
