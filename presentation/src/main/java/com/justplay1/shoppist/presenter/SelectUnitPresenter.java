@@ -32,11 +32,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.subjects.BehaviorSubject;
+
 /**
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
 public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView, Router> {
+
+    private final BehaviorSubject<List<UnitViewModel>> cache = BehaviorSubject.create();
 
     private final UnitsDataModelMapper mDataMapper;
     private final GetUnitsList mGetUnitsList;
@@ -47,6 +51,8 @@ public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView, Router>
     SelectUnitPresenter(UnitsDataModelMapper dataMapper, GetUnitsList getUnitsList) {
         this.mDataMapper = dataMapper;
         this.mGetUnitsList = getUnitsList;
+
+        loadUnits();
     }
 
     @Override
@@ -57,8 +63,21 @@ public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView, Router>
         }
     }
 
-    public void init() {
-        loadUnits();
+    @Override
+    public void attachView(SelectUnitView view) {
+        super.attachView(view);
+        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
+
+            @Override
+            public void onNext(List<UnitViewModel> units) {
+                setUnits(units);
+                if (mItem != null) {
+                    selectUnit(mItem.getCategory().getId());
+                } else {
+                    selectUnit(CategoryViewModel.NO_CATEGORY_ID);
+                }
+            }
+        }));
     }
 
     public void onPositiveButtonClick(UnitViewModel unit) {
@@ -79,20 +98,9 @@ public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView, Router>
     }
 
     public void loadUnits() {
-        mSubscriptions.add(mGetUnitsList.get()
+        mGetUnitsList.get()
                 .map(mDataMapper::transformToViewModel)
-                .subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
-
-                    @Override
-                    public void onNext(List<UnitViewModel> units) {
-                        setUnits(units);
-                        if (mItem != null) {
-                            selectUnit(mItem.getCategory().getId());
-                        } else {
-                            selectUnit(CategoryViewModel.NO_CATEGORY_ID);
-                        }
-                    }
-                }));
+                .subscribe(cache);
     }
 
     private void setUnits(List<UnitViewModel> units) {

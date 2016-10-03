@@ -31,11 +31,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.subjects.BehaviorSubject;
+
 /**
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
 public class SelectCategoryPresenter extends BaseRxPresenter<SelectCategoryView, Router> {
+
+    private final BehaviorSubject<List<CategoryViewModel>> cache = BehaviorSubject.create();
 
     private final CategoryModelDataMapper mDataMapper;
     private final GetCategoryList mGetCategoryList;
@@ -46,6 +50,8 @@ public class SelectCategoryPresenter extends BaseRxPresenter<SelectCategoryView,
     SelectCategoryPresenter(CategoryModelDataMapper dataMapper, GetCategoryList getCategoryList) {
         this.mDataMapper = dataMapper;
         this.mGetCategoryList = getCategoryList;
+
+        loadCategories();
     }
 
     @Override
@@ -56,8 +62,21 @@ public class SelectCategoryPresenter extends BaseRxPresenter<SelectCategoryView,
         }
     }
 
-    public void init() {
-        loadCategories();
+    @Override
+    public void attachView(SelectCategoryView view) {
+        super.attachView(view);
+        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
+
+            @Override
+            public void onNext(List<CategoryViewModel> category) {
+                setCategory(category);
+                if (mItem != null) {
+                    selectCategory(mItem.getCategory().getId());
+                } else {
+                    selectCategory(CategoryViewModel.NO_CATEGORY_ID);
+                }
+            }
+        }));
     }
 
     public void onPositiveButtonClick(CategoryViewModel category) {
@@ -70,21 +89,10 @@ public class SelectCategoryPresenter extends BaseRxPresenter<SelectCategoryView,
     }
 
 
-    public void loadCategories() {
-        mSubscriptions.add(mGetCategoryList.get()
+    private void loadCategories() {
+        mGetCategoryList.get()
                 .map(mDataMapper::transformToViewModel)
-                .subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
-
-                    @Override
-                    public void onNext(List<CategoryViewModel> category) {
-                        setCategory(category);
-                        if (mItem != null) {
-                            selectCategory(mItem.getCategory().getId());
-                        } else {
-                            selectCategory(CategoryViewModel.NO_CATEGORY_ID);
-                        }
-                    }
-                }));
+                .subscribe(cache);
     }
 
     private void setCategory(List<CategoryViewModel> category) {

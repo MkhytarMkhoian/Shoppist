@@ -37,7 +37,7 @@ import com.justplay1.shoppist.view.fragments.CategoryFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class CategoriesActivity extends BaseListActivity<CategoryComponent>
+public class CategoriesActivity extends BaseListActivity
         implements Toolbar.OnMenuItemClickListener, CategoryRouter {
 
     private CategoryFragment mFragment;
@@ -53,6 +53,7 @@ public class CategoriesActivity extends BaseListActivity<CategoryComponent>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createNewInjectorIfNeeded();
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
         mFragment = createFragment();
@@ -70,11 +71,14 @@ public class CategoriesActivity extends BaseListActivity<CategoryComponent>
         ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
     }
 
-    @Override
-    protected CategoryComponent getNewComponentInstance() {
-        return DaggerCategoryComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .build();
+    private void createNewInjectorIfNeeded() {
+        CategoryComponent component = getInjector(CategoryComponent.class.getName());
+        if (component == null) {
+            component = DaggerCategoryComponent.builder()
+                    .appComponent(App.get().getAppComponent())
+                    .build();
+            putInjector(CategoryComponent.class.getName(), component);
+        }
     }
 
     @Override

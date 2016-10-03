@@ -42,12 +42,16 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
 public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
+
+    private final BehaviorSubject<List<UnitViewModel>> unitsCache = BehaviorSubject.create();
+    private final BehaviorSubject<List<CategoryViewModel>> categoryCache = BehaviorSubject.create();
 
     private final GoodsModelDataMapper mGoodsModelDataMapper;
     private final CategoryModelDataMapper mCategoryModelDataMapper;
@@ -64,13 +68,13 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
     private String mNewName;
 
     @Inject
-    public AddGoodsPresenter(GoodsModelDataMapper dataMapper,
-                             UpdateGoods updateGoods,
-                             AddGoods addGoods,
-                             GetUnitsList getUnitsList,
-                             GetCategoryList getCategoryList,
-                             CategoryModelDataMapper categoryModelDataMapper,
-                             UnitsDataModelMapper unitsDataModelMapper) {
+    AddGoodsPresenter(GoodsModelDataMapper dataMapper,
+                      UpdateGoods updateGoods,
+                      AddGoods addGoods,
+                      GetUnitsList getUnitsList,
+                      GetCategoryList getCategoryList,
+                      CategoryModelDataMapper categoryModelDataMapper,
+                      UnitsDataModelMapper unitsDataModelMapper) {
         this.mGoodsModelDataMapper = dataMapper;
         this.mUpdateGoods = updateGoods;
         this.mAddGoods = addGoods;
@@ -78,6 +82,9 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
         this.mGetCategoryList = getCategoryList;
         this.mUnitsDataModelMapper = unitsDataModelMapper;
         this.mCategoryModelDataMapper = categoryModelDataMapper;
+
+        loadCategories();
+        loadUnits();
     }
 
     @Override
@@ -89,7 +96,9 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
         }
     }
 
-    public void init() {
+    @Override
+    public void attachView(AddGoodsView view) {
+        super.attachView(view);
         if (mItem != null) {
             setName(mItem.getName());
             setDefaultUpdateTitle();
@@ -97,8 +106,32 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
             setDefaultNewTitle();
             setName(mNewName);
         }
-        loadCategories();
-        loadUnits();
+
+        mSubscriptions.add(unitsCache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
+
+            @Override
+            public void onNext(List<UnitViewModel> unitViewModels) {
+                setUnits(unitViewModels);
+                if (mItem != null && !mItem.isUnitEmpty()) {
+                    selectUnit(mItem.getUnit().getId());
+                } else {
+                    selectUnit(UnitViewModel.NO_UNIT_ID);
+                }
+            }
+        }));
+
+        mSubscriptions.add(categoryCache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
+
+            @Override
+            public void onNext(List<CategoryViewModel> category) {
+                setCategory(category);
+                if (mItem != null) {
+                    selectCategory(mItem.getCategory().getId());
+                } else {
+                    selectCategory(CategoryViewModel.NO_CATEGORY_ID);
+                }
+            }
+        }));
     }
 
     public void onPositiveButtonClick(String name) {
@@ -125,38 +158,16 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
         mUnitModel = unit;
     }
 
-    public void loadCategories() {
-        mSubscriptions.add(mGetCategoryList.get()
+    private void loadCategories() {
+        mGetCategoryList.get()
                 .map(mCategoryModelDataMapper::transformToViewModel)
-                .subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
-
-                    @Override
-                    public void onNext(List<CategoryViewModel> category) {
-                        setCategory(category);
-                        if (mItem != null) {
-                            selectCategory(mItem.getCategory().getId());
-                        } else {
-                            selectCategory(CategoryViewModel.NO_CATEGORY_ID);
-                        }
-                    }
-                }));
+                .subscribe(categoryCache);
     }
 
     public void loadUnits() {
-        mSubscriptions.add(mGetUnitsList.get()
+        mGetUnitsList.get()
                 .map(mUnitsDataModelMapper::transformToViewModel)
-                .subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
-
-                    @Override
-                    public void onNext(List<UnitViewModel> unitViewModels) {
-                        setUnits(unitViewModels);
-                        if (mItem != null && !mItem.isUnitEmpty()) {
-                            selectUnit(mItem.getUnit().getId());
-                        } else {
-                            selectUnit(UnitViewModel.NO_UNIT_ID);
-                        }
-                    }
-                }));
+                .subscribe(unitsCache);
     }
 
     private void saveGoods(String name) {
@@ -297,7 +308,7 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
 
         private boolean isAddAction;
 
-        public SaveGoodsSubscriber(boolean isAddAction) {
+        SaveGoodsSubscriber(boolean isAddAction) {
             this.isAddAction = isAddAction;
         }
 

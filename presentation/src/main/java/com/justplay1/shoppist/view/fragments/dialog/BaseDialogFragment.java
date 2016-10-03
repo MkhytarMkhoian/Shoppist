@@ -16,6 +16,8 @@
 
 package com.justplay1.shoppist.view.fragments.dialog;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -28,6 +30,7 @@ import android.widget.Button;
 
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.HasInjector;
 import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.view.component.CustomProgressDialog;
 
@@ -50,15 +53,26 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment
     protected Button mNegativeButton;
     protected CustomProgressDialog mProgressDialog;
 
-    protected abstract
     @LayoutRes
-    int getLayoutId();
+    protected abstract int getLayoutId();
+
+    private HasInjector mHasInjector;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mHasInjector = (HasInjector) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement HasInjector");
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         injectDependencies();
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     /**
@@ -66,6 +80,18 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment
      */
     protected void injectDependencies() {
         App.get().getAppComponent().inject(this);
+    }
+
+    /**
+     * Gets a component for dependency injection by its type.
+     */
+    @SuppressWarnings("unchecked")
+    protected <C> C getInjector(Class<C> injectorType) {
+        return injectorType.cast(mHasInjector.getInjector(injectorType.getName()));
+    }
+
+    protected void putInjector(String id, Object component) {
+        mHasInjector.putInjector(id, component);
     }
 
     public void init(View view) {
@@ -96,6 +122,10 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment
 
     @Override
     public void onDestroyView() {
+        Dialog dialog = getDialog();
+        if (dialog != null && getRetainInstance()) {
+            dialog.setDismissMessage(null);
+        }
         super.onDestroyView();
         ButterKnife.unbind(this);
     }

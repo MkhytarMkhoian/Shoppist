@@ -60,7 +60,7 @@ public abstract class BaseFragment extends Fragment {
      */
     @SuppressWarnings("unchecked")
     protected <C> C getInjector(Class<C> injectorType) {
-        return injectorType.cast(((HasInjector<C>) getActivity()).getInjector());
+        return injectorType.cast(((HasInjector) getActivity()).getInjector(injectorType.getName()));
     }
 
     protected void showToastMessage(String message) {

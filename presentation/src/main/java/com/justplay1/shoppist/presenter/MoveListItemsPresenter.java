@@ -37,12 +37,15 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
 public class MoveListItemsPresenter extends BaseRxPresenter<MoveListItemsView, Router> {
+
+    private final BehaviorSubject<ArrayList<Map<String, Object>>> cache = BehaviorSubject.create();
 
     private final ListModelDataMapper mDataMapper;
     private final ListItemsModelDataMapper mListItemsModelDataMapper;
@@ -55,13 +58,15 @@ public class MoveListItemsPresenter extends BaseRxPresenter<MoveListItemsView, R
 
     @Inject
     MoveListItemsPresenter(ListModelDataMapper dataMapper,
-                                  ListItemsModelDataMapper listItemsModelDataMapper,
-                                  GetLists getLists,
-                                  MoveToList moveToList) {
+                           ListItemsModelDataMapper listItemsModelDataMapper,
+                           GetLists getLists,
+                           MoveToList moveToList) {
         this.mDataMapper = dataMapper;
         this.mListItemsModelDataMapper = listItemsModelDataMapper;
         this.mGetLists = getLists;
         this.mMoveToList = moveToList;
+
+        loadData();
     }
 
     @Override
@@ -71,13 +76,26 @@ public class MoveListItemsPresenter extends BaseRxPresenter<MoveListItemsView, R
         isCopy = arguments.getBoolean("isCopy");
     }
 
-    public void init() {
-        loadData();
+    @Override
+    public void attachView(MoveListItemsView view) {
+        super.attachView(view);
+        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<ArrayList<Map<String, Object>>>() {
+
+            @Override
+            public void onError(Throwable e) {
+                hideLoading();
+            }
+
+            @Override
+            public void onNext(ArrayList<Map<String, Object>> data) {
+                hideLoading();
+                showData(data);
+            }
+        }));
     }
 
-    public void loadData() {
-        showLoading();
-        mSubscriptions.add(mGetLists.get()
+    private void loadData() {
+        mGetLists.get()
                 .map(mDataMapper::transformToViewModel)
                 .map(lists -> {
                     ArrayList<Map<String, Object>> data = new ArrayList<>(lists.size());
@@ -91,19 +109,7 @@ public class MoveListItemsPresenter extends BaseRxPresenter<MoveListItemsView, R
                     }
                     return data;
                 })
-                .subscribe(new DefaultSubscriber<ArrayList<Map<String, Object>>>() {
-
-                    @Override
-                    public void onError(Throwable e) {
-                        hideLoading();
-                    }
-
-                    @Override
-                    public void onNext(ArrayList<Map<String, Object>> data) {
-                        hideLoading();
-                        showData(data);
-                    }
-                }));
+                .subscribe(cache);
     }
 
     public void onPositiveButtonClick(ListViewModel newList) {

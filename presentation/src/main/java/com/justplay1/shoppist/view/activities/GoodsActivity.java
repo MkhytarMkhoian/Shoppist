@@ -37,7 +37,7 @@ import com.justplay1.shoppist.view.fragments.GoodsFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class GoodsActivity extends BaseListActivity<GoodsComponent>
+public class GoodsActivity extends BaseListActivity
         implements Toolbar.OnMenuItemClickListener, GoodsRouter {
 
     private GoodsFragment mFragment;
@@ -53,6 +53,7 @@ public class GoodsActivity extends BaseListActivity<GoodsComponent>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createNewInjectorIfNeeded();
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
         mFragment = createFragment();
@@ -70,11 +71,14 @@ public class GoodsActivity extends BaseListActivity<GoodsComponent>
         toolbar.setNavigationOnClickListener(v -> finishActivity());
     }
 
-    @Override
-    protected GoodsComponent getNewComponentInstance() {
-        return DaggerGoodsComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .build();
+    private void createNewInjectorIfNeeded() {
+        GoodsComponent component = getInjector(GoodsComponent.class.getName());
+        if (component == null) {
+            component = DaggerGoodsComponent.builder()
+                    .appComponent(App.get().getAppComponent())
+                    .build();
+            putInjector(GoodsComponent.class.getName(), component);
+        }
     }
 
     @Override

@@ -18,6 +18,8 @@ package com.justplay1.shoppist.di;
 /**
  * Interface representing a contract for clients that contains a component for dependency injection.
  */
-public interface HasInjector<C> {
-  C getInjector();
+public interface HasInjector {
+    <C> C getInjector(String id);
+
+    <C> void putInjector(String id, C component);
 }

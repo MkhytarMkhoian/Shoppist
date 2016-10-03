@@ -39,7 +39,7 @@ import com.justplay1.shoppist.view.fragments.ListItemsFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class ListItemActivity extends BaseListActivity<ListItemsComponent>
+public class ListItemActivity extends BaseListActivity
         implements Toolbar.OnMenuItemClickListener, ListItemsRouter {
 
     private ListItemsFragment mFragment;
@@ -58,6 +58,7 @@ public class ListItemActivity extends BaseListActivity<ListItemsComponent>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createNewInjectorIfNeeded();
         setContentView(R.layout.layout_single_fragment);
         if (getIntent() != null) {
             mParentList = getIntent().getParcelableExtra(ListViewModel.class.getName());
@@ -77,17 +78,16 @@ public class ListItemActivity extends BaseListActivity<ListItemsComponent>
         toolbar.setNavigationOnClickListener(v -> finish());
         toolbar.inflateMenu(R.menu.shopping_list_toolbar);
         toolbar.getMenu().findItem(R.id.action_settings).setVisible(false);
-//        if (mData == null) {
-//            toolbar.getMenu().findItem(R.id.menu_sort).setEnabled(true);
-//            toolbar.getMenu().findItem(R.id.action_menu).setEnabled(true);
-//        }
     }
 
-    @Override
-    protected ListItemsComponent getNewComponentInstance() {
-        return DaggerListItemsComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .build();
+    private void createNewInjectorIfNeeded() {
+        ListItemsComponent component = getInjector(ListItemsComponent.class.getName());
+        if (component == null) {
+            component = DaggerListItemsComponent.builder()
+                    .appComponent(App.get().getAppComponent())
+                    .build();
+            putInjector(ListItemsComponent.class.getName(), component);
+        }
     }
 
     @Override

@@ -40,7 +40,6 @@ public class SelectCategoryDialogFragment extends BaseSelectItemDialogFragment<C
 
     @Inject
     SelectCategoryPresenter mPresenter;
-    private CategoryComponent mComponent;
 
     public static SelectCategoryDialogFragment newInstance() {
         return newInstance(null);
@@ -57,10 +56,14 @@ public class SelectCategoryDialogFragment extends BaseSelectItemDialogFragment<C
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerCategoryComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .build();
-        mComponent.inject(this);
+        CategoryComponent component = getInjector(CategoryComponent.class);
+        if (component == null) {
+            component = DaggerCategoryComponent.builder()
+                    .appComponent(App.get().getAppComponent())
+                    .build();
+            putInjector(CategoryComponent.class.getName(), component);
+        }
+        component.inject(this);
     }
 
     @Override
@@ -73,7 +76,6 @@ public class SelectCategoryDialogFragment extends BaseSelectItemDialogFragment<C
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
-        mPresenter.init();
     }
 
     @Override

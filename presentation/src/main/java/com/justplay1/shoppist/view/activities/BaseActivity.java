@@ -27,10 +27,14 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.di.HasInjector;
 import com.justplay1.shoppist.di.components.AppComponent;
 import com.justplay1.shoppist.navigation.Navigator;
 import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.ShoppistUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -40,12 +44,15 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity
+        implements HasInjector {
 
     @Inject
     Navigator mNavigator;
     @Inject
     AppPreferences mPreferences;
+
+    protected NonConfigurationInstance mNonConfigurationInstance;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -54,9 +61,35 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        mNonConfigurationInstance = retrieveNonConfigurationInstanceOrCreateNew();
         super.onCreate(savedInstanceState);
         getAppComponent().inject(this);
         setStatusBarColor();
+    }
+
+    private NonConfigurationInstance retrieveNonConfigurationInstanceOrCreateNew() {
+        Object lastNonConfInstance = getLastCustomNonConfigurationInstance();
+        if (lastNonConfInstance == null) {
+            return new NonConfigurationInstance();
+        } else {
+            return (NonConfigurationInstance) lastNonConfInstance;
+        }
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return mNonConfigurationInstance;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <C> C getInjector(String id) {
+        return (C) mNonConfigurationInstance.getInjector(id);
+    }
+
+    @Override
+    public void putInjector(String id, Object component) {
+        mNonConfigurationInstance.putInjector(id, component);
     }
 
     protected AppComponent getAppComponent() {
@@ -109,6 +142,22 @@ public abstract class BaseActivity extends AppCompatActivity {
             activity.overridePendingTransition(R.anim.activity_close_enter_v21, R.anim.activity_close_exit_v21);
         } else {
             activity.overridePendingTransition(R.anim.activity_close_enter, R.anim.activity_close_exit);
+        }
+    }
+
+    private static class NonConfigurationInstance {
+        private Map<String, Object> injectors;
+
+        NonConfigurationInstance() {
+            injectors = new HashMap<>();
+        }
+
+        public Object getInjector(String id) {
+            return injectors.get(id);
+        }
+
+        public void putInjector(String id, Object injector) {
+            injectors.put(id, injector);
         }
     }
 }

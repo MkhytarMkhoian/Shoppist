@@ -20,7 +20,6 @@ import com.justplay1.shoppist.di.modules.CurrencyModule;
 import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.view.fragments.CurrencyFragment;
 import com.justplay1.shoppist.view.fragments.dialog.AddCurrencyDialogFragment;
-import com.justplay1.shoppist.view.fragments.dialog.SelectCurrencyDialogFragment;
 import com.justplay1.shoppist.view.fragments.settings.ListsSettingFragment;
 
 import dagger.Component;
@@ -35,8 +34,6 @@ public interface CurrencyComponent {
     void inject(CurrencyFragment fragment);
 
     void inject(AddCurrencyDialogFragment fragment);
-
-    void inject(SelectCurrencyDialogFragment fragment);
 
     void inject(ListsSettingFragment fragment);
 

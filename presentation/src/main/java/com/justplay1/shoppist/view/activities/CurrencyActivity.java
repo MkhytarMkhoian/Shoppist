@@ -35,7 +35,7 @@ import com.justplay1.shoppist.view.fragments.CurrencyFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class CurrencyActivity extends BaseListActivity<CurrencyComponent>
+public class CurrencyActivity extends BaseListActivity
         implements Toolbar.OnMenuItemClickListener {
 
     private CurrencyFragment mFragment;
@@ -51,6 +51,7 @@ public class CurrencyActivity extends BaseListActivity<CurrencyComponent>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createNewInjectorIfNeeded();
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
         mFragment = createFragment();
@@ -68,11 +69,14 @@ public class CurrencyActivity extends BaseListActivity<CurrencyComponent>
         ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
     }
 
-    @Override
-    protected CurrencyComponent getNewComponentInstance() {
-        return DaggerCurrencyComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .build();
+    private void createNewInjectorIfNeeded() {
+        CurrencyComponent component = getInjector(CurrencyComponent.class.getName());
+        if (component == null) {
+            component = DaggerCurrencyComponent.builder()
+                    .appComponent(App.get().getAppComponent())
+                    .build();
+            putInjector(CurrencyComponent.class.getName(), component);
+        }
     }
 
     @Override

@@ -41,7 +41,6 @@ public class SelectUnitDialogFragment extends BaseSelectItemDialogFragment<UnitV
 
     @Inject
     SelectUnitPresenter mPresenter;
-    private UnitsComponent mComponent;
 
     public static SelectUnitDialogFragment newInstance() {
         return newInstance(null);
@@ -58,10 +57,14 @@ public class SelectUnitDialogFragment extends BaseSelectItemDialogFragment<UnitV
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerUnitsComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .build();
-        mComponent.inject(this);
+        UnitsComponent component = getInjector(UnitsComponent.class);
+        if (component == null) {
+            component = DaggerUnitsComponent.builder()
+                    .appComponent(App.get().getAppComponent())
+                    .build();
+            putInjector(UnitsComponent.class.getName(), component);
+        }
+        component.inject(this);
     }
 
     @Override
@@ -74,7 +77,6 @@ public class SelectUnitDialogFragment extends BaseSelectItemDialogFragment<UnitV
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
-        mPresenter.init();
     }
 
     @Override

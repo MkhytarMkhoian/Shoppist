@@ -65,7 +65,9 @@ public class AddUnitPresenter extends BaseRxPresenter<AddUnitView, Router> {
         }
     }
 
-    public void init() {
+    @Override
+    public void attachView(AddUnitView view) {
+        super.attachView(view);
         if (mItem != null) {
             setFullName(mItem.getName());
             setShortName(mItem.getShortName());

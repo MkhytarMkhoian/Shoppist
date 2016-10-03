@@ -19,7 +19,7 @@ import com.justplay1.shoppist.view.fragments.UnitFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class UnitsActivity extends BaseListActivity<UnitsComponent>
+public class UnitsActivity extends BaseListActivity
         implements Toolbar.OnMenuItemClickListener {
 
     private UnitFragment mFragment;
@@ -35,6 +35,7 @@ public class UnitsActivity extends BaseListActivity<UnitsComponent>
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createNewInjectorIfNeeded();
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
         mFragment = createFragment();
@@ -52,11 +53,14 @@ public class UnitsActivity extends BaseListActivity<UnitsComponent>
         ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
     }
 
-    @Override
-    protected UnitsComponent getNewComponentInstance() {
-        return DaggerUnitsComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .build();
+    private void createNewInjectorIfNeeded() {
+        UnitsComponent component = getInjector(UnitsComponent.class.getName());
+        if (component == null) {
+            component = DaggerUnitsComponent.builder()
+                    .appComponent(App.get().getAppComponent())
+                    .build();
+            putInjector(UnitsComponent.class.getName(), component);
+        }
     }
 
     @Override

@@ -25,10 +25,12 @@ import android.support.v7.widget.Toolbar;
 
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.di.HasInjector;
+import com.justplay1.shoppist.di.components.AddListItemsComponent;
+import com.justplay1.shoppist.di.components.CategoryComponent;
 import com.justplay1.shoppist.di.components.DaggerAddListItemsComponent;
 import com.justplay1.shoppist.di.components.DaggerCategoryComponent;
 import com.justplay1.shoppist.di.components.DaggerListsComponent;
+import com.justplay1.shoppist.di.components.ListsComponent;
 import com.justplay1.shoppist.models.AddElementType;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.ListItemViewModel;
@@ -41,12 +43,8 @@ import com.justplay1.shoppist.view.fragments.BaseAddElementFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class AddElementActivity<C> extends BaseActivity
-        implements BaseAddElementFragment.AddElementListener, AddListItemFragment.AddListItemListener,
-        HasInjector<C> {
-
-    private BaseAddElementFragment mFragment;
-    private C mComponent;
+public class AddElementActivity extends BaseActivity
+        implements BaseAddElementFragment.AddElementListener, AddListItemFragment.AddListItemListener {
 
     private Toolbar mToolbar;
     @AddElementType private int mElementType;
@@ -81,23 +79,53 @@ public class AddElementActivity<C> extends BaseActivity
     @SuppressWarnings("ResourceType")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout_single_fragment);
+        initToolbar();
+
         if (getIntent() != null) {
             mElementType = getIntent().getIntExtra(AddElementType.class.getName(), 0);
             mCategoryModel = getIntent().getParcelableExtra(CategoryViewModel.class.getName());
             mListModel = getIntent().getParcelableExtra(ListViewModel.class.getName());
             mListItemModel = getIntent().getParcelableExtra(ListItemViewModel.class.getName());
         }
-        mComponent = (C) retrieveComponentOrCreateNew();
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_single_fragment);
-        initToolbar();
+        createNewInjectorIfNeeded();
+
+        BaseAddElementFragment fragment = createFragment();
+        replaceFragment(R.id.container, fragment, BaseAddElementFragment.class.getName());
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mFragment = createFragment();
-        replaceFragment(R.id.container, mFragment, BaseAddElementFragment.class.getName());
+    private void createNewInjectorIfNeeded() {
+        Object component;
+        switch (mElementType) {
+            case AddElementType.CATEGORY:
+                component = getInjector(CategoryComponent.class.getName());
+                if (component == null) {
+                    component = DaggerCategoryComponent.builder()
+                            .appComponent(App.get().getAppComponent())
+                            .build();
+                    putInjector(CategoryComponent.class.getName(), component);
+                }
+                break;
+            case AddElementType.LIST:
+                component = getInjector(ListsComponent.class.getName());
+                if (component == null) {
+                    component = DaggerListsComponent.builder()
+                            .appComponent(App.get().getAppComponent())
+                            .build();
+                    putInjector(ListsComponent.class.getName(), component);
+                }
+                break;
+            case AddElementType.LIST_ITEM:
+                component = getInjector(AddListItemsComponent.class.getName());
+                if (component == null) {
+                    component = DaggerAddListItemsComponent.builder()
+                            .appComponent(App.get().getAppComponent())
+                            .build();
+                    putInjector(AddListItemsComponent.class.getName(), component);
+                }
+                break;
+        }
     }
 
     protected void initToolbar() {
@@ -106,39 +134,6 @@ public class AddElementActivity<C> extends BaseActivity
         mToolbar.setNavigationIcon(R.drawable.ic_back_white);
         mToolbar.setNavigationOnClickListener(v -> finishWithResult());
         ViewCompat.setElevation(mToolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
-    }
-
-    private Object retrieveComponentOrCreateNew() {
-        Object lastNonConfInstance = getLastCustomNonConfigurationInstance();
-        if (lastNonConfInstance == null) {
-            switch (mElementType) {
-                case AddElementType.CATEGORY:
-                    return DaggerCategoryComponent.builder()
-                            .appComponent(App.get().getAppComponent())
-                            .build();
-                case AddElementType.LIST:
-                    return DaggerListsComponent.builder()
-                            .appComponent(App.get().getAppComponent())
-                            .build();
-                case AddElementType.LIST_ITEM:
-                    return DaggerAddListItemsComponent.builder()
-                            .appComponent(App.get().getAppComponent())
-                            .build();
-            }
-        } else {
-            return lastNonConfInstance;
-        }
-        return null;
-    }
-
-    @Override
-    public Object onRetainCustomNonConfigurationInstance() {
-        return mComponent;
-    }
-
-    @Override
-    public C getInjector() {
-        return mComponent;
     }
 
     @Override

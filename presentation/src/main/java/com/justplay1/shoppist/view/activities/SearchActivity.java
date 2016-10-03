@@ -23,7 +23,6 @@ import android.support.annotation.Nullable;
 
 import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
-import com.justplay1.shoppist.di.HasInjector;
 import com.justplay1.shoppist.di.components.DaggerSearchComponent;
 import com.justplay1.shoppist.di.components.SearchComponent;
 import com.justplay1.shoppist.utils.Const;
@@ -33,9 +32,7 @@ import com.justplay1.shoppist.view.fragments.SearchFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class SearchActivity extends BaseActivity implements HasInjector<SearchComponent> {
-
-    private SearchComponent mComponent;
+public class SearchActivity extends BaseActivity {
 
     private int mContextType;
     private String mParentListId;
@@ -53,8 +50,8 @@ public class SearchActivity extends BaseActivity implements HasInjector<SearchCo
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        mComponent = retrieveComponentOrCreateNew();
         super.onCreate(savedInstanceState);
+        createNewInjectorIfNeeded();
         setContentView(R.layout.layout_fragment_container);
         setStatusBarColor(FloatingSearchView.DEFAULT_BACKGROUND_COLOR);
 
@@ -73,25 +70,14 @@ public class SearchActivity extends BaseActivity implements HasInjector<SearchCo
         replaceFragment(R.id.container, fragment, SearchFragment.class.getName());
     }
 
-    private SearchComponent retrieveComponentOrCreateNew() {
-        Object lastNonConfInstance = getLastCustomNonConfigurationInstance();
-        if (lastNonConfInstance == null) {
-            return DaggerSearchComponent.builder()
+    private void createNewInjectorIfNeeded() {
+        SearchComponent component = getInjector(SearchComponent.class.getName());
+        if (component == null) {
+            component = DaggerSearchComponent.builder()
                     .appComponent(App.get().getAppComponent())
                     .build();
-        } else {
-            return (SearchComponent) lastNonConfInstance;
+            putInjector(SearchComponent.class.getName(), component);
         }
-    }
-
-    @Override
-    public Object onRetainCustomNonConfigurationInstance() {
-        return mComponent;
-    }
-
-    @Override
-    public SearchComponent getInjector() {
-        return mComponent;
     }
 
     @Override

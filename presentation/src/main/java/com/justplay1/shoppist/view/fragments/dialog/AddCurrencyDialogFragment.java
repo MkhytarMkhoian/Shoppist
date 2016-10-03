@@ -24,7 +24,6 @@ import com.justplay1.shoppist.App;
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.di.components.CurrencyComponent;
 import com.justplay1.shoppist.di.components.DaggerCurrencyComponent;
-import com.justplay1.shoppist.di.modules.CurrencyModule;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.presenter.AddCurrencyPresenter;
 import com.justplay1.shoppist.utils.ShoppistUtils;
@@ -46,7 +45,6 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
     AddCurrencyPresenter mPresenter;
     @Bind(R.id.name_edit)
     MaterialEditText mNameEdit;
-    private CurrencyComponent mComponent;
     private OnCompleteListener mCompleteListener;
 
     public static AddCurrencyDialogFragment newInstance(CurrencyViewModel currency) {
@@ -60,10 +58,14 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerCurrencyComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .build();
-        mComponent.inject(this);
+        CurrencyComponent component = getInjector(CurrencyComponent.class);
+        if (component == null) {
+            component = DaggerCurrencyComponent.builder()
+                    .appComponent(App.get().getAppComponent())
+                    .build();
+            putInjector(CurrencyComponent.class.getName(), component);
+        }
+        component.inject(this);
     }
 
     @Override
@@ -84,7 +86,6 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         mPresenter.attachView(this);
-        mPresenter.init();
     }
 
     @Override

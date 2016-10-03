@@ -41,7 +41,6 @@ public class AddUnitsDialogFragment extends BaseDialogFragment
     @Inject
     AddUnitPresenter mPresenter;
 
-    private UnitsComponent mComponent;
     private OnCompleteListener mCompleteListener;
     private MaterialEditText mFullNameEdit;
     private MaterialEditText mShortNameEdit;
@@ -57,10 +56,14 @@ public class AddUnitsDialogFragment extends BaseDialogFragment
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerUnitsComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .build();
-        mComponent.inject(this);
+        UnitsComponent component = getInjector(UnitsComponent.class);
+        if (component == null) {
+            component = DaggerUnitsComponent.builder()
+                    .appComponent(App.get().getAppComponent())
+                    .build();
+            putInjector(UnitsComponent.class.getName(), component);
+        }
+        component.inject(this);
     }
 
     @Override
@@ -73,7 +76,6 @@ public class AddUnitsDialogFragment extends BaseDialogFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
-        mPresenter.init();
     }
 
     @Override

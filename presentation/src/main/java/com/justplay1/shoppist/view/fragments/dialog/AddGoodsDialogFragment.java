@@ -49,7 +49,6 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
     @Inject
     AddGoodsPresenter mPresenter;
 
-    private GoodsComponent mComponent;
     private OnCompleteListener mCompleteListener;
     private MaterialEditText mNameEdit;
     private CategorySpinnerView mCategoryList;
@@ -75,10 +74,14 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerGoodsComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .build();
-        mComponent.inject(this);
+        GoodsComponent component = getInjector(GoodsComponent.class);
+        if (component == null) {
+            component = DaggerGoodsComponent.builder()
+                    .appComponent(App.get().getAppComponent())
+                    .build();
+            putInjector(GoodsComponent.class.getName(), component);
+        }
+        component.inject(this);
     }
 
     @Override
@@ -91,7 +94,6 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
-        mPresenter.init();
     }
 
     @Override

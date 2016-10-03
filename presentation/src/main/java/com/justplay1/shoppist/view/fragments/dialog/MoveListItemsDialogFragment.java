@@ -47,7 +47,6 @@ public class MoveListItemsDialogFragment extends BaseDialogFragment implements M
     MoveListItemsPresenter mPresenter;
 
     private OnCompleteListener mCompleteListener;
-    private MoveListItemsComponent mComponent;
     private ListView listView;
     private SimpleAdapter adapter;
 
@@ -64,10 +63,14 @@ public class MoveListItemsDialogFragment extends BaseDialogFragment implements M
     @Override
     protected void injectDependencies() {
         super.injectDependencies();
-        mComponent = DaggerMoveListItemsComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .build();
-        mComponent.inject(this);
+        MoveListItemsComponent component = getInjector(MoveListItemsComponent.class);
+        if (component == null) {
+            component = DaggerMoveListItemsComponent.builder()
+                    .appComponent(App.get().getAppComponent())
+                    .build();
+            putInjector(MoveListItemsComponent.class.getName(), component);
+        }
+        component.inject(this);
     }
 
     @Override
@@ -80,7 +83,6 @@ public class MoveListItemsDialogFragment extends BaseDialogFragment implements M
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
-        mPresenter.init();
     }
 
     @Override

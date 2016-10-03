@@ -64,7 +64,9 @@ public class AddCurrencyPresenter extends BaseRxPresenter<AddCurrencyView, Route
         }
     }
 
-    public void init() {
+    @Override
+    public void attachView(AddCurrencyView view) {
+        super.attachView(view);
         if (mItem != null) {
             setName(mItem.getName());
             setDefaultUpdateTitle();

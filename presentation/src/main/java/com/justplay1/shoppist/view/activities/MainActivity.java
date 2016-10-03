@@ -45,7 +45,7 @@ import com.justplay1.shoppist.view.fragments.MenuFragment;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class MainActivity extends BaseListActivity<ListsComponent>
+public class MainActivity extends BaseListActivity
         implements MenuFragment.MenuFragmentInteraction, Toolbar.OnMenuItemClickListener,
         ListRouter {
 
@@ -60,17 +60,21 @@ public class MainActivity extends BaseListActivity<ListsComponent>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createNewInjectorIfNeeded();
         setContentView(R.layout.activity_main);
         initToolbar();
         mListFragment = ListFragment.newInstance();
         replaceFragment(R.id.container, mListFragment, FRAGMENT_TAG);
     }
 
-    @Override
-    protected ListsComponent getNewComponentInstance() {
-        return DaggerListsComponent.builder()
-                .appComponent(App.get().getAppComponent())
-                .build();
+    private void createNewInjectorIfNeeded() {
+        ListsComponent component = getInjector(ListsComponent.class.getName());
+        if (component == null) {
+            component = DaggerListsComponent.builder()
+                    .appComponent(App.get().getAppComponent())
+                    .build();
+            putInjector(ListsComponent.class.getName(), component);
+        }
     }
 
     protected void onPostCreate(Bundle savedInstanceState) {
