@@ -163,10 +163,10 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
             @Override
             public void onNext(List<CategoryViewModel> category) {
                 setCategory(category);
-                if (mItem != null) {
-                    selectCategory(mItem.getCategory().getId());
-                } else if (mCategoryModel != null) {
+                if (mCategoryModel != null) {
                     selectCategory(mCategoryModel.getId());
+                } else if (mItem != null) {
+                    selectCategory(mItem.getCategory().getId());
                 } else {
                     selectCategory(CategoryViewModel.NO_CATEGORY_ID);
                 }
@@ -178,10 +178,10 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
             @Override
             public void onNext(List<UnitViewModel> unitViewModels) {
                 setUnits(unitViewModels);
-                if (mItem != null) {
-                    selectUnit(mItem.getUnit().getId());
-                } else if (mUnitModel != null) {
+                if (mUnitModel != null) {
                     selectUnit(mUnitModel.getId());
+                } else if (mItem != null) {
+                    selectUnit(mItem.getUnit().getId());
                 } else {
                     selectUnit(UnitViewModel.NO_UNIT_ID);
                 }
@@ -193,10 +193,10 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
             @Override
             public void onNext(List<CurrencyViewModel> currency) {
                 setCurrency(currency);
-                if (mItem != null) {
-                    selectCurrency(mItem.getCurrency().getId());
-                } else if (mCurrencyModel != null) {
+                if (mCurrencyModel != null) {
                     selectCurrency(mCurrencyModel.getId());
+                } else if (mItem != null) {
+                    selectCurrency(mItem.getCurrency().getId());
                 } else {
                     selectCurrency(CurrencyViewModel.NO_CURRENCY_ID);
                 }
@@ -397,6 +397,11 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         setViewPrice("0");
         setViewQuantity("0");
         mItem = null;
+        mName = "";
+        mNote = "";
+        mPrice = 0;
+        mQuantity = 0;
+        mPriority = Priority.NO_PRIORITY;
     }
 
     private boolean checkDataForErrors(String name) {

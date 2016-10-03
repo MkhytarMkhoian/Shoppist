@@ -65,7 +65,7 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
     private CategoryViewModel mCategoryModel;
     private UnitViewModel mUnitModel;
     private ProductViewModel mItem;
-    private String mNewName;
+    private String mName = "";
 
     @Inject
     AddGoodsPresenter(GoodsModelDataMapper dataMapper,
@@ -91,7 +91,7 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
     public void onCreate(Bundle arguments, Bundle savedInstanceState) {
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
-            mNewName = arguments.getString(Const.NEW_NAME);
+            mName = arguments.getString(Const.NEW_NAME);
             mItem = arguments.getParcelable(ProductViewModel.class.getName());
         }
     }
@@ -100,19 +100,21 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
     public void attachView(AddGoodsView view) {
         super.attachView(view);
         if (mItem != null) {
-            setName(mItem.getName());
+            mName = mItem.getName();
             setDefaultUpdateTitle();
         } else {
             setDefaultNewTitle();
-            setName(mNewName);
         }
+        setViewName(mName);
 
         mSubscriptions.add(unitsCache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
 
             @Override
             public void onNext(List<UnitViewModel> unitViewModels) {
                 setUnits(unitViewModels);
-                if (mItem != null && !mItem.isUnitEmpty()) {
+                if (mUnitModel != null) {
+                    selectUnit(mUnitModel.getId());
+                } else if (mItem != null && !mItem.isUnitEmpty()) {
                     selectUnit(mItem.getUnit().getId());
                 } else {
                     selectUnit(UnitViewModel.NO_UNIT_ID);
@@ -125,7 +127,9 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
             @Override
             public void onNext(List<CategoryViewModel> category) {
                 setCategory(category);
-                if (mItem != null) {
+                if (mCategoryModel != null) {
+                    selectCategory(mCategoryModel.getId());
+                } else if (mItem != null && !mItem.isCategoryEmpty()) {
                     selectCategory(mItem.getCategory().getId());
                 } else {
                     selectCategory(CategoryViewModel.NO_CATEGORY_ID);
@@ -134,8 +138,8 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
         }));
     }
 
-    public void onPositiveButtonClick(String name) {
-        saveGoods(name);
+    public void onPositiveButtonClick() {
+        saveGoods(mName);
     }
 
     public void onNegativeButtonClick() {
@@ -148,6 +152,13 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
 
     public void onEditUnitClick(UnitViewModel unit) {
         showUnitDialog(unit);
+    }
+
+    public void setName(String name) {
+        mName = name;
+        if (mItem != null) {
+            mItem.setName(name);
+        }
     }
 
     public void setCategory(CategoryViewModel category) {
@@ -164,7 +175,7 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
                 .subscribe(categoryCache);
     }
 
-    public void loadUnits() {
+    private void loadUnits() {
         mGetUnitsList.get()
                 .map(mUnitsDataModelMapper::transformToViewModel)
                 .subscribe(unitsCache);
@@ -250,9 +261,9 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
         }
     }
 
-    private void setName(String name) {
+    private void setViewName(String name) {
         if (isViewAttached()) {
-            getView().setName(name);
+            getView().setViewName(name);
         }
     }
 

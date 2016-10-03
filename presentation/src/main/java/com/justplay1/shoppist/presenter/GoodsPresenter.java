@@ -201,7 +201,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
                 .flatMap(goods -> {
                     mDeleteGoods.setData(goods);
                     return mDeleteGoods.get();
-                }).subscribe(new DefaultSubscriber<Boolean>()));
+                }).subscribe(new DefaultSubscriber<>()));
     }
 
     public void changeUnit(UnitViewModel unit, List<ProductViewModel> editProducts) {

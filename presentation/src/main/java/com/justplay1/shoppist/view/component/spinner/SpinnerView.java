@@ -132,7 +132,7 @@ public class SpinnerView<T extends BaseViewModel> extends FrameLayout {
 
         private LayoutInflater mInflater;
 
-        public SpinnerAdapter(Context context, int textViewResourceId, List<T> objects) {
+        SpinnerAdapter(Context context, int textViewResourceId, List<T> objects) {
             super(context, textViewResourceId, objects);
             mInflater = LayoutInflater.from(context);
         }

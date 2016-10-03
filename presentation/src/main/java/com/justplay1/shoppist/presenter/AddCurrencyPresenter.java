@@ -48,9 +48,9 @@ public class AddCurrencyPresenter extends BaseRxPresenter<AddCurrencyView, Route
     private CurrencyViewModel mItem;
 
     @Inject
-    public AddCurrencyPresenter(CurrencyModelDataMapper dataMapper,
-                                UpdateCurrency updateCurrency,
-                                AddCurrency addCurrency) {
+    AddCurrencyPresenter(CurrencyModelDataMapper dataMapper,
+                         UpdateCurrency updateCurrency,
+                         AddCurrency addCurrency) {
         this.mDataMapper = dataMapper;
         this.mUpdateCurrency = updateCurrency;
         this.mAddCurrency = addCurrency;

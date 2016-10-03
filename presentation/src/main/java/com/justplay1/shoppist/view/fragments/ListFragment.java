@@ -76,7 +76,6 @@ public class ListFragment extends BaseEDSListFragment
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
         mPresenter.attachRouter((ListRouter) getActivity());
-        mPresenter.init();
     }
 
     @Override
@@ -238,38 +237,17 @@ public class ListFragment extends BaseEDSListFragment
         DialogInterface.OnClickListener listener = (dialog, which) -> {
             switch (which) {
                 case Dialog.BUTTON_POSITIVE:
-                    Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
-                    Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-                    try {
-                        context.startActivity(goToMarket);
-                    } catch (ActivityNotFoundException e) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + context.getPackageName()));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                        context.startActivity(intent);
-                    }
-                    mPreferences.setNeedShowRateDialog(31);
+
                     dialog.dismiss();
-                case Dialog.BUTTON_NEGATIVE:
-                    mPreferences.setNeedShowRateDialog(31);
-                    dialog.dismiss();
-                    break;
-                case Dialog.BUTTON_NEUTRAL:
-                    mPreferences.setNeedShowRateDialog(0);
-                    dialog.dismiss();
-                    break;
             }
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(R.string.rate_shoppist);
-        builder.setMessage(R.string.rate_info);
-        builder.setNeutralButton(R.string.no_later, listener);
-        builder.setPositiveButton(R.string.rate, listener);
-        builder.setNegativeButton(R.string.no, listener);
+        builder.setTitle(getString(R.string.important));
+        builder.setMessage(getString(R.string.important_m));
+        builder.setPositiveButton(R.string.ok, listener);
         AlertDialog dialog = builder.create();
         dialog.show();
         dialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(mPreferences.getColorPrimary());
-        dialog.getButton(Dialog.BUTTON_NEGATIVE).setTextColor(mPreferences.getColorPrimary());
-        dialog.getButton(Dialog.BUTTON_NEUTRAL).setTextColor(mPreferences.getColorPrimary());
     }
 }

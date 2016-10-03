@@ -26,7 +26,7 @@ import java.util.List;
  */
 public interface AddGoodsView extends LoadDataView {
 
-    void setName(String name);
+    void setViewName(String name);
 
     void setDefaultUpdateTitle();
 

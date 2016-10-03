@@ -130,13 +130,21 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         });
 
         mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListItemViewModel>>>>() {
+
+            @Override
+            public void onStart() {
+                showLoading();
+            }
+
             @Override
             public void onNext(List<Pair<HeaderViewModel, List<ListItemViewModel>>> data) {
+                hideLoading();
                 showData(data);
             }
 
             @Override
             public void onError(Throwable e) {
+                hideLoading();
                 e.printStackTrace();
             }
         }));

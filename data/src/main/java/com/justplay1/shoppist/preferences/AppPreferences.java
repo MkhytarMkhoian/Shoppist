@@ -37,7 +37,6 @@ public class AppPreferences {
     private static final String LOCK_SCREEN = "LockScreen";
 
     private static final String CONFIRM_DELETE_DIALOG = "confirm_delete_dialog";
-    private static final String IS_NEED_SHOW_RATE_DIALOG = "is_need_show_rate_dialog";
     private static final String ADD_BUTTON_CLICK_ACTION = "add_button_click_action";
 
     private static final String SORT_FOR_SHOPPING_LISTS = "sort_for_shopping_lists";
@@ -62,7 +61,6 @@ public class AppPreferences {
     private int mSortForGoods;
 
     private boolean mConfirmDeleteDialog;
-    private int mNeedShowRateDialog;
     private int mAddButtonClickAction;
 
     private int mLeftShoppingListItemSwipeAction;
@@ -83,7 +81,6 @@ public class AppPreferences {
             mLockScreen = mPreference.getBoolean(LOCK_SCREEN, false);
 
             mConfirmDeleteDialog = mPreference.getBoolean(CONFIRM_DELETE_DIALOG, false);
-            mNeedShowRateDialog = mPreference.getInt(IS_NEED_SHOW_RATE_DIALOG, 0);
             mAddButtonClickAction = mPreference.getInt(ADD_BUTTON_CLICK_ACTION, 0);
 
             mLeftShoppingListItemSwipeAction = mPreference.getInt(LEFT_SHOPPING_LIST_ITEM_SWIPE_ACTION, 0);
@@ -175,27 +172,6 @@ public class AppPreferences {
         mLockScreen = lockScreen;
         SharedPreferences.Editor editor = mPreference.edit();
         editor.putBoolean(LOCK_SCREEN, lockScreen);
-        editor.apply();
-    }
-
-    public boolean isNeedShowRateDialog() {
-        boolean flag = false;
-        if (mNeedShowRateDialog == 30) {
-            flag = true;
-        } else if (mNeedShowRateDialog > 30) {
-            flag = false;
-        } else {
-            flag = false;
-            mNeedShowRateDialog++;
-            setNeedShowRateDialog(mNeedShowRateDialog);
-        }
-        return flag;
-    }
-
-    public void setNeedShowRateDialog(int counter) {
-        mNeedShowRateDialog = counter;
-        SharedPreferences.Editor editor = mPreference.edit();
-        editor.putInt(IS_NEED_SHOW_RATE_DIALOG, counter);
         editor.apply();
     }
 

@@ -17,7 +17,6 @@
 package com.justplay1.shoppist.view.activities;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.view.ActionMode;
@@ -35,26 +34,6 @@ public abstract class BaseListActivity extends BaseActivity
 
     protected ActionMode mActionMode;
     protected boolean isActionModeShowing;
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean("isActionModeShowing", isActionModeShowing);
-        if (isActionModeShowing) {
-            outState.putInt("title", Integer.valueOf(mActionMode.getTitle().toString()));
-        }
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        if (savedInstanceState != null) {
-            isActionModeShowing = savedInstanceState.getBoolean("isActionModeShowing");
-            if (isActionModeShowing) {
-                openActionMode(savedInstanceState.getInt("title", 0));
-            }
-        }
-    }
 
     @Override
     public boolean isActionModeShowing() {
