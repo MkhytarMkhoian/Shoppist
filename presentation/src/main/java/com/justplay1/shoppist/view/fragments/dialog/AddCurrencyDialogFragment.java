@@ -88,12 +88,6 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mPresenter.onSaveInstanceState(outState);
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mNameEdit.setSelection(mNameEdit.getText().length());

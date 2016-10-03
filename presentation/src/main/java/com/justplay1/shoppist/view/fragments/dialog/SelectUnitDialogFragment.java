@@ -78,12 +78,6 @@ public class SelectUnitDialogFragment extends BaseSelectItemDialogFragment<UnitV
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mPresenter.onSaveInstanceState(outState);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.detachView();

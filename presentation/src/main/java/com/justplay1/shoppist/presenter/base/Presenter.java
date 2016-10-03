@@ -29,7 +29,4 @@ public interface Presenter<V> {
 
     @UiThread
     void onCreate(Bundle arguments, Bundle savedInstanceState);
-
-    @UiThread
-    void onSaveInstanceState(Bundle bundle);
 }

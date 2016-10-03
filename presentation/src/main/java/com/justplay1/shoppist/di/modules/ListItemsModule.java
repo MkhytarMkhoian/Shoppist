@@ -66,9 +66,9 @@ public class ListItemsModule {
 
     @Provides
     @NonConfigurationScope
-    MoveToList provideMoveToList(DeleteListItems deleteListItems, AddListItems addListItems,
+    MoveToList provideMoveToList(ListItemsRepository repository,
                                  ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-        return new MoveToList(deleteListItems, addListItems, threadExecutor, postExecutionThread);
+        return new MoveToList(repository, threadExecutor, postExecutionThread);
     }
 
     @Provides

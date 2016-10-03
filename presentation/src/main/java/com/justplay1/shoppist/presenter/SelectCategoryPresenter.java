@@ -53,14 +53,7 @@ public class SelectCategoryPresenter extends BaseRxPresenter<SelectCategoryView,
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
             mItem = arguments.getParcelable(CategoryViewModel.class.getName());
-        } else if (savedInstanceState != null) {
-            mItem = savedInstanceState.getParcelable(CategoryViewModel.class.getName());
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle bundle) {
-        bundle.putParcelable(CategoryViewModel.class.getName(), mItem);
     }
 
     public void init() {

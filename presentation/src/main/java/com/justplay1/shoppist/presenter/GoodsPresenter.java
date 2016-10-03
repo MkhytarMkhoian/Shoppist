@@ -55,7 +55,7 @@ import rx.subjects.BehaviorSubject;
 @NonConfigurationScope
 public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductViewModel, GoodsRouter> {
 
-    private final BehaviorSubject<List<Pair<HeaderViewModel, List<ProductViewModel>>>> subject = BehaviorSubject.create();
+    private final BehaviorSubject<List<Pair<HeaderViewModel, List<ProductViewModel>>>> cache = BehaviorSubject.create();
 
     private final GoodsModelDataMapper mGoodsModelDataMapper;
     private final CategoryModelDataMapper mCategoryModelDataMapper;
@@ -68,15 +68,15 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     private final UpdateGoods mUpdateGoods;
 
     @Inject
-    public GoodsPresenter(AppPreferences preferences,
-                          GoodsModelDataMapper dataMapper,
-                          GetGoodsList getGoodsList,
-                          DeleteGoods deleteGoods,
-                          UpdateGoods updateGoods,
-                          GetCategory getCategory,
-                          GetUnit getUnit,
-                          CategoryModelDataMapper categoryModelDataMapper,
-                          UnitsDataModelMapper unitsDataModelMapper) {
+    GoodsPresenter(AppPreferences preferences,
+                   GoodsModelDataMapper dataMapper,
+                   GetGoodsList getGoodsList,
+                   DeleteGoods deleteGoods,
+                   UpdateGoods updateGoods,
+                   GetCategory getCategory,
+                   GetUnit getUnit,
+                   CategoryModelDataMapper categoryModelDataMapper,
+                   UnitsDataModelMapper unitsDataModelMapper) {
         super(preferences);
         this.mGoodsModelDataMapper = dataMapper;
         this.mGetGoodsList = getGoodsList;
@@ -93,7 +93,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     @Override
     public void attachView(GoodsView view) {
         super.attachView(view);
-        mSubscriptions.add(subject.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ProductViewModel>>>>() {
+        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ProductViewModel>>>>() {
 
             @Override
             public void onStart() {
@@ -153,7 +153,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     }
 
     private void loadData() {
-        mSubscriptions.add(Observable.zip(loadDefaultUnit(), loadDefaultCategory(), (unit, category) -> {
+        Observable.zip(loadDefaultUnit(), loadDefaultCategory(), (unit, category) -> {
             Map<String, BaseViewModel> map = new HashMap<>();
             map.put(CategoryViewModel.NO_CATEGORY_ID, category);
             map.put(UnitViewModel.NO_UNIT_ID, unit);
@@ -174,7 +174,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
                     }
                     return goods;
                 }))
-                .subscribe(subject));
+                .subscribe(cache);
     }
 
     @SuppressWarnings("ResourceType")

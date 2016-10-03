@@ -20,7 +20,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -112,7 +114,6 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         mPresenter.attachView(this);
-        mPresenter.init();
     }
 
     @Override
@@ -148,10 +149,37 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
             ProductViewModel product = mAutoCompleteTextAdapter.getProduct(mNameEdit.getText().toString());
             mPresenter.onProductClick(product);
         });
+        mNameEdit.addTextChangedListener(new AbstractTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                mPresenter.selectName(ShoppistUtils.filterSpace(s.toString()));
+                ProductViewModel product = mAutoCompleteTextAdapter.getProduct(s.toString());
+                mPresenter.setProduct(product);
+            }
+        });
 
         mPriceEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
         mQuantityEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
         mNote.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
+
+        mNote.addTextChangedListener(new AbstractTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                mPresenter.setNote(ShoppistUtils.filterSpace(s.toString()));
+            }
+        });
+        mPriceEdit.addTextChangedListener(new AbstractTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                mPresenter.setPrice(s.toString());
+            }
+        });
+        mQuantityEdit.addTextChangedListener(new AbstractTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                mPresenter.setQuantity(s.toString());
+            }
+        });
 
         ImageButton incrementPriceBtn = (ImageButton) view.findViewById(R.id.increment_price_button);
         ImageButton decrementPriceBtn = (ImageButton) view.findViewById(R.id.decrement_price_button);
@@ -208,40 +236,70 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, data);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mPriorityList.setAdapter(adapter);
+        mPriorityList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mPresenter.setPriority(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void initializeCategoryList() {
         mCategoryList.setOnAddBtnClickListener(v -> mListItemListener.openAddCategoryScreen(null));
         mCategoryList.setOnEditBtnClickListener(v -> mListItemListener.openAddCategoryScreen(mCategoryList.getSelectedItem()));
+        mCategoryList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mPresenter.setCategory(mCategoryList.getSelectedItem());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void initializeUnitList() {
         mUnitList.setOnAddBtnClickListener(v -> showUnitDialog(null));
         mUnitList.setOnEditBtnClickListener(v -> showUnitDialog(mUnitList.getSelectedItem()));
+        mUnitList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mPresenter.setUnit(mUnitList.getSelectedItem());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void initializeCurrencyList() {
         mCurrencyList.setOnAddBtnClickListener(v -> showCurrencyDialog(null));
         mCurrencyList.setOnEditBtnClickListener(v -> showCurrencyDialog(mCurrencyList.getSelectedItem()));
-    }
+        mCurrencyList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mPresenter.setCurrency(mCurrencyList.getSelectedItem());
+            }
 
-    private void setPresenterData() {
-        ProductViewModel product = mAutoCompleteTextAdapter.getProduct(mNameEdit.getText().toString());
-        mPresenter.setProduct(product);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-        mPresenter.setPriority(mPriorityList.getSelectedItemPosition());
-        mPresenter.setUnit(mUnitList.getSelectedItem());
-        mPresenter.setCurrency(mCurrencyList.getSelectedItem());
-        mPresenter.setCategory(mCategoryList.getSelectedItem());
-        mPresenter.setNote(ShoppistUtils.filterSpace(mNote.getText().toString()));
-        mPresenter.setPrice(mPriceEdit.getText().toString());
-        mPresenter.setQuantity(mQuantityEdit.getText().toString());
+            }
+        });
     }
 
     @Override
     public boolean onLongClick(View v) {
-        setPresenterData();
-        mPresenter.onDoneButtonLongClick(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
+        mPresenter.onDoneButtonLongClick();
         return true;
     }
 
@@ -249,8 +307,7 @@ public class AddListItemFragment extends BaseAddElementFragment implements AddLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.done_button:
-                setPresenterData();
-                mPresenter.onDoneButtonClick(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
+                mPresenter.onDoneButtonClick();
                 break;
             case R.id.decrement_price_button:
                 mPresenter.onDecrementPriceClick(mPriceEdit.getText().toString());

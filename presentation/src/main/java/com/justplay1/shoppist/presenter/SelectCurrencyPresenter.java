@@ -54,14 +54,7 @@ public class SelectCurrencyPresenter extends BaseRxPresenter<SelectCurrencyView,
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
             mItem = arguments.getParcelable(CurrencyViewModel.class.getName());
-        } else if (savedInstanceState != null) {
-            mItem = savedInstanceState.getParcelable(CurrencyViewModel.class.getName());
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle bundle) {
-        bundle.putParcelable(CurrencyViewModel.class.getName(), mItem);
     }
 
     public void init() {

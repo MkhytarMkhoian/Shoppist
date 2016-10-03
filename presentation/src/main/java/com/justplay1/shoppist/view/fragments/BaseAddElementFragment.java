@@ -22,12 +22,15 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.utils.Const;
+import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.CustomProgressDialog;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 
@@ -83,6 +86,10 @@ public abstract class BaseAddElementFragment extends BaseFragment
         }
         ButterKnife.bind(this, view);
         init(view);
+
+        if (savedInstanceState != null) {
+            mNameEdit.setText(savedInstanceState.getString(Const.NAME));
+        }
     }
 
     @Override
@@ -93,10 +100,25 @@ public abstract class BaseAddElementFragment extends BaseFragment
 
         mNameEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
         mNameEdit.setPrimaryColor(mPreferences.getColorPrimary());
+        mNameEdit.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() != KeyEvent.ACTION_DOWN)
+                return false;
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                ShoppistUtils.hideKeyboard(getContext(), mNameEdit);
+                return true;
+            }
+            return false;
+        });
 
         mActionButton.setOnLongClickListener(this);
         mActionButton.setOnClickListener(this);
         mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(Const.NAME, mNameEdit.getText().toString());
     }
 
     @Override

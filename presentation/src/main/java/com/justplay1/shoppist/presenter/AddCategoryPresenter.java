@@ -20,8 +20,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.justplay1.shoppist.di.scope.NonConfigurationScope;
-import com.justplay1.shoppist.exception.DefaultErrorBundle;
-import com.justplay1.shoppist.exception.ErrorBundle;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.AddCategory;
 import com.justplay1.shoppist.interactor.category.UpdateCategory;
@@ -49,9 +47,10 @@ public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryVie
 
     private CategoryViewModel mItem;
     private int mColor = Color.DKGRAY;
+    private String mName = "";
 
     @Inject
-    public AddCategoryPresenter(CategoryModelDataMapper dataMapper, AddCategory addCategory, UpdateCategory updateCategory) {
+    AddCategoryPresenter(CategoryModelDataMapper dataMapper, AddCategory addCategory, UpdateCategory updateCategory) {
         this.mAddCategory = addCategory;
         this.mUpdateCategory = updateCategory;
         this.mDataMapper = dataMapper;
@@ -62,45 +61,51 @@ public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryVie
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
             mItem = arguments.getParcelable(CategoryViewModel.class.getName());
-        } else if (savedInstanceState != null) {
-            mItem = savedInstanceState.getParcelable(CategoryViewModel.class.getName());
         }
     }
 
     @Override
-    public void onSaveInstanceState(Bundle bundle) {
-        bundle.putParcelable(CategoryViewModel.class.getName(), mItem);
-    }
-
-    public void init() {
+    public void attachView(AddCategoryView view) {
+        super.attachView(view);
         if (mItem != null) {
-            setToolbarTitle(mItem.getName());
-            setName(mItem.getName());
             mColor = mItem.getColor();
+            mName = mItem.getName();
+            setToolbarTitle(mName);
         } else {
             setDefaultToolbarTitle();
         }
         setColorToButton(mColor);
+        setName(mName);
     }
 
     public boolean isItemEdit() {
         return mItem != null;
     }
 
-    public void onColorSelected(int color) {
+    public void selectColor(int color) {
         mColor = color;
+        if (mItem != null) {
+            mItem.setColor(color);
+        }
+    }
+
+    public void selectName(String name) {
+        this.mName = name;
+        if (mItem != null) {
+            mItem.setName(name);
+        }
     }
 
     public void onColorButtonClick() {
         showSelectColorDialog();
     }
 
-    public void onDoneButtonClick(String name) {
-        saveCategory(name, false);
+    public void onDoneButtonClick() {
+        saveCategory(mName, false);
     }
 
-    public void onDoneButtonLongClick(String name) {
-        saveCategory(name, true);
+    public void onDoneButtonLongClick() {
+        saveCategory(mName, true);
     }
 
     private void addCategory(CategoryViewModel data, boolean isLongClick) {
@@ -121,13 +126,13 @@ public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryVie
                         }).subscribe(new SaveCategorySubscriber(isLongClick, false)));
     }
 
-    protected void showSelectColorDialog() {
+    private void showSelectColorDialog() {
         if (isViewAttached()) {
             getView().showSelectColorDialog(mColor);
         }
     }
 
-    protected void setColorToButton(int color) {
+    private void setColorToButton(int color) {
         if (isViewAttached()) {
             getView().setColorToButton(color);
         }
@@ -176,24 +181,14 @@ public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryVie
         }
     }
 
-    private void showErrorMessage(ErrorBundle errorBundle) {
-//        String errorMessage = ErrorMessageFactory.create(getView().context(), errorBundle.getException());
-//        getView().showError(errorMessage);
-    }
-
     private final class SaveCategorySubscriber extends DefaultSubscriber<Boolean> {
 
         private boolean isLongClick;
         private boolean isAddAction;
 
-        public SaveCategorySubscriber(boolean isLongClick, boolean isAddAction) {
+        SaveCategorySubscriber(boolean isLongClick, boolean isAddAction) {
             this.isLongClick = isLongClick;
             this.isAddAction = isAddAction;
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            showErrorMessage(new DefaultErrorBundle((Exception) e));
         }
 
         @Override

@@ -54,14 +54,7 @@ public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView, Router>
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
             mItem = arguments.getParcelable(UnitViewModel.class.getName());
-        } else if (savedInstanceState != null) {
-            mItem = savedInstanceState.getParcelable(UnitViewModel.class.getName());
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle bundle) {
-        bundle.putParcelable(UnitViewModel.class.getName(), mItem);
     }
 
     public void init() {

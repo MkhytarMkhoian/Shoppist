@@ -43,12 +43,6 @@ public abstract class BaseRxPresenter<V extends BaseMvpView, R extends Router> e
 
     @UiThread
     @Override
-    public void onSaveInstanceState(Bundle bundle) {
-
-    }
-
-    @UiThread
-    @Override
     public void detachView() {
         super.detachView();
         mSubscriptions.clear();

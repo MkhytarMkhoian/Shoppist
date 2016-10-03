@@ -24,4 +24,6 @@ public interface AddCategoryView extends AddElementView {
     void showSelectColorDialog(int color);
 
     void setColorToButton(int color);
+
+    void setName(String name);
 }

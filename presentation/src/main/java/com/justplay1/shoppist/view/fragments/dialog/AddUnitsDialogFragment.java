@@ -77,12 +77,6 @@ public class AddUnitsDialogFragment extends BaseDialogFragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mPresenter.onSaveInstanceState(outState);
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mFullNameEdit.setSelection(mFullNameEdit.getText().length());

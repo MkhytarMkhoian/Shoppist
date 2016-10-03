@@ -43,11 +43,11 @@ public abstract class BaseListActivity<C> extends BaseActivity
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        mComponent = retrieveComponentOrCreateNew();
+        mComponent = retrieveInjectorOrCreateNew();
         super.onCreate(savedInstanceState);
     }
 
-    private C retrieveComponentOrCreateNew() {
+    private C retrieveInjectorOrCreateNew() {
         Object lastNonConfInstance = getLastCustomNonConfigurationInstance();
         if (lastNonConfInstance == null) {
             return getNewComponentInstance();

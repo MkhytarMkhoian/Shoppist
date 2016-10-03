@@ -49,9 +49,9 @@ public class AddUnitPresenter extends BaseRxPresenter<AddUnitView, Router> {
     private UnitViewModel mItem;
 
     @Inject
-    public AddUnitPresenter(UnitsDataModelMapper dataMapper,
-                            UpdateUnits updateUnits,
-                            AddUnits addUnits) {
+    AddUnitPresenter(UnitsDataModelMapper dataMapper,
+                     UpdateUnits updateUnits,
+                     AddUnits addUnits) {
         this.mDataMapper = dataMapper;
         this.mUpdateUnits = updateUnits;
         this.mAddUnits = addUnits;
@@ -62,14 +62,7 @@ public class AddUnitPresenter extends BaseRxPresenter<AddUnitView, Router> {
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
             mItem = arguments.getParcelable(UnitViewModel.class.getName());
-        } else if (savedInstanceState != null) {
-            mItem = savedInstanceState.getParcelable(UnitViewModel.class.getName());
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle bundle) {
-        bundle.putParcelable(UnitViewModel.class.getName(), mItem);
     }
 
     public void init() {
@@ -207,7 +200,7 @@ public class AddUnitPresenter extends BaseRxPresenter<AddUnitView, Router> {
 
         private boolean isAddAction;
 
-        public SaveUnitSubscriber(boolean isAddAction) {
+        SaveUnitSubscriber(boolean isAddAction) {
             this.isAddAction = isAddAction;
         }
 

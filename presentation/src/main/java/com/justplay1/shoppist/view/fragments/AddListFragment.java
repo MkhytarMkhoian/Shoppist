@@ -18,7 +18,7 @@ package com.justplay1.shoppist.view.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
+import android.text.Editable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -72,7 +72,6 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         mPresenter.attachView(this);
-        mPresenter.init();
     }
 
     @Override
@@ -98,14 +97,11 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
         TextView priorityLabel = (TextView) view.findViewById(R.id.priority_label);
         priorityLabel.setTextColor(mPreferences.getColorPrimary());
 
-        mNameEdit.setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() != KeyEvent.ACTION_DOWN)
-                return false;
-            if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                ShoppistUtils.hideKeyboard(getContext(), mNameEdit);
-                return true;
+        mNameEdit.addTextChangedListener(new AbstractTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                mPresenter.selectName(ShoppistUtils.filterSpace(s.toString()));
             }
-            return false;
         });
 
         String[] data = getResources().getStringArray(R.array.priority);
@@ -151,10 +147,6 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
         mListener.closeScreen();
     }
 
-    protected void showError() {
-        mNameEdit.setError(getString(R.string.list_name_is_required));
-    }
-
     @Override
     public void showSelectColorDialog(int color) {
         final ColorPickerDialog colorPickerDialog = new ColorPickerDialog(getContext(), mPreferences.getColorPrimary());
@@ -162,7 +154,7 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
         colorPickerDialog.setOnClickListener(view -> {
             switch (view.getId()) {
                 case R.id.positive_button:
-                    mPresenter.onColorSelected(colorPickerDialog.getColor());
+                    mPresenter.selectColor(colorPickerDialog.getColor());
                     mColorBtn.setBackgroundColor(colorPickerDialog.getColor());
                     colorPickerDialog.dismiss();
                     break;
@@ -178,7 +170,7 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.done_button:
-                mPresenter.onDoneButtonClick(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
+                mPresenter.onDoneButtonClick();
                 break;
             case R.id.color_button:
                 mPresenter.onColorButtonClick();
@@ -188,7 +180,9 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
 
     @Override
     public void setRandomColor() {
-        mPresenter.onColorSelected(getRandomColor());
+        int color = getRandomColor();
+        setColorToButton(color);
+        mPresenter.selectColor(color);
     }
 
     @Override
@@ -254,7 +248,7 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
 
     @Override
     public boolean onLongClick(View v) {
-        mPresenter.onDoneButtonLongClick(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
+        mPresenter.onDoneButtonLongClick();
         return true;
     }
 }

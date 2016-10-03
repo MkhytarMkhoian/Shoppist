@@ -47,11 +47,12 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
     private final UpdateLists mUpdateLists;
 
     private ListViewModel mItem;
-    private int mPriority;
+    private int mPriority = Priority.NO_PRIORITY;
     private int mColor = Color.DKGRAY;
+    private String mName = "";
 
     @Inject
-    public AddListPresenter(ListModelDataMapper dataMapper, AddList addList, UpdateLists updateLists) {
+    AddListPresenter(ListModelDataMapper dataMapper, AddList addList, UpdateLists updateLists) {
         this.mDataMapper = dataMapper;
         this.mAddList = addList;
         this.mUpdateLists = updateLists;
@@ -62,32 +63,48 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
             mItem = arguments.getParcelable(ListViewModel.class.getName());
-        } else if (savedInstanceState != null) {
-            mItem = savedInstanceState.getParcelable(ListViewModel.class.getName());
         }
     }
 
     @Override
-    public void onSaveInstanceState(Bundle bundle) {
-        bundle.putParcelable(ListViewModel.class.getName(), mItem);
-    }
-
-    public void init() {
+    public void attachView(AddListView view) {
+        super.attachView(view);
         if (mItem != null) {
-            setToolbarTitle(mItem.getName());
-            setName(mItem.getName());
-            setPriority(mItem.getPriority());
             mColor = mItem.getColor();
+            mName = mItem.getName();
+            mPriority = mItem.getPriority();
+            setToolbarTitle(mName);
         } else {
-            setRandomColor();
-            setPriority(Priority.NO_PRIORITY);
             setDefaultToolbarTitle();
         }
-        setColorToButton(mColor);
+        setName(mName);
+        setPriority(mPriority);
+        if (mColor == Color.DKGRAY) {
+            setRandomColor();
+        } else {
+            setColorToButton(mColor);
+        }
     }
 
     public void selectPriority(@Priority int priority) {
         mPriority = priority;
+        if (mItem != null) {
+            mItem.setPriority(priority);
+        }
+    }
+
+    public void selectColor(int color) {
+        mColor = color;
+        if (mItem != null) {
+            mItem.setColor(color);
+        }
+    }
+
+    public void selectName(String name) {
+        this.mName = name;
+        if (mItem != null) {
+            mItem.setName(name);
+        }
     }
 
     private void setRandomColor() {
@@ -106,20 +123,16 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
         return mItem != null;
     }
 
-    public void onColorSelected(int color) {
-        mColor = color;
-    }
-
     public void onColorButtonClick() {
         showSelectColorDialog();
     }
 
-    public void onDoneButtonClick(String name) {
-        saveList(name, false);
+    public void onDoneButtonClick() {
+        saveList(mName, false);
     }
 
-    public void onDoneButtonLongClick(String name) {
-        saveList(name, true);
+    public void onDoneButtonLongClick() {
+        saveList(mName, true);
     }
 
     private void addList(ListViewModel data, boolean isLongClick) {
@@ -140,13 +153,13 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
                         }).subscribe(new SaveListSubscriber(isLongClick, false)));
     }
 
-    protected void showSelectColorDialog() {
+    private void showSelectColorDialog() {
         if (isViewAttached()) {
             getView().showSelectColorDialog(mColor);
         }
     }
 
-    protected void setColorToButton(int color) {
+    private void setColorToButton(int color) {
         if (isViewAttached()) {
             getView().setColorToButton(color);
         }

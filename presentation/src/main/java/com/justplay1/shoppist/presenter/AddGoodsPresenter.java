@@ -86,16 +86,7 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
         if (arguments != null) {
             mNewName = arguments.getString(Const.NEW_NAME);
             mItem = arguments.getParcelable(ProductViewModel.class.getName());
-        } else if (savedInstanceState != null) {
-            mItem = savedInstanceState.getParcelable(ProductViewModel.class.getName());
-            mNewName = savedInstanceState.getString(Const.NEW_NAME);
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle bundle) {
-        bundle.putParcelable(ProductViewModel.class.getName(), mItem);
-        bundle.putString(Const.NEW_NAME, mNewName);
     }
 
     public void init() {

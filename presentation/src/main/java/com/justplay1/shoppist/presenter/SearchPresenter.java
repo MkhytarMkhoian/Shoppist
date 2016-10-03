@@ -90,16 +90,7 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
         if (arguments != null) {
             mParentListId = arguments.getString(Const.PARENT_LIST_ID);
             mContextType = arguments.getInt(Const.SEARCH_CONTEXT_TYPE, Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST);
-        } else if (savedInstanceState != null) {
-            mParentListId = savedInstanceState.getString(Const.PARENT_LIST_ID);
-            mContextType = savedInstanceState.getInt(Const.SEARCH_CONTEXT_TYPE, Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST);
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle bundle) {
-        bundle.putString(Const.PARENT_LIST_ID, mParentListId);
-        bundle.putInt(Const.SEARCH_CONTEXT_TYPE, mContextType);
     }
 
     @Override

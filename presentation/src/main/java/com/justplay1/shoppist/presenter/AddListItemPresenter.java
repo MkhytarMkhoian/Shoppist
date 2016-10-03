@@ -86,29 +86,30 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
 
     private ListItemViewModel mItem;
     private String mParentListId;
-    private int mPriority;
     private CategoryViewModel mCategoryModel;
     private UnitViewModel mUnitModel;
     private CurrencyViewModel mCurrencyModel;
     private ProductViewModel mProductModel;
-    private double mPrice;
-    private double mQuantity;
-    private String mNote;
+    private double mPrice = 0;
+    private double mQuantity = 0;
+    private String mNote = "";
+    private String mName = "";
+    private int mPriority = Priority.NO_PRIORITY;
 
     @Inject
-    public AddListItemPresenter(CategoryModelDataMapper categoryModelDataMapper,
-                                UnitsDataModelMapper unitsDataModelMapper,
-                                CurrencyModelDataMapper currencyModelDataMapper,
-                                GoodsModelDataMapper goodsModelDataMapper,
-                                ListItemsModelDataMapper listItemsModelDataMapper,
-                                AddListItems addListItems,
-                                UpdateListItems updateListItems,
-                                GetCategoryList getCategoryList,
-                                GetCurrencyList getCurrencyList,
-                                GetGoodsList getGoodsList,
-                                GetUnitsList getUnitsList,
-                                UpdateGoods updateGoods,
-                                AppPreferences preferences) {
+    AddListItemPresenter(CategoryModelDataMapper categoryModelDataMapper,
+                         UnitsDataModelMapper unitsDataModelMapper,
+                         CurrencyModelDataMapper currencyModelDataMapper,
+                         GoodsModelDataMapper goodsModelDataMapper,
+                         ListItemsModelDataMapper listItemsModelDataMapper,
+                         AddListItems addListItems,
+                         UpdateListItems updateListItems,
+                         GetCategoryList getCategoryList,
+                         GetCurrencyList getCurrencyList,
+                         GetGoodsList getGoodsList,
+                         GetUnitsList getUnitsList,
+                         UpdateGoods updateGoods,
+                         AppPreferences preferences) {
         this.mCategoryModelDataMapper = categoryModelDataMapper;
         this.mUnitsDataModelMapper = unitsDataModelMapper;
         this.mCurrencyModelDataMapper = currencyModelDataMapper;
@@ -135,37 +136,28 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         if (arguments != null) {
             mItem = arguments.getParcelable(ListItemViewModel.class.getName());
             mParentListId = arguments.getString(Const.PARENT_LIST_ID);
-        } else if (savedInstanceState != null) {
-            mItem = savedInstanceState.getParcelable(ListItemViewModel.class.getName());
-            mParentListId = savedInstanceState.getString(Const.PARENT_LIST_ID);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle bundle) {
-        bundle.putParcelable(ListItemViewModel.class.getName(), mItem);
-        bundle.putString(Const.PARENT_LIST_ID, mParentListId);
-    }
-
-    public void init() {
-        if (mItem != null) {
-            setViewPrice(String.valueOf(mItem.getPrice()));
-            setViewQuantity(String.valueOf(mItem.getQuantity()));
-            setViewNote(String.valueOf(mItem.getNote()));
-            setToolbarTitle(mItem.getName());
-            setName(mItem.getName());
-            selectPriority(mItem.getPriority());
-        } else {
-            setViewPrice("0");
-            setViewQuantity("0");
-            selectPriority(Priority.NO_PRIORITY);
-            setDefaultToolbarTitle();
         }
     }
 
     @Override
     public void attachView(AddListItemView view) {
         super.attachView(view);
+        if (mItem != null) {
+            mName = mItem.getName();
+            mPriority = mItem.getPriority();
+            mNote = mItem.getNote();
+            mPrice = mItem.getPrice();
+            mQuantity = mItem.getQuantity();
+            setToolbarTitle(mName);
+        } else {
+            setDefaultToolbarTitle();
+        }
+        setName(mName);
+        selectPriority(mPriority);
+        setViewNote(String.valueOf(mNote));
+        setViewPrice(String.valueOf(mPrice));
+        setViewQuantity(String.valueOf(mQuantity));
+
         mSubscriptions.add(categoryCache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
 
             @Override
@@ -173,6 +165,8 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
                 setCategory(category);
                 if (mItem != null) {
                     selectCategory(mItem.getCategory().getId());
+                } else if (mCategoryModel != null) {
+                    selectCategory(mCategoryModel.getId());
                 } else {
                     selectCategory(CategoryViewModel.NO_CATEGORY_ID);
                 }
@@ -186,6 +180,8 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
                 setUnits(unitViewModels);
                 if (mItem != null) {
                     selectUnit(mItem.getUnit().getId());
+                } else if (mUnitModel != null) {
+                    selectUnit(mUnitModel.getId());
                 } else {
                     selectUnit(UnitViewModel.NO_UNIT_ID);
                 }
@@ -199,6 +195,8 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
                 setCurrency(currency);
                 if (mItem != null) {
                     selectCurrency(mItem.getCurrency().getId());
+                } else if (mCurrencyModel != null) {
+                    selectCurrency(mCurrencyModel.getId());
                 } else {
                     selectCurrency(mPreferences.getDefaultCurrency());
                 }
@@ -228,6 +226,9 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
             case 3:
                 mPriority = Priority.HIGH;
                 break;
+        }
+        if (mItem != null) {
+            mItem.setPriority(mPriority);
         }
     }
 
@@ -278,16 +279,26 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         setViewQuantity(String.format("%s", decrementValue(quantity)));
     }
 
-    public void onDoneButtonClick(String name) {
-        saveListItem(name, false);
+    public void onDoneButtonClick() {
+        saveListItem(mName, false);
     }
 
-    public void onDoneButtonLongClick(String name) {
-        saveListItem(name, true);
+    public void onDoneButtonLongClick() {
+        saveListItem(mName, true);
+    }
+
+    public void selectName(String name) {
+        mName = name;
+        if (mItem != null) {
+            mItem.setName(name);
+        }
     }
 
     public void setNote(String note) {
         mNote = note;
+        if (mItem != null) {
+            mItem.setNote(note);
+        }
     }
 
     public void setPrice(String price) {
@@ -298,6 +309,9 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         } else {
             mPrice = 0;
         }
+        if (mItem != null) {
+            mItem.setPrice(mPrice);
+        }
     }
 
     public void setQuantity(String quantity) {
@@ -307,6 +321,9 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
             mQuantity = decimal.doubleValue();
         } else {
             mQuantity = 0;
+        }
+        if (mItem != null) {
+            mItem.setQuantity(mQuantity);
         }
     }
 
@@ -554,7 +571,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         private boolean isLongClick;
         private boolean isAddAction;
 
-        public SaveListItemSubscriber(boolean isLongClick, boolean isAddAction) {
+        SaveListItemSubscriber(boolean isLongClick, boolean isAddAction) {
             this.isLongClick = isLongClick;
             this.isAddAction = isAddAction;
         }

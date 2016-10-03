@@ -18,7 +18,7 @@ package com.justplay1.shoppist.view.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
+import android.text.Editable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -68,7 +68,6 @@ public class AddCategoryFragment extends BaseAddElementFragment
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         mPresenter.attachView(this);
-        mPresenter.init();
     }
 
     @Override
@@ -95,14 +94,11 @@ public class AddCategoryFragment extends BaseAddElementFragment
         TextView colorLabel = (TextView) view.findViewById(R.id.color_label);
         colorLabel.setTextColor(mPreferences.getColorPrimary());
 
-        mNameEdit.setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() != KeyEvent.ACTION_DOWN)
-                return false;
-            if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                ShoppistUtils.hideKeyboard(getContext(), v);
-                return true;
+        mNameEdit.addTextChangedListener(new AbstractTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                mPresenter.selectName(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
             }
-            return false;
         });
         mColorBtn.setOnClickListener(this);
     }
@@ -130,14 +126,14 @@ public class AddCategoryFragment extends BaseAddElementFragment
                 mPresenter.onColorButtonClick();
                 break;
             case R.id.done_button:
-                mPresenter.onDoneButtonClick(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
+                mPresenter.onDoneButtonClick();
                 break;
         }
     }
 
     @Override
     public boolean onLongClick(View v) {
-        mPresenter.onDoneButtonLongClick(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
+        mPresenter.onDoneButtonLongClick();
         return true;
     }
 
@@ -163,7 +159,7 @@ public class AddCategoryFragment extends BaseAddElementFragment
         colorPickerDialog.setOnClickListener(view -> {
             switch (view.getId()) {
                 case R.id.positive_button:
-                    mPresenter.onColorSelected(colorPickerDialog.getColor());
+                    mPresenter.selectColor(colorPickerDialog.getColor());
                     mColorBtn.setBackgroundColor(colorPickerDialog.getColor());
                     colorPickerDialog.dismiss();
                     break;

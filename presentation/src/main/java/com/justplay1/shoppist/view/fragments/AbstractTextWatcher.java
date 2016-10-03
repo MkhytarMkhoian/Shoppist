@@ -14,21 +14,33 @@
  *   limitations under the License.
  */
 
-package com.justplay1.shoppist.utils;
+package com.justplay1.shoppist.view.fragments;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-public interface Const {
 
-    String PARENT_LIST_ID = "parent_list_id";
-    String SEARCH_CONTEXT_TYPE = "context_type";
-    String NEW_NAME = "new_name";
-    String SETTING_ID = "setting_id";
-    String SELECTED_COLOR = "selectedColor";
-    String NAME = "name";
+public abstract class AbstractTextWatcher implements TextWatcher {
 
-    int REQ_CODE_SPEECH_INPUT = 111;
-    int CONTEXT_QUICK_ADD_GOODS_TO_LIST = 222;
-    int CONTEXT_QUICK_SEARCH_IN_GOODS_LIST = 333;
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
 }
+
+
+
+
