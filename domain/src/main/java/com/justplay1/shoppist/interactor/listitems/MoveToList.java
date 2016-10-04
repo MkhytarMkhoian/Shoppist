@@ -36,27 +36,27 @@ import rx.Observable;
  */
 public class MoveToList extends UseCase<Boolean> {
 
-    private final ListItemsRepository mRepository;
-    private Collection<ListItemModel> mData;
-    private String mNewParentListId;
-    private boolean mCopy;
+    private final ListItemsRepository repository;
+    private Collection<ListItemModel> data;
+    private String newParentListId;
+    private boolean copy;
 
     @Inject
     public MoveToList(ListItemsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mRepository = repository;
+        this.repository = repository;
     }
 
     public void setData(Collection<ListItemModel> data) {
-        this.mData = data;
+        this.data = data;
     }
 
     public void setNewParentListId(String newParentListId) {
-        this.mNewParentListId = newParentListId;
+        this.newParentListId = newParentListId;
     }
 
     public void setCopy(boolean copy) {
-        this.mCopy = copy;
+        this.copy = copy;
     }
 
     @Override
@@ -64,17 +64,17 @@ public class MoveToList extends UseCase<Boolean> {
         return Observable.fromCallable(() -> {
             List<ListItemModel> needAdd = new ArrayList<>();
 
-            for (ListItemModel item : mData) {
+            for (ListItemModel item : data) {
                 ListItemModel newItem = new ListItemModel(item);
                 newItem.setId(UUID.nameUUIDFromBytes((newItem.getName() + UUID.randomUUID()).getBytes()).toString());
-                newItem.setParentListId(mNewParentListId);
+                newItem.setParentListId(newParentListId);
                 needAdd.add(newItem);
             }
             if (needAdd.size() > 0) {
-                mRepository.save(needAdd);
+                repository.save(needAdd);
             }
-            if (!mCopy) {
-                mRepository.delete(mData);
+            if (!copy) {
+                repository.delete(data);
             }
             return true;
         });

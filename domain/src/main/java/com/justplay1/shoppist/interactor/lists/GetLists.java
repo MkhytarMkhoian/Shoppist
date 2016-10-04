@@ -22,7 +22,6 @@ import com.justplay1.shoppist.interactor.UseCase;
 import com.justplay1.shoppist.models.ListModel;
 import com.justplay1.shoppist.repository.ListRepository;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -34,17 +33,17 @@ import rx.Observable;
  */
 public class GetLists extends UseCase<List<ListModel>> {
 
-    private final ListRepository mRepository;
+    private final ListRepository repository;
 
     @Inject
     public GetLists(ListRepository repository,
                     ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mRepository = repository;
+        this.repository = repository;
     }
 
     @Override
     protected Observable<List<ListModel>> buildUseCaseObservable() {
-        return mRepository.getItems();
+        return repository.getItems();
     }
 }

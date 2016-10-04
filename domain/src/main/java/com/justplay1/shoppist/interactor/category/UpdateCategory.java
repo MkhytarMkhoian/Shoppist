@@ -33,24 +33,24 @@ import rx.Observable;
  */
 public class UpdateCategory extends UseCase<Boolean> {
 
-    private final CategoryRepository mRepository;
-    private Collection<CategoryModel> mData;
+    private final CategoryRepository repository;
+    private Collection<CategoryModel> data;
 
     @Inject
     public UpdateCategory(CategoryRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mRepository = repository;
+        this.repository = repository;
     }
 
     public void setData(Collection<CategoryModel> data) {
-        this.mData = data;
+        this.data = data;
     }
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
         return Observable.fromCallable(() -> {
-            if (mData == null) throw new NullPointerException("CategoryModel == null");
-            mRepository.update(mData);
+            if (data == null) throw new NullPointerException("CategoryModel == null");
+            repository.update(data);
             return true;
         });
     }

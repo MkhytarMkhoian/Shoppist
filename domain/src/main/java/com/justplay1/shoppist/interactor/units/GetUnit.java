@@ -31,21 +31,21 @@ import rx.Observable;
  */
 public class GetUnit extends UseCase<UnitModel> {
 
-    private final UnitsRepository mRepository;
-    private String mId;
+    private final UnitsRepository repository;
+    private String id;
 
     @Inject
     public GetUnit(UnitsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mRepository = repository;
+        this.repository = repository;
     }
 
     public void setId(String id) {
-        this.mId = id;
+        this.id = id;
     }
 
     @Override
     protected Observable<UnitModel> buildUseCaseObservable() {
-        return mRepository.getItem(mId);
+        return repository.getItem(id);
     }
 }

@@ -33,23 +33,23 @@ import rx.Observable;
  */
 public class DeleteCurrency extends UseCase<Boolean> {
 
-    private final CurrencyRepository mRepository;
-    private Collection<CurrencyModel> mData;
+    private final CurrencyRepository repository;
+    private Collection<CurrencyModel> data;
 
     @Inject
     public DeleteCurrency(CurrencyRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mRepository = repository;
+        this.repository = repository;
     }
 
     public void setData(Collection<CurrencyModel> data) {
-        this.mData = data;
+        this.data = data;
     }
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
         return Observable.fromCallable(() -> {
-            mRepository.delete(mData);
+            repository.delete(data);
             return true;
         });
     }

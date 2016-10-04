@@ -23,7 +23,6 @@ import com.justplay1.shoppist.models.CategoryModel;
 import com.justplay1.shoppist.repository.CategoryRepository;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -34,23 +33,23 @@ import rx.Observable;
  */
 public class AddCategory extends UseCase<Boolean> {
 
-    private final CategoryRepository mRepository;
-    private Collection<CategoryModel> mData;
+    private final CategoryRepository repository;
+    private Collection<CategoryModel> data;
 
     @Inject
     public AddCategory(CategoryRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mRepository = repository;
+        this.repository = repository;
     }
 
     public void setData(Collection<CategoryModel> data) {
-        this.mData = data;
+        this.data = data;
     }
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
         return Observable.fromCallable(() -> {
-            mRepository.save(mData);
+            repository.save(data);
             return true;
         });
     }

@@ -33,26 +33,26 @@ import rx.Observable;
  */
 public class MoveProductToCart extends UseCase<Boolean> {
 
-    private final ListItemsRepository mRepository;
-    private Collection<ListItemModel> mData;
+    private final ListItemsRepository repository;
+    private Collection<ListItemModel> data;
 
     @Inject
     public MoveProductToCart(ListItemsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mRepository = repository;
+        this.repository = repository;
     }
 
     public void setData(Collection<ListItemModel> data) {
-        this.mData = data;
+        this.data = data;
     }
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
         return Observable.fromCallable(() -> {
-            for (ListItemModel item : mData) {
+            for (ListItemModel item : data) {
                 item.setStatus(!item.getStatus());
             }
-            mRepository.update(mData);
+            repository.update(data);
             return true;
         });
     }

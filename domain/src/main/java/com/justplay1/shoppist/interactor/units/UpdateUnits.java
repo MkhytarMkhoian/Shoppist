@@ -33,24 +33,24 @@ import rx.Observable;
  */
 public class UpdateUnits extends UseCase<Boolean> {
 
-    private final UnitsRepository mRepository;
-    private Collection<UnitModel> mData;
+    private final UnitsRepository repository;
+    private Collection<UnitModel> data;
 
     @Inject
     public UpdateUnits(UnitsRepository repository, ThreadExecutor threadExecutor,
                        PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mRepository = repository;
+        this.repository = repository;
     }
 
     public void setData(Collection<UnitModel> data) {
-        this.mData = data;
+        this.data = data;
     }
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
         return Observable.fromCallable(() -> {
-            mRepository.update(mData);
+            repository.update(data);
             return true;
         });
     }

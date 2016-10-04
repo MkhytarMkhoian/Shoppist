@@ -23,7 +23,6 @@ import com.justplay1.shoppist.models.ProductModel;
 import com.justplay1.shoppist.repository.GoodsRepository;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -34,23 +33,23 @@ import rx.Observable;
  */
 public class AddGoods extends UseCase<Boolean> {
 
-    private final GoodsRepository mRepository;
-    private Collection<ProductModel> mData;
+    private final GoodsRepository repository;
+    private Collection<ProductModel> data;
 
     @Inject
     public AddGoods(GoodsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mRepository = repository;
+        this.repository = repository;
     }
 
     public void setData(Collection<ProductModel> data) {
-        this.mData = data;
+        this.data = data;
     }
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
         return Observable.fromCallable(() -> {
-            mRepository.save(mData);
+            repository.save(data);
             return true;
         });
     }

@@ -22,7 +22,6 @@ import com.justplay1.shoppist.interactor.UseCase;
 import com.justplay1.shoppist.models.CurrencyModel;
 import com.justplay1.shoppist.repository.CurrencyRepository;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -34,16 +33,16 @@ import rx.Observable;
  */
 public class GetCurrencyList extends UseCase<List<CurrencyModel>> {
 
-    private final CurrencyRepository mRepository;
+    private final CurrencyRepository repository;
 
     @Inject
     public GetCurrencyList(CurrencyRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mRepository = repository;
+        this.repository = repository;
     }
 
     @Override
     protected Observable<List<CurrencyModel>> buildUseCaseObservable() {
-        return mRepository.getItems();
+        return repository.getItems();
     }
 }

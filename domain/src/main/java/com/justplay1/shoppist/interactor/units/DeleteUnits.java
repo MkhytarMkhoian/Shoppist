@@ -33,24 +33,24 @@ import rx.Observable;
  */
 public class DeleteUnits extends UseCase<Boolean> {
 
-    private final UnitsRepository mRepository;
-    private Collection<UnitModel> mData;
+    private final UnitsRepository repository;
+    private Collection<UnitModel> data;
 
     @Inject
     public DeleteUnits(UnitsRepository repository,
                        ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mRepository = repository;
+        this.repository = repository;
     }
 
     public void setData(Collection<UnitModel> data) {
-        this.mData = data;
+        this.data = data;
     }
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
         return Observable.fromCallable(() -> {
-            mRepository.delete(mData);
+            repository.delete(data);
             return true;
         });
     }

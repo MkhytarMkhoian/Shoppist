@@ -31,21 +31,21 @@ import rx.Observable;
  */
 public class GetCategory extends UseCase<CategoryModel> {
 
-    private final CategoryRepository mRepository;
-    private String mId;
+    private final CategoryRepository repository;
+    private String id;
 
     @Inject
     public GetCategory(CategoryRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mRepository = repository;
+        this.repository = repository;
     }
 
     public void setId(String id) {
-        this.mId = id;
+        this.id = id;
     }
 
     @Override
     protected Observable<CategoryModel> buildUseCaseObservable() {
-        return mRepository.getItem(mId);
+        return repository.getItem(id);
     }
 }

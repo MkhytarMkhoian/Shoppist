@@ -33,24 +33,24 @@ import rx.Observable;
  */
 public class AddListItems extends UseCase<Boolean> {
 
-    private final ListItemsRepository mRepository;
-    private Collection<ListItemModel> mData;
+    private final ListItemsRepository repository;
+    private Collection<ListItemModel> data;
 
     @Inject
     public AddListItems(ListItemsRepository repository,
                         ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mRepository = repository;
+        this.repository = repository;
     }
 
     public void setData(Collection<ListItemModel> items) {
-        this.mData = items;
+        this.data = items;
     }
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
         return Observable.fromCallable(() -> {
-            mRepository.save(mData);
+            repository.save(data);
             return true;
         });
     }
