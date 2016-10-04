@@ -32,15 +32,15 @@ import javax.inject.Singleton;
 @Singleton
 public class ListItemsDAODataMapper {
 
-    private final CategoryDAODataMapper mCategoryDAODataMapper;
-    private final CurrencyDAODataMapper mCurrencyDAODataMapper;
-    private final UnitsDAODataMapper mUnitsDAODataMapper;
+    private final CategoryDAODataMapper categoryDAODataMapper;
+    private final CurrencyDAODataMapper currencyDAODataMapper;
+    private final UnitsDAODataMapper unitsDAODataMapper;
 
     @Inject
     public ListItemsDAODataMapper(CategoryDAODataMapper categoryDAODataMapper, CurrencyDAODataMapper currencyDAODataMapper, UnitsDAODataMapper unitsDAODataMapper) {
-        this.mCategoryDAODataMapper = categoryDAODataMapper;
-        this.mCurrencyDAODataMapper = currencyDAODataMapper;
-        this.mUnitsDAODataMapper = unitsDAODataMapper;
+        this.categoryDAODataMapper = categoryDAODataMapper;
+        this.currencyDAODataMapper = currencyDAODataMapper;
+        this.unitsDAODataMapper = unitsDAODataMapper;
     }
 
     public ListItemModel transformFromDAO(ListItemDAO itemDAO) {
@@ -54,9 +54,9 @@ public class ListItemsDAODataMapper {
             item.setPrice(itemDAO.getPrice());
             item.setPriority(itemDAO.getPriority());
             item.setStatus(itemDAO.getStatus());
-            item.setCategory(mCategoryDAODataMapper.transformFromDAO(itemDAO.getCategory()));
-            item.setCurrency(mCurrencyDAODataMapper.transformFromDAO(itemDAO.getCurrency()));
-            item.setUnit(mUnitsDAODataMapper.transformFromDAO(itemDAO.getUnit()));
+            item.setCategory(categoryDAODataMapper.transformFromDAO(itemDAO.getCategory()));
+            item.setCurrency(currencyDAODataMapper.transformFromDAO(itemDAO.getCurrency()));
+            item.setUnit(unitsDAODataMapper.transformFromDAO(itemDAO.getUnit()));
             item.setQuantity(itemDAO.getQuantity());
             item.setTimeCreated(itemDAO.getTimeCreated());
         }
@@ -83,13 +83,13 @@ public class ListItemsDAODataMapper {
                     listItem.getParentListId(),
                     listItem.getNote(),
                     listItem.getStatus(),
-                    mCategoryDAODataMapper.transformToDAO(listItem.getCategory()),
+                    categoryDAODataMapper.transformToDAO(listItem.getCategory()),
                     listItem.getPriority(),
                     listItem.getPrice(),
                     listItem.getQuantity(),
-                    mUnitsDAODataMapper.transformToDAO(listItem.getUnit()),
+                    unitsDAODataMapper.transformToDAO(listItem.getUnit()),
                     listItem.getTimeCreated(),
-                    mCurrencyDAODataMapper.transformToDAO(listItem.getCurrency()));
+                    currencyDAODataMapper.transformToDAO(listItem.getCurrency()));
         }
         return item;
     }

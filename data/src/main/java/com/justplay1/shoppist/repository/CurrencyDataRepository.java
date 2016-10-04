@@ -34,44 +34,44 @@ import rx.Observable;
 @Singleton
 public class CurrencyDataRepository implements CurrencyRepository {
 
-    private final CurrencyDAODataMapper mDataMapper;
-    private final LocalCurrencyDataStore mDataStore;
+    private final CurrencyDAODataMapper dataMapper;
+    private final LocalCurrencyDataStore dataStore;
 
     @Inject
     public CurrencyDataRepository(CurrencyDAODataMapper dataMapper, LocalCurrencyDataStore store) {
-        mDataMapper = dataMapper;
-        mDataStore = store;
+        this.dataMapper = dataMapper;
+        this.dataStore = store;
     }
 
     @Override
     public Observable<List<CurrencyModel>> getItems() {
-        return mDataStore.getItems()
-                .map(mDataMapper::transformFromDAO);
+        return dataStore.getItems()
+                .map(dataMapper::transformFromDAO);
     }
 
     @Override
     public Observable<CurrencyModel> getItem(String id) {
-        return mDataStore.getItem(id)
-                .map(mDataMapper::transformFromDAO);
+        return dataStore.getItem(id)
+                .map(dataMapper::transformFromDAO);
     }
 
     @Override
     public void save(Collection<CurrencyModel> data) {
-        mDataStore.save(mDataMapper.transformToDAO(data));
+        dataStore.save(dataMapper.transformToDAO(data));
     }
 
     @Override
     public void delete(Collection<CurrencyModel> data) {
-        mDataStore.delete(mDataMapper.transformToDAO(data));
+        dataStore.delete(dataMapper.transformToDAO(data));
     }
 
     @Override
     public void update(Collection<CurrencyModel> data) {
-        mDataStore.update(mDataMapper.transformToDAO(data));
+        dataStore.update(dataMapper.transformToDAO(data));
     }
 
     @Override
     public int clear() {
-        return mDataStore.clear();
+        return dataStore.clear();
     }
 }

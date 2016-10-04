@@ -34,43 +34,43 @@ import rx.Observable;
 @Singleton
 public class ListDataRepository implements ListRepository {
 
-    private final ListDAODataMapper mDataMapper;
-    private final LocalListDataStore mDataStore;
+    private final ListDAODataMapper dataMapper;
+    private final LocalListDataStore dataStore;
 
     @Inject
     public ListDataRepository(ListDAODataMapper dataMapper, LocalListDataStore store) {
-        mDataMapper = dataMapper;
-        mDataStore = store;
+        this.dataMapper = dataMapper;
+        this.dataStore = store;
     }
 
     @Override
     public void deleteListItems(String id) {
-        mDataStore.deleteListItems(id);
+        dataStore.deleteListItems(id);
     }
 
     @Override
     public Observable<List<ListModel>> getItems() {
-        return mDataStore.getItems()
-                .map(mDataMapper::transformFromDAO);
+        return dataStore.getItems()
+                .map(dataMapper::transformFromDAO);
     }
 
     @Override
     public void save(Collection<ListModel> data) {
-        mDataStore.save(mDataMapper.transformToDAO(data));
+        dataStore.save(dataMapper.transformToDAO(data));
     }
 
     @Override
     public void delete(Collection<ListModel> data) {
-        mDataStore.delete(mDataMapper.transformToDAO(data));
+        dataStore.delete(dataMapper.transformToDAO(data));
     }
 
     @Override
     public void update(Collection<ListModel> data) {
-        mDataStore.update(mDataMapper.transformToDAO(data));
+        dataStore.update(dataMapper.transformToDAO(data));
     }
 
     @Override
     public int clear() {
-        return mDataStore.clear();
+        return dataStore.clear();
     }
 }

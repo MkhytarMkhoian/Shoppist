@@ -25,5 +25,4 @@ import rx.Observable;
  */
 public interface LocalDataStore<T> extends LocalSetData<T>, LocalGetData<T> {
 
-    Observable<Map<String, T>> getDefaultData();
 }

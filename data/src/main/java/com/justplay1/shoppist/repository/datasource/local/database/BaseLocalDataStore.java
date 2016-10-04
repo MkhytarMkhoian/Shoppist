@@ -27,11 +27,11 @@ import rx.Observable;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseLocalDataStore<T> {
+abstract class BaseLocalDataStore<T> {
 
     protected BriteDatabase db;
 
-    public BaseLocalDataStore(BriteDatabase db) {
+    BaseLocalDataStore(BriteDatabase db) {
         this.db = db;
     }
 

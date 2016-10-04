@@ -58,17 +58,16 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
         return query + " WHERE " + selection;
     }
 
-    private Context mContext;
+    private Context context;
 
     @Inject
     public LocalGoodsDataStoreImpl(BriteDatabase db, Context context) {
         super(db);
-        this.mContext = context;
+        this.context = context;
     }
 
-    @Override
     public Observable<Map<String, ProductDAO>> getDefaultData() {
-        String[] products = mContext.getResources().getStringArray(R.array.products);
+        String[] products = context.getResources().getStringArray(R.array.products);
         Map<String, ProductDAO> newProducts = new HashMap<>(products.length);
 
         for (String item : products) {

@@ -34,44 +34,44 @@ import rx.Observable;
 @Singleton
 public class GoodsDataRepository implements GoodsRepository {
 
-    private final LocalGoodsDataStore mDataStore;
-    private final GoodsDAODataMapper mDataMapper;
+    private final LocalGoodsDataStore dataStore;
+    private final GoodsDAODataMapper dataMapper;
 
     @Inject
     public GoodsDataRepository(LocalGoodsDataStore dataStore, GoodsDAODataMapper dataMapper) {
-        this.mDataStore = dataStore;
-        this.mDataMapper = dataMapper;
+        this.dataStore = dataStore;
+        this.dataMapper = dataMapper;
     }
 
     @Override
     public Observable<List<ProductModel>> getItems() {
-        return mDataStore.getItems()
-                .map(mDataMapper::transformFromDAO);
+        return dataStore.getItems()
+                .map(dataMapper::transformFromDAO);
     }
 
     @Override
     public Observable<ProductModel> getItem(String id) {
-        return mDataStore.getItem(id)
-                .map(mDataMapper::transformFromDAO);
+        return dataStore.getItem(id)
+                .map(dataMapper::transformFromDAO);
     }
 
     @Override
     public void save(Collection<ProductModel> data) {
-        mDataStore.save(mDataMapper.transformToDAO(data));
+        dataStore.save(dataMapper.transformToDAO(data));
     }
 
     @Override
     public void delete(Collection<ProductModel> data) {
-        mDataStore.delete(mDataMapper.transformToDAO(data));
+        dataStore.delete(dataMapper.transformToDAO(data));
     }
 
     @Override
     public void update(Collection<ProductModel> data) {
-        mDataStore.update(mDataMapper.transformToDAO(data));
+        dataStore.update(dataMapper.transformToDAO(data));
     }
 
     @Override
     public int clear() {
-        return mDataStore.clear();
+        return dataStore.clear();
     }
 }

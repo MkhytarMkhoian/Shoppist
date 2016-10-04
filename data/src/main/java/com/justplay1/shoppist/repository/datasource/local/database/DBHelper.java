@@ -108,12 +108,12 @@ public class DBHelper extends SQLiteOpenHelper {
             ListDAO.TIME_CREATED + " integer " +
             ");";
 
-    private Context mContext;
+    private Context context;
 
     @Inject
     public DBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
-        mContext = context;
+        this.context = context;
     }
 
     @Override
@@ -131,8 +131,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private void fillDatabase(SQLiteDatabase db) {
-        String[] categories = mContext.getResources().getStringArray(R.array.categories);
-        int[] categoriesColors = mContext.getResources().getIntArray(R.array.categories_colors);
+        String[] categories = context.getResources().getStringArray(R.array.categories);
+        int[] categoriesColors = context.getResources().getIntArray(R.array.categories_colors);
 
         for (int i = 0; i < categories.length; i++) {
             String[] categoriesName = categories[i].split(" ! ");
@@ -143,7 +143,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     .build());
         }
 
-        String[] units = mContext.getResources().getStringArray(R.array.units);
+        String[] units = context.getResources().getStringArray(R.array.units);
         for (String item : units) {
             String[] unit = item.split("/");
             String[] unitId = unit[1].split(" ! ");
@@ -154,7 +154,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     .build());
         }
 
-        String[] currency = mContext.getResources().getStringArray(R.array.currency);
+        String[] currency = context.getResources().getStringArray(R.array.currency);
         for (String c : currency) {
             String[] currencyId = c.split(" ! ");
             db.insert(CurrencyDAO.TABLE, null, new CurrencyDAO.Builder()
@@ -163,7 +163,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     .build());
         }
 
-        String[] products = mContext.getResources().getStringArray(R.array.products);
+        String[] products = context.getResources().getStringArray(R.array.products);
         for (String product : products) {
             String[] productsName = product.split(" ! ");
             db.insert(ProductDAO.TABLE, null, new ProductDAO.Builder()
@@ -248,7 +248,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             Log.d("ALTER TABLE", ProductDAO.UNIT_ID + " column already exists");
                         }
 
-                        String[] units = mContext.getResources().getStringArray(R.array.units);
+                        String[] units = context.getResources().getStringArray(R.array.units);
                         String[] unit = units[0].split("/");
                         String[] unitId = unit[1].split(" ! ");
                         db.insert(UnitDAO.TABLE, null, new UnitDAO.Builder()
@@ -257,7 +257,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                 .shortName(unitId[0])
                                 .build());
 
-                        String[] currency = mContext.getResources().getStringArray(R.array.currency);
+                        String[] currency = context.getResources().getStringArray(R.array.currency);
                         String[] currencyId = currency[0].split(" ! ");
                         db.insert(CurrencyDAO.TABLE, null, new CurrencyDAO.Builder()
                                 .id(currencyId[1])

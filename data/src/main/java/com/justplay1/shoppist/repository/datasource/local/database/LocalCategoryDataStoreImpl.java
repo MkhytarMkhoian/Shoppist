@@ -51,18 +51,17 @@ public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> 
                 " WHERE " + selection;
     }
 
-    private final Context mContext;
+    private final Context context;
 
     @Inject
     public LocalCategoryDataStoreImpl(BriteDatabase db, Context context) {
         super(db);
-        this.mContext = context;
+        this.context = context;
     }
 
-    @Override
     public Observable<Map<String, CategoryDAO>> getDefaultData() {
-        String[] categories = mContext.getResources().getStringArray(R.array.categories);
-        int[] categoriesColors = mContext.getResources().getIntArray(R.array.categories_colors);
+        String[] categories = context.getResources().getStringArray(R.array.categories);
+        int[] categoriesColors = context.getResources().getIntArray(R.array.categories_colors);
         String[] categoriesName;
 
         Map<String, CategoryDAO> categoryList = new HashMap<>(categories.length);

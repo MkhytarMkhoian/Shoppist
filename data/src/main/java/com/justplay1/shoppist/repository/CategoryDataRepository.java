@@ -34,44 +34,44 @@ import rx.Observable;
 @Singleton
 public class CategoryDataRepository implements CategoryRepository {
 
-    private final CategoryDAODataMapper mDataMapper;
-    private final LocalCategoryDataStore mDataStore;
+    private final CategoryDAODataMapper dataMapper;
+    private final LocalCategoryDataStore dataStore;
 
     @Inject
     public CategoryDataRepository(CategoryDAODataMapper dataMapper, LocalCategoryDataStore store) {
-        mDataMapper = dataMapper;
-        mDataStore = store;
+        this.dataMapper = dataMapper;
+        this.dataStore = store;
     }
 
     @Override
     public Observable<List<CategoryModel>> getItems() {
-        return mDataStore.getItems()
-                .map(mDataMapper::transformFromDAO);
+        return dataStore.getItems()
+                .map(dataMapper::transformFromDAO);
     }
 
     @Override
     public Observable<CategoryModel> getItem(String id) {
-        return mDataStore.getItem(id)
-                .map(mDataMapper::transformFromDAO);
+        return dataStore.getItem(id)
+                .map(dataMapper::transformFromDAO);
     }
 
     @Override
     public void save(Collection<CategoryModel> data) {
-        mDataStore.save(mDataMapper.transformToDAO(data));
+        dataStore.save(dataMapper.transformToDAO(data));
     }
 
     @Override
     public void delete(Collection<CategoryModel> data) {
-        mDataStore.delete(mDataMapper.transformToDAO(data));
+        dataStore.delete(dataMapper.transformToDAO(data));
     }
 
     @Override
     public void update(Collection<CategoryModel> data) {
-        mDataStore.update(mDataMapper.transformToDAO(data));
+        dataStore.update(dataMapper.transformToDAO(data));
     }
 
     @Override
     public int clear() {
-        return mDataStore.clear();
+        return dataStore.clear();
     }
 }

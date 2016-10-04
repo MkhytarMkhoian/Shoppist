@@ -51,17 +51,16 @@ public class LocalCurrencyDataStoreImpl extends BaseLocalDataStore<CurrencyDAO> 
                 " WHERE " + selection;
     }
 
-    private Context mContext;
+    private Context context;
 
     @Inject
     public LocalCurrencyDataStoreImpl(BriteDatabase db, Context context) {
         super(db);
-        this.mContext = context;
+        this.context = context;
     }
 
-    @Override
     public Observable<Map<String, CurrencyDAO>> getDefaultData() {
-        String[] currency = mContext.getResources().getStringArray(R.array.currency);
+        String[] currency = context.getResources().getStringArray(R.array.currency);
         Map<String, CurrencyDAO> currencyList = new HashMap<>(currency.length);
         for (String c : currency) {
             String[] currencyId = c.split(" ! ");

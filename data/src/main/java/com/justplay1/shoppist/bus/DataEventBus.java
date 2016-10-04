@@ -28,7 +28,7 @@ import rx.subjects.PublishSubject;
 @Singleton
 public class DataEventBus {
 
-    private final PublishSubject<Object> mBusSubject;
+    private final PublishSubject<Object> busSubject;
 
     private static DataEventBus instance;
 
@@ -41,21 +41,21 @@ public class DataEventBus {
 
     @Inject
     public DataEventBus() {
-        mBusSubject = PublishSubject.create();
+        busSubject = PublishSubject.create();
     }
 
     /**
      * Posts an object (usually an Event) to the bus
      */
     public void post(Object event) {
-        mBusSubject.onNext(event);
+        busSubject.onNext(event);
     }
 
     /**
      * Observable that will emmit everything posted to the event bus.
      */
     public Observable<Object> observable() {
-        return mBusSubject;
+        return busSubject;
     }
 
     /**
@@ -63,7 +63,7 @@ public class DataEventBus {
      * Use this if you only want to subscribe to one type of events.
      */
     public <T> Observable<T> filteredObservable(final Class<T> eventClass) {
-        return mBusSubject.filter(eventClass::isInstance)
+        return busSubject.filter(eventClass::isInstance)
                 .map(event -> (T) event);
     }
 }

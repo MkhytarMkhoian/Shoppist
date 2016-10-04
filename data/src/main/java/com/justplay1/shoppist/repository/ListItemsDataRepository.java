@@ -34,50 +34,50 @@ import rx.Observable;
 @Singleton
 public class ListItemsDataRepository implements ListItemsRepository {
 
-    private final ListItemsDAODataMapper mDataMapper;
-    private final LocalListItemsDataStore mDataStore;
+    private final ListItemsDAODataMapper dataMapper;
+    private final LocalListItemsDataStore dataStore;
 
     @Inject
     public ListItemsDataRepository(ListItemsDAODataMapper dataMapper, LocalListItemsDataStore store) {
-        mDataMapper = dataMapper;
-        mDataStore = store;
+        this.dataMapper = dataMapper;
+        this.dataStore = store;
     }
 
     @Override
     public Observable<List<ListItemModel>> getItems(String parentId) {
-        return mDataStore.getItems(parentId)
-                .map(mDataMapper::transformFromDAO);
+        return dataStore.getItems(parentId)
+                .map(dataMapper::transformFromDAO);
     }
 
     @Override
     public Observable<List<ListItemModel>> getItems() {
-        return mDataStore.getItems()
-                .map(mDataMapper::transformFromDAO);
+        return dataStore.getItems()
+                .map(dataMapper::transformFromDAO);
     }
 
     @Override
     public Observable<ListItemModel> getItem(String id) {
-        return mDataStore.getItem(id)
-                .map(mDataMapper::transformFromDAO);
+        return dataStore.getItem(id)
+                .map(dataMapper::transformFromDAO);
     }
 
     @Override
     public void save(Collection<ListItemModel> data) {
-        mDataStore.save(mDataMapper.transformToDAO(data));
+        dataStore.save(dataMapper.transformToDAO(data));
     }
 
     @Override
     public void delete(Collection<ListItemModel> data) {
-        mDataStore.delete(mDataMapper.transformToDAO(data));
+        dataStore.delete(dataMapper.transformToDAO(data));
     }
 
     @Override
     public void update(Collection<ListItemModel> data) {
-        mDataStore.update(mDataMapper.transformToDAO(data));
+        dataStore.update(dataMapper.transformToDAO(data));
     }
 
     @Override
     public int clear() {
-        return mDataStore.clear();
+        return dataStore.clear();
     }
 }

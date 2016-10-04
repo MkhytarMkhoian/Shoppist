@@ -32,13 +32,13 @@ import javax.inject.Singleton;
 @Singleton
 public class GoodsDAODataMapper {
 
-    private final CategoryDAODataMapper mCategoryDAODataMapper;
-    private final UnitsDAODataMapper mUnitsDAODataMapper;
+    private final CategoryDAODataMapper categoryDAODataMapper;
+    private final UnitsDAODataMapper unitsDAODataMapper;
 
     @Inject
     public GoodsDAODataMapper(UnitsDAODataMapper unitsDAODataMapper, CategoryDAODataMapper categoryDAODataMapper) {
-        this.mUnitsDAODataMapper = unitsDAODataMapper;
-        this.mCategoryDAODataMapper = categoryDAODataMapper;
+        this.unitsDAODataMapper = unitsDAODataMapper;
+        this.categoryDAODataMapper = categoryDAODataMapper;
     }
 
     public ProductModel transformFromDAO(ProductDAO itemEntity) {
@@ -47,8 +47,8 @@ public class GoodsDAODataMapper {
             item = new ProductModel();
             item.setId(itemEntity.getId());
             item.setName(itemEntity.getName());
-            item.setCategory(mCategoryDAODataMapper.transformFromDAO(itemEntity.getCategory()));
-            item.setUnit(mUnitsDAODataMapper.transformFromDAO(itemEntity.getUnit()));
+            item.setCategory(categoryDAODataMapper.transformFromDAO(itemEntity.getCategory()));
+            item.setUnit(unitsDAODataMapper.transformFromDAO(itemEntity.getUnit()));
             item.setTimeCreated(itemEntity.getTimeCreated());
             item.setCreateByUser(itemEntity.isCreateByUser());
         }
@@ -72,10 +72,10 @@ public class GoodsDAODataMapper {
         if (product != null) {
             item = new ProductDAO(product.getId(),
                     product.getName(),
-                    mCategoryDAODataMapper.transformToDAO(product.getCategory()),
+                    categoryDAODataMapper.transformToDAO(product.getCategory()),
                     product.isCreateByUser(),
                     product.getTimeCreated(),
-                    mUnitsDAODataMapper.transformToDAO(product.getUnit()));
+                    unitsDAODataMapper.transformToDAO(product.getUnit()));
         }
         return item;
     }

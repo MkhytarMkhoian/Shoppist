@@ -51,17 +51,16 @@ public class LocalUnitsDataStoreImpl extends BaseLocalDataStore<UnitDAO> impleme
                 " WHERE " + selection;
     }
 
-    private Context mContext;
+    private Context context;
 
     @Inject
     public LocalUnitsDataStoreImpl(BriteDatabase db, Context context) {
         super(db);
-        this.mContext = context;
+        this.context = context;
     }
 
-    @Override
     public Observable<Map<String, UnitDAO>> getDefaultData() {
-        String[] units = mContext.getResources().getStringArray(R.array.units);
+        String[] units = context.getResources().getStringArray(R.array.units);
         Map<String, UnitDAO> unitList = new HashMap<>(units.length);
         for (String item : units) {
             String[] unit = item.split("/");

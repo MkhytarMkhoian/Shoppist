@@ -34,44 +34,44 @@ import rx.Observable;
 @Singleton
 public class UnitsDataRepository implements UnitsRepository {
 
-    private final UnitsDAODataMapper mDataMapper;
-    private final LocalUnitsDataStore mDataStore;
+    private final UnitsDAODataMapper dataMapper;
+    private final LocalUnitsDataStore dataStore;
 
     @Inject
     public UnitsDataRepository(UnitsDAODataMapper dataMapper, LocalUnitsDataStore store) {
-        mDataMapper = dataMapper;
-        mDataStore = store;
+        this.dataMapper = dataMapper;
+        this.dataStore = store;
     }
 
     @Override
     public Observable<List<UnitModel>> getItems() {
-        return mDataStore.getItems()
-                .map(mDataMapper::transformFromDAO);
+        return dataStore.getItems()
+                .map(dataMapper::transformFromDAO);
     }
 
     @Override
     public Observable<UnitModel> getItem(String id) {
-        return mDataStore.getItem(id)
-                .map(mDataMapper::transformFromDAO);
+        return dataStore.getItem(id)
+                .map(dataMapper::transformFromDAO);
     }
 
     @Override
     public void save(Collection<UnitModel> data) {
-        mDataStore.save(mDataMapper.transformToDAO(data));
+        dataStore.save(dataMapper.transformToDAO(data));
     }
 
     @Override
     public void delete(Collection<UnitModel> data) {
-        mDataStore.delete(mDataMapper.transformToDAO(data));
+        dataStore.delete(dataMapper.transformToDAO(data));
     }
 
     @Override
     public void update(Collection<UnitModel> data) {
-        mDataStore.update(mDataMapper.transformToDAO(data));
+        dataStore.update(dataMapper.transformToDAO(data));
     }
 
     @Override
     public int clear() {
-        return mDataStore.clear();
+        return dataStore.clear();
     }
 }
