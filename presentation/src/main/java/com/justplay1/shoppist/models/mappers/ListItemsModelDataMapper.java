@@ -32,15 +32,15 @@ import javax.inject.Inject;
 @NonConfigurationScope
 public class ListItemsModelDataMapper {
 
-    private final CategoryModelDataMapper mCategoryDataMapper;
-    private final CurrencyModelDataMapper mCurrencyDataMapper;
-    private final UnitsDataModelMapper mUnitsDataMapper;
+    private final CategoryModelDataMapper categoryModelDataMapper;
+    private final CurrencyModelDataMapper currencyModelDataMapper;
+    private final UnitsDataModelMapper unitsDataModelMapper;
 
     @Inject
     public ListItemsModelDataMapper(CategoryModelDataMapper categoryDataMapper, CurrencyModelDataMapper currencyDataMapper, UnitsDataModelMapper unitsDataMapper) {
-        this.mCategoryDataMapper = categoryDataMapper;
-        this.mCurrencyDataMapper = currencyDataMapper;
-        this.mUnitsDataMapper = unitsDataMapper;
+        this.categoryModelDataMapper = categoryDataMapper;
+        this.currencyModelDataMapper = currencyDataMapper;
+        this.unitsDataModelMapper = unitsDataMapper;
     }
 
     @SuppressWarnings("ResourceType")
@@ -55,9 +55,9 @@ public class ListItemsModelDataMapper {
             itemModel.setPrice(item.getPrice());
             itemModel.setPriority(item.getPriority());
             itemModel.setStatus(item.getStatus());
-            itemModel.setCategory(mCategoryDataMapper.transformToViewModel(item.getCategory()));
-            itemModel.setCurrency(mCurrencyDataMapper.transformToViewModel(item.getCurrency()));
-            itemModel.setUnit(mUnitsDataMapper.transformToViewModel(item.getUnit()));
+            itemModel.setCategory(categoryModelDataMapper.transformToViewModel(item.getCategory()));
+            itemModel.setCurrency(currencyModelDataMapper.transformToViewModel(item.getCurrency()));
+            itemModel.setUnit(unitsDataModelMapper.transformToViewModel(item.getUnit()));
             itemModel.setQuantity(item.getQuantity());
             itemModel.setTimeCreated(item.getTimeCreated());
         }
@@ -87,9 +87,9 @@ public class ListItemsModelDataMapper {
             item.setPrice(itemModel.getPrice());
             item.setPriority(itemModel.getPriority());
             item.setStatus(itemModel.getStatus());
-            item.setCategory(mCategoryDataMapper.transform(itemModel.getCategory()));
-            item.setCurrency(mCurrencyDataMapper.transform(itemModel.getCurrency()));
-            item.setUnit(mUnitsDataMapper.transform(itemModel.getUnit()));
+            item.setCategory(categoryModelDataMapper.transform(itemModel.getCategory()));
+            item.setCurrency(currencyModelDataMapper.transform(itemModel.getCurrency()));
+            item.setUnit(unitsDataModelMapper.transform(itemModel.getUnit()));
             item.setQuantity(itemModel.getQuantity());
             item.setTimeCreated(itemModel.getTimeCreated());
         }

@@ -32,13 +32,13 @@ import javax.inject.Inject;
 @NonConfigurationScope
 public class GoodsModelDataMapper {
 
-    private final CategoryModelDataMapper mCategoryDataMapper;
-    private final UnitsDataModelMapper mUnitsDataMapper;
+    private final CategoryModelDataMapper categoryModelDataMapper;
+    private final UnitsDataModelMapper unitsDataModelMapper;
 
     @Inject
     public GoodsModelDataMapper(UnitsDataModelMapper unitsDataMapper, CategoryModelDataMapper categoryDataMapper) {
-        this.mUnitsDataMapper = unitsDataMapper;
-        this.mCategoryDataMapper = categoryDataMapper;
+        this.unitsDataModelMapper = unitsDataMapper;
+        this.categoryModelDataMapper = categoryDataMapper;
     }
 
     public ProductViewModel transformToViewModel(ProductModel product) {
@@ -47,8 +47,8 @@ public class GoodsModelDataMapper {
             productModel = new ProductViewModel();
             productModel.setId(product.getId());
             productModel.setName(product.getName());
-            productModel.setCategory(mCategoryDataMapper.transformToViewModel(product.getCategory()));
-            productModel.setUnit(mUnitsDataMapper.transformToViewModel(product.getUnit()));
+            productModel.setCategory(categoryModelDataMapper.transformToViewModel(product.getCategory()));
+            productModel.setUnit(unitsDataModelMapper.transformToViewModel(product.getUnit()));
             productModel.setTimeCreated(product.getTimeCreated());
             productModel.setCreateByUser(product.isCreateByUser());
         }
@@ -73,8 +73,8 @@ public class GoodsModelDataMapper {
             item = new ProductModel();
             item.setId(product.getId());
             item.setName(product.getName());
-            item.setCategory(mCategoryDataMapper.transform(product.getCategory()));
-            item.setUnit(mUnitsDataMapper.transform(product.getUnit()));
+            item.setCategory(categoryModelDataMapper.transform(product.getCategory()));
+            item.setUnit(unitsDataModelMapper.transform(product.getUnit()));
             item.setTimeCreated(product.getTimeCreated());
             item.setCreateByUser(product.isCreateByUser());
         }
