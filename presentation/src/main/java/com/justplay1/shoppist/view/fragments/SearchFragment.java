@@ -72,6 +72,8 @@ public class SearchFragment extends BaseFragment
         FloatingSearchView.OnSearchFocusChangedListener, FloatingSearchView.OnContainerTouchClickListener,
         ShoppistRecyclerView.OnItemClickListener<BaseViewHolder>, SearchView {
 
+    private static final int REQ_CODE_SPEECH_INPUT = 111;
+
     @Inject
     SearchPresenter mPresenter;
 
@@ -259,6 +261,7 @@ public class SearchFragment extends BaseFragment
     @Override
     public void fadeInSignal(@ColorInt int color) {
         mSearchView.fadeInSignal(color, animator -> {
+            if (mSearchView == null) return;
             int value = (int) animator.getAnimatedValue();
             mSearchView.setBackgroundColor(value);
             ((BaseActivity) getActivity()).setStatusBarColor(value);
@@ -266,7 +269,7 @@ public class SearchFragment extends BaseFragment
     }
 
     public void openVoiceSearch() {
-        startTextToSpeech(null, Const.REQ_CODE_SPEECH_INPUT);
+        startTextToSpeech(null, REQ_CODE_SPEECH_INPUT);
     }
 
     private void startTextToSpeech(String prompt, int requestCode) {
@@ -277,8 +280,7 @@ public class SearchFragment extends BaseFragment
         try {
             startActivityForResult(intent, requestCode);
         } catch (ActivityNotFoundException a) {
-            Toast.makeText(getContext(), getString(R.string.recognition_not_present),
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.recognition_not_present), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -301,14 +303,11 @@ public class SearchFragment extends BaseFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case Const.REQ_CODE_SPEECH_INPUT: {
-                if (resultCode == Activity.RESULT_OK && null != data) {
-                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    mSearchView.setActivated(true);
-                    mSearchView.setText(result.get(0));
-                }
-                break;
+        if (requestCode == REQ_CODE_SPEECH_INPUT) {
+            if (resultCode == Activity.RESULT_OK && null != data) {
+                ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                mSearchView.setActivated(true);
+                mSearchView.setText(result.get(0));
             }
         }
     }
