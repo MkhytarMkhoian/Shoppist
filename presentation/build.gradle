@@ -57,7 +57,8 @@ android {
         abortOnError false
         ignoreWarnings true
         disable 'InvalidPackage'            //Some libraries have issues with this.
-        disable 'OldTargetApi'              //Lint gives this warning but SDK 20 would be Android L Beta.
+        disable 'OldTargetApi'
+        //Lint gives this warning but SDK 20 would be Android L Beta.
         disable 'IconDensities'             //For testing purpose. This is safe to remove.
         disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
         disable "MissingTranslation"
@@ -96,22 +97,20 @@ dependencies {
     compile presentationDependencies.calligraphy
     compile presentationDependencies.butterKnife
 
-    compile (presentationDependencies.advRecyclerView){
+    compile(presentationDependencies.advRecyclerView) {
         transitive = true
         exclude module: 'appcompat-v7'
         exclude module: 'recyclerview-v7'
     }
-    compile (presentationDependencies.materialPreference){
+    compile(presentationDependencies.materialPreference) {
         exclude module: 'appcompat-v7'
     }
-    compile (presentationDependencies.materialEditText){
+    compile(presentationDependencies.materialEditText) {
         exclude module: 'appcompat-v7'
     }
-    compile (presentationDependencies.materialDateTimePicker){
+    compile(presentationDependencies.materialDateTimePicker) {
         exclude module: 'appcompat-v7'
     }
-
-    compile 'com.jakewharton.timber:timber:2.7.1'
 
     androidTestCompile presentationTestDependencies.mockito
     androidTestCompile presentationTestDependencies.dexmaker

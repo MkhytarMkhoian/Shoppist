@@ -1,7 +1,8 @@
 # Shoppist
 
 Shoppist is a showcase of simple and functional shopping list. 
-It demonstrates how to implement Clean Architecture and MVP for presentation layer.
+It demonstrates how to implement Clean Architecture with MVP for presentation layer
+and how to presenters survive when configuration changes.
 
 ### Download the app
 
@@ -14,7 +15,7 @@ It demonstrates how to implement Clean Architecture and MVP for presentation lay
 Latest version
 ---
 
-- Version 1.2.5
+- Version 2.0
 
 
 
