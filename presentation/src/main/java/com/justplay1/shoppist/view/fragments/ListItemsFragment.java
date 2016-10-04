@@ -23,7 +23,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.justplay1.shoppist.R;
@@ -50,15 +49,13 @@ import javax.inject.Inject;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class ListItemsFragment extends BaseEDSListFragment
+public class ListItemsFragment extends BaseEDSListFragment<ListItemViewModel, ListItemAdapter>
         implements BaseGroupSwipeableItemAdapter.SwipeEventListener<ListItemViewModel>,
         ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, View.OnClickListener, View.OnLongClickListener,
         ListItemsView, ListItemAdapter.NoteClickListener {
 
     @Inject
     ListItemsPresenter mPresenter;
-
-    private ListItemAdapter mAdapter;
 
     public static ListItemsFragment newInstance(ListViewModel parentList) {
         Bundle args = new Bundle();
@@ -117,11 +114,6 @@ public class ListItemsFragment extends BaseEDSListFragment
     protected void initRecyclerView(View view, Bundle savedInstanceState) {
         super.initRecyclerView(view, savedInstanceState);
         mAdapter.setExpandableItemManager(mRecyclerViewExpandableItemManager);
-    }
-
-    @Override
-    protected RecyclerView.Adapter getAdapter() {
-        return mAdapter;
     }
 
     @Override

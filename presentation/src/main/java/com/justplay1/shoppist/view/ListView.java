@@ -30,7 +30,7 @@ public interface ListView extends LoadDataView, ContextView{
 
     void showData(List<Pair<HeaderViewModel, List<ListViewModel>>> data);
 
-    void showRateDialog();
+    void showMessageDialog();
 
     void share(String share);
 

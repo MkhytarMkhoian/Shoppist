@@ -56,7 +56,11 @@ public class GoodsActivity extends BaseListActivity
         createNewInjectorIfNeeded();
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
-        mFragment = createFragment();
+
+        mFragment = (GoodsFragment) getSupportFragmentManager().findFragmentByTag(GoodsFragment.class.getName());
+        if (mFragment == null) {
+            mFragment = createFragment();
+        }
         replaceFragment(R.id.container, mFragment, GoodsFragment.class.getName());
     }
 

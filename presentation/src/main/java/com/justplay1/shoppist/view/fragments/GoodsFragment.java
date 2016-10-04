@@ -25,7 +25,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
@@ -54,18 +53,14 @@ import javax.inject.Inject;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class GoodsFragment extends BaseExpandableListFragment
+public class GoodsFragment extends BaseExpandableListFragment<ProductViewModel, GoodsAdapter>
         implements ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, View.OnClickListener, GoodsView {
 
     @Inject
     GoodsPresenter mPresenter;
 
-    private GoodsAdapter mAdapter;
-
     public static GoodsFragment newInstance() {
-
         Bundle args = new Bundle();
-
         GoodsFragment fragment = new GoodsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -83,11 +78,6 @@ public class GoodsFragment extends BaseExpandableListFragment
         super.onDestroyView();
         mPresenter.detachView();
         mPresenter.detachRouter();
-    }
-
-    @Override
-    protected RecyclerView.Adapter getAdapter() {
-        return mAdapter;
     }
 
     @Override

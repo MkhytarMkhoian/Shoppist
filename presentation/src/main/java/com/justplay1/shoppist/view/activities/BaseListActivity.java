@@ -17,6 +17,7 @@
 package com.justplay1.shoppist.view.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.view.ActionMode;
@@ -31,6 +32,9 @@ import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionLis
  */
 public abstract class BaseListActivity extends BaseActivity
         implements ActionModeInteractionListener, ActionMode.Callback {
+
+    private static final String IS_ACTION_MODE_SHOWING = "is_action_mode_showing";
+    private static final String ACTION_MODE_TITLE = "action_mode_title";
 
     protected ActionMode mActionMode;
     protected boolean isActionModeShowing;
@@ -68,6 +72,26 @@ public abstract class BaseListActivity extends BaseActivity
             closeActionMode();
         } else {
             finishActivity(this);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(IS_ACTION_MODE_SHOWING, isActionModeShowing);
+        if (isActionModeShowing) {
+            outState.putInt(ACTION_MODE_TITLE, Integer.valueOf(mActionMode.getTitle().toString()));
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            isActionModeShowing = savedInstanceState.getBoolean(IS_ACTION_MODE_SHOWING);
+            if (isActionModeShowing) {
+                openActionMode(savedInstanceState.getInt(ACTION_MODE_TITLE, 0));
+            }
         }
     }
 

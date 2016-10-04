@@ -66,7 +66,10 @@ public class SearchActivity extends BaseActivity {
             }
         }
 
-        SearchFragment fragment = createFragment();
+        SearchFragment fragment = (SearchFragment) getSupportFragmentManager().findFragmentByTag(SearchFragment.class.getName());
+        if (fragment == null) {
+            fragment = createFragment();
+        }
         replaceFragment(R.id.container, fragment, SearchFragment.class.getName());
     }
 

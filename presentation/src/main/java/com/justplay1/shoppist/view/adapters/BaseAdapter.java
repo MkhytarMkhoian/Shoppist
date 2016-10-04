@@ -40,14 +40,14 @@ import java.util.Map;
  */
 public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    protected Context mContext;
-    protected ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> mItemClickListener;
+    Context mContext;
+    ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> mItemClickListener;
     private ActionModeInteractionListener mActionModeInteractionListener;
 
     protected RecyclerView mRecyclerView;
     private boolean deleteState = false;
     private int mCheckedCount = 0;
-    protected LinearLayoutManager mLinearLayoutManager;
+    LinearLayoutManager mLinearLayoutManager;
     private Map<String, Boolean> mCheckedItems;
 
     public BaseAdapter(Context context, ActionModeInteractionListener listener,
@@ -72,6 +72,10 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
 
     public int getCheckedItemsCount() {
         return mCheckedCount;
+    }
+
+    public void setCheckedItemsCount(int checkedCount) {
+        this.mCheckedCount = checkedCount;
     }
 
     private List<Checkable> findVisibleItems() {

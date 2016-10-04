@@ -32,6 +32,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.models.BaseViewModel;
+import com.justplay1.shoppist.view.adapters.BaseAdapter;
 import com.justplay1.shoppist.view.component.CustomProgressDialog;
 import com.justplay1.shoppist.view.component.EmptyView;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
@@ -43,7 +45,11 @@ import butterknife.ButterKnife;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseListFragment extends BaseFragment implements View.OnClickListener {
+public abstract class BaseListFragment<M extends BaseViewModel, T extends BaseAdapter<M>>
+        extends BaseFragment
+        implements View.OnClickListener {
+
+    private static final String CHECKED_ITEMS_COUNT = "checked_items_count";
 
     @Bind(android.R.id.empty)
     protected EmptyView mEmptyView;
@@ -56,6 +62,7 @@ public abstract class BaseListFragment extends BaseFragment implements View.OnCl
     protected LinearLayoutManager mLayoutManager;
     protected ActionModeInteractionListener mActionModeInteractionListener;
     protected AlertDialog mDialog;
+    protected T mAdapter;
 
     @LayoutRes
     protected abstract int getLayoutId();
@@ -91,6 +98,22 @@ public abstract class BaseListFragment extends BaseFragment implements View.OnCl
 
         mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
         mActionButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (savedInstanceState != null) {
+            mAdapter.setCheckedItemsCount(savedInstanceState.getInt(CHECKED_ITEMS_COUNT));
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mActionModeInteractionListener.isActionModeShowing()) {
+            outState.putInt(CHECKED_ITEMS_COUNT, mAdapter.getCheckedItemsCount());
+        }
     }
 
     protected void initRecyclerView(View view, Bundle savedInstanceState) {

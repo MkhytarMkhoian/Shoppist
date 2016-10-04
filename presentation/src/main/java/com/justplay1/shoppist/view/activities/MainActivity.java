@@ -63,7 +63,11 @@ public class MainActivity extends BaseListActivity
         createNewInjectorIfNeeded();
         setContentView(R.layout.activity_main);
         initToolbar();
-        mListFragment = ListFragment.newInstance();
+
+        mListFragment = (ListFragment) getSupportFragmentManager().findFragmentByTag(ListFragment.class.getName());
+        if (mListFragment == null) {
+            mListFragment = ListFragment.newInstance();
+        }
         replaceFragment(R.id.container, mListFragment, FRAGMENT_TAG);
     }
 

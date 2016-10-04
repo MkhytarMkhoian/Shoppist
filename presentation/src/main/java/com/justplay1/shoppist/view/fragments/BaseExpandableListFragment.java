@@ -23,18 +23,19 @@ import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
+import com.justplay1.shoppist.models.BaseViewModel;
+import com.justplay1.shoppist.view.adapters.BaseAdapter;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseExpandableListFragment extends BaseListFragment {
+public abstract class BaseExpandableListFragment<M extends BaseViewModel, T extends BaseAdapter<M>>
+        extends BaseListFragment<M, T> {
 
     protected static final String SAVED_STATE_EXPANDABLE_ITEM_MANAGER = "RecyclerViewExpandableItemManager";
 
     protected RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
     protected RecyclerView.Adapter mWrappedAdapter;
-
-    protected abstract RecyclerView.Adapter getAdapter();
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -51,11 +52,9 @@ public abstract class BaseExpandableListFragment extends BaseListFragment {
     @Override
     protected void initRecyclerView(View view, Bundle savedInstanceState) {
         super.initRecyclerView(view, savedInstanceState);
-
         final Parcelable eimSavedState = (savedInstanceState != null) ? savedInstanceState.getParcelable(SAVED_STATE_EXPANDABLE_ITEM_MANAGER) : null;
         mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
-
-        mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(getAdapter());
+        mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(mAdapter);
     }
 
     @Override

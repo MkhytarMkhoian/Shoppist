@@ -28,7 +28,7 @@ public interface Const {
     String SELECTED_COLOR = "selectedColor";
     String NAME = "name";
 
-    int REQ_CODE_SPEECH_INPUT = 111;
+
     int CONTEXT_QUICK_ADD_GOODS_TO_LIST = 222;
     int CONTEXT_QUICK_SEARCH_IN_GOODS_LIST = 333;
 }

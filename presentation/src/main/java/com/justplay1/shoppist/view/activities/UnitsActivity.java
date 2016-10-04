@@ -38,7 +38,10 @@ public class UnitsActivity extends BaseListActivity
         createNewInjectorIfNeeded();
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
-        mFragment = createFragment();
+        mFragment = (UnitFragment) getSupportFragmentManager().findFragmentByTag(UnitFragment.class.getName());
+        if (mFragment == null) {
+            mFragment = createFragment();
+        }
         replaceFragment(R.id.container, mFragment, UnitFragment.class.getName());
     }
 

@@ -64,7 +64,11 @@ public class ListItemActivity extends BaseListActivity
             mParentList = getIntent().getParcelableExtra(ListViewModel.class.getName());
         }
         initToolbar();
-        mFragment = createFragment();
+
+        mFragment = (ListItemsFragment) getSupportFragmentManager().findFragmentByTag(ListItemsFragment.class.getName());
+        if (mFragment == null) {
+            mFragment = createFragment();
+        }
         replaceFragment(R.id.container, mFragment, ListItemsFragment.class.getName());
     }
 

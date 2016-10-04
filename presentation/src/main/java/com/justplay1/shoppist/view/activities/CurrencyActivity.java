@@ -54,7 +54,11 @@ public class CurrencyActivity extends BaseListActivity
         createNewInjectorIfNeeded();
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
-        mFragment = createFragment();
+
+        mFragment = (CurrencyFragment) getSupportFragmentManager().findFragmentByTag(CurrencyFragment.class.getName());
+        if (mFragment == null) {
+            mFragment = createFragment();
+        }
         replaceFragment(R.id.container, mFragment, CurrencyFragment.class.getName());
     }
 

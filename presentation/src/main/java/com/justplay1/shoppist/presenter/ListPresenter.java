@@ -122,7 +122,7 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
 
     private void showRateDialog() {
         if (isViewAttached()) {
-            getView().showRateDialog();
+            getView().showMessageDialog();
         }
     }
 

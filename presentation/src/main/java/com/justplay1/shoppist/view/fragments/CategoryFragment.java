@@ -21,18 +21,14 @@ import javax.inject.Inject;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class CategoryFragment extends BaseListFragment
+public class CategoryFragment extends BaseListFragment<CategoryViewModel, CategoriesAdapter>
         implements CategoryView, ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, View.OnClickListener {
 
     @Inject
     CategoryPresenter mPresenter;
 
-    private CategoriesAdapter mAdapter;
-
     public static CategoryFragment newInstance() {
-
         Bundle args = new Bundle();
-
         CategoryFragment fragment = new CategoryFragment();
         fragment.setArguments(args);
         return fragment;
@@ -58,6 +54,7 @@ public class CategoryFragment extends BaseListFragment
 
     @Override
     protected void initAdapter() {
+        if (mAdapter != null) return;
         mAdapter = new CategoriesAdapter(getContext(), mActionModeInteractionListener, mRecyclerView);
         mAdapter.setClickListener(this);
     }

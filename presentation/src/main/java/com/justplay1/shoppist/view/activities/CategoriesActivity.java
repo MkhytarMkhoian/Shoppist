@@ -56,7 +56,11 @@ public class CategoriesActivity extends BaseListActivity
         createNewInjectorIfNeeded();
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
-        mFragment = createFragment();
+
+        mFragment = (CategoryFragment) getSupportFragmentManager().findFragmentByTag(CategoryFragment.class.getName());
+        if (mFragment == null) {
+            mFragment = createFragment();
+        }
         replaceFragment(R.id.container, mFragment, CategoryFragment.class.getName());
     }
 

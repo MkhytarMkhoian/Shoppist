@@ -91,7 +91,11 @@ public class AddElementActivity extends BaseActivity
         }
         createNewInjectorIfNeeded();
 
-        BaseAddElementFragment fragment = createFragment();
+        BaseAddElementFragment fragment = (BaseAddElementFragment) getSupportFragmentManager()
+                .findFragmentByTag(BaseAddElementFragment.class.getName());
+        if (fragment == null) {
+            fragment = createFragment();
+        }
         replaceFragment(R.id.container, fragment, BaseAddElementFragment.class.getName());
     }
 

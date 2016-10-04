@@ -39,18 +39,14 @@ import javax.inject.Inject;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class UnitFragment extends BaseListFragment
+public class UnitFragment extends BaseListFragment<UnitViewModel, UnitsAdapter>
         implements UnitsView, ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, View.OnClickListener, UnitRouter {
 
     @Inject
     UnitsPresenter mPresenter;
 
-    private UnitsAdapter mAdapter;
-
     public static UnitFragment newInstance() {
-
         Bundle args = new Bundle();
-
         UnitFragment fragment = new UnitFragment();
         fragment.setArguments(args);
         return fragment;

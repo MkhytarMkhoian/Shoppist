@@ -20,7 +20,6 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
@@ -30,42 +29,23 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropM
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
-import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.justplay1.shoppist.R;
+import com.justplay1.shoppist.models.BaseViewModel;
+import com.justplay1.shoppist.view.adapters.BaseAdapter;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseEDSListFragment extends BaseListFragment {
+public abstract class BaseEDSListFragment<M extends BaseViewModel, T extends BaseAdapter<M>>
+        extends BaseExpandableListFragment<M, T> {
 
-    protected static final String SAVED_STATE_EXPANDABLE_ITEM_MANAGER = "RecyclerViewExpandableItemManager";
-
-    protected RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
     protected RecyclerViewDragDropManager mRecyclerViewDragDropManager;
     protected RecyclerViewSwipeManager mRecyclerViewSwipeManager;
     protected RecyclerViewTouchActionGuardManager mRecyclerViewTouchActionGuardManager;
-    protected RecyclerView.Adapter mWrappedAdapter;
-
-    protected abstract RecyclerView.Adapter getAdapter();
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        // save current state to support screen rotation, etc...
-        if (mRecyclerViewExpandableItemManager != null) {
-            outState.putParcelable(
-                    SAVED_STATE_EXPANDABLE_ITEM_MANAGER,
-                    mRecyclerViewExpandableItemManager.getSavedState());
-        }
-    }
 
     @Override
     protected void initRecyclerView(View view, Bundle savedInstanceState) {
         super.initRecyclerView(view, savedInstanceState);
-
-        final Parcelable eimSavedState = (savedInstanceState != null) ? savedInstanceState.getParcelable(SAVED_STATE_EXPANDABLE_ITEM_MANAGER) : null;
-        mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
 
         // touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
         mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
@@ -80,7 +60,6 @@ public abstract class BaseEDSListFragment extends BaseListFragment {
         // swipe manager
         mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
 
-        mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(getAdapter());
         mWrappedAdapter = mRecyclerViewDragDropManager.createWrappedAdapter(mWrappedAdapter);
         mWrappedAdapter = mRecyclerViewSwipeManager.createWrappedAdapter(mWrappedAdapter);
 
@@ -123,16 +102,6 @@ public abstract class BaseEDSListFragment extends BaseListFragment {
         if (mRecyclerViewTouchActionGuardManager != null) {
             mRecyclerViewTouchActionGuardManager.release();
             mRecyclerViewTouchActionGuardManager = null;
-        }
-
-        if (mRecyclerViewExpandableItemManager != null) {
-            mRecyclerViewExpandableItemManager.release();
-            mRecyclerViewExpandableItemManager = null;
-        }
-
-        if (mWrappedAdapter != null) {
-            WrapperAdapterUtils.releaseAll(mWrappedAdapter);
-            mWrappedAdapter = null;
         }
         super.onDestroyView();
     }

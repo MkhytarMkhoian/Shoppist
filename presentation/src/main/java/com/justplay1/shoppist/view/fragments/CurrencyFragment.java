@@ -39,18 +39,14 @@ import javax.inject.Inject;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class CurrencyFragment extends BaseListFragment
+public class CurrencyFragment extends BaseListFragment<CurrencyViewModel, CurrencyAdapter>
         implements CurrencyView, ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, CurrencyRouter {
 
     @Inject
     CurrencyPresenter mPresenter;
 
-    private CurrencyAdapter mAdapter;
-
     public static CurrencyFragment newInstance() {
-
         Bundle args = new Bundle();
-
         CurrencyFragment fragment = new CurrencyFragment();
         fragment.setArguments(args);
         return fragment;

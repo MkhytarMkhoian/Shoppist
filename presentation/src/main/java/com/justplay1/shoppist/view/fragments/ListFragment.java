@@ -17,17 +17,13 @@
 package com.justplay1.shoppist.view.fragments;
 
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.justplay1.shoppist.R;
@@ -53,19 +49,15 @@ import rx.Subscription;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public class ListFragment extends BaseEDSListFragment
+public class ListFragment extends BaseEDSListFragment<ListViewModel, ListAdapter>
         implements ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, ListView, View.OnClickListener {
 
     @Inject
     ListPresenter mPresenter;
-
     private Subscription mUiBusSubscription;
-
-    private ListAdapter mAdapter;
 
     public static ListFragment newInstance() {
         Bundle args = new Bundle();
-
         ListFragment fragment = new ListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -115,11 +107,6 @@ public class ListFragment extends BaseEDSListFragment
     protected void initAdapter() {
         mAdapter = new ListAdapter(getContext(), mActionModeInteractionListener, mRecyclerView, mPreferences);
         mAdapter.setClickListener(this);
-    }
-
-    @Override
-    protected RecyclerView.Adapter getAdapter() {
-        return mAdapter;
     }
 
     @Override
@@ -176,8 +163,8 @@ public class ListFragment extends BaseEDSListFragment
     }
 
     @Override
-    public void showRateDialog() {
-        showRateDialog(getContext());
+    public void showMessageDialog() {
+        showMessageDialog(getContext());
     }
 
     @Override
@@ -233,7 +220,7 @@ public class ListFragment extends BaseEDSListFragment
         return !mAdapter.isAllItemsChecked();
     }
 
-    private void showRateDialog(final Context context) {
+    private void showMessageDialog(final Context context) {
         DialogInterface.OnClickListener listener = (dialog, which) -> {
             switch (which) {
                 case Dialog.BUTTON_POSITIVE:
