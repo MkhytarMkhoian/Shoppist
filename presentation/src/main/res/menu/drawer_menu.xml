@@ -18,13 +18,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:visible="false"
-        android:id="@+id/notifications"
-        android:icon="@drawable/ic_notifications"
-        android:title="@string/notifications"
-        app:actionLayout="@layout/view_notification_badge" />
-
     <item android:title="@string/shopping">
         <menu>
             <item

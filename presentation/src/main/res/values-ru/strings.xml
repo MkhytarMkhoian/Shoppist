@@ -20,34 +20,21 @@
     <string name="close">Закрить</string>
     <string name="open">Открить</string>
     <string name="title_activity_shopping_lists">Списки покупок</string>
-    <string name="title_activity_help">Помощь</string>
     <string name="title_activity_category">Категории</string>
     <string name="title_activity_add_category">Добавить категорию</string>
-    <string name="title_activity_login">Войти</string>
     <string name="title_activity_add_list">Добавить список</string>
     <string name="add_list_item">Добавить элемент списка</string>
-    <string name="title_activity_account">Аккаунт</string>
 
     <!-- Settings Activity -->
     <string name="category_general">Общее</string>
-    <string name="category_account">Аккаунт</string>
     <string name="category_system">Система</string>
-    <string name="category_about_app">О приложении</string>
-    <string name="category_notification">Уведомление</string>
-
-    <string name="notification_onn">Включить</string>
-    <string name="notification_sound">Звук</string>
-    <string name="notification_vibration">Вибрация</string>
 
     <string name="lockscreen">Держать экран включенным</string>
     <string name="lockscreen_summary">Выберите, если вам нужно, чтобы экран был включен</string>
-    <string name="account_log_out">Выйти</string>
-    <string name="app_version">Приложение</string>
     <string name="feedback">Обратная связь</string>
 
     <string name="theme">Тема</string>
     <string name="select_color_theme">Выберите цвет темы</string>
-    <string name="image_description">image</string>
     <string name="shopping_lists">Списки покупок</string>
     <string name="categories">Категории</string>
     <string name="empty_list_text">Список пуст</string>
@@ -81,14 +68,13 @@
     <string name="action_move">Переместить</string>
     <string name="action_delete">Удалить</string>
     <string name="action_edit">Изменить</string>
-    <string name="synchronization">Синхронизация</string>
     <string name="priority">Приоритет</string>
     <string name="category">Категория</string>
     <string name="quantity">Количество</string>
     <string name="price">Цена</string>
     <string name="unit">Единица измерения</string>
     <string name="units">Единицы измерения</string>
-    <string name="create">СОЗДАТЬ</string>
+    <string name="create">Создать</string>
     <string name="full_unit_name_is_required">Необходимо указать полное имя единицы измерения</string>
     <string name="short_unit_name_is_required">Необходимо указать краткое имя единицы измерения</string>
     <string name="full_unit_name">Полное имя</string>
@@ -101,17 +87,10 @@
     <string name="category_name">Имя категории</string>
     <string name="new_color">Новый цвет</string>
     <string name="category_name_is_required">Необходимо указать имя категории</string>
-    <string name="action_enable">Включить</string>
-    <string name="action_disable">Выключить</string>
-    <string name="user_name_is_required">Необходимо указать имя пользователя</string>
-    <string name="password_is_required">Необходимо указать пароль</string>
     <string name="new_category_added">Новая категория добавлена</string>
     <string name="category_is_updated">Категория обновленна</string>
     <string name="color">Цвет</string>
-    <string name="login_info">Используйте одну учетную запись вместе с близкими для того чтобы обмениваться списками и покупками вместе.</string>
     <string name="action_copy">Копировать</string>
-    <string name="action_reset_categories">Сбросить категории</string>
-    <string name="reset">Сбросить</string>
     <string name="error">Ошибка</string>
     <string name="this_name_already_used">Это имя уже используется</string>
     <string name="this_color_already_used">Этот цвет уже используется</string>
@@ -119,10 +98,6 @@
     <string name="currency">Валюта</string>
     <string name="choose">Выбрать</string>
     <string name="please_wait">Пожалуйста подождите</string>
-    <string name="date">Дата</string>
-    <string name="time">Время</string>
-    <string name="date_and_time">Дата и время</string>
-    <string name="reminder">Напоминание</string>
     <string name="recognition_not_present">Устройства распознавания нет</string>
     <string name="send_to">Отправить</string>
     <string name="confirm_to_delete">Подтверждать удаление</string>
@@ -133,78 +108,22 @@
     <string name="delete_the_list">Удалить список?</string>
     <string name="delete_the_category">Удалить категорию?</string>
     <string name="delete_the_goods">Удалить товар?</string>
-    <string name="delete_with_animation">Анимация удаления элемента</string>
     <string name="add">Добавить</string>
-    <string name="add_user">Добавить пользователя</string>
-
-    <string name="help_shopping_list_items">Помощь: Продукти</string>
-    <string name="help_shopping_lists">Помощь: Списки покупок</string>
-    <string name="help_categories">Помощь: Категории</string>
-    <string name="help_account">Помощь: Аккаунт</string>
-
-    <string name="help_create_new_list">Создать новый список</string>
-    <string name="help_enter_list_name">Введите имя списка и нажмите кнопку готово</string>
-    <string name="help_fill_list_name">или длинное нажатие на кнопку готово чтобы сохранить список и добавить новый</string>
-
-    <string name="help_create_new_list_item">Добавить продукт</string>
-    <string name="help_enter_name_list_item">Введите имя продукта</string>
-    <string name="help_list_item_parameters">Заполните другие параметры, если нужно</string>
-    <string name="help_list_item_done_click">нажмите кнопку готово чтобы сохранить продукт и перейти назад к списку</string>
-    <string name="help_list_item_done_long_click">или длинное нажатие на кнопку готово что бы сохранить продукт и добавить следующий</string>
-    <string name="help_list_usability">1) Нажмите чтобы выбрать \n2) Длинное нажатие чтобы выбрать \n3) Нажмите чтобы посмотреть заметки</string>
-    <string name="help_swipe_to_buy">Потяните продукт чтобы купить, или удалить из корзины</string>
-    <string name="help_swipe_to_refresh">Потяните чтобы обновить список</string>
-
-    <string name="help_create_new_category">Создать новую категорию</string>
-    <string name="help_fill_category_info">Введите имя категории, выберите цвет и нажмите кнопку готово</string>
-    <string name="help_fill_category_info2">или длинное нажатие на кнопку готово чтобы сохранить категорию и добавить новую</string>
-    <string name="help_short_and_long_tap_to_select_item">1) Нажмите чтобы выбрать \n2) Длинное нажатие чтобы выбрать</string>
-    <string name="help_long_tap_to_select_item">Длинное нажатие чтобы выбрать</string>
-    <string name="help_tap_to_edit_item">Нажмите чтобы изменить</string>
-
-    <string name="logo_content_description">Logo</string>
-    <string name="parse_ui_progress_dialog_text">Загрузка&#8230;</string>
-    <string name="loading_data">Загрузка данных&#8230;</string>
-    <string name="sync_data">Синхронизация данных&#8230;</string>
-    <string name="username_input_hint_floating_label">Имя пользователя</string>
-    <string name="username_input_hint">Имя пользователя или email</string>
-    <string name="password_input_hint">Пароль</string>
-    <string name="forgot_password_button_label"><u>Забыли пароль</u></string>
-    <string name="facebook_login_button_label">войти с помощью Facebook</string>
-    <string name="email_input_hint">Email</string>
-    <string name="confirm_password_input_hint">Введите повторно пароль</string>
-    <string name="create_account_button_label">Создать аккаунт</string>
-    <string name="no_password">Пожалуйста, введите пароль</string>
-    <string name="parse_login_invalid_credentials_toast">Имя пользователя и пароль, которые вы ввели, не совпадают</string>
-    <string name="parse_login_failed_unknown_toast">Не удалось войти, попробуйте еще раз позже</string>
 
     <string name="select_lists">Выбрать списки</string>
-    <string name="pro_account_info">Синхронизируйте и обменивайтесь всеми списками с друзьями и семьей мгновенно для скоординированных покупок. \n Никогда не потеряете свои списки, автоматическое резервное копирование списков в облако и возможность восстановить их на любом устройстве, на котором установлено приложение.</string>
-    <string name="account_sync_automatically">Автоматическая Синхронизация</string>
-    <string name="delete_account">Удалить Аккаунт</string>
     <string name="delete">Удалить</string>
-    <string name="sync">Синхронизировать</string>
-    <string name="server_is_overloaded">Сервер перегружен, пожалуйста попробуйте еще раз позже</string>
-    <string name="user_not_found">Пользователь не найден</string>
-    <string name="error_no_network_connection">Не удается загрузить данные, пожалуйста, проверьте подключение к сети.</string>
-    <string name="rate_info">Мы рады видеть, что вам нравится работать с Shoppist. Это было бы действительно полезно, если бы Вы оценили нас в Google Play. \n\nЭто займет всего минуту. \nСпасибо за поддержку!</string>
     <string name="no">Нет</string>
     <string name="skip">Пропустить</string>
     <string name="note">Заметка</string>
-    <string name="calculate_price">Рассчитывать цену товара</string>
-    <string name="calculate_price_summary">Рассчитывать цену товара по количеству</string>
     <string name="goods">Товары</string>
     <string name="action_strike_out_all">Вычеркнуть все</string>
     <string name="action_return_all_to_list">Вернуть всех в список</string>
     <string name="action_strike_out">Вычеркнуть</string>
     <string name="action_return_to_list">Вернуть в список</string>
     <string name="version">Версия: </string>
-    <string name="sort_manually_mode">Ручная сортировка</string>
     <string name="today">Сегодня</string>
     <string name="yesterday">Вчера</string>
     <string name="days_ago">дней назад</string>
-    <string name="close_manual_sort_mode_with_back_btn_symmary">Выключать режим ручной сортировки нажатием кнопки назад</string>
-    <string name="closing_manual_sort_mode">Закрытие ручного режима сортировки</string>
     <string name="edit_currency">Редактировать валюту</string>
     <string name="edit_unit">Редактировать единицу</string>
     <string name="edit_goods">Редактировать товар</string>
@@ -220,29 +139,13 @@
     <string name="delete_item">Удалить элемент</string>
     <string name="edit_item">Редактировать элемент</string>
     <string name="shopping">Покупки</string>
-    <string name="work">Работа</string>
     <string name="select_list">Выберите список</string>
     <string name="add_new_item">Добавить новый элемент</string>
     <string name="select_sort">Выберите сортировку</string>
     <string name="select_item">Выбрать элемент</string>
     <string name="long_item_click_action">Действие на длинное нажатие</string>
     <string name="choose_actions">Выберите действие</string>
-    <string name="history">История</string>
-    <string name="tap_to_sing_up_or_login">Нажмите чтобы войти/зарегистрироваться</string>
     <string name="system">Система</string>
-    <string name="buy">Купить</string>
-    <string name="shoppist_pro">Shoppist Pro</string>
-    <string name="notifications">Уведомления</string>
-    <string name="clear_all">Очистить все</string>
-    <string name="status_not_done">Не выполнено</string>
-    <string name="status_done">Выполнено</string>
-    <string name="status_updated">Обновленны</string>
-    <string name="status_deleted">Удаленны</string>
-    <string name="status_new">Новый</string>
-    <string name="status_bought">Купленны</string>
-    <string name="status_not_bought">Не купленны</string>
-    <string name="snooze">Отложить</string>
-    <string name="action_reset_goods">Сбросить товары</string>
     <string name="select_list_dialog">Выберите список</string>
     <string name="update">Обновить</string>
     <string name="select">Выбрать</string>
@@ -252,14 +155,6 @@
     <string name="add_button_click_action">Кнопка добавить</string>
     <string name="quick_mode">Быстрый режим</string>
     <string name="standart_mode">Стандартный режим</string>
-    <string name="available_delete_notification">Уведомлять об удалениях</string>
-    <string name="available_new_notification">Уведомлять о новых элементах</string>
-    <string name="available_update_notification">Уведомлять об обновлениях</string>
-    <string name="available_not_bought_notification">Уведомлять о не купленных товарах</string>
-    <string name="subscription">Подписка</string>
-    <string name="billing_not_supported">Покупки внутри приложения не поддерживаются.\n\nВозможные причины:\n1. Приложение Google Play не установлено или не обновлено\n2. Приложение запущено в эмуляторе\n3. Ошибка в библиотеке</string>
-    <string name="for_month">За месяц</string>
-    <string name="delete_account_message">Все данные на сервере и устройстве будут удалены. Вы уверен?</string>
     <string name="important_m">К сожалению с этого момента синхронизация более недоступна и часть функционала тоже.
         Сейчас у меня нет времени, что бы развивать проект,  так как он мне не приносит никакого дохода, а времени на него я потратил много.
         Возможно Вам стоит выбрать другое приложение.

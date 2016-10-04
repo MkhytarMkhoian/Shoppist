@@ -24,29 +24,17 @@
     <string name="close">Close</string>
     <string name="open">Open</string>
     <string name="title_activity_shopping_lists">Shopping Lists</string>
-    <string name="title_activity_help">Help</string>
     <string name="title_activity_category">Categories</string>
     <string name="title_activity_add_category">Add category</string>
-    <string name="title_activity_login">Login</string>
     <string name="title_activity_add_list">Add list</string>
     <string name="add_list_item">Add list item</string>
-    <string name="title_activity_account">Account</string>
 
     <!-- Settings Activity -->
     <string name="category_general">General</string>
-    <string name="category_account">Account</string>
     <string name="category_system">System</string>
-    <string name="category_about_app">About</string>
-    <string name="category_notification">Notifications</string>
-
-    <string name="notification_onn">Enable</string>
-    <string name="notification_sound">Sound</string>
-    <string name="notification_vibration">Vibration</string>
 
     <string name="lockscreen">Keep Screen On</string>
     <string name="lockscreen_summary">Check if you need to keep the screen turned on</string>
-    <string name="account_log_out">Logout</string>
-    <string name="app_version">App</string>
     <string name="feedback">Feedback</string>
 
     <string name="theme">Theme</string>
@@ -85,7 +73,6 @@
     <string name="action_move">Move to</string>
     <string name="action_delete">Delete</string>
     <string name="action_edit">Edit</string>
-    <string name="synchronization">Synchronization</string>
     <string name="priority">Priority</string>
     <string name="category">Category</string>
     <string name="quantity">Quantity</string>
@@ -105,17 +92,10 @@
     <string name="category_name">Category name</string>
     <string name="new_color">New color</string>
     <string name="category_name_is_required">Category name is required</string>
-    <string name="action_enable">Enable</string>
-    <string name="action_disable">Disable</string>
-    <string name="user_name_is_required">User name is required</string>
-    <string name="password_is_required">Password is required</string>
     <string name="new_category_added">New category added</string>
     <string name="category_is_updated">category is updated</string>
     <string name="color">Color</string>
-    <string name="login_info">Use one account together with loved ones on phones to share lists and shopping together.</string>
     <string name="action_copy">Copy to</string>
-    <string name="action_reset_categories">Reset categories</string>
-    <string name="reset">Reset</string>
     <string name="error">Error</string>
     <string name="this_name_already_used">This name already used</string>
     <string name="this_color_already_used">This color already used</string>
@@ -124,9 +104,6 @@
     <string name="choose">Choose</string>
     <string name="please_wait">Please wait</string>
     <string name="date">Date</string>
-    <string name="time">Time</string>
-    <string name="date_and_time">Date and Time</string>
-    <string name="reminder">Reminder</string>
     <string name="recognition_not_present">Recogniser not present</string>
     <string name="send_to">Send to</string>
     <string name="confirm_to_delete">Confirm Before Deleting</string>
@@ -137,73 +114,22 @@
     <string name="delete_the_list">Delete the list?</string>
     <string name="delete_the_category">Delete the category?</string>
     <string name="delete_the_goods">Delete the goods?</string>
-    <string name="delete_with_animation">Delete With Animation</string>
     <string name="add">Add</string>
-    <string name="add_user">Add user</string>
-
-    <string name="help_create_new_list">Create new list</string>
-    <string name="help_enter_list_name">Enter list name and click done button</string>
-    <string name="help_fill_list_name">or long click on done button to save the list and add another list</string>
-
-    <string name="help_create_new_list_item">Add new product</string>
-    <string name="help_enter_name_list_item">Enter the product name</string>
-    <string name="help_list_item_parameters">Fill in other parameters(if needed)</string>
-    <string name="help_list_item_done_click">Click done button to save product and return to list</string>
-    <string name="help_list_item_done_long_click">or long click on done button to save the product and add another product</string>
-    <string name="help_list_usability">1) Tap to select item \n2) Long tap to select item \n3) Tap to show note</string>
-    <string name="help_swipe_to_buy">Swipe item to buy, or delete from shopping cart</string>
-    <string name="help_swipe_to_refresh">Swipe to refresh the list</string>
-
-    <string name="help_create_new_category">Create new category</string>
-    <string name="help_fill_category_info">Enter a name of the category, select the color and click done button</string>
-    <string name="help_fill_category_info2">or long click on done button to save the category and add another category</string>
-    <string name="help_short_and_long_tap_to_select_item">1) Tap to select item \n2) Long tap to select item</string>
-    <string name="help_long_tap_to_select_item">Long tap to select item</string>
-    <string name="help_tap_to_edit_item">Tap to edit item</string>
-
-    <string name="logo_content_description">Logo</string>
-    <string name="parse_ui_progress_dialog_text">Loading&#8230;</string>
-    <string name="loading_data">Loading data&#8230;</string>
-    <string name="sync_data">Sync data&#8230;</string>
-    <string name="username_input_hint_floating_label">Username</string>
-    <string name="username_input_hint">Username or email</string>
-    <string name="password_input_hint">Password</string>
-    <string name="forgot_password_button_label"><u>Forgot password</u></string>
-    <string name="facebook_login_button_label">Log in with Facebook</string>
-    <string name="email_input_hint">Email</string>
-    <string name="confirm_password_input_hint">Re-enter password</string>
-    <string name="create_account_button_label">Create account</string>
-    <string name="no_password">Please enter your password</string>
-    <string name="parse_login_invalid_credentials_toast">The username and password you entered don\'t match</string>
-    <string name="parse_login_failed_unknown_toast">Could not log in, please try again later</string>
 
     <string name="select_lists">Select lists</string>
-    <string name="pro_account_info">Sync and share all of your lists with friends and family instantly for coordinated shopping. \n Never lose your lists, automatically backup your lists to the cloud and restore on any device that has the app installed.</string>
-    <string name="account_sync_automatically">Automatic Synchronization</string>
-    <string name="delete_account">Delete Account</string>
     <string name="delete">Delete</string>
-    <string name="sync">Sync</string>
-    <string name="server_is_overloaded">Server is overloaded, please try again later</string>
-    <string name="user_not_found">User not found</string>
-    <string name="error_no_network_connection">Cannot load data, please check your network connection.</string>
-    <string name="rate_info">We are happy to see that you enjoy using Shoppist. It\'d be really helpful if you reted us in Google Play. \n\nIt takes just a minute. \nThanks for your support!</string>
     <string name="no">No</string>
     <string name="skip">Skip</string>
     <string name="note">Note</string>
-    <string name="calculate_price">Calculate price of goods</string>
-    <string name="calculate_price_summary">Calculate the price of goods by quantity</string>
     <string name="goods">Goods</string>
     <string name="action_strike_out_all">Strike out all</string>
     <string name="action_return_all_to_list">Return all to list</string>
     <string name="action_strike_out">Strike out</string>
     <string name="action_return_to_list">Return to list</string>
     <string name="version">Version: </string>
-    <string name="sort_manually_mode">Sort manually mode</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="days_ago">days ago</string>
-    <string name="close_manual_sort_mode_with_back_btn_symmary">Turn off manual sort mode when tap on back button</string>
-    <string name="closing_manual_sort_mode">Closing Manual Sort Mode</string>
     <string name="edit_currency">Edit currency</string>
     <string name="edit_unit">Edit unit</string>
     <string name="edit_goods">Edit goods</string>
@@ -219,7 +145,6 @@
     <string name="delete_item">Delete item</string>
     <string name="edit_item">Edit item</string>
     <string name="shopping">Shopping</string>
-    <string name="work">Work</string>
     <string name="select_list">Select List</string>
     <string name="select_list_dialog">Select List Dialog</string>
     <string name="add_new_item">Add New Item</string>
@@ -227,22 +152,8 @@
     <string name="select_item">Select item</string>
     <string name="long_item_click_action">Long Item Click Action</string>
     <string name="choose_actions">Choose Actions</string>
-    <string name="history">History</string>
     <string name="tap_to_sing_up_or_login">Tap to sing up or login</string>
     <string name="system">System</string>
-    <string name="buy">Buy</string>
-    <string name="shoppist_pro">Shoppist Pro</string>
-    <string name="notifications">Notifications</string>
-    <string name="clear_all">Clear all</string>
-    <string name="status_not_done">Not done</string>
-    <string name="status_done">Done</string>
-    <string name="status_updated">Updated</string>
-    <string name="status_deleted">Deleted</string>
-    <string name="status_new">New</string>
-    <string name="status_bought">Bought</string>
-    <string name="status_not_bought">Not bought</string>
-    <string name="snooze">Snooze</string>
-    <string name="action_reset_goods">Reset goods</string>
     <string name="update">Update</string>
     <string name="select">Select</string>
     <string name="change_unit">Change unit</string>
@@ -251,14 +162,6 @@
     <string name="add_button_click_action">Add Button Click Action</string>
     <string name="quick_mode">Quick mode</string>
     <string name="standart_mode">Standart mode</string>
-    <string name="available_delete_notification">Notify About Deleted Items</string>
-    <string name="available_new_notification">Notify About New Items</string>
-    <string name="available_update_notification">Notify About Updated Items</string>
-    <string name="available_not_bought_notification">Notify About Not Bought Goods</string>
-    <string name="subscription">Subscription</string>
-    <string name="billing_not_supported">In-App billing is not supported.\n\nProbable reasons:\n1. Google Play is not installed or is not updated\n2. The app is running in emulator\n3. Bug in the library</string>
-    <string name="for_month">For Month</string>
-    <string name="delete_account_message">All data on server and device will be deleted. Are you sure?</string>
     <string name="important_m">Unfortunately from this moment synchronization is no longer available, and some functionality too.
         Now I do not have time to develop the project, because he did not bring any income, and time for him, I spent a lot.
         Perhaps you should choose another application. Please do not put a bad score. Please accept my apologies and good luck!:)
