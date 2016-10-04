@@ -34,8 +34,8 @@ import com.justplay1.shoppist.view.fragments.SearchFragment;
  */
 public class SearchActivity extends BaseActivity {
 
-    private int mContextType;
-    private String mParentListId;
+    private int contextType;
+    private String parentListId;
 
     public static Intent getCallingIntent(Context context, int contextType, String parentListId) {
         Intent callingIntent = new Intent(context, SearchActivity.class);
@@ -45,7 +45,7 @@ public class SearchActivity extends BaseActivity {
     }
 
     public SearchFragment createFragment() {
-        return SearchFragment.newInstance(mParentListId, mContextType);
+        return SearchFragment.newInstance(parentListId, contextType);
     }
 
     @Override
@@ -56,10 +56,10 @@ public class SearchActivity extends BaseActivity {
         setStatusBarColor(FloatingSearchView.DEFAULT_BACKGROUND_COLOR);
 
         if (getIntent() != null) {
-            mContextType = getIntent().getIntExtra(Const.SEARCH_CONTEXT_TYPE, Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST);
-            switch (mContextType) {
+            contextType = getIntent().getIntExtra(Const.SEARCH_CONTEXT_TYPE, Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST);
+            switch (contextType) {
                 case Const.CONTEXT_QUICK_ADD_GOODS_TO_LIST:
-                    mParentListId = getIntent().getStringExtra(Const.PARENT_LIST_ID);
+                    parentListId = getIntent().getStringExtra(Const.PARENT_LIST_ID);
                     break;
                 case Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST:
                     break;

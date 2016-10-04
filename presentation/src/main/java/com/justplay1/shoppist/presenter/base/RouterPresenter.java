@@ -25,7 +25,8 @@ import dagger.internal.Preconditions;
 
 
 public abstract class RouterPresenter<V extends BaseMvpView, R extends Router> extends BasePresenter<V> {
-    private WeakReference<R> mRouterRef;
+
+    private WeakReference<R> routerRef;
 
     /**
      * Called to surrender control of taken router.
@@ -46,7 +47,7 @@ public abstract class RouterPresenter<V extends BaseMvpView, R extends Router> e
      * @return {@code true} if presenter has attached router
      */
     public final boolean hasRouter() {
-        return mRouterRef != null && mRouterRef.get() != null;
+        return routerRef != null && routerRef.get() != null;
     }
 
     /**
@@ -75,17 +76,17 @@ public abstract class RouterPresenter<V extends BaseMvpView, R extends Router> e
      * @return {@code null}, if router is not taken, otherwise the concrete router instance.
      */
     protected final R getRouter() {
-        return mRouterRef == null ? null : mRouterRef.get();
+        return routerRef == null ? null : routerRef.get();
     }
 
     private void assignRouter(R router) {
-        mRouterRef = new WeakReference<>(router);
+        routerRef = new WeakReference<>(router);
     }
 
     private void releaseRouter() {
-        if (mRouterRef != null) {
-            mRouterRef.clear();
-            mRouterRef = null;
+        if (routerRef != null) {
+            routerRef.clear();
+            routerRef = null;
         }
     }
 }

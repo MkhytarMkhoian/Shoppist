@@ -42,30 +42,30 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRou
 
     private final BehaviorSubject<List<CategoryViewModel>> cache = BehaviorSubject.create();
 
-    private final CategoryModelDataMapper mDataMapper;
-    private final GetCategoryList mGetCategoryList;
-    private final DeleteCategory mDeleteCategory;
+    private final CategoryModelDataMapper dataMapper;
+    private final GetCategoryList getCategoryList;
+    private final DeleteCategory deleteCategory;
 
     @Inject
     CategoryPresenter(GetCategoryList getCategoryList, DeleteCategory deleteCategory,
                       CategoryModelDataMapper dataMapper) {
-        this.mGetCategoryList = getCategoryList;
-        this.mDeleteCategory = deleteCategory;
-        this.mDataMapper = dataMapper;
+        this.getCategoryList = getCategoryList;
+        this.deleteCategory = deleteCategory;
+        this.dataMapper = dataMapper;
 
         loadData();
     }
 
     private void loadData() {
-        mGetCategoryList.get()
-                .map(mDataMapper::transformToViewModel)
+        getCategoryList.get()
+                .map(dataMapper::transformToViewModel)
                 .subscribe(cache);
     }
 
     @Override
     public void attachView(CategoryView view) {
         super.attachView(view);
-        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
+        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
 
             @Override
             public void onStart() {
@@ -100,10 +100,10 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRou
     }
 
     public void deleteItems(Collection<CategoryViewModel> data) {
-        mSubscriptions.add(Observable.fromCallable(() -> mDataMapper.transform(data))
+        subscriptions.add(Observable.fromCallable(() -> dataMapper.transform(data))
                 .flatMap(items -> {
-                    mDeleteCategory.setData(items);
-                    return mDeleteCategory.get();
+                    deleteCategory.setData(items);
+                    return deleteCategory.get();
                 }).subscribe(new DefaultSubscriber<>()));
     }
 

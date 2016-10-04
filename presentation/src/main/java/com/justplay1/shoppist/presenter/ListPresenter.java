@@ -53,13 +53,13 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
 
     private final BehaviorSubject<List<Pair<HeaderViewModel, List<ListViewModel>>>> cache = BehaviorSubject.create();
 
-    private final ListModelDataMapper mDataMapper;
-    private final ListItemsModelDataMapper mListItemsModelDataMapper;
-    private final GetLists mGetLists;
-    private final DeleteLists mDeleteLists;
-    private final GetListItems mGetListItems;
+    private final ListModelDataMapper dataMapper;
+    private final ListItemsModelDataMapper listItemsModelDataMapper;
+    private final GetLists getLists;
+    private final DeleteLists deleteLists;
+    private final GetListItems getListItems;
 
-    private Subscription mDataBusSubscription;
+    private Subscription dataBusSubscription;
 
     @Inject
     ListPresenter(AppPreferences preferences,
@@ -69,11 +69,11 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
                   ListModelDataMapper listModelDataMapper,
                   ListItemsModelDataMapper listItemsModelDataMapper) {
         super(preferences);
-        this.mGetLists = getLists;
-        this.mDeleteLists = deleteLists;
-        this.mDataMapper = listModelDataMapper;
-        this.mListItemsModelDataMapper = listItemsModelDataMapper;
-        this.mGetListItems = getListItems;
+        this.getLists = getLists;
+        this.deleteLists = deleteLists;
+        this.dataMapper = listModelDataMapper;
+        this.listItemsModelDataMapper = listItemsModelDataMapper;
+        this.getListItems = getListItems;
 
         loadData();
     }
@@ -81,19 +81,19 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
     @Override
     public void attachView(ListView view) {
         super.attachView(view);
-        if (mPreferences.isNeedShowMessageDialog()) {
+        if (preferences.isNeedShowMessageDialog()) {
             showRateDialog();
         }
 
         DataEventBus.instanceOf().filteredObservable(ListsDataUpdatedEvent.class);
-        mDataBusSubscription = DataEventBus.instanceOf().observable().subscribe(new DefaultSubscriber<Object>() {
+        dataBusSubscription = DataEventBus.instanceOf().observable().subscribe(new DefaultSubscriber<Object>() {
             @Override
             public void onNext(Object o) {
                 loadData();
             }
         });
 
-        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListViewModel>>>>() {
+        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListViewModel>>>>() {
             @Override
             public void onNext(List<Pair<HeaderViewModel, List<ListViewModel>>> data) {
                 showData(data);
@@ -109,14 +109,14 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
     @Override
     public void detachView() {
         super.detachView();
-        mDataBusSubscription.unsubscribe();
+        dataBusSubscription.unsubscribe();
     }
 
     @SuppressWarnings("ResourceType")
     private void loadData() {
-        mGetLists.get()
-                .map(mDataMapper::transformToViewModel)
-                .map(listViewModels -> sort(listViewModels, mPreferences.getSortForLists()))
+        getLists.get()
+                .map(dataMapper::transformToViewModel)
+                .map(listViewModels -> sort(listViewModels, preferences.getSortForLists()))
                 .subscribe(cache);
     }
 
@@ -151,17 +151,17 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
     }
 
     public void sortByName(final List<ListViewModel> data) {
-        mPreferences.setSortForShoppingLists(SortType.SORT_BY_NAME);
+        preferences.setSortForShoppingLists(SortType.SORT_BY_NAME);
         showData(sort(data, SortType.SORT_BY_NAME));
     }
 
     public void sortByPriority(final List<ListViewModel> data) {
-        mPreferences.setSortForShoppingLists(SortType.SORT_BY_PRIORITY);
+        preferences.setSortForShoppingLists(SortType.SORT_BY_PRIORITY);
         showData(sort(data, SortType.SORT_BY_PRIORITY));
     }
 
     public void sortByTimeCreated(final List<ListViewModel> data) {
-        mPreferences.setSortForShoppingLists(SortType.SORT_BY_TIME_CREATED);
+        preferences.setSortForShoppingLists(SortType.SORT_BY_TIME_CREATED);
         showData(sort(data, SortType.SORT_BY_TIME_CREATED));
     }
 
@@ -184,20 +184,20 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
     }
 
     public void deleteItems(Collection<ListViewModel> data) {
-        mSubscriptions.add(Observable.fromCallable(() -> mDataMapper.transform(data))
+        subscriptions.add(Observable.fromCallable(() -> dataMapper.transform(data))
                 .flatMap(list -> {
-                    mDeleteLists.setData(list);
-                    return mDeleteLists.get();
+                    deleteLists.setData(list);
+                    return deleteLists.get();
                 }).subscribe(new DefaultSubscriber<>()));
     }
 
     public void emailShare(List<ListViewModel> data) {
         showLoadingDialog();
-        mSubscriptions.add(Observable.from(data)
+        subscriptions.add(Observable.from(data)
                 .flatMap(shoppingList -> {
-                    mGetListItems.setParentId(shoppingList.getId());
-                    return mGetListItems.get()
-                            .map(mListItemsModelDataMapper::transformToViewModel)
+                    getListItems.setParentId(shoppingList.getId());
+                    return getListItems.get()
+                            .map(listItemsModelDataMapper::transformToViewModel)
                             .map(items -> shoppingList.getName() + "\n" + "\n" +
                                     ShoppistUtils.buildShareString(items) + "\n");
                 })

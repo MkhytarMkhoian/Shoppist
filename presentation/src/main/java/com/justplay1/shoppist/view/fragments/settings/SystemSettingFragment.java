@@ -28,7 +28,7 @@ public class SystemSettingFragment extends BaseSettingFragment {
 
     private static final String LOCK_SCREEN_ID = "lockscreen";
 
-    protected CheckBoxPreference mLockScreen;
+    protected CheckBoxPreference lockScreen;
 
     public static SystemSettingFragment newInstance() {
         return new SystemSettingFragment();
@@ -42,7 +42,7 @@ public class SystemSettingFragment extends BaseSettingFragment {
     protected void initFrame() {
         super.initFrame();
         updateSystemCheckBox();
-        mLockScreen.setChecked(mPreferences.isLockScreen());
+        lockScreen.setChecked(preferences.isLockScreen());
     }
 
     @Override
@@ -50,8 +50,8 @@ public class SystemSettingFragment extends BaseSettingFragment {
         switch (preference.getKey()) {
             case LOCK_SCREEN_ID:
                 boolean isChecked = ((CheckBoxPreference) preference).isChecked();
-                mPreferences.setLockScreen(isChecked);
-                ShoppistUtils.setKeepScreenOn(getActivity().getWindow(), mPreferences.isLockScreen());
+                preferences.setLockScreen(isChecked);
+                ShoppistUtils.setKeepScreenOn(getActivity().getWindow(), preferences.isLockScreen());
                 break;
         }
         return true;
@@ -62,15 +62,15 @@ public class SystemSettingFragment extends BaseSettingFragment {
             getPreferenceScreen().removePreference(findPreference(LOCK_SCREEN_ID));
         }
 
-        if (mLockScreen == null) {
-            mLockScreen = new ColorCheckBoxPreference(getActivity(), mPreferences.getColorPrimary());
-            mLockScreen.setKey(LOCK_SCREEN_ID);
-            mLockScreen.setTitle(R.string.lockscreen);
-            mLockScreen.setSummary(R.string.lockscreen_summary);
+        if (lockScreen == null) {
+            lockScreen = new ColorCheckBoxPreference(getActivity(), preferences.getColorPrimary());
+            lockScreen.setKey(LOCK_SCREEN_ID);
+            lockScreen.setTitle(R.string.lockscreen);
+            lockScreen.setSummary(R.string.lockscreen_summary);
         }
-        getPreferenceScreen().removePreference(mLockScreen);
-        getPreferenceScreen().addPreference(mLockScreen);
+        getPreferenceScreen().removePreference(lockScreen);
+        getPreferenceScreen().addPreference(lockScreen);
 
-        mLockScreen.setOnPreferenceClickListener(this);
+        lockScreen.setOnPreferenceClickListener(this);
     }
 }

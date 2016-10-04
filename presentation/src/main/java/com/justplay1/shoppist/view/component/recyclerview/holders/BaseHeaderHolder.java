@@ -33,7 +33,7 @@ public abstract class BaseHeaderHolder extends RecyclerView.ViewHolder implement
 
     @Bind(R.id.indicator)
     public ExpandIndicator indicator;
-    private int mExpandStateFlags;
+    private int expandStateFlags;
 
     public BaseHeaderHolder(View itemView) {
         super(itemView);
@@ -42,11 +42,11 @@ public abstract class BaseHeaderHolder extends RecyclerView.ViewHolder implement
 
     @Override
     public void setExpandStateFlags(int flags) {
-        mExpandStateFlags = flags;
+        expandStateFlags = flags;
     }
 
     @Override
     public int getExpandStateFlags() {
-        return mExpandStateFlags;
+        return expandStateFlags;
     }
 }

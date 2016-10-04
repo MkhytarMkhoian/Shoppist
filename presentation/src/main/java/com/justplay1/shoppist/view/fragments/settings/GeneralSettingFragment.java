@@ -37,9 +37,7 @@ public class GeneralSettingFragment extends BaseSettingFragment implements Color
     private static final String COLOR_THEME_BTN_ID = "color_theme";
     private static final String CONFIRM_TO_DELETE_BTN_ID = "confirm_to_delete";
 
-    private Preference mColorThemeBtn;
-
-    protected CheckBoxPreference mConfirmToDeleteBtn;
+    protected CheckBoxPreference confirmToDeleteBtn;
 
     public static GeneralSettingFragment newInstance() {
         return new GeneralSettingFragment();
@@ -54,9 +52,9 @@ public class GeneralSettingFragment extends BaseSettingFragment implements Color
         super.initFrame();
         updateGeneralCheckBox();
 
-        mColorThemeBtn = (Preference) findPreference(COLOR_THEME_BTN_ID);
-        mColorThemeBtn.setOnPreferenceClickListener(this);
-        mConfirmToDeleteBtn.setChecked(mPreferences.isNeedShowConfirmDeleteDialog());
+        Preference colorThemeBtn = (Preference) findPreference(COLOR_THEME_BTN_ID);
+        colorThemeBtn.setOnPreferenceClickListener(this);
+        confirmToDeleteBtn.setChecked(preferences.isNeedShowConfirmDeleteDialog());
     }
 
     @Override
@@ -64,16 +62,16 @@ public class GeneralSettingFragment extends BaseSettingFragment implements Color
         switch (preference.getKey()) {
             case COLOR_THEME_BTN_ID:
                 FragmentManager fm = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
-                SelectThemeColorDialogFragment colorDialog = SelectThemeColorDialogFragment.newInstance(mPreferences.getColorPrimary());
+                SelectThemeColorDialogFragment colorDialog = SelectThemeColorDialogFragment.newInstance(preferences.getColorPrimary());
                 colorDialog.setOnColorSelectedListener((colorPrimary, colorPrimaryDark) -> {
-                    mPreferences.setColorPrimary(colorPrimary);
-                    mPreferences.setColorPrimaryDark(colorPrimaryDark);
+                    preferences.setColorPrimary(colorPrimary);
+                    preferences.setColorPrimaryDark(colorPrimaryDark);
                     updateTheme();
                 });
                 colorDialog.show(fm, SelectThemeColorDialogFragment.class.getName());
                 break;
             case CONFIRM_TO_DELETE_BTN_ID:
-                mPreferences.setConfirmDeleteDialog(((CheckBoxPreference) preference).isChecked());
+                preferences.setConfirmDeleteDialog(((CheckBoxPreference) preference).isChecked());
                 break;
         }
         return true;
@@ -82,17 +80,17 @@ public class GeneralSettingFragment extends BaseSettingFragment implements Color
     protected void updateGeneralCheckBox() {
         if (findPreference(CONFIRM_TO_DELETE_BTN_ID) != null) {
             getPreferenceScreen().removePreference(findPreference(CONFIRM_TO_DELETE_BTN_ID));
-            mConfirmToDeleteBtn = null;
+            confirmToDeleteBtn = null;
         }
 
-        if (mConfirmToDeleteBtn == null) {
-            mConfirmToDeleteBtn = new ColorCheckBoxPreference(getActivity(), mPreferences.getColorPrimary());
-            mConfirmToDeleteBtn.setKey(CONFIRM_TO_DELETE_BTN_ID);
-            mConfirmToDeleteBtn.setTitle(R.string.confirm_to_delete);
-            mConfirmToDeleteBtn.setSummary(R.string.confirm_to_delete_summary);
+        if (confirmToDeleteBtn == null) {
+            confirmToDeleteBtn = new ColorCheckBoxPreference(getActivity(), preferences.getColorPrimary());
+            confirmToDeleteBtn.setKey(CONFIRM_TO_DELETE_BTN_ID);
+            confirmToDeleteBtn.setTitle(R.string.confirm_to_delete);
+            confirmToDeleteBtn.setSummary(R.string.confirm_to_delete_summary);
         }
-        getPreferenceScreen().addPreference(mConfirmToDeleteBtn);
-        mConfirmToDeleteBtn.setOnPreferenceClickListener(this);
+        getPreferenceScreen().addPreference(confirmToDeleteBtn);
+        confirmToDeleteBtn.setOnPreferenceClickListener(this);
     }
 
     @Override

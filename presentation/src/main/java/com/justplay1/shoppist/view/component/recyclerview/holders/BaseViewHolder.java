@@ -28,7 +28,7 @@ import com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView;
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener, View.OnLongClickListener {
 
-    private ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> mClickListener;
+    private ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> clickListener;
 
     public BaseViewHolder(View itemView) {
         super(itemView);
@@ -38,20 +38,20 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder
     }
 
     public void setClickListener(ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> mClickListener) {
-        this.mClickListener = mClickListener;
+        this.clickListener = mClickListener;
     }
 
     @Override
     public void onClick(View v) {
-        if (mClickListener != null) {
-            mClickListener.onItemClick(this, getLayoutPosition(), getItemId());
+        if (clickListener != null) {
+            clickListener.onItemClick(this, getLayoutPosition(), getItemId());
         }
     }
 
     @Override
     public boolean onLongClick(View v) {
-        if (mClickListener != null) {
-            mClickListener.onItemLongClick(this, getLayoutPosition(), getItemId());
+        if (clickListener != null) {
+            clickListener.onItemLongClick(this, getLayoutPosition(), getItemId());
             return true;
         }
         return false;

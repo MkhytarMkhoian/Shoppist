@@ -43,10 +43,10 @@ public class AddCategoryFragment extends BaseAddElementFragment
         implements AddCategoryView {
 
     @Inject
-    AddCategoryPresenter mPresenter;
+    AddCategoryPresenter presenter;
 
     @Bind(R.id.color_button)
-    ImageView mColorBtn;
+    ImageView colorBtn;
 
     public static AddCategoryFragment newInstance(CategoryViewModel category) {
         Bundle args = new Bundle();
@@ -60,20 +60,20 @@ public class AddCategoryFragment extends BaseAddElementFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.onCreate(getArguments(), savedInstanceState);
+        presenter.onCreate(getArguments(), savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        mPresenter.attachView(this);
+        presenter.attachView(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.detachView();
+        presenter.detachView();
         ButterKnife.unbind(this);
     }
 
@@ -85,33 +85,33 @@ public class AddCategoryFragment extends BaseAddElementFragment
 
     @Override
     protected boolean isItemEdit() {
-        return mPresenter.isItemEdit();
+        return presenter.isItemEdit();
     }
 
     @Override
     protected void init(View view) {
         super.init(view);
         TextView colorLabel = (TextView) view.findViewById(R.id.color_label);
-        colorLabel.setTextColor(mPreferences.getColorPrimary());
+        colorLabel.setTextColor(preferences.getColorPrimary());
 
-        mNameEdit.addTextChangedListener(new AbstractTextWatcher() {
+        nameEdit.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                mPresenter.selectName(ShoppistUtils.filterSpace(mNameEdit.getText().toString()));
+                presenter.selectName(ShoppistUtils.filterSpace(nameEdit.getText().toString()));
             }
         });
-        mColorBtn.setOnClickListener(this);
+        colorBtn.setOnClickListener(this);
     }
 
     @Override
     public void setName(String name) {
-        mNameEdit.setText(name);
-        mNameEdit.setSelection(mNameEdit.getText().length());
+        nameEdit.setText(name);
+        nameEdit.setSelection(nameEdit.getText().length());
     }
 
     @Override
     public void setColorToButton(int color) {
-        mColorBtn.setBackgroundColor(color);
+        colorBtn.setBackgroundColor(color);
     }
 
     @Override
@@ -123,44 +123,44 @@ public class AddCategoryFragment extends BaseAddElementFragment
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.color_button:
-                mPresenter.onColorButtonClick();
+                presenter.onColorButtonClick();
                 break;
             case R.id.done_button:
-                mPresenter.onDoneButtonClick();
+                presenter.onDoneButtonClick();
                 break;
         }
     }
 
     @Override
     public boolean onLongClick(View v) {
-        mPresenter.onDoneButtonLongClick();
+        presenter.onDoneButtonLongClick();
         return true;
     }
 
     @Override
     public void closeScreen() {
-        mListener.closeScreen();
+        listener.closeScreen();
     }
 
     @Override
     public void showNameIsRequiredError() {
-        mNameEdit.setError(getString(R.string.category_name_is_required));
+        nameEdit.setError(getString(R.string.category_name_is_required));
     }
 
     @Override
     public void showKeyboard() {
-        ShoppistUtils.showKeyboard(getContext(), mNameEdit);
+        ShoppistUtils.showKeyboard(getContext(), nameEdit);
     }
 
     @Override
     public void showSelectColorDialog(int color) {
-        final ColorPickerDialog colorPickerDialog = new ColorPickerDialog(getContext(), mPreferences.getColorPrimary());
+        final ColorPickerDialog colorPickerDialog = new ColorPickerDialog(getContext(), preferences.getColorPrimary());
         colorPickerDialog.setColor(color);
         colorPickerDialog.setOnClickListener(view -> {
             switch (view.getId()) {
                 case R.id.positive_button:
-                    mPresenter.selectColor(colorPickerDialog.getColor());
-                    mColorBtn.setBackgroundColor(colorPickerDialog.getColor());
+                    presenter.selectColor(colorPickerDialog.getColor());
+                    colorBtn.setBackgroundColor(colorPickerDialog.getColor());
                     colorPickerDialog.dismiss();
                     break;
                 case R.id.negative_button:
@@ -173,17 +173,17 @@ public class AddCategoryFragment extends BaseAddElementFragment
 
     @Override
     public void showLoading() {
-        mProgressDialog.show();
+        progressDialog.show();
     }
 
     @Override
     public void hideLoading() {
-        mProgressDialog.dismiss();
+        progressDialog.dismiss();
     }
 
     @Override
     public void setDefaultToolbarTitle() {
-        mListener.setTitle(getString(R.string.title_activity_add_category));
+        listener.setTitle(getString(R.string.title_activity_add_category));
     }
 
     @Override
@@ -198,6 +198,6 @@ public class AddCategoryFragment extends BaseAddElementFragment
 
     @Override
     public void setToolbarTitle(String title) {
-        mListener.setTitle(title);
+        listener.setTitle(title);
     }
 }

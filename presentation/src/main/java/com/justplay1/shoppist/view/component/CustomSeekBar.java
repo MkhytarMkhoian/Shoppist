@@ -28,7 +28,7 @@ import android.widget.SeekBar;
  */
 public class CustomSeekBar  extends SeekBar {
 
-    private Drawable mThumb;
+    private Drawable thumb;
 
     public CustomSeekBar(Context context) {
         super(context);
@@ -50,10 +50,10 @@ public class CustomSeekBar  extends SeekBar {
     @Override
     public void setThumb(Drawable thumb) {
         super.setThumb(thumb);
-        mThumb = thumb;
+        this.thumb = thumb;
     }
 
     public Drawable getSeekBarThumb() {
-        return mThumb;
+        return thumb;
     }
 }

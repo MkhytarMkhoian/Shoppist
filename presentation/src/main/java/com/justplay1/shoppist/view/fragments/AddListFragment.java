@@ -46,11 +46,11 @@ import butterknife.ButterKnife;
 public class AddListFragment extends BaseAddElementFragment implements AddListView {
 
     @Inject
-    AddListPresenter mPresenter;
+    AddListPresenter presenter;
     @Bind(R.id.priority)
-    Spinner mPriorityList;
+    Spinner priorityList;
     @Bind(R.id.color_button)
-    ImageView mColorBtn;
+    ImageView colorBtn;
 
     public static AddListFragment newInstance(ListViewModel list) {
         Bundle args = new Bundle();
@@ -64,20 +64,20 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.onCreate(getArguments(), savedInstanceState);
+        presenter.onCreate(getArguments(), savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        mPresenter.attachView(this);
+        presenter.attachView(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.detachView();
+        presenter.detachView();
         ButterKnife.unbind(this);
     }
 
@@ -92,15 +92,15 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
         super.init(view);
 
         TextView colorLabel = (TextView) view.findViewById(R.id.color_label);
-        colorLabel.setTextColor(mPreferences.getColorPrimary());
+        colorLabel.setTextColor(preferences.getColorPrimary());
 
         TextView priorityLabel = (TextView) view.findViewById(R.id.priority_label);
-        priorityLabel.setTextColor(mPreferences.getColorPrimary());
+        priorityLabel.setTextColor(preferences.getColorPrimary());
 
-        mNameEdit.addTextChangedListener(new AbstractTextWatcher() {
+        nameEdit.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                mPresenter.selectName(ShoppistUtils.filterSpace(s.toString()));
+                presenter.selectName(ShoppistUtils.filterSpace(s.toString()));
             }
         });
 
@@ -108,22 +108,22 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, data);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        mPriorityList.setAdapter(adapter);
-        mPriorityList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        priorityList.setAdapter(adapter);
+        priorityList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        mPresenter.selectPriority(Priority.NO_PRIORITY);
+                        presenter.selectPriority(Priority.NO_PRIORITY);
                         break;
                     case 1:
-                        mPresenter.selectPriority(Priority.LOW);
+                        presenter.selectPriority(Priority.LOW);
                         break;
                     case 2:
-                        mPresenter.selectPriority(Priority.MEDIUM);
+                        presenter.selectPriority(Priority.MEDIUM);
                         break;
                     case 3:
-                        mPresenter.selectPriority(Priority.HIGH);
+                        presenter.selectPriority(Priority.HIGH);
                         break;
                 }
             }
@@ -134,28 +134,28 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
             }
         });
 
-        mColorBtn.setOnClickListener(this);
+        colorBtn.setOnClickListener(this);
     }
 
     @Override
     public void setPriority(@Priority int priority) {
-        mPriorityList.setSelection(priority);
+        priorityList.setSelection(priority);
     }
 
     @Override
     public void closeScreen() {
-        mListener.closeScreen();
+        listener.closeScreen();
     }
 
     @Override
     public void showSelectColorDialog(int color) {
-        final ColorPickerDialog colorPickerDialog = new ColorPickerDialog(getContext(), mPreferences.getColorPrimary());
+        final ColorPickerDialog colorPickerDialog = new ColorPickerDialog(getContext(), preferences.getColorPrimary());
         colorPickerDialog.setColor(color);
         colorPickerDialog.setOnClickListener(view -> {
             switch (view.getId()) {
                 case R.id.positive_button:
-                    mPresenter.selectColor(colorPickerDialog.getColor());
-                    mColorBtn.setBackgroundColor(colorPickerDialog.getColor());
+                    presenter.selectColor(colorPickerDialog.getColor());
+                    colorBtn.setBackgroundColor(colorPickerDialog.getColor());
                     colorPickerDialog.dismiss();
                     break;
                 case R.id.negative_button:
@@ -170,10 +170,10 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.done_button:
-                mPresenter.onDoneButtonClick();
+                presenter.onDoneButtonClick();
                 break;
             case R.id.color_button:
-                mPresenter.onColorButtonClick();
+                presenter.onColorButtonClick();
                 break;
         }
     }
@@ -182,28 +182,28 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
     public void setRandomColor() {
         int color = getRandomColor();
         setColorToButton(color);
-        mPresenter.selectColor(color);
+        presenter.selectColor(color);
     }
 
     @Override
     public void setName(String name) {
-        mNameEdit.setText(name);
-        mNameEdit.setSelection(mNameEdit.getText().length());
+        nameEdit.setText(name);
+        nameEdit.setSelection(nameEdit.getText().length());
     }
 
     @Override
     public void showNameIsRequiredError() {
-        mNameEdit.setError(getString(R.string.list_name_is_required));
+        nameEdit.setError(getString(R.string.list_name_is_required));
     }
 
     @Override
     public void setDefaultToolbarTitle() {
-        mListener.setTitle(getString(R.string.title_activity_add_list));
+        listener.setTitle(getString(R.string.title_activity_add_list));
     }
 
     @Override
     public void setToolbarTitle(String title) {
-        mListener.setTitle(title);
+        listener.setTitle(title);
     }
 
     @Override
@@ -218,17 +218,17 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
 
     @Override
     public void showKeyboard() {
-        ShoppistUtils.showKeyboard(getContext(), mNameEdit);
+        ShoppistUtils.showKeyboard(getContext(), nameEdit);
     }
 
     @Override
     public void setColorToButton(int color) {
-        mColorBtn.setBackgroundColor(color);
+        colorBtn.setBackgroundColor(color);
     }
 
     @Override
     protected boolean isItemEdit() {
-        return mPresenter.isItemEdit();
+        return presenter.isItemEdit();
     }
 
     @Override
@@ -238,17 +238,17 @@ public class AddListFragment extends BaseAddElementFragment implements AddListVi
 
     @Override
     public void showLoading() {
-        mProgressDialog.show();
+        progressDialog.show();
     }
 
     @Override
     public void hideLoading() {
-        mProgressDialog.dismiss();
+        progressDialog.dismiss();
     }
 
     @Override
     public boolean onLongClick(View v) {
-        mPresenter.onDoneButtonLongClick();
+        presenter.onDoneButtonLongClick();
         return true;
     }
 }

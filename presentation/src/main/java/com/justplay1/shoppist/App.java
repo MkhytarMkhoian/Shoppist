@@ -29,7 +29,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  */
 public class App extends Application {
 
-    private AppComponent mAppComponent;
+    private AppComponent appComponent;
 
     private static App instance;
 
@@ -48,13 +48,13 @@ public class App extends Application {
     }
 
     private void initializeInjector() {
-        mAppComponent = DaggerAppComponent.builder()
+        appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
     }
 
     public AppComponent getAppComponent() {
-        return mAppComponent;
+        return appComponent;
     }
 
     public static App get() {

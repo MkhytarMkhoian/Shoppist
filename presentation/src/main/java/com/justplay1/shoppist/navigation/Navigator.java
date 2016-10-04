@@ -44,7 +44,7 @@ import javax.inject.Singleton;
 public class Navigator {
 
     @Inject
-    public Navigator() {
+    Navigator() {
         //empty
     }
 

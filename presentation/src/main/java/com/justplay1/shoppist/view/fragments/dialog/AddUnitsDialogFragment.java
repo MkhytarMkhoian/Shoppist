@@ -39,11 +39,11 @@ public class AddUnitsDialogFragment extends BaseDialogFragment
         implements AddUnitView {
 
     @Inject
-    AddUnitPresenter mPresenter;
+    AddUnitPresenter presenter;
 
-    private OnCompleteListener mCompleteListener;
-    private MaterialEditText mFullNameEdit;
-    private MaterialEditText mShortNameEdit;
+    private OnCompleteListener onCompleteListener;
+    private MaterialEditText fullNameEdit;
+    private MaterialEditText shortNameEdit;
 
     public static AddUnitsDialogFragment newInstance(UnitViewModel unit) {
         Bundle args = new Bundle();
@@ -69,25 +69,25 @@ public class AddUnitsDialogFragment extends BaseDialogFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.onCreate(getArguments(), savedInstanceState);
+        presenter.onCreate(getArguments(), savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.attachView(this);
+        presenter.attachView(this);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mFullNameEdit.setSelection(mFullNameEdit.getText().length());
+        fullNameEdit.setSelection(fullNameEdit.getText().length());
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.detachView();
+        presenter.detachView();
     }
 
     @Override
@@ -98,41 +98,41 @@ public class AddUnitsDialogFragment extends BaseDialogFragment
     @Override
     public void init(View view) {
         super.init(view);
-        mFullNameEdit = (MaterialEditText) view.findViewById(R.id.full_name_edit);
-        mShortNameEdit = (MaterialEditText) view.findViewById(R.id.short_name_edit);
-        mShortNameEdit.setPrimaryColor(mPreferences.getColorPrimary());
-        mFullNameEdit.setPrimaryColor(mPreferences.getColorPrimary());
-        mFullNameEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
-        mShortNameEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
+        fullNameEdit = (MaterialEditText) view.findViewById(R.id.full_name_edit);
+        shortNameEdit = (MaterialEditText) view.findViewById(R.id.short_name_edit);
+        shortNameEdit.setPrimaryColor(preferences.getColorPrimary());
+        fullNameEdit.setPrimaryColor(preferences.getColorPrimary());
+        fullNameEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
+        shortNameEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.positive_button:
-                final String fullName = ShoppistUtils.filterSpace(mFullNameEdit.getText().toString());
-                final String shortName = ShoppistUtils.filterSpace(mShortNameEdit.getText().toString());
-                mPresenter.onPositiveButtonClick(fullName, shortName);
+                final String fullName = ShoppistUtils.filterSpace(fullNameEdit.getText().toString());
+                final String shortName = ShoppistUtils.filterSpace(shortNameEdit.getText().toString());
+                presenter.onPositiveButtonClick(fullName, shortName);
                 break;
             case R.id.negative_button:
-                mPresenter.onNegativeButtonClick();
+                presenter.onNegativeButtonClick();
                 break;
         }
     }
 
     @Override
     public void setShortName(String name) {
-        mShortNameEdit.setText(name);
+        shortNameEdit.setText(name);
     }
 
     @Override
     public void setFullName(String name) {
-        mFullNameEdit.setText(name);
+        fullNameEdit.setText(name);
     }
 
     @Override
     public void setDefaultUpdateTitle() {
-        mPositiveButton.setText(R.string.update);
+        positiveButton.setText(R.string.update);
         getDialog().setTitle(R.string.edit_unit);
     }
 
@@ -143,39 +143,39 @@ public class AddUnitsDialogFragment extends BaseDialogFragment
 
     @Override
     public void closeDialog() {
-        ShoppistUtils.hideKeyboard(getActivity(), mFullNameEdit);
+        ShoppistUtils.hideKeyboard(getActivity(), fullNameEdit);
         dismiss();
     }
 
     @Override
     public void showFullNameIsRequiredError() {
-        mFullNameEdit.setError(getString(R.string.full_unit_name_is_required));
+        fullNameEdit.setError(getString(R.string.full_unit_name_is_required));
     }
 
     @Override
     public void showShortNameIsRequiredError() {
-        mShortNameEdit.setError(getString(R.string.short_unit_name_is_required));
+        shortNameEdit.setError(getString(R.string.short_unit_name_is_required));
     }
 
     @Override
     public void onComplete(boolean isUpdate) {
-        if (mCompleteListener != null) {
-            mCompleteListener.onComplete(true);
+        if (onCompleteListener != null) {
+            onCompleteListener.onComplete(true);
         }
     }
 
     @Override
     public void showLoading() {
-        mProgressDialog.show();
+        progressDialog.show();
     }
 
     @Override
     public void hideLoading() {
-        mProgressDialog.dismiss();
+        progressDialog.dismiss();
     }
 
     public void setCompleteListener(OnCompleteListener listener) {
-        mCompleteListener = listener;
+        onCompleteListener = listener;
     }
 
     public interface OnCompleteListener {

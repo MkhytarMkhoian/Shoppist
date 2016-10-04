@@ -55,7 +55,7 @@ public class ListItemsFragment extends BaseEDSListFragment<ListItemViewModel, Li
         ListItemsView, ListItemAdapter.NoteClickListener {
 
     @Inject
-    ListItemsPresenter mPresenter;
+    ListItemsPresenter presenter;
 
     public static ListItemsFragment newInstance(ListViewModel parentList) {
         Bundle args = new Bundle();
@@ -68,27 +68,27 @@ public class ListItemsFragment extends BaseEDSListFragment<ListItemViewModel, Li
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.onCreate(getArguments(), savedInstanceState);
+        presenter.onCreate(getArguments(), savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.attachView(this);
-        mPresenter.attachRouter((ListItemsRouter) getActivity());
+        presenter.attachView(this);
+        presenter.attachRouter((ListItemsRouter) getActivity());
     }
 
     @Override
     protected void init(View view) {
         super.init(view);
-        mActionButton.setOnLongClickListener(this);
+        actionButton.setOnLongClickListener(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.detachView();
-        mPresenter.detachRouter();
+        presenter.detachView();
+        presenter.detachRouter();
     }
 
     @Override
@@ -104,37 +104,37 @@ public class ListItemsFragment extends BaseEDSListFragment<ListItemViewModel, Li
 
     @Override
     protected void initAdapter() {
-        mAdapter = new ListItemAdapter(getContext(), mActionModeInteractionListener, mRecyclerView, mPreferences);
-        mAdapter.setClickListener(this);
-        mAdapter.setSwipeEventListener(this);
-        mAdapter.setNoteClickListener(this);
+        adapter = new ListItemAdapter(getContext(), actionModeInteractionListener, recyclerView, preferences);
+        adapter.setClickListener(this);
+        adapter.setSwipeEventListener(this);
+        adapter.setNoteClickListener(this);
     }
 
     @Override
     protected void initRecyclerView(View view, Bundle savedInstanceState) {
         super.initRecyclerView(view, savedInstanceState);
-        mAdapter.setExpandableItemManager(mRecyclerViewExpandableItemManager);
+        adapter.setExpandableItemManager(recyclerViewExpandableItemManager);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_button:
-                mPresenter.onAddButtonClick();
+                presenter.onAddButtonClick();
                 break;
         }
     }
 
     @Override
     public boolean onLongClick(View v) {
-        mPresenter.onAddButtonLongClick();
+        presenter.onAddButtonLongClick();
         return true;
     }
 
     @Override
     public void showData(List<Pair<HeaderViewModel, List<ListItemViewModel>>> data) {
-        mAdapter.setData(data);
-        mAdapter.notifyDataSetChanged();
+        adapter.setData(data);
+        adapter.notifyDataSetChanged();
         onExpandAll();
     }
 
@@ -145,17 +145,17 @@ public class ListItemsFragment extends BaseEDSListFragment<ListItemViewModel, Li
 
     @Override
     public void showLoading() {
-        mEmptyView.showProgressBar();
+        emptyView.showProgressBar();
     }
 
     @Override
     public void hideLoading() {
-        mEmptyView.hideProgressBar();
+        emptyView.hideProgressBar();
     }
 
     @Override
     public void onItemClick(BaseItemHolder holder, int position, long id) {
-        mPresenter.onListItemClick(mAdapter.getChildItem(holder.groupPosition, holder.childPosition));
+        presenter.onListItemClick(adapter.getChildItem(holder.groupPosition, holder.childPosition));
     }
 
     @Override
@@ -177,73 +177,73 @@ public class ListItemsFragment extends BaseEDSListFragment<ListItemViewModel, Li
     private void openMoveGoodsDialog(ListViewModel currentList, List<ListItemViewModel> data, boolean isCopy) {
         FragmentManager fm = getFragmentManager();
         MoveListItemsDialogFragment dialog = MoveListItemsDialogFragment.newInstance(currentList, data, isCopy);
-        dialog.setCompleteListener(() -> mActionModeInteractionListener.closeActionMode());
+        dialog.setCompleteListener(() -> actionModeInteractionListener.closeActionMode());
         dialog.show(fm, MoveListItemsDialogFragment.class.getName());
     }
 
     public void onDeleteCheckedItemsClick() {
         deleteItems(getString(R.string.delete_the_item),
-                () -> mAdapter.deleteCheckedView(deleteItems -> mPresenter.deleteItems(deleteItems)));
+                () -> adapter.deleteCheckedView(deleteItems -> presenter.deleteItems(deleteItems)));
     }
 
     public void onReturnCheckedItemsToListClick() {
-        mPresenter.returnItemsToList(mAdapter.getCheckedItems());
+        presenter.returnItemsToList(adapter.getCheckedItems());
     }
 
     public void onStrikeOutCheckedItemsClick() {
-        mPresenter.strikeOutItems(mAdapter.getCheckedItems());
+        presenter.strikeOutItems(adapter.getCheckedItems());
     }
 
     public void onReturnAllToListClick() {
-        mPresenter.returnItemsToList(mAdapter.getItems());
+        presenter.returnItemsToList(adapter.getItems());
     }
 
     public void onStrikeOutAllClick() {
-        mPresenter.strikeOutItems(mAdapter.getItems());
+        presenter.strikeOutItems(adapter.getItems());
     }
 
     public void onExpandAll() {
-        mRecyclerViewExpandableItemManager.expandAll();
+        recyclerViewExpandableItemManager.expandAll();
     }
 
     public void onCollapseAll() {
-        mRecyclerViewExpandableItemManager.collapseAll();
+        recyclerViewExpandableItemManager.collapseAll();
     }
 
     public void onUnCheckAllItemsClick() {
-        mAdapter.unCheckAllItems();
+        adapter.unCheckAllItems();
     }
 
     public void onCheckAllItemsClick() {
-        mAdapter.checkAllItems();
+        adapter.checkAllItems();
     }
 
     public void onSortByNameClick() {
-        mPresenter.onSortByNameClick(mAdapter.getItems());
+        presenter.onSortByNameClick(adapter.getItems());
     }
 
     public void onSortByPriorityClick() {
-        mPresenter.onSortByPriorityClick(mAdapter.getItems());
+        presenter.onSortByPriorityClick(adapter.getItems());
     }
 
     public void onSortByCategoryClick() {
-        mPresenter.onSortByCategoryClick(mAdapter.getItems());
+        presenter.onSortByCategoryClick(adapter.getItems());
     }
 
     public void onSortByTimeCreatedClick() {
-        mPresenter.onSortByTimeCreatedClick(mAdapter.getItems());
+        presenter.onSortByTimeCreatedClick(adapter.getItems());
     }
 
     @Override
     public void showEmailShareDialog(String listName) {
         String textToSend = listName + "\n" + "\n" +
-                ShoppistUtils.buildShareString(mAdapter.getCheckedItems());
+                ShoppistUtils.buildShareString(adapter.getCheckedItems());
         share(textToSend, getString(R.string.shopping_list));
     }
 
     protected void swipeDeleteConfirm(String message, final ListItemViewModel item,
                                       final DeleteSwipeResultListener<ListItemViewModel> resultListener) {
-        if (mPreferences.isNeedShowConfirmDeleteDialog()) {
+        if (preferences.isNeedShowConfirmDeleteDialog()) {
             showConfirmDeleteDialog(message, (dialog, which) -> {
                 switch (which) {
                     case Dialog.BUTTON_POSITIVE:
@@ -264,7 +264,7 @@ public class ListItemsFragment extends BaseEDSListFragment<ListItemViewModel, Li
 
     private void unCheckItem(ListItemViewModel item) {
         if (item.isChecked()) {
-            mAdapter.updateCount(false);
+            adapter.updateCount(false);
         }
     }
 
@@ -273,42 +273,42 @@ public class ListItemsFragment extends BaseEDSListFragment<ListItemViewModel, Li
         swipeDeleteConfirm(getString(R.string.delete_the_item), removeItem, new DeleteSwipeResultListener<ListItemViewModel>() {
             @Override
             public void onDelete(final ListItemViewModel deleteItem) {
-                mPresenter.deleteItems(Collections.singletonList(deleteItem));
+                presenter.deleteItems(Collections.singletonList(deleteItem));
             }
 
             @Override
             public void onCancel(ListItemViewModel deleteItem) {
                 deleteItem.setPinned(false);
-                mRecyclerViewExpandableItemManager.notifyChildItemChanged(groupPosition, childPosition);
+                recyclerViewExpandableItemManager.notifyChildItemChanged(groupPosition, childPosition);
             }
         });
     }
 
     @Override
     public void onChildItemEdit(ListItemViewModel editItem, final int groupPosition, final int childPosition) {
-        mPresenter.onChildItemEdit(editItem);
-        mRecyclerView.postDelayed(() -> mRecyclerViewExpandableItemManager.notifyChildItemChanged(groupPosition, childPosition), 300);
+        presenter.onChildItemEdit(editItem);
+        recyclerView.postDelayed(() -> recyclerViewExpandableItemManager.notifyChildItemChanged(groupPosition, childPosition), 300);
     }
 
     @Override
     public void onChildItemMoved(ListItemViewModel moveItem) {
-        mPresenter.onChildItemMoved(moveItem);
+        presenter.onChildItemMoved(moveItem);
     }
 
     public void onCopyItemsClick() {
-        mPresenter.onCopyItemsClick(mAdapter.getCheckedItems());
+        presenter.onCopyItemsClick(adapter.getCheckedItems());
     }
 
     public void onMoveItemsClick() {
-        mPresenter.onMoveItemsClick(mAdapter.getCheckedItems());
+        presenter.onMoveItemsClick(adapter.getCheckedItems());
     }
 
     public void onEmailShareClick() {
-        mPresenter.onEmailShareClick();
+        presenter.onEmailShareClick();
     }
 
     public void onEditItemClick() {
-        mPresenter.onEditItemClick(mAdapter.getCheckedItems().get(0));
+        presenter.onEditItemClick(adapter.getCheckedItems().get(0));
     }
 
     public boolean isMoveCopyButtonEnable() {
@@ -317,14 +317,14 @@ public class ListItemsFragment extends BaseEDSListFragment<ListItemViewModel, Li
 
     public boolean isEditButtonEnable() {
         boolean editFlag = true;
-        if (mAdapter.getCheckedItemsCount() != 1) {
+        if (adapter.getCheckedItemsCount() != 1) {
             editFlag = false;
         }
         return editFlag;
     }
 
     public boolean isCheckAllButtonEnable() {
-        return !mAdapter.isAllItemsChecked();
+        return !adapter.isAllItemsChecked();
     }
 
     @Override

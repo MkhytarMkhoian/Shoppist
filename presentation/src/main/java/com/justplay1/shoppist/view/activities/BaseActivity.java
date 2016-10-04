@@ -48,11 +48,11 @@ public abstract class BaseActivity extends AppCompatActivity
         implements HasInjector {
 
     @Inject
-    Navigator mNavigator;
+    Navigator navigator;
     @Inject
-    AppPreferences mPreferences;
+    AppPreferences preferences;
 
-    protected NonConfigurationInstance mNonConfigurationInstance;
+    protected NonConfigurationInstance nonConfigurationInstance;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -61,7 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        mNonConfigurationInstance = retrieveNonConfigurationInstanceOrCreateNew();
+        nonConfigurationInstance = retrieveNonConfigurationInstanceOrCreateNew();
         super.onCreate(savedInstanceState);
         getAppComponent().inject(this);
         setStatusBarColor();
@@ -78,18 +78,18 @@ public abstract class BaseActivity extends AppCompatActivity
 
     @Override
     public Object onRetainCustomNonConfigurationInstance() {
-        return mNonConfigurationInstance;
+        return nonConfigurationInstance;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <C> C getInjector(String id) {
-        return (C) mNonConfigurationInstance.getInjector(id);
+        return (C) nonConfigurationInstance.getInjector(id);
     }
 
     @Override
     public void putInjector(String id, Object component) {
-        mNonConfigurationInstance.putInjector(id, component);
+        nonConfigurationInstance.putInjector(id, component);
     }
 
     protected AppComponent getAppComponent() {
@@ -113,13 +113,13 @@ public abstract class BaseActivity extends AppCompatActivity
     }
 
     public void setStatusBarColor() {
-        setStatusBarColor(mPreferences.getColorPrimaryDark());
+        setStatusBarColor(preferences.getColorPrimaryDark());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        ShoppistUtils.setKeepScreenOn(getWindow(), mPreferences.isLockScreen());
+        ShoppistUtils.setKeepScreenOn(getWindow(), preferences.isLockScreen());
     }
 
     public void finishActivityWithResult(Activity activity, int resultCode, Intent data) {

@@ -53,19 +53,19 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
     private final BehaviorSubject<List<UnitViewModel>> unitsCache = BehaviorSubject.create();
     private final BehaviorSubject<List<CategoryViewModel>> categoryCache = BehaviorSubject.create();
 
-    private final GoodsModelDataMapper mGoodsModelDataMapper;
-    private final CategoryModelDataMapper mCategoryModelDataMapper;
-    private final UnitsDataModelMapper mUnitsDataModelMapper;
+    private final GoodsModelDataMapper goodsModelDataMapper;
+    private final CategoryModelDataMapper categoryModelDataMapper;
+    private final UnitsDataModelMapper unitsDataModelMapper;
 
-    private final UpdateGoods mUpdateGoods;
-    private final AddGoods mAddGoods;
-    private final GetUnitsList mGetUnitsList;
-    private final GetCategoryList mGetCategoryList;
+    private final UpdateGoods updateGoods;
+    private final AddGoods addGoods;
+    private final GetUnitsList getUnitsList;
+    private final GetCategoryList getCategoryList;
 
-    private CategoryViewModel mCategoryModel;
-    private UnitViewModel mUnitModel;
-    private ProductViewModel mItem;
-    private String mName = "";
+    private CategoryViewModel categoryModel;
+    private UnitViewModel unitModel;
+    private ProductViewModel item;
+    private String name = "";
 
     @Inject
     AddGoodsPresenter(GoodsModelDataMapper dataMapper,
@@ -75,13 +75,13 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
                       GetCategoryList getCategoryList,
                       CategoryModelDataMapper categoryModelDataMapper,
                       UnitsDataModelMapper unitsDataModelMapper) {
-        this.mGoodsModelDataMapper = dataMapper;
-        this.mUpdateGoods = updateGoods;
-        this.mAddGoods = addGoods;
-        this.mGetUnitsList = getUnitsList;
-        this.mGetCategoryList = getCategoryList;
-        this.mUnitsDataModelMapper = unitsDataModelMapper;
-        this.mCategoryModelDataMapper = categoryModelDataMapper;
+        this.goodsModelDataMapper = dataMapper;
+        this.updateGoods = updateGoods;
+        this.addGoods = addGoods;
+        this.getUnitsList = getUnitsList;
+        this.getCategoryList = getCategoryList;
+        this.unitsDataModelMapper = unitsDataModelMapper;
+        this.categoryModelDataMapper = categoryModelDataMapper;
 
         loadCategories();
         loadUnits();
@@ -91,46 +91,46 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
     public void onCreate(Bundle arguments, Bundle savedInstanceState) {
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
-            mName = arguments.getString(Const.NEW_NAME);
-            mItem = arguments.getParcelable(ProductViewModel.class.getName());
+            name = arguments.getString(Const.NEW_NAME);
+            item = arguments.getParcelable(ProductViewModel.class.getName());
         }
     }
 
     @Override
     public void attachView(AddGoodsView view) {
         super.attachView(view);
-        if (mItem != null) {
-            mName = mItem.getName();
+        if (item != null) {
+            name = item.getName();
             setDefaultUpdateTitle();
         } else {
             setDefaultNewTitle();
         }
-        setViewName(mName);
+        setViewName(name);
 
-        mSubscriptions.add(unitsCache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
+        subscriptions.add(unitsCache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
 
             @Override
             public void onNext(List<UnitViewModel> unitViewModels) {
                 setUnits(unitViewModels);
-                if (mUnitModel != null) {
-                    selectUnit(mUnitModel.getId());
-                } else if (mItem != null && !mItem.isUnitEmpty()) {
-                    selectUnit(mItem.getUnit().getId());
+                if (unitModel != null) {
+                    selectUnit(unitModel.getId());
+                } else if (item != null && !item.isUnitEmpty()) {
+                    selectUnit(item.getUnit().getId());
                 } else {
                     selectUnit(UnitViewModel.NO_UNIT_ID);
                 }
             }
         }));
 
-        mSubscriptions.add(categoryCache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
+        subscriptions.add(categoryCache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
 
             @Override
             public void onNext(List<CategoryViewModel> category) {
                 setCategory(category);
-                if (mCategoryModel != null) {
-                    selectCategory(mCategoryModel.getId());
-                } else if (mItem != null && !mItem.isCategoryEmpty()) {
-                    selectCategory(mItem.getCategory().getId());
+                if (categoryModel != null) {
+                    selectCategory(categoryModel.getId());
+                } else if (item != null && !item.isCategoryEmpty()) {
+                    selectCategory(item.getCategory().getId());
                 } else {
                     selectCategory(CategoryViewModel.NO_CATEGORY_ID);
                 }
@@ -139,7 +139,7 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
     }
 
     public void onPositiveButtonClick() {
-        saveGoods(mName);
+        saveGoods(name);
     }
 
     public void onNegativeButtonClick() {
@@ -155,29 +155,29 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
     }
 
     public void setName(String name) {
-        mName = name;
-        if (mItem != null) {
-            mItem.setName(name);
+        this.name = name;
+        if (item != null) {
+            item.setName(name);
         }
     }
 
     public void setCategory(CategoryViewModel category) {
-        mCategoryModel = category;
+        categoryModel = category;
     }
 
     public void setUnit(UnitViewModel unit) {
-        mUnitModel = unit;
+        unitModel = unit;
     }
 
     private void loadCategories() {
-        mGetCategoryList.get()
-                .map(mCategoryModelDataMapper::transformToViewModel)
+        getCategoryList.get()
+                .map(categoryModelDataMapper::transformToViewModel)
                 .subscribe(categoryCache);
     }
 
     private void loadUnits() {
-        mGetUnitsList.get()
-                .map(mUnitsDataModelMapper::transformToViewModel)
+        getUnitsList.get()
+                .map(unitsDataModelMapper::transformToViewModel)
                 .subscribe(unitsCache);
     }
 
@@ -185,16 +185,16 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
         if (checkDataForErrors(name)) {
             ProductViewModel product = new ProductViewModel();
             product.setName(name);
-            product.setCategory(mCategoryModel);
-            product.setUnit(mUnitModel);
+            product.setCategory(categoryModel);
+            product.setUnit(unitModel);
 
-            if (mItem != null) {
-                product.setId(mItem.getId());
-                product.setTimeCreated(mItem.getTimeCreated());
-                product.setCreateByUser(mItem.isCreateByUser());
-                if (!mItem.getCategory().getId().equals(product.getCategory().getId())
-                        || !mItem.getUnit().getId().equals(product.getUnit().getId())
-                        || !mItem.getName().equals(product.getName())) {
+            if (item != null) {
+                product.setId(item.getId());
+                product.setTimeCreated(item.getTimeCreated());
+                product.setCreateByUser(item.isCreateByUser());
+                if (!item.getCategory().getId().equals(product.getCategory().getId())
+                        || !item.getUnit().getId().equals(product.getUnit().getId())
+                        || !item.getName().equals(product.getName())) {
                     product.setCreateByUser(true);
                 }
                 updateGoods(product);
@@ -209,21 +209,21 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
 
     private void addGoods(ProductViewModel data) {
         showLoading();
-        mSubscriptions.add(
-                Observable.fromCallable(() -> mGoodsModelDataMapper.transform(data))
+        subscriptions.add(
+                Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
                         .flatMap(currency -> {
-                            mAddGoods.setData(Collections.singletonList(currency));
-                            return mAddGoods.get();
+                            addGoods.setData(Collections.singletonList(currency));
+                            return addGoods.get();
                         }).subscribe(new SaveGoodsSubscriber(true)));
     }
 
     private void updateGoods(ProductViewModel data) {
         showLoading();
-        mSubscriptions.add(
-                Observable.fromCallable(() -> mGoodsModelDataMapper.transform(data))
+        subscriptions.add(
+                Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
                         .flatMap(currency -> {
-                            mUpdateGoods.setData(Collections.singletonList(currency));
-                            return mUpdateGoods.get();
+                            updateGoods.setData(Collections.singletonList(currency));
+                            return updateGoods.get();
                         }).subscribe(new SaveGoodsSubscriber(false)));
     }
 

@@ -48,7 +48,7 @@ public class CurrencyAdapter extends BaseListAdapter<CurrencyViewModel> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_currency, parent, false);
         CurrencyItemViewHolder holder = new CurrencyItemViewHolder(view);
-        holder.setClickListener(mItemClickListener);
+        holder.setClickListener(itemClickListener);
         return holder;
     }
 
@@ -61,7 +61,7 @@ public class CurrencyAdapter extends BaseListAdapter<CurrencyViewModel> {
         }
 
         holder.name.setText(item.getName());
-        holder.selectBox.setNormalStateColor(ContextCompat.getColor(mContext, R.color.blue_grey_500));
+        holder.selectBox.setNormalStateColor(ContextCompat.getColor(context, R.color.blue_grey_500));
         holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
         holder.selectBox.setEventListener(isChecked -> {
             onCheckItem(item, isChecked);

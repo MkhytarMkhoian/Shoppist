@@ -47,7 +47,7 @@ public class CategoriesAdapter extends BaseListAdapter<CategoryViewModel> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
         CategoryItemViewHolder holder = new CategoryItemViewHolder(view);
-        holder.setClickListener(mItemClickListener);
+        holder.setClickListener(itemClickListener);
         return holder;
     }
 

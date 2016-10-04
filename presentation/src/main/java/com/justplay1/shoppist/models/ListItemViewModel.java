@@ -73,7 +73,7 @@ public class ListItemViewModel extends BaseViewModel {
         unit = parcel.readParcelable(ListItemViewModel.class.getClassLoader());
         timeCreated = parcel.readLong();
         currency = parcel.readParcelable(ListItemViewModel.class.getClassLoader());
-        mPinned = parcel.readByte() != 0;
+        pinned = parcel.readByte() != 0;
     }
 
     public String getParentListId() {
@@ -221,7 +221,7 @@ public class ListItemViewModel extends BaseViewModel {
         dest.writeParcelable(unit, flags);
         dest.writeLong(timeCreated);
         dest.writeParcelable(currency, flags);
-        dest.writeByte((byte) (mPinned ? 1 : 0));
+        dest.writeByte((byte) (pinned ? 1 : 0));
     }
 
     public static final Creator<ListItemViewModel> CREATOR = new Creator<ListItemViewModel>() {

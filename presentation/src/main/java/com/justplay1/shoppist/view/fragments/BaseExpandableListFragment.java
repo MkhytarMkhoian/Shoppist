@@ -34,18 +34,18 @@ public abstract class BaseExpandableListFragment<M extends BaseViewModel, T exte
 
     protected static final String SAVED_STATE_EXPANDABLE_ITEM_MANAGER = "RecyclerViewExpandableItemManager";
 
-    protected RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
-    protected RecyclerView.Adapter mWrappedAdapter;
+    protected RecyclerViewExpandableItemManager recyclerViewExpandableItemManager;
+    protected RecyclerView.Adapter wrappedAdapter;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         // save current state to support screen rotation, etc...
-        if (mRecyclerViewExpandableItemManager != null) {
+        if (recyclerViewExpandableItemManager != null) {
             outState.putParcelable(
                     SAVED_STATE_EXPANDABLE_ITEM_MANAGER,
-                    mRecyclerViewExpandableItemManager.getSavedState());
+                    recyclerViewExpandableItemManager.getSavedState());
         }
     }
 
@@ -53,20 +53,20 @@ public abstract class BaseExpandableListFragment<M extends BaseViewModel, T exte
     protected void initRecyclerView(View view, Bundle savedInstanceState) {
         super.initRecyclerView(view, savedInstanceState);
         final Parcelable eimSavedState = (savedInstanceState != null) ? savedInstanceState.getParcelable(SAVED_STATE_EXPANDABLE_ITEM_MANAGER) : null;
-        mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
-        mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(mAdapter);
+        recyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
+        wrappedAdapter = recyclerViewExpandableItemManager.createWrappedAdapter(adapter);
     }
 
     @Override
     public void onDestroyView() {
-        if (mRecyclerViewExpandableItemManager != null) {
-            mRecyclerViewExpandableItemManager.release();
-            mRecyclerViewExpandableItemManager = null;
+        if (recyclerViewExpandableItemManager != null) {
+            recyclerViewExpandableItemManager.release();
+            recyclerViewExpandableItemManager = null;
         }
 
-        if (mWrappedAdapter != null) {
-            WrapperAdapterUtils.releaseAll(mWrappedAdapter);
-            mWrappedAdapter = null;
+        if (wrappedAdapter != null) {
+            WrapperAdapterUtils.releaseAll(wrappedAdapter);
+            wrappedAdapter = null;
         }
         super.onDestroyView();
     }

@@ -36,9 +36,7 @@ import java.util.Locale;
  */
 public class ColorPickerDialog extends Dialog implements SeekBar.OnSeekBarChangeListener {
 
-    private
-    @ColorInt
-    int mButtonColor;
+    @ColorInt private int buttonColor;
 
     private View colorView;
     private CustomSeekBar redSeekBar, greenSeekBar, blueSeekBar;
@@ -49,7 +47,7 @@ public class ColorPickerDialog extends Dialog implements SeekBar.OnSeekBarChange
 
     public ColorPickerDialog(Context context, @ColorInt int buttonColor) {
         super(context);
-        mButtonColor = buttonColor;
+        this.buttonColor = buttonColor;
         init();
     }
 
@@ -59,8 +57,8 @@ public class ColorPickerDialog extends Dialog implements SeekBar.OnSeekBarChange
 
         mPositiveBtn = (Button) findViewById(R.id.positive_button);
         mNegativeBtn = (Button) findViewById(R.id.negative_button);
-        mNegativeBtn.setTextColor(mButtonColor);
-        mPositiveBtn.setTextColor(mButtonColor);
+        mNegativeBtn.setTextColor(buttonColor);
+        mPositiveBtn.setTextColor(buttonColor);
 
         colorView = findViewById(R.id.colorView);
         redSeekBar = (CustomSeekBar) findViewById(R.id.redSeekBar);

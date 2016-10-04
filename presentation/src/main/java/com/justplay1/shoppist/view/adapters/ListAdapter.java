@@ -62,7 +62,7 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
     public BaseItemHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shopping_list, parent, false);
         ListViewHolder holder = new ListViewHolder(view);
-        holder.setClickListener(mItemClickListener);
+        holder.setClickListener(itemClickListener);
         return holder;
     }
 
@@ -70,10 +70,10 @@ public class ListAdapter extends BaseListGroupAdapter<ListViewModel, BaseHeaderH
     public void onBindGroupViewHolder(BaseHeaderHolder holder, int groupPosition, int viewType) {
         HeaderViewModel model = getGroupItem(groupPosition);
         HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
-        if (mPreferences.getSortForLists() == SortType.SORT_BY_PRIORITY) {
+        if (preferences.getSortForLists() == SortType.SORT_BY_PRIORITY) {
             setPriorityTextColor(model.getPriority(), headerHolder.name);
         } else {
-            headerHolder.name.setTextColor(mPreferences.getColorPrimary());
+            headerHolder.name.setTextColor(preferences.getColorPrimary());
         }
         headerHolder.name.setText(model.getName());
         ExpandUtils.toggleIndicator(holder);

@@ -42,10 +42,10 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
         implements AddCurrencyView {
 
     @Inject
-    AddCurrencyPresenter mPresenter;
+    AddCurrencyPresenter presenter;
     @Bind(R.id.name_edit)
-    MaterialEditText mNameEdit;
-    private OnCompleteListener mCompleteListener;
+    MaterialEditText nameEdit;
+    private OnCompleteListener completeListener;
 
     public static AddCurrencyDialogFragment newInstance(CurrencyViewModel currency) {
         Bundle args = new Bundle();
@@ -71,33 +71,33 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
     @Override
     public void init(View view) {
         super.init(view);
-        mNameEdit.setPrimaryColor(mPreferences.getColorPrimary());
-        mNameEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
+        nameEdit.setPrimaryColor(preferences.getColorPrimary());
+        nameEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.onCreate(getArguments(), savedInstanceState);
+        presenter.onCreate(getArguments(), savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        mPresenter.attachView(this);
+        presenter.attachView(this);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mNameEdit.setSelection(mNameEdit.getText().length());
+        nameEdit.setSelection(nameEdit.getText().length());
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.detachView();
+        presenter.detachView();
         ButterKnife.unbind(this);
     }
 
@@ -110,41 +110,41 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.positive_button:
-                final String name = ShoppistUtils.filterSpace(mNameEdit.getText().toString());
-                mPresenter.onPositiveButtonClick(name);
+                final String name = ShoppistUtils.filterSpace(nameEdit.getText().toString());
+                presenter.onPositiveButtonClick(name);
                 break;
             case R.id.negative_button:
-                mPresenter.onNegativeButtonClick();
+                presenter.onNegativeButtonClick();
                 break;
         }
     }
 
     @Override
     public void onComplete(boolean isUpdate) {
-        if (mCompleteListener != null) {
-            mCompleteListener.onComplete(true);
+        if (completeListener != null) {
+            completeListener.onComplete(true);
         }
     }
 
     @Override
     public void showNameIsRequiredError() {
-        mNameEdit.setError(getString(R.string.currency_name_is_required));
+        nameEdit.setError(getString(R.string.currency_name_is_required));
     }
 
     @Override
     public void closeDialog() {
-        ShoppistUtils.hideKeyboard(getContext(), mNameEdit);
+        ShoppistUtils.hideKeyboard(getContext(), nameEdit);
         dismiss();
     }
 
     @Override
     public void setName(String name) {
-        mNameEdit.setText(name);
+        nameEdit.setText(name);
     }
 
     @Override
     public void setDefaultUpdateTitle() {
-        mPositiveButton.setText(R.string.update);
+        positiveButton.setText(R.string.update);
         getDialog().setTitle(R.string.edit_currency);
     }
 
@@ -155,16 +155,16 @@ public class AddCurrencyDialogFragment extends BaseDialogFragment
 
     @Override
     public void showLoading() {
-        mProgressDialog.show();
+        progressDialog.show();
     }
 
     @Override
     public void hideLoading() {
-        mProgressDialog.dismiss();
+        progressDialog.dismiss();
     }
 
     public void setCompleteListener(OnCompleteListener listener) {
-        mCompleteListener = listener;
+        completeListener = listener;
     }
 
     public interface OnCompleteListener {

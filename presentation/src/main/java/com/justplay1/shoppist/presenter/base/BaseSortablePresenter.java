@@ -44,10 +44,10 @@ import java.util.Locale;
 public abstract class BaseSortablePresenter<V extends ContextView, T extends BaseViewModel, R extends Router>
         extends BaseRxPresenter<V, R> {
 
-    protected final AppPreferences mPreferences;
+    protected final AppPreferences preferences;
 
     public BaseSortablePresenter(AppPreferences preferences) {
-        this.mPreferences = preferences;
+        this.preferences = preferences;
     }
 
     protected String getString(@StringRes int resId) {

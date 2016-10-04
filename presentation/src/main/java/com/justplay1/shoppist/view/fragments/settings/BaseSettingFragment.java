@@ -33,10 +33,10 @@ import javax.inject.Inject;
  */
 public abstract class BaseSettingFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
 
-    protected CustomProgressDialog mProgressDialog;
+    protected CustomProgressDialog progressDialog;
 
     @Inject
-    AppPreferences mPreferences;
+    AppPreferences preferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,8 +58,8 @@ public abstract class BaseSettingFragment extends PreferenceFragment implements 
     int getPreferencesResId();
 
     protected void initFrame() {
-        mProgressDialog = new CustomProgressDialog(getActivity());
-        mProgressDialog.setMessage(getString(R.string.please_wait));
-        mProgressDialog.setCancelable(false);
+        progressDialog = new CustomProgressDialog(getActivity());
+        progressDialog.setMessage(getString(R.string.please_wait));
+        progressDialog.setCancelable(false);
     }
 }

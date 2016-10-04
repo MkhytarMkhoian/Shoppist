@@ -46,12 +46,12 @@ import com.justplay1.shoppist.view.fragments.BaseAddElementFragment;
 public class AddElementActivity extends BaseActivity
         implements BaseAddElementFragment.AddElementListener, AddListItemFragment.AddListItemListener {
 
-    private Toolbar mToolbar;
-    @AddElementType private int mElementType;
+    private Toolbar toolbar;
+    @AddElementType private int elementType;
 
-    private CategoryViewModel mCategoryModel;
-    private ListViewModel mListModel;
-    private ListItemViewModel mListItemModel;
+    private CategoryViewModel categoryModel;
+    private ListViewModel listModel;
+    private ListItemViewModel listItemModel;
 
     public static Intent getCallingIntent(Context context, @AddElementType int type,
                                           CategoryViewModel category, ListViewModel list,
@@ -65,13 +65,13 @@ public class AddElementActivity extends BaseActivity
     }
 
     public BaseAddElementFragment createFragment() {
-        switch (mElementType) {
+        switch (elementType) {
             case AddElementType.CATEGORY:
-                return AddCategoryFragment.newInstance(mCategoryModel);
+                return AddCategoryFragment.newInstance(categoryModel);
             case AddElementType.LIST:
-                return AddListFragment.newInstance(mListModel);
+                return AddListFragment.newInstance(listModel);
             case AddElementType.LIST_ITEM:
-                return AddListItemFragment.newInstance(mListModel.getId(), mListItemModel);
+                return AddListItemFragment.newInstance(listModel.getId(), listItemModel);
         }
         return null;
     }
@@ -84,10 +84,10 @@ public class AddElementActivity extends BaseActivity
         initToolbar();
 
         if (getIntent() != null) {
-            mElementType = getIntent().getIntExtra(AddElementType.class.getName(), 0);
-            mCategoryModel = getIntent().getParcelableExtra(CategoryViewModel.class.getName());
-            mListModel = getIntent().getParcelableExtra(ListViewModel.class.getName());
-            mListItemModel = getIntent().getParcelableExtra(ListItemViewModel.class.getName());
+            elementType = getIntent().getIntExtra(AddElementType.class.getName(), 0);
+            categoryModel = getIntent().getParcelableExtra(CategoryViewModel.class.getName());
+            listModel = getIntent().getParcelableExtra(ListViewModel.class.getName());
+            listItemModel = getIntent().getParcelableExtra(ListItemViewModel.class.getName());
         }
         createNewInjectorIfNeeded();
 
@@ -101,7 +101,7 @@ public class AddElementActivity extends BaseActivity
 
     private void createNewInjectorIfNeeded() {
         Object component;
-        switch (mElementType) {
+        switch (elementType) {
             case AddElementType.CATEGORY:
                 component = getInjector(CategoryComponent.class.getName());
                 if (component == null) {
@@ -133,16 +133,16 @@ public class AddElementActivity extends BaseActivity
     }
 
     protected void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setBackgroundColor(mPreferences.getColorPrimary());
-        mToolbar.setNavigationIcon(R.drawable.ic_back_white);
-        mToolbar.setNavigationOnClickListener(v -> finishWithResult());
-        ViewCompat.setElevation(mToolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(preferences.getColorPrimary());
+        toolbar.setNavigationIcon(R.drawable.ic_back_white);
+        toolbar.setNavigationOnClickListener(v -> finishWithResult());
+        ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
     }
 
     @Override
     public void setTitle(String title) {
-        mToolbar.setTitle(title);
+        toolbar.setTitle(title);
     }
 
     @Override
@@ -152,7 +152,7 @@ public class AddElementActivity extends BaseActivity
 
     @Override
     public void openAddCategoryScreen(CategoryViewModel category) {
-        mNavigator.navigateToAddCategoryScreen(this, category);
+        navigator.navigateToAddCategoryScreen(this, category);
     }
 
     @Override

@@ -44,9 +44,9 @@ import javax.inject.Inject;
 public class MoveListItemsDialogFragment extends BaseDialogFragment implements MoveListItemsView {
 
     @Inject
-    MoveListItemsPresenter mPresenter;
+    MoveListItemsPresenter presenter;
 
-    private OnCompleteListener mCompleteListener;
+    private OnCompleteListener completeListener;
     private ListView listView;
     private SimpleAdapter adapter;
 
@@ -76,13 +76,13 @@ public class MoveListItemsDialogFragment extends BaseDialogFragment implements M
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.onCreate(getArguments(), savedInstanceState);
+        presenter.onCreate(getArguments(), savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.attachView(this);
+        presenter.attachView(this);
     }
 
     @Override
@@ -90,15 +90,15 @@ public class MoveListItemsDialogFragment extends BaseDialogFragment implements M
         super.init(view);
         listView = (ListView) view.findViewById(R.id.list_view);
 
-        mPositiveButton.setText(R.string.choose);
-        mNegativeButton.setText(R.string.cancel);
+        positiveButton.setText(R.string.choose);
+        negativeButton.setText(R.string.cancel);
         getDialog().setTitle(R.string.title_activity_shopping_lists);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.detachView();
+        presenter.detachView();
     }
 
     @Override
@@ -109,8 +109,8 @@ public class MoveListItemsDialogFragment extends BaseDialogFragment implements M
     @Override
     public void closeDialog() {
         dismiss();
-        if (mCompleteListener != null) {
-            mCompleteListener.onComplete();
+        if (completeListener != null) {
+            completeListener.onComplete();
         }
     }
 
@@ -130,7 +130,7 @@ public class MoveListItemsDialogFragment extends BaseDialogFragment implements M
         switch (v.getId()) {
             case R.id.positive_button:
                 ListViewModel newList = (ListViewModel) (((Map<String, Object>) adapter.getItem(listView.getCheckedItemPosition())).get("object"));
-                mPresenter.onPositiveButtonClick(newList);
+                presenter.onPositiveButtonClick(newList);
                 break;
             case R.id.negative_button:
                 dismiss();
@@ -140,16 +140,16 @@ public class MoveListItemsDialogFragment extends BaseDialogFragment implements M
 
     @Override
     public void showLoading() {
-        mProgressDialog.show();
+        progressDialog.show();
     }
 
     @Override
     public void hideLoading() {
-        mProgressDialog.dismiss();
+        progressDialog.dismiss();
     }
 
     public void setCompleteListener(OnCompleteListener listener) {
-        mCompleteListener = listener;
+        completeListener = listener;
     }
 
     public interface OnCompleteListener {

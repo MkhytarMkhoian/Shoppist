@@ -56,16 +56,16 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
 
     private final BehaviorSubject<Map<String, ProductViewModel>> cache = BehaviorSubject.create();
 
-    private final GoodsModelDataMapper mGoodsModelDataMapper;
-    private final CategoryModelDataMapper mCategoryModelDataMapper;
-    private final ListItemsModelDataMapper mListItemsModelDataMapper;
+    private final GoodsModelDataMapper goodsModelDataMapper;
+    private final CategoryModelDataMapper categoryModelDataMapper;
+    private final ListItemsModelDataMapper listItemsModelDataMapper;
 
-    private final GetCategory mGetCategory;
-    private final GetGoodsList mGetGoodsList;
-    private final AddListItems mAddListItems;
+    private final GetCategory getCategory;
+    private final GetGoodsList getGoodsList;
+    private final AddListItems addListItems;
 
-    private String mParentListId;
-    private int mContextType;
+    private String parentListId;
+    private int contextType;
 
     @Inject
     SearchPresenter(GoodsModelDataMapper dataMapper,
@@ -74,12 +74,12 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
                     GetCategory getCategory,
                     CategoryModelDataMapper categoryModelDataMapper,
                     ListItemsModelDataMapper listItemsModelDataMapper) {
-        this.mGoodsModelDataMapper = dataMapper;
-        this.mGetGoodsList = getGoodsList;
-        this.mGetCategory = getCategory;
-        this.mCategoryModelDataMapper = categoryModelDataMapper;
-        this.mAddListItems = addListItems;
-        this.mListItemsModelDataMapper = listItemsModelDataMapper;
+        this.goodsModelDataMapper = dataMapper;
+        this.getGoodsList = getGoodsList;
+        this.getCategory = getCategory;
+        this.categoryModelDataMapper = categoryModelDataMapper;
+        this.addListItems = addListItems;
+        this.listItemsModelDataMapper = listItemsModelDataMapper;
 
         loadData();
     }
@@ -88,15 +88,15 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
     public void onCreate(Bundle arguments, Bundle savedInstanceState) {
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
-            mParentListId = arguments.getString(Const.PARENT_LIST_ID);
-            mContextType = arguments.getInt(Const.SEARCH_CONTEXT_TYPE, Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST);
+            parentListId = arguments.getString(Const.PARENT_LIST_ID);
+            contextType = arguments.getInt(Const.SEARCH_CONTEXT_TYPE, Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST);
         }
     }
 
     @Override
     public void attachView(SearchView view) {
         super.attachView(view);
-        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<Map<String, ProductViewModel>>() {
+        subscriptions.add(cache.subscribe(new DefaultSubscriber<Map<String, ProductViewModel>>() {
             @Override
             public void onNext(Map<String, ProductViewModel> data) {
                 showData(data);
@@ -118,18 +118,18 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
     }
 
     private Observable<List<ProductViewModel>> loadGoods() {
-        return mGetGoodsList.get()
-                .map(mGoodsModelDataMapper::transformToViewModel);
+        return getGoodsList.get()
+                .map(goodsModelDataMapper::transformToViewModel);
     }
 
     private Observable<CategoryViewModel> loadDefaultCategory() {
-        mGetCategory.setId(CategoryViewModel.NO_CATEGORY_ID);
-        return mGetCategory.get()
-                .map(mCategoryModelDataMapper::transformToViewModel);
+        getCategory.setId(CategoryViewModel.NO_CATEGORY_ID);
+        return getCategory.get()
+                .map(categoryModelDataMapper::transformToViewModel);
     }
 
     public void onListItemClick(ProductViewModel product) {
-        switch (mContextType) {
+        switch (contextType) {
             case Const.CONTEXT_QUICK_ADD_GOODS_TO_LIST:
                 addItem(product);
                 break;
@@ -153,7 +153,7 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
 
     private void addItem(ProductViewModel product) {
         ListItemViewModel listItem = new ListItemViewModel();
-        listItem.setParentListId(mParentListId);
+        listItem.setParentListId(parentListId);
         listItem.setNote("");
         listItem.setName(product.getName());
         listItem.setTimeCreated(System.currentTimeMillis());
@@ -168,11 +168,11 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
         listItem.setCategory(product.getCategory());
         listItem.setPriority(Priority.NO_PRIORITY);
 
-        mSubscriptions.add(
-                Observable.fromCallable(() -> mListItemsModelDataMapper.transform(listItem))
+        subscriptions.add(
+                Observable.fromCallable(() -> listItemsModelDataMapper.transform(listItem))
                         .flatMap(item -> {
-                            mAddListItems.setData(Collections.singletonList(item));
-                            return mAddListItems.get();
+                            addListItems.setData(Collections.singletonList(item));
+                            return addListItems.get();
                         }).subscribe(new DefaultSubscriber<Boolean>() {
 
                     @Override

@@ -38,7 +38,7 @@ import javax.inject.Inject;
 public abstract class BaseFragment extends Fragment {
 
     @Inject
-    AppPreferences mPreferences;
+    AppPreferences preferences;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -50,12 +50,12 @@ import javax.inject.Inject;
 public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoodsView {
 
     @Inject
-    AddGoodsPresenter mPresenter;
+    AddGoodsPresenter presenter;
 
-    private OnCompleteListener mCompleteListener;
-    private MaterialEditText mNameEdit;
-    private CategorySpinnerView mCategoryList;
-    private UnitsSpinnerView mUnitList;
+    private OnCompleteListener completeListener;
+    private MaterialEditText nameEdit;
+    private CategorySpinnerView categoryList;
+    private UnitsSpinnerView unitList;
 
     private static AddGoodsDialogFragment newInstance(ProductViewModel product, String newName) {
         Bundle args = new Bundle();
@@ -90,19 +90,19 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.onCreate(getArguments(), savedInstanceState);
+        presenter.onCreate(getArguments(), savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.attachView(this);
+        presenter.attachView(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.detachView();
+        presenter.detachView();
     }
 
     @Override
@@ -114,17 +114,17 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
     public void init(View view) {
         super.init(view);
         TextView categoryLabel = (TextView) view.findViewById(R.id.category_label);
-        categoryLabel.setTextColor(mPreferences.getColorPrimary());
+        categoryLabel.setTextColor(preferences.getColorPrimary());
         TextView unitsLabel = (TextView) view.findViewById(R.id.units_label);
-        unitsLabel.setTextColor(mPreferences.getColorPrimary());
+        unitsLabel.setTextColor(preferences.getColorPrimary());
 
-        mNameEdit = (MaterialEditText) view.findViewById(R.id.goods_name);
-        mNameEdit.setPrimaryColor(mPreferences.getColorPrimary());
-        mNameEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
-        mNameEdit.addTextChangedListener(new AbstractTextWatcher() {
+        nameEdit = (MaterialEditText) view.findViewById(R.id.goods_name);
+        nameEdit.setPrimaryColor(preferences.getColorPrimary());
+        nameEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
+        nameEdit.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                mPresenter.setName(ShoppistUtils.filterSpace(s.toString()));
+                presenter.setName(ShoppistUtils.filterSpace(s.toString()));
             }
         });
 
@@ -133,13 +133,13 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
     }
 
     private void initUnitList(View view) {
-        mUnitList = (UnitsSpinnerView) view.findViewById(R.id.units_spinner_view);
-        mUnitList.setOnAddBtnClickListener(this);
-        mUnitList.setOnEditBtnClickListener(this);
-        mUnitList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        unitList = (UnitsSpinnerView) view.findViewById(R.id.units_spinner_view);
+        unitList.setOnAddBtnClickListener(this);
+        unitList.setOnEditBtnClickListener(this);
+        unitList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mPresenter.setUnit(mUnitList.getSelectedItem());
+                presenter.setUnit(unitList.getSelectedItem());
             }
 
             @Override
@@ -150,13 +150,13 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
     }
 
     private void initCategoryList(View parent) {
-        mCategoryList = (CategorySpinnerView) parent.findViewById(R.id.category_spinner_view);
-        mCategoryList.setEditBtnVisibility(View.GONE);
-        mCategoryList.setAddBtnVisibility(View.GONE);
-        mCategoryList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        categoryList = (CategorySpinnerView) parent.findViewById(R.id.category_spinner_view);
+        categoryList.setEditBtnVisibility(View.GONE);
+        categoryList.setAddBtnVisibility(View.GONE);
+        categoryList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mPresenter.setCategory(mCategoryList.getSelectedItem());
+                presenter.setCategory(categoryList.getSelectedItem());
             }
 
             @Override
@@ -169,23 +169,23 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mNameEdit.setSelection(mNameEdit.getText().length());
+        nameEdit.setSelection(nameEdit.getText().length());
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.positive_button:
-                mPresenter.onPositiveButtonClick();
+                presenter.onPositiveButtonClick();
                 break;
             case R.id.negative_button:
-                mPresenter.onNegativeButtonClick();
+                presenter.onNegativeButtonClick();
                 break;
             case R.id.add_button:
-                mPresenter.onAddUnitClick();
+                presenter.onAddUnitClick();
                 break;
             case R.id.edit_button:
-                mPresenter.onEditUnitClick(mUnitList.getSelectedItem());
+                presenter.onEditUnitClick(unitList.getSelectedItem());
                 break;
         }
     }
@@ -199,32 +199,32 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
 
     @Override
     public void selectCategory(String id) {
-        mCategoryList.selectItem(id);
+        categoryList.selectItem(id);
     }
 
     @Override
     public void selectUnit(String id) {
-        mUnitList.selectItem(id);
+        unitList.selectItem(id);
     }
 
     @Override
     public void setCategory(List<CategoryViewModel> category) {
-        mCategoryList.setData(category);
+        categoryList.setData(category);
     }
 
     @Override
     public void setUnits(List<UnitViewModel> unit) {
-        mUnitList.setData(unit);
+        unitList.setData(unit);
     }
 
     @Override
     public void setViewName(String name) {
-        mNameEdit.setText(name);
+        nameEdit.setText(name);
     }
 
     @Override
     public void setDefaultUpdateTitle() {
-        mPositiveButton.setText(R.string.update);
+        positiveButton.setText(R.string.update);
         getDialog().setTitle(R.string.edit_goods);
     }
 
@@ -235,34 +235,34 @@ public class AddGoodsDialogFragment extends BaseDialogFragment implements AddGoo
 
     @Override
     public void closeDialog() {
-        ShoppistUtils.hideKeyboard(getActivity(), mNameEdit);
+        ShoppistUtils.hideKeyboard(getActivity(), nameEdit);
         dismiss();
     }
 
     @Override
     public void showNameIsRequiredError() {
-        mNameEdit.setError(getString(R.string.goods_name_is_required));
+        nameEdit.setError(getString(R.string.goods_name_is_required));
     }
 
     @Override
     public void onComplete(boolean isUpdate) {
-        if (mCompleteListener != null) {
-            mCompleteListener.onComplete(true);
+        if (completeListener != null) {
+            completeListener.onComplete(true);
         }
     }
 
     @Override
     public void showLoading() {
-        mProgressDialog.show();
+        progressDialog.show();
     }
 
     @Override
     public void hideLoading() {
-        mProgressDialog.dismiss();
+        progressDialog.dismiss();
     }
 
     public void setCompleteListener(OnCompleteListener listener) {
-        mCompleteListener = listener;
+        completeListener = listener;
     }
 
     public interface OnCompleteListener {

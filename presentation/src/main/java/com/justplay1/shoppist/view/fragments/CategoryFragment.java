@@ -25,7 +25,7 @@ public class CategoryFragment extends BaseListFragment<CategoryViewModel, Catego
         implements CategoryView, ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, View.OnClickListener {
 
     @Inject
-    CategoryPresenter mPresenter;
+    CategoryPresenter presenter;
 
     public static CategoryFragment newInstance() {
         Bundle args = new Bundle();
@@ -42,8 +42,8 @@ public class CategoryFragment extends BaseListFragment<CategoryViewModel, Catego
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.attachRouter((CategoryRouter) getActivity());
-        mPresenter.attachView(this);
+        presenter.attachRouter((CategoryRouter) getActivity());
+        presenter.attachView(this);
     }
 
     @Override
@@ -54,48 +54,48 @@ public class CategoryFragment extends BaseListFragment<CategoryViewModel, Catego
 
     @Override
     protected void initAdapter() {
-        if (mAdapter != null) return;
-        mAdapter = new CategoriesAdapter(getContext(), mActionModeInteractionListener, mRecyclerView);
-        mAdapter.setClickListener(this);
+        if (adapter != null) return;
+        adapter = new CategoriesAdapter(getContext(), actionModeInteractionListener, recyclerView);
+        adapter.setClickListener(this);
     }
 
     @Override
     protected void initRecyclerView(View view, Bundle savedInstanceState) {
         super.initRecyclerView(view, savedInstanceState);
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void showData(List<CategoryViewModel> data) {
-        mAdapter.setData(data);
-        mAdapter.notifyDataSetChanged();
+        adapter.setData(data);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void showLoading() {
-        mEmptyView.showProgressBar();
+        emptyView.showProgressBar();
     }
 
     @Override
     public void hideLoading() {
-        mEmptyView.hideProgressBar();
+        emptyView.hideProgressBar();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.detachView();
-        mPresenter.detachRouter();
+        presenter.detachView();
+        presenter.detachRouter();
     }
 
     @Override
     public void onClick(View v) {
-        mPresenter.onAddButtonClick();
+        presenter.onAddButtonClick();
     }
 
     @Override
     public void onItemClick(BaseItemHolder holder, int position, long id) {
-        mPresenter.onListItemClick(mAdapter.getItem(position));
+        presenter.onListItemClick(adapter.getItem(position));
     }
 
     @Override
@@ -106,7 +106,7 @@ public class CategoryFragment extends BaseListFragment<CategoryViewModel, Catego
 
     public boolean isDeleteButtonEnable() {
         boolean deleteFlag = true;
-        for (CategoryViewModel category : mAdapter.getCheckedItems()) {
+        for (CategoryViewModel category : adapter.getCheckedItems()) {
             if (category.getId().equals(CategoryViewModel.NO_CATEGORY_ID)) {
                 deleteFlag = false;
             }
@@ -115,19 +115,19 @@ public class CategoryFragment extends BaseListFragment<CategoryViewModel, Catego
     }
 
     public boolean isCheckAllButtonEnable() {
-        return !mAdapter.isAllItemsChecked();
+        return !adapter.isAllItemsChecked();
     }
 
     public void onUnCheckAllItemsClick() {
-        mAdapter.unCheckAllItems();
+        adapter.unCheckAllItems();
     }
 
     public void onCheckAllItemsClick() {
-        mAdapter.checkAllItems();
+        adapter.checkAllItems();
     }
 
     public void onDeleteCheckedItemsClick() {
         deleteItems(getString(R.string.delete_the_category),
-                () -> mAdapter.deleteCheckedView(deleteItems -> mPresenter.deleteItems(deleteItems)));
+                () -> adapter.deleteCheckedView(deleteItems -> presenter.deleteItems(deleteItems)));
     }
 }

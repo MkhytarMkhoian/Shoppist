@@ -34,15 +34,12 @@ import com.justplay1.shoppist.utils.DrawableUtils;
  */
 public class ColorCheckBoxPreference extends CheckBoxPreference {
 
-    private
-    @ColorInt
-    int mColor;
+    @ColorInt private int color;
 
     public ColorCheckBoxPreference(Context context, @ColorInt int color) {
         super(context);
-        mColor = color;
+        this.color = color;
     }
-
 
     @Override
     protected void onBindView(View view) {
@@ -55,7 +52,7 @@ public class ColorCheckBoxPreference extends CheckBoxPreference {
         Drawable checked = ContextCompat.getDrawable(getContext(), R.drawable.abc_btn_check_to_on_mtrl_015);
 
         if (isEnabled()) {
-            states.setColorFilter(DrawableUtils.getColorFilter(mColor));
+            states.setColorFilter(DrawableUtils.getColorFilter(color));
         } else {
             states.setColorFilter(DrawableUtils.getColorFilter(Color.GRAY));
         }

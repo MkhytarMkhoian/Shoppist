@@ -57,7 +57,7 @@ public class GoodsFragment extends BaseExpandableListFragment<ProductViewModel, 
         implements ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, View.OnClickListener, GoodsView {
 
     @Inject
-    GoodsPresenter mPresenter;
+    GoodsPresenter presenter;
 
     public static GoodsFragment newInstance() {
         Bundle args = new Bundle();
@@ -69,15 +69,15 @@ public class GoodsFragment extends BaseExpandableListFragment<ProductViewModel, 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.attachView(this);
-        mPresenter.attachRouter((GoodsRouter) getActivity());
+        presenter.attachView(this);
+        presenter.attachRouter((GoodsRouter) getActivity());
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.detachView();
-        mPresenter.detachRouter();
+        presenter.detachView();
+        presenter.detachRouter();
     }
 
     @Override
@@ -88,8 +88,8 @@ public class GoodsFragment extends BaseExpandableListFragment<ProductViewModel, 
 
     @Override
     protected void initAdapter() {
-        mAdapter = new GoodsAdapter(getContext(), mActionModeInteractionListener, mRecyclerView, mPreferences);
-        mAdapter.setClickListener(this);
+        adapter = new GoodsAdapter(getContext(), actionModeInteractionListener, recyclerView, preferences);
+        adapter.setClickListener(this);
     }
 
     protected void initRecyclerView(View view, Bundle savedInstanceState) {
@@ -97,21 +97,21 @@ public class GoodsFragment extends BaseExpandableListFragment<ProductViewModel, 
         initAdapter();
 
         final Parcelable eimSavedState = (savedInstanceState != null) ? savedInstanceState.getParcelable(SAVED_STATE_EXPANDABLE_ITEM_MANAGER) : null;
-        mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
+        recyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
 
-        mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(mAdapter);       // wrap for expanding
+        wrappedAdapter = recyclerViewExpandableItemManager.createWrappedAdapter(adapter);       // wrap for expanding
 
         final GeneralItemAnimator animator = new RefactoredDefaultItemAnimator();
         animator.setSupportsChangeAnimations(false);
 
-        mRecyclerView.setAdapter(mWrappedAdapter);  // requires *wrapped* adapter
-        mRecyclerView.setItemAnimator(animator);
+        recyclerView.setAdapter(wrappedAdapter);  // requires *wrapped* adapter
+        recyclerView.setItemAnimator(animator);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z1)));
+            recyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z1)));
         }
 
-        mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
+        recyclerViewExpandableItemManager.attachRecyclerView(recyclerView);
     }
 
     @Override
@@ -127,52 +127,52 @@ public class GoodsFragment extends BaseExpandableListFragment<ProductViewModel, 
 
     public boolean isEditButtonEnable() {
         boolean editFlag = true;
-        if (mAdapter.getCheckedItemsCount() != 1) {
+        if (adapter.getCheckedItemsCount() != 1) {
             editFlag = false;
         }
         return editFlag;
     }
 
     public boolean isCheckAllButtonEnable() {
-        return !mAdapter.isAllItemsChecked();
+        return !adapter.isAllItemsChecked();
     }
 
     public void onChangeCategoryClick() {
-        mPresenter.onChangeCategoryClick(mAdapter.getCheckedItems());
+        presenter.onChangeCategoryClick(adapter.getCheckedItems());
     }
 
     public void onChangeUnitClick() {
-        mPresenter.onChangeUnitClick(mAdapter.getCheckedItems());
+        presenter.onChangeUnitClick(adapter.getCheckedItems());
     }
 
     public void onCheckAllItemsClick() {
-        mAdapter.checkAllItems();
+        adapter.checkAllItems();
     }
 
     public void onUnCheckAllItemsClick() {
-        mAdapter.unCheckAllItems();
+        adapter.unCheckAllItems();
     }
 
     public void onDeleteCheckedItemsClick() {
         deleteItems(getString(R.string.delete_the_goods),
-                () -> mAdapter.deleteCheckedView(deleteItems -> mPresenter.deleteItems(deleteItems)));
+                () -> adapter.deleteCheckedView(deleteItems -> presenter.deleteItems(deleteItems)));
     }
 
     @Override
     public void onItemClick(BaseItemHolder holder, int position, long id) {
-        mPresenter.onListItemClick(mAdapter.getChildItem(holder.groupPosition, holder.childPosition));
+        presenter.onListItemClick(adapter.getChildItem(holder.groupPosition, holder.childPosition));
     }
 
     @Override
     public void onClick(View v) {
-        mPresenter.onAddButtonClick();
+        presenter.onAddButtonClick();
     }
 
     @Override
     public void showChangeCategoryDialog(final List<ProductViewModel> editProducts) {
         FragmentManager fm = getFragmentManager();
         final SelectCategoryDialogFragment dialog = SelectCategoryDialogFragment.newInstance();
-        dialog.setCompleteListener((category, isUpdate) -> mPresenter.changeCategory(category, editProducts));
+        dialog.setCompleteListener((category, isUpdate) -> presenter.changeCategory(category, editProducts));
         dialog.show(fm, AddUnitsDialogFragment.class.getName());
     }
 
@@ -180,7 +180,7 @@ public class GoodsFragment extends BaseExpandableListFragment<ProductViewModel, 
     public void showChangeUnitDialog(final List<ProductViewModel> editProducts) {
         FragmentManager fm = getFragmentManager();
         final SelectUnitDialogFragment dialog = SelectUnitDialogFragment.newInstance();
-        dialog.setCompleteListener((unit, isUpdate) -> mPresenter.changeUnit(unit, editProducts));
+        dialog.setCompleteListener((unit, isUpdate) -> presenter.changeUnit(unit, editProducts));
         dialog.show(fm, AddUnitsDialogFragment.class.getName());
     }
 
@@ -193,19 +193,19 @@ public class GoodsFragment extends BaseExpandableListFragment<ProductViewModel, 
 
     @Override
     public void showData(List<Pair<HeaderViewModel, List<ProductViewModel>>> data) {
-        mAdapter.setData(data);
-        mAdapter.notifyDataSetChanged();
-        mRecyclerViewExpandableItemManager.expandAll();
+        adapter.setData(data);
+        adapter.notifyDataSetChanged();
+        recyclerViewExpandableItemManager.expandAll();
     }
 
     @Override
     public void showLoading() {
-        mEmptyView.showProgressBar();
+        emptyView.showProgressBar();
     }
 
     @Override
     public void hideLoading() {
-        mEmptyView.hideProgressBar();
+        emptyView.hideProgressBar();
     }
 
     @Override
@@ -214,26 +214,26 @@ public class GoodsFragment extends BaseExpandableListFragment<ProductViewModel, 
     }
 
     public void onExpandAllClick() {
-        mRecyclerViewExpandableItemManager.expandAll();
+        recyclerViewExpandableItemManager.expandAll();
     }
 
     public void onCollapseAllClick() {
-        mRecyclerViewExpandableItemManager.collapseAll();
+        recyclerViewExpandableItemManager.collapseAll();
     }
 
     public void onSortByNameClick() {
-        mPresenter.onSortByNameClick(mAdapter.getItems());
+        presenter.onSortByNameClick(adapter.getItems());
     }
 
     public void onSortByTimeCreatedClick() {
-        mPresenter.onSortByTimeCreatedClick(mAdapter.getItems());
+        presenter.onSortByTimeCreatedClick(adapter.getItems());
     }
 
     public void onSortByCategoryClick() {
-        mPresenter.onSortByCategoryClick(mAdapter.getItems());
+        presenter.onSortByCategoryClick(adapter.getItems());
     }
 
     public void onSearchClick() {
-        mPresenter.onSearchClick();
+        presenter.onSearchClick();
     }
 }

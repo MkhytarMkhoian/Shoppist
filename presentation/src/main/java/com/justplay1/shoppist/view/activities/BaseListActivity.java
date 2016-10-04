@@ -36,7 +36,7 @@ public abstract class BaseListActivity extends BaseActivity
     private static final String IS_ACTION_MODE_SHOWING = "is_action_mode_showing";
     private static final String ACTION_MODE_TITLE = "action_mode_title";
 
-    protected ActionMode mActionMode;
+    protected ActionMode actionMode;
     protected boolean isActionModeShowing;
 
     @Override
@@ -46,23 +46,23 @@ public abstract class BaseListActivity extends BaseActivity
 
     @Override
     public void closeActionMode() {
-        if (mActionMode != null) {
-            mActionMode.finish();
-            mActionMode = null;
+        if (actionMode != null) {
+            actionMode.finish();
+            actionMode = null;
         }
     }
 
     @Override
     public void openActionMode(int count) {
-        mActionMode = startSupportActionMode(this);
+        actionMode = startSupportActionMode(this);
         updateActionMode(count);
     }
 
     @Override
     public void updateActionMode(int count) {
-        if (mActionMode != null) {
-            mActionMode.setTitle(String.valueOf(count));
-            mActionMode.invalidate();
+        if (actionMode != null) {
+            actionMode.setTitle(String.valueOf(count));
+            actionMode.invalidate();
         }
     }
 
@@ -80,7 +80,7 @@ public abstract class BaseListActivity extends BaseActivity
         super.onSaveInstanceState(outState);
         outState.putBoolean(IS_ACTION_MODE_SHOWING, isActionModeShowing);
         if (isActionModeShowing) {
-            outState.putInt(ACTION_MODE_TITLE, Integer.valueOf(mActionMode.getTitle().toString()));
+            outState.putInt(ACTION_MODE_TITLE, Integer.valueOf(actionMode.getTitle().toString()));
         }
     }
 

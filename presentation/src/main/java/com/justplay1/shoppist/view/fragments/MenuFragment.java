@@ -32,13 +32,13 @@ import com.justplay1.shoppist.R;
  */
 public class MenuFragment extends BaseFragment implements NavigationView.OnNavigationItemSelectedListener {
 
-    private MenuFragmentInteraction mListener;
+    private MenuFragmentInteraction listener;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mListener = (MenuFragmentInteraction) context;
+            listener = (MenuFragmentInteraction) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement FragmentInteractionListener");
@@ -70,22 +70,22 @@ public class MenuFragment extends BaseFragment implements NavigationView.OnNavig
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.goods_button:
-                mListener.onGoodsClick();
+                listener.onGoodsClick();
                 break;
             case R.id.category_button:
-                mListener.onCategoryClick();
+                listener.onCategoryClick();
                 break;
             case R.id.currencies_button:
-                mListener.onCurrencyClick();
+                listener.onCurrencyClick();
                 break;
             case R.id.units_button:
-                mListener.onUnitsClick();
+                listener.onUnitsClick();
                 break;
             case R.id.settings_button:
-                mListener.onSettingClick(0);
+                listener.onSettingClick(0);
                 break;
             case R.id.feedback_button:
-                mListener.onFeedbackClick();
+                listener.onFeedbackClick();
                 break;
         }
         return true;

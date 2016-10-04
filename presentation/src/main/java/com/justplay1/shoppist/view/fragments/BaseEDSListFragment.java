@@ -19,14 +19,12 @@ package com.justplay1.shoppist.view.fragments;
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.RefactoredDefaultItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
-import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
 import com.justplay1.shoppist.R;
@@ -39,69 +37,69 @@ import com.justplay1.shoppist.view.adapters.BaseAdapter;
 public abstract class BaseEDSListFragment<M extends BaseViewModel, T extends BaseAdapter<M>>
         extends BaseExpandableListFragment<M, T> {
 
-    protected RecyclerViewDragDropManager mRecyclerViewDragDropManager;
-    protected RecyclerViewSwipeManager mRecyclerViewSwipeManager;
-    protected RecyclerViewTouchActionGuardManager mRecyclerViewTouchActionGuardManager;
+    protected RecyclerViewDragDropManager recyclerViewDragDropManager;
+    protected RecyclerViewSwipeManager recyclerViewSwipeManager;
+    protected RecyclerViewTouchActionGuardManager recyclerViewTouchActionGuardManager;
 
     @Override
     protected void initRecyclerView(View view, Bundle savedInstanceState) {
         super.initRecyclerView(view, savedInstanceState);
 
         // touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
-        mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
-        mRecyclerViewTouchActionGuardManager.setInterceptVerticalScrollingWhileAnimationRunning(true);
-        mRecyclerViewTouchActionGuardManager.setEnabled(true);
+        recyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
+        recyclerViewTouchActionGuardManager.setInterceptVerticalScrollingWhileAnimationRunning(true);
+        recyclerViewTouchActionGuardManager.setEnabled(true);
 
         // drag & drop manager
-        mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
-        mRecyclerViewDragDropManager.setDraggingItemShadowDrawable(
+        recyclerViewDragDropManager = new RecyclerViewDragDropManager();
+        recyclerViewDragDropManager.setDraggingItemShadowDrawable(
                 (NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z3));
 
         // swipe manager
-        mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
+        recyclerViewSwipeManager = new RecyclerViewSwipeManager();
 
-        mWrappedAdapter = mRecyclerViewDragDropManager.createWrappedAdapter(mWrappedAdapter);
-        mWrappedAdapter = mRecyclerViewSwipeManager.createWrappedAdapter(mWrappedAdapter);
+        wrappedAdapter = recyclerViewDragDropManager.createWrappedAdapter(wrappedAdapter);
+        wrappedAdapter = recyclerViewSwipeManager.createWrappedAdapter(wrappedAdapter);
 
         final GeneralItemAnimator animator = new RefactoredDefaultItemAnimator();
         animator.setSupportsChangeAnimations(false);
 
-        mRecyclerView.setAdapter(mWrappedAdapter);  // requires *wrapped* adapter
-        mRecyclerView.setItemAnimator(animator);
+        recyclerView.setAdapter(wrappedAdapter);  // requires *wrapped* adapter
+        recyclerView.setItemAnimator(animator);
 
         // additional decorations
         //noinspection StatementWithEmptyBody
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z1)));
+            recyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z1)));
         }
 
-        mRecyclerViewTouchActionGuardManager.attachRecyclerView(mRecyclerView);
-        mRecyclerViewSwipeManager.attachRecyclerView(mRecyclerView);
-        mRecyclerViewDragDropManager.attachRecyclerView(mRecyclerView);
-        mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
+        recyclerViewTouchActionGuardManager.attachRecyclerView(recyclerView);
+        recyclerViewSwipeManager.attachRecyclerView(recyclerView);
+        recyclerViewDragDropManager.attachRecyclerView(recyclerView);
+        recyclerViewExpandableItemManager.attachRecyclerView(recyclerView);
     }
 
     @Override
     public void onPause() {
-        mRecyclerViewDragDropManager.cancelDrag();
+        recyclerViewDragDropManager.cancelDrag();
         super.onPause();
     }
 
     @Override
     public void onDestroyView() {
-        if (mRecyclerViewDragDropManager != null) {
-            mRecyclerViewDragDropManager.release();
-            mRecyclerViewDragDropManager = null;
+        if (recyclerViewDragDropManager != null) {
+            recyclerViewDragDropManager.release();
+            recyclerViewDragDropManager = null;
         }
 
-        if (mRecyclerViewSwipeManager != null) {
-            mRecyclerViewSwipeManager.release();
-            mRecyclerViewSwipeManager = null;
+        if (recyclerViewSwipeManager != null) {
+            recyclerViewSwipeManager.release();
+            recyclerViewSwipeManager = null;
         }
 
-        if (mRecyclerViewTouchActionGuardManager != null) {
-            mRecyclerViewTouchActionGuardManager.release();
-            mRecyclerViewTouchActionGuardManager = null;
+        if (recyclerViewTouchActionGuardManager != null) {
+            recyclerViewTouchActionGuardManager.release();
+            recyclerViewTouchActionGuardManager = null;
         }
         super.onDestroyView();
     }

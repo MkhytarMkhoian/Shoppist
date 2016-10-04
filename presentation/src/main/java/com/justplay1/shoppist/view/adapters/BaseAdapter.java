@@ -40,24 +40,25 @@ import java.util.Map;
  */
 public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    Context mContext;
-    ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> mItemClickListener;
-    private ActionModeInteractionListener mActionModeInteractionListener;
-
-    protected RecyclerView mRecyclerView;
+    private ActionModeInteractionListener actionModeInteractionListener;
     private boolean deleteState = false;
-    private int mCheckedCount = 0;
-    LinearLayoutManager mLinearLayoutManager;
-    private Map<String, Boolean> mCheckedItems;
+    private int checkedCount = 0;
+    private Map<String, Boolean> checkedItems;
+
+    protected RecyclerView recyclerView;
+
+    LinearLayoutManager linearLayoutManager;
+    Context context;
+    ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> itemClickListener;
 
     public BaseAdapter(Context context, ActionModeInteractionListener listener,
                        RecyclerView recyclerView) {
         setHasStableIds(true);
-        this.mContext = context;
-        this.mActionModeInteractionListener = listener;
-        this.mRecyclerView = recyclerView;
-        mLinearLayoutManager = ((LinearLayoutManager) mRecyclerView.getLayoutManager());
-        mCheckedItems = new HashMap<>();
+        this.context = context;
+        this.actionModeInteractionListener = listener;
+        this.recyclerView = recyclerView;
+        linearLayoutManager = ((LinearLayoutManager) this.recyclerView.getLayoutManager());
+        checkedItems = new HashMap<>();
     }
 
     protected abstract List<T> getCheckedItems();
@@ -67,28 +68,28 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
     protected abstract void refreshInvisibleItems();
 
     public boolean isAllItemsChecked() {
-        return getItemCount() == mCheckedCount;
+        return getItemCount() == checkedCount;
     }
 
     public int getCheckedItemsCount() {
-        return mCheckedCount;
+        return checkedCount;
     }
 
     public void setCheckedItemsCount(int checkedCount) {
-        this.mCheckedCount = checkedCount;
+        this.checkedCount = checkedCount;
     }
 
     private List<Checkable> findVisibleItems() {
         List<Checkable> visibleItems = new ArrayList<>();
-        final int firstPosition = mLinearLayoutManager.findFirstVisibleItemPosition();
-        final int lastPosition = mLinearLayoutManager.findLastVisibleItemPosition();
+        final int firstPosition = linearLayoutManager.findFirstVisibleItemPosition();
+        final int lastPosition = linearLayoutManager.findLastVisibleItemPosition();
 
         RecyclerView.ViewHolder holder;
         for (int i = firstPosition; i <= lastPosition; i++) {
-            View item = mLinearLayoutManager.findViewByPosition(i);
+            View item = linearLayoutManager.findViewByPosition(i);
             if (item == null) continue;
 
-            holder = mRecyclerView.getChildViewHolder(item);
+            holder = recyclerView.getChildViewHolder(item);
             if (holder instanceof Checkable) {
                 visibleItems.add((Checkable) holder);
             }
@@ -99,10 +100,10 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
     public void unCheckAllItems() {
         if (deleteState) return;
 
-        if (mActionModeInteractionListener.isActionModeShowing()) {
-            mActionModeInteractionListener.closeActionMode();
+        if (actionModeInteractionListener.isActionModeShowing()) {
+            actionModeInteractionListener.closeActionMode();
         }
-        mCheckedItems.clear();
+        checkedItems.clear();
         List<Checkable> visibleItems = findVisibleItems();
         for (Checkable checkable : visibleItems) {
             if (checkable.isChecked()) {
@@ -111,7 +112,7 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         }
         checkInvisibleItems(false);
         refreshInvisibleItems();
-        mCheckedCount = 0;
+        checkedCount = 0;
     }
 
     public void checkAllItems() {
@@ -124,7 +125,7 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
             }
         }
         checkInvisibleItems(true);
-        mCheckedCount = getCheckedItems().size();
+        checkedCount = getCheckedItems().size();
         startActionMode();
         refreshInvisibleItems();
     }
@@ -134,13 +135,13 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
             if (item instanceof HeaderViewModel) continue;
             if (item.isChecked() != check) {
                 item.setChecked(check);
-                mCheckedItems.put(item.getId(), check);
+                checkedItems.put(item.getId(), check);
             }
         }
     }
 
     protected boolean isItemChecked(String id) {
-        Boolean isChecked = mCheckedItems.get(id);
+        Boolean isChecked = checkedItems.get(id);
         if (isChecked == null) return false;
         return isChecked;
     }
@@ -149,22 +150,22 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
         item.setChecked(isChecked);
         updateCount(item.isChecked());
         if (isChecked) {
-            mCheckedItems.put(item.getId(), true);
+            checkedItems.put(item.getId(), true);
         } else {
-            mCheckedItems.remove(item.getId());
+            checkedItems.remove(item.getId());
         }
     }
 
     public void updateCount(final boolean isChecked) {
         if (isChecked) {
-            if (mCheckedCount < getItemCount()) {
-                mCheckedCount++;
+            if (checkedCount < getItemCount()) {
+                checkedCount++;
             }
         } else {
-            if (mCheckedCount != 0) {
-                mCheckedCount--;
-                if (mCheckedCount == 0 && mActionModeInteractionListener.isActionModeShowing()) {
-                    mActionModeInteractionListener.closeActionMode();
+            if (checkedCount != 0) {
+                checkedCount--;
+                if (checkedCount == 0 && actionModeInteractionListener.isActionModeShowing()) {
+                    actionModeInteractionListener.closeActionMode();
                     return;
                 }
             }
@@ -173,27 +174,27 @@ public abstract class BaseAdapter<T extends BaseViewModel> extends RecyclerView.
     }
 
     private void startActionMode() {
-        if (!mActionModeInteractionListener.isActionModeShowing()) {
-            mActionModeInteractionListener.openActionMode(mCheckedCount);
+        if (!actionModeInteractionListener.isActionModeShowing()) {
+            actionModeInteractionListener.openActionMode(checkedCount);
         } else {
-            mActionModeInteractionListener.updateActionMode(mCheckedCount);
+            actionModeInteractionListener.updateActionMode(checkedCount);
         }
     }
 
     private void finishDelete() {
-        mActionModeInteractionListener.closeActionMode();
-        mRecyclerView.setEnabled(true);
+        actionModeInteractionListener.closeActionMode();
+        recyclerView.setEnabled(true);
         deleteState = false;
     }
 
     public void deleteCheckedView(final AnimationResultListener<T> resultListener) {
-        mRecyclerView.setEnabled(false);
+        recyclerView.setEnabled(false);
         deleteState = true;
         resultListener.onAnimationEnd(getCheckedItems());
         finishDelete();
     }
 
     public void setClickListener(ShoppistRecyclerView.OnItemClickListener clickListener) {
-        this.mItemClickListener = clickListener;
+        this.itemClickListener = clickListener;
     }
 }

@@ -39,7 +39,7 @@ public class SelectCategoryDialogFragment extends BaseSelectItemDialogFragment<C
         implements SelectCategoryView {
 
     @Inject
-    SelectCategoryPresenter mPresenter;
+    SelectCategoryPresenter presenter;
 
     public static SelectCategoryDialogFragment newInstance() {
         return newInstance(null);
@@ -69,19 +69,19 @@ public class SelectCategoryDialogFragment extends BaseSelectItemDialogFragment<C
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.onCreate(getArguments(), savedInstanceState);
+        presenter.onCreate(getArguments(), savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.attachView(this);
+        presenter.attachView(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.detachView();
+        presenter.detachView();
     }
 
     @Override
@@ -92,21 +92,21 @@ public class SelectCategoryDialogFragment extends BaseSelectItemDialogFragment<C
     @Override
     public void init(View view) {
         super.init(view);
-        mPositiveButton.setText(R.string.ok);
+        positiveButton.setText(R.string.ok);
         getDialog().setTitle(R.string.change_category);
 
-        mSelectView.setAddBtnVisibility(View.GONE);
-        mSelectView.setEditBtnVisibility(View.GONE);
+        selectView.setAddBtnVisibility(View.GONE);
+        selectView.setEditBtnVisibility(View.GONE);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.positive_button:
-                mPresenter.onPositiveButtonClick(mSelectView.getSelectedItem());
+                presenter.onPositiveButtonClick(selectView.getSelectedItem());
                 break;
             case R.id.negative_button:
-                mPresenter.onNegativeButtonClick();
+                presenter.onNegativeButtonClick();
                 break;
         }
     }
@@ -118,19 +118,19 @@ public class SelectCategoryDialogFragment extends BaseSelectItemDialogFragment<C
 
     @Override
     public void onComplete(CategoryViewModel category, boolean isUpdate) {
-        if (mCompleteListener != null) {
-            mCompleteListener.onComplete(category, isUpdate);
+        if (completeListener != null) {
+            completeListener.onComplete(category, isUpdate);
         }
     }
 
     @Override
     public void setCategory(List<CategoryViewModel> category) {
-        mSelectView.setData(category);
+        selectView.setData(category);
     }
 
     @Override
     public void selectCategory(String id) {
-        mSelectView.selectItem(id);
+        selectView.selectItem(id);
     }
 
     @Override

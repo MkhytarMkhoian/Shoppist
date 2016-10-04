@@ -43,7 +43,7 @@ import butterknife.ButterKnife;
  */
 public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewModel, BaseHeaderHolder, BaseSwipeableItemViewHolder> {
 
-    private NoteClickListener mNoteClickListener;
+    private NoteClickListener noteClickListener;
 
     public ListItemAdapter(Context context, ActionModeInteractionListener listener,
                            RecyclerView recyclerView, AppPreferences preferences) {
@@ -51,17 +51,17 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
     }
 
     public void setNoteClickListener(NoteClickListener noteClickListener) {
-        this.mNoteClickListener = noteClickListener;
+        this.noteClickListener = noteClickListener;
     }
 
     @Override
     protected int getLeftSwipeActionType() {
-        return mPreferences.getLeftShoppingListItemSwipeAction();
+        return preferences.getLeftShoppingListItemSwipeAction();
     }
 
     @Override
     protected int getRightSwipeActionType() {
-        return mPreferences.getRightShoppingListItemSwipeAction();
+        return preferences.getRightShoppingListItemSwipeAction();
     }
 
     @Override
@@ -84,7 +84,7 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
             case ItemType.CART_HEADER:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_header, parent, false);
                 CartViewHolder holder = new CartViewHolder(view);
-                holder.setColor(mPreferences.getColorPrimary());
+                holder.setColor(preferences.getColorPrimary());
                 return holder;
         }
         return null;
@@ -94,7 +94,7 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
     public BaseSwipeableItemViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shopping_list_item, parent, false);
         ListItemViewHolder holder = new ListItemViewHolder(view);
-        holder.setClickListener(mItemClickListener);
+        holder.setClickListener(itemClickListener);
         return holder;
     }
 
@@ -104,14 +104,14 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
             case ItemType.HEADER_ITEM:
                 BaseViewModel model = getGroupItem(groupPosition);
                 HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
-                if (mPreferences.getSortForShoppingListItems() == SortType.SORT_BY_PRIORITY) {
+                if (preferences.getSortForShoppingListItems() == SortType.SORT_BY_PRIORITY) {
                     if (model.getPriority() == Priority.NO_PRIORITY) {
-                        headerViewHolder.name.setTextColor(ContextCompat.getColor(mContext, R.color.action_mode_toolbar_color));
+                        headerViewHolder.name.setTextColor(ContextCompat.getColor(context, R.color.action_mode_toolbar_color));
                     } else {
                         setPriorityTextColor(model.getPriority(), headerViewHolder.name);
                     }
                 } else {
-                    headerViewHolder.name.setTextColor(mPreferences.getColorPrimary());
+                    headerViewHolder.name.setTextColor(preferences.getColorPrimary());
                 }
                 headerViewHolder.indicator.setBackgroundResource(R.drawable.ic_expand_less);
                 headerViewHolder.name.setText(model.getName());
@@ -127,7 +127,7 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
                     cartViewHolder.indicator.setVisibility(View.INVISIBLE);
                 }
 
-                cartViewHolder.itemView.setBackgroundColor(mPreferences.getColorPrimary());
+                cartViewHolder.itemView.setBackgroundColor(preferences.getColorPrimary());
                 cartViewHolder.cart.setTextColor(Color.WHITE);
                 cartViewHolder.cart.setText(header.getName().toUpperCase(Locale.getDefault()));
                 break;
@@ -155,20 +155,20 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
 
             if (!item.getNote().isEmpty()) {
                 View.OnClickListener listener = v -> {
-                    if (mNoteClickListener != null) {
-                        mNoteClickListener.onNoteClick(item.getNote());
+                    if (noteClickListener != null) {
+                        noteClickListener.onNoteClick(item.getNote());
                     }
                 };
                 holder.note.setVisibility(View.VISIBLE);
                 holder.note.setOnClickListener(listener);
                 ViewUtils.setPaddingRight(holder.info2, 0);
             } else {
-                ViewUtils.setPaddingRight(holder.info2, mContext.getResources().getDimensionPixelSize(R.dimen.content2x));
+                ViewUtils.setPaddingRight(holder.info2, context.getResources().getDimensionPixelSize(R.dimen.content2x));
                 holder.note.setVisibility(View.GONE);
             }
         }
 
-        if (mPreferences.getSortForShoppingListItems() == SortType.SORT_BY_CATEGORIES) {
+        if (preferences.getSortForShoppingListItems() == SortType.SORT_BY_CATEGORIES) {
             holder.categoryName.setVisibility(View.GONE);
         } else {
             holder.categoryName.setVisibility(View.VISIBLE);
@@ -196,14 +196,14 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
         if (item.getStatus()) {
             holder.name.setPaintFlags(holder.name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.categoryName.setPaintFlags(holder.categoryName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            holder.name.setTextColor(ContextCompat.getColor(mContext, R.color.disable_text_color_black));
-            normalStateColor = ContextCompat.getColor(mContext, R.color.grey_300);
-            holder.selectBox.setInnerTextColor(ContextCompat.getColor(mContext, R.color.disable_text_color_black));
+            holder.name.setTextColor(ContextCompat.getColor(context, R.color.disable_text_color_black));
+            normalStateColor = ContextCompat.getColor(context, R.color.grey_300);
+            holder.selectBox.setInnerTextColor(ContextCompat.getColor(context, R.color.disable_text_color_black));
         } else {
             holder.name.setPaintFlags(holder.name.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             holder.categoryName.setPaintFlags(holder.categoryName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-            holder.name.setTextColor(ContextCompat.getColor(mContext, R.color.text_color_black));
-            holder.selectBox.setInnerTextColor(ContextCompat.getColor(mContext, R.color.white));
+            holder.name.setTextColor(ContextCompat.getColor(context, R.color.text_color_black));
+            holder.selectBox.setInnerTextColor(ContextCompat.getColor(context, R.color.white));
         }
 
         holder.selectBox.setNormalStateColor(normalStateColor);

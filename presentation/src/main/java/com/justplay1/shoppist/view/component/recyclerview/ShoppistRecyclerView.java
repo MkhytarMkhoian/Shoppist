@@ -26,7 +26,7 @@ import android.view.View;
  */
 public class ShoppistRecyclerView extends RecyclerView {
 
-    private View mEmptyView;
+    private View emptyView;
 
     public ShoppistRecyclerView(Context context) {
         super(context);
@@ -64,9 +64,9 @@ public class ShoppistRecyclerView extends RecyclerView {
     };
 
     void checkIfEmpty() {
-        if (mEmptyView != null && getAdapter() != null) {
+        if (emptyView != null && getAdapter() != null) {
             final boolean emptyViewVisible = getAdapter().getItemCount() == 0;
-            mEmptyView.setVisibility(emptyViewVisible ? VISIBLE : GONE);
+            emptyView.setVisibility(emptyViewVisible ? VISIBLE : GONE);
             setVisibility(emptyViewVisible ? GONE : VISIBLE);
         }
     }
@@ -85,7 +85,7 @@ public class ShoppistRecyclerView extends RecyclerView {
     }
 
     public void setEmptyView(View emptyView) {
-        mEmptyView = emptyView;
+        this.emptyView = emptyView;
         checkIfEmpty();
     }
 }

@@ -41,34 +41,34 @@ import rx.Observable;
 @NonConfigurationScope
 public class AddCurrencyPresenter extends BaseRxPresenter<AddCurrencyView, Router> {
 
-    private final CurrencyModelDataMapper mDataMapper;
-    private final UpdateCurrency mUpdateCurrency;
-    private final AddCurrency mAddCurrency;
+    private final CurrencyModelDataMapper dataMapper;
+    private final UpdateCurrency updateCurrency;
+    private final AddCurrency addCurrency;
 
-    private CurrencyViewModel mItem;
+    private CurrencyViewModel item;
 
     @Inject
     AddCurrencyPresenter(CurrencyModelDataMapper dataMapper,
                          UpdateCurrency updateCurrency,
                          AddCurrency addCurrency) {
-        this.mDataMapper = dataMapper;
-        this.mUpdateCurrency = updateCurrency;
-        this.mAddCurrency = addCurrency;
+        this.dataMapper = dataMapper;
+        this.updateCurrency = updateCurrency;
+        this.addCurrency = addCurrency;
     }
 
     @Override
     public void onCreate(Bundle arguments, Bundle savedInstanceState) {
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
-            mItem = arguments.getParcelable(CurrencyViewModel.class.getName());
+            item = arguments.getParcelable(CurrencyViewModel.class.getName());
         }
     }
 
     @Override
     public void attachView(AddCurrencyView view) {
         super.attachView(view);
-        if (mItem != null) {
-            setName(mItem.getName());
+        if (item != null) {
+            setName(item.getName());
             setDefaultUpdateTitle();
         } else {
             setDefaultNewTitle();
@@ -86,8 +86,8 @@ public class AddCurrencyPresenter extends BaseRxPresenter<AddCurrencyView, Route
     private void saveCurrency(String name) {
         if (checkDataForErrors(name)) {
             CurrencyViewModel currency = new CurrencyViewModel();
-            if (mItem != null) {
-                currency.setId(mItem.getId());
+            if (item != null) {
+                currency.setId(item.getId());
                 currency.setName(name);
                 updateCurrency(currency);
             } else {
@@ -100,21 +100,21 @@ public class AddCurrencyPresenter extends BaseRxPresenter<AddCurrencyView, Route
 
     private void addCurrency(CurrencyViewModel data) {
         showLoading();
-        mSubscriptions.add(
-                Observable.fromCallable(() -> mDataMapper.transform(data))
+        subscriptions.add(
+                Observable.fromCallable(() -> dataMapper.transform(data))
                         .flatMap(currency -> {
-                            mAddCurrency.setData(Collections.singletonList(currency));
-                            return mAddCurrency.get();
+                            addCurrency.setData(Collections.singletonList(currency));
+                            return addCurrency.get();
                         }).subscribe(new SaveCurrencySubscriber(true)));
     }
 
     private void updateCurrency(CurrencyViewModel data) {
         showLoading();
-        mSubscriptions.add(
-                Observable.fromCallable(() -> mDataMapper.transform(data))
+        subscriptions.add(
+                Observable.fromCallable(() -> dataMapper.transform(data))
                         .flatMap(currency -> {
-                            mUpdateCurrency.setData(Collections.singletonList(currency));
-                            return mUpdateCurrency.get();
+                            updateCurrency.setData(Collections.singletonList(currency));
+                            return updateCurrency.get();
                         }).subscribe(new SaveCurrencySubscriber(false)));
     }
 

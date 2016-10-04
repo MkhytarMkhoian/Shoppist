@@ -42,15 +42,15 @@ public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView, Router>
 
     private final BehaviorSubject<List<UnitViewModel>> cache = BehaviorSubject.create();
 
-    private final UnitsDataModelMapper mDataMapper;
-    private final GetUnitsList mGetUnitsList;
+    private final UnitsDataModelMapper dataMapper;
+    private final GetUnitsList getUnitsList;
 
-    private UnitViewModel mItem;
+    private UnitViewModel item;
 
     @Inject
     SelectUnitPresenter(UnitsDataModelMapper dataMapper, GetUnitsList getUnitsList) {
-        this.mDataMapper = dataMapper;
-        this.mGetUnitsList = getUnitsList;
+        this.dataMapper = dataMapper;
+        this.getUnitsList = getUnitsList;
 
         loadUnits();
     }
@@ -59,20 +59,20 @@ public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView, Router>
     public void onCreate(Bundle arguments, Bundle savedInstanceState) {
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
-            mItem = arguments.getParcelable(UnitViewModel.class.getName());
+            item = arguments.getParcelable(UnitViewModel.class.getName());
         }
     }
 
     @Override
     public void attachView(SelectUnitView view) {
         super.attachView(view);
-        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
+        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
 
             @Override
             public void onNext(List<UnitViewModel> units) {
                 setUnits(units);
-                if (mItem != null) {
-                    selectUnit(mItem.getCategory().getId());
+                if (item != null) {
+                    selectUnit(item.getCategory().getId());
                 } else {
                     selectUnit(CategoryViewModel.NO_CATEGORY_ID);
                 }
@@ -98,8 +98,8 @@ public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView, Router>
     }
 
     public void loadUnits() {
-        mGetUnitsList.get()
-                .map(mDataMapper::transformToViewModel)
+        getUnitsList.get()
+                .map(dataMapper::transformToViewModel)
                 .subscribe(cache);
     }
 

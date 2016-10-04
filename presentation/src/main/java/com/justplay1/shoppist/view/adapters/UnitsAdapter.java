@@ -48,7 +48,7 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_currency, parent, false);
         UnitItemViewHolder holder = new UnitItemViewHolder(view);
-        holder.setClickListener(mItemClickListener);
+        holder.setClickListener(itemClickListener);
         return holder;
     }
 
@@ -62,7 +62,7 @@ public class UnitsAdapter extends BaseListAdapter<UnitViewModel> {
 
         holder.name.setText(String.format("%s (%s)", item.getName(), item.getShortName()));
 
-        holder.selectBox.setNormalStateColor(ContextCompat.getColor(mContext, R.color.blue_grey_500));
+        holder.selectBox.setNormalStateColor(ContextCompat.getColor(context, R.color.blue_grey_500));
         holder.selectBox.setInnerText(ShoppistUtils.getFirstCharacter(item.getName()).toUpperCase(Locale.getDefault()));
         holder.selectBox.setEventListener(isChecked -> {
             onCheckItem(item, isChecked);

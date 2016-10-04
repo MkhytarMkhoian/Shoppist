@@ -42,35 +42,35 @@ import rx.Observable;
 @NonConfigurationScope
 public class AddUnitPresenter extends BaseRxPresenter<AddUnitView, Router> {
 
-    private final UnitsDataModelMapper mDataMapper;
-    private final UpdateUnits mUpdateUnits;
-    private final AddUnits mAddUnits;
+    private final UnitsDataModelMapper dataMapper;
+    private final UpdateUnits updateUnits;
+    private final AddUnits addUnits;
 
-    private UnitViewModel mItem;
+    private UnitViewModel item;
 
     @Inject
     AddUnitPresenter(UnitsDataModelMapper dataMapper,
                      UpdateUnits updateUnits,
                      AddUnits addUnits) {
-        this.mDataMapper = dataMapper;
-        this.mUpdateUnits = updateUnits;
-        this.mAddUnits = addUnits;
+        this.dataMapper = dataMapper;
+        this.updateUnits = updateUnits;
+        this.addUnits = addUnits;
     }
 
     @Override
     public void onCreate(Bundle arguments, Bundle savedInstanceState) {
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
-            mItem = arguments.getParcelable(UnitViewModel.class.getName());
+            item = arguments.getParcelable(UnitViewModel.class.getName());
         }
     }
 
     @Override
     public void attachView(AddUnitView view) {
         super.attachView(view);
-        if (mItem != null) {
-            setFullName(mItem.getName());
-            setShortName(mItem.getShortName());
+        if (item != null) {
+            setFullName(item.getName());
+            setShortName(item.getShortName());
             setDefaultUpdateTitle();
         } else {
             setDefaultNewTitle();
@@ -88,8 +88,8 @@ public class AddUnitPresenter extends BaseRxPresenter<AddUnitView, Router> {
     private void saveUnit(String fullName, String shortName) {
         if (checkDataForErrors(fullName, shortName)) {
             UnitViewModel unit = new UnitViewModel();
-            if (mItem != null) {
-                unit.setId(mItem.getId());
+            if (item != null) {
+                unit.setId(item.getId());
                 unit.setName(fullName);
                 unit.setShortName(shortName);
                 updateUnit(unit);
@@ -104,21 +104,21 @@ public class AddUnitPresenter extends BaseRxPresenter<AddUnitView, Router> {
 
     private void addUnit(UnitViewModel data) {
         showLoading();
-        mSubscriptions.add(
-                Observable.fromCallable(() -> mDataMapper.transform(data))
+        subscriptions.add(
+                Observable.fromCallable(() -> dataMapper.transform(data))
                         .flatMap(unit -> {
-                            mAddUnits.setData(Collections.singletonList(unit));
-                            return mAddUnits.get();
+                            addUnits.setData(Collections.singletonList(unit));
+                            return addUnits.get();
                         }).subscribe(new SaveUnitSubscriber(true)));
     }
 
     private void updateUnit(UnitViewModel data) {
         showLoading();
-        mSubscriptions.add(
-                Observable.fromCallable(() -> mDataMapper.transform(data))
+        subscriptions.add(
+                Observable.fromCallable(() -> dataMapper.transform(data))
                         .flatMap(unit -> {
-                            mUpdateUnits.setData(Collections.singletonList(unit));
-                            return mUpdateUnits.get();
+                            updateUnits.setData(Collections.singletonList(unit));
+                            return updateUnits.get();
                         }).subscribe(new SaveUnitSubscriber(false)));
     }
 

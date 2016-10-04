@@ -22,8 +22,6 @@ import android.support.v7.widget.RecyclerView;
 import com.justplay1.shoppist.models.BaseViewModel;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.view.component.actionmode.ActionModeInteractionListener;
-import com.justplay1.shoppist.view.component.animboxes.SelectBoxCheckListener;
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +32,7 @@ import java.util.List;
 public abstract class BaseListAdapter<T extends BaseViewModel>
         extends BaseAdapter<T> {
 
-    protected List<T> mData;
+    private List<T> mData;
 
     public BaseListAdapter(Context context, ActionModeInteractionListener listener,
                            RecyclerView recyclerView) {
@@ -44,11 +42,11 @@ public abstract class BaseListAdapter<T extends BaseViewModel>
 
     @Override
     protected void refreshInvisibleItems() {
-        if (mLinearLayoutManager.findFirstVisibleItemPosition() > 0) {
-            notifyItemRangeChanged(0, mLinearLayoutManager.findFirstVisibleItemPosition());
+        if (linearLayoutManager.findFirstVisibleItemPosition() > 0) {
+            notifyItemRangeChanged(0, linearLayoutManager.findFirstVisibleItemPosition());
         }
-        notifyItemRangeChanged(mLinearLayoutManager.findLastVisibleItemPosition() + 1,
-                getItems().size() - mLinearLayoutManager.findLastVisibleItemPosition());
+        notifyItemRangeChanged(linearLayoutManager.findLastVisibleItemPosition() + 1,
+                getItems().size() - linearLayoutManager.findLastVisibleItemPosition());
     }
 
     @Override

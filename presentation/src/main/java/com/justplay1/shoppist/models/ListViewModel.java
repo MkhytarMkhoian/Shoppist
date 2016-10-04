@@ -62,7 +62,7 @@ public class ListViewModel extends BaseViewModel {
         color = parcel.readInt();
         isChecked = parcel.readByte() != 0;
         size = parcel.readInt();
-        mPinned = parcel.readByte() != 0;
+        pinned = parcel.readByte() != 0;
     }
 
     @Override
@@ -150,7 +150,7 @@ public class ListViewModel extends BaseViewModel {
         dest.writeInt(color);
         dest.writeByte((byte) (isChecked ? 1 : 0));
         dest.writeInt(size);
-        dest.writeByte((byte) (mPinned ? 1 : 0));
+        dest.writeByte((byte) (pinned ? 1 : 0));
     }
 
     public static final Parcelable.Creator<ListViewModel> CREATOR = new Creator<ListViewModel>() {

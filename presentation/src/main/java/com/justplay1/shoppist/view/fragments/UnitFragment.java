@@ -43,7 +43,7 @@ public class UnitFragment extends BaseListFragment<UnitViewModel, UnitsAdapter>
         implements UnitsView, ShoppistRecyclerView.OnItemClickListener<BaseItemHolder>, View.OnClickListener, UnitRouter {
 
     @Inject
-    UnitsPresenter mPresenter;
+    UnitsPresenter presenter;
 
     public static UnitFragment newInstance() {
         Bundle args = new Bundle();
@@ -60,21 +60,21 @@ public class UnitFragment extends BaseListFragment<UnitViewModel, UnitsAdapter>
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.attachView(this);
-        mPresenter.attachRouter(this);
+        presenter.attachView(this);
+        presenter.attachRouter(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.detachView();
-        mPresenter.detachRouter();
+        presenter.detachView();
+        presenter.detachRouter();
     }
 
     @Override
     protected void initAdapter() {
-        mAdapter = new UnitsAdapter(getContext(), mActionModeInteractionListener, mRecyclerView);
-        mAdapter.setClickListener(this);
+        adapter = new UnitsAdapter(getContext(), actionModeInteractionListener, recyclerView);
+        adapter.setClickListener(this);
     }
 
     @Override
@@ -86,17 +86,17 @@ public class UnitFragment extends BaseListFragment<UnitViewModel, UnitsAdapter>
     @Override
     protected void initRecyclerView(View view, Bundle savedInstanceState) {
         super.initRecyclerView(view, savedInstanceState);
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onClick(View v) {
-        mPresenter.onAddButtonClick();
+        presenter.onAddButtonClick();
     }
 
     @Override
     public void onItemClick(BaseItemHolder holder, int position, long id) {
-        mPresenter.onListItemClick(mAdapter.getItem(position));
+        presenter.onListItemClick(adapter.getItem(position));
     }
 
     @Override
@@ -113,21 +113,21 @@ public class UnitFragment extends BaseListFragment<UnitViewModel, UnitsAdapter>
     }
 
     public void onCheckAllItemsClick() {
-        mAdapter.checkAllItems();
+        adapter.checkAllItems();
     }
 
     public void onUnCheckAllItemsClick() {
-        mAdapter.unCheckAllItems();
+        adapter.unCheckAllItems();
     }
 
     public void onDeleteCheckedItemsClick() {
         deleteItems(getString(R.string.delete_the_item),
-                () -> mAdapter.deleteCheckedView(deleteItems -> mPresenter.deleteItems(deleteItems)));
+                () -> adapter.deleteCheckedView(deleteItems -> presenter.deleteItems(deleteItems)));
     }
 
     public boolean isDeleteButtonEnable() {
         boolean deleteFlag = true;
-        for (UnitViewModel unit : mAdapter.getCheckedItems()) {
+        for (UnitViewModel unit : adapter.getCheckedItems()) {
             if (unit.getId().equals(UnitViewModel.NO_UNIT_ID)) {
                 deleteFlag = false;
             }
@@ -136,22 +136,22 @@ public class UnitFragment extends BaseListFragment<UnitViewModel, UnitsAdapter>
     }
 
     public boolean isCheckAllButtonEnable() {
-        return !mAdapter.isAllItemsChecked();
+        return !adapter.isAllItemsChecked();
     }
 
     @Override
     public void showData(List<UnitViewModel> data) {
-        mAdapter.setData(data);
-        mAdapter.notifyDataSetChanged();
+        adapter.setData(data);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void showLoading() {
-        mEmptyView.showProgressBar();
+        emptyView.showProgressBar();
     }
 
     @Override
     public void hideLoading() {
-        mEmptyView.hideProgressBar();
+        emptyView.hideProgressBar();
     }
 }

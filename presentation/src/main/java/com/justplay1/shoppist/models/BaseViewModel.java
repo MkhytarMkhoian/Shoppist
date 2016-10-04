@@ -27,8 +27,8 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableI
  */
 public abstract class BaseViewModel implements Parcelable {
 
-    protected int mSwipeReaction = SwipeableItemConstants.REACTION_CAN_SWIPE_BOTH_H;
-    protected boolean mPinned;
+    protected int swipeReaction = SwipeableItemConstants.REACTION_CAN_SWIPE_BOTH_H;
+    protected boolean pinned;
 
     protected String id;
     protected String name;
@@ -48,20 +48,20 @@ public abstract class BaseViewModel implements Parcelable {
     }
 
     public void setPinned(boolean pinnedToSwipeLeft) {
-        mPinned = pinnedToSwipeLeft;
+        pinned = pinnedToSwipeLeft;
     }
 
     public boolean isPinned() {
-        return mPinned;
+        return pinned;
     }
 
     public void setSwipeReaction(int swipeReaction) {
-        this.mSwipeReaction = swipeReaction;
+        this.swipeReaction = swipeReaction;
     }
 
     @SwipeableItemReactions
     public int getSwipeReactionType() {
-        return mSwipeReaction;
+        return swipeReaction;
     }
 
     public String getName() {

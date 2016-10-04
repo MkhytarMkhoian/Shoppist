@@ -42,31 +42,31 @@ public class CurrencyPresenter extends BaseRxPresenter<CurrencyView, CurrencyRou
 
     private final BehaviorSubject<List<CurrencyViewModel>> cache = BehaviorSubject.create();
 
-    private final CurrencyModelDataMapper mDataMapper;
-    private final GetCurrencyList mGetCurrencyList;
-    private final DeleteCurrency mDeleteCurrency;
+    private final CurrencyModelDataMapper dataMapper;
+    private final GetCurrencyList getCurrencyList;
+    private final DeleteCurrency deleteCurrency;
 
     @Inject
     CurrencyPresenter(GetCurrencyList getCurrencyList,
                       DeleteCurrency deleteCurrency,
                       CurrencyModelDataMapper dataMapper) {
-        this.mGetCurrencyList = getCurrencyList;
-        this.mDeleteCurrency = deleteCurrency;
-        this.mDataMapper = dataMapper;
+        this.getCurrencyList = getCurrencyList;
+        this.deleteCurrency = deleteCurrency;
+        this.dataMapper = dataMapper;
 
         loadData();
     }
 
     private void loadData() {
-        mGetCurrencyList.get()
-                .map(mDataMapper::transformToViewModel)
+        getCurrencyList.get()
+                .map(dataMapper::transformToViewModel)
                 .subscribe(cache);
     }
 
     @Override
     public void attachView(CurrencyView view) {
         super.attachView(view);
-        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<CurrencyViewModel>>() {
+        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<CurrencyViewModel>>() {
 
             @Override
             public void onNext(List<CurrencyViewModel> currencyViewModels) {
@@ -94,10 +94,10 @@ public class CurrencyPresenter extends BaseRxPresenter<CurrencyView, CurrencyRou
     }
 
     public void deleteItems(Collection<CurrencyViewModel> data) {
-        mSubscriptions.add(Observable.fromCallable(() -> mDataMapper.transform(data))
+        subscriptions.add(Observable.fromCallable(() -> dataMapper.transform(data))
                 .flatMap(items -> {
-                    mDeleteCurrency.setData(items);
-                    return mDeleteCurrency.get();
+                    deleteCurrency.setData(items);
+                    return deleteCurrency.get();
                 }).subscribe(new DefaultSubscriber<>()));
     }
 }

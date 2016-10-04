@@ -75,13 +75,13 @@ public class SearchFragment extends BaseFragment
     private static final int REQ_CODE_SPEECH_INPUT = 111;
 
     @Inject
-    SearchPresenter mPresenter;
+    SearchPresenter presenter;
 
     @Bind(R.id.search_view)
-    FloatingSearchView mSearchView;
+    FloatingSearchView searchView;
 
-    private int mContextType;
-    private SearchAdapter mAdapter;
+    private int contextType;
+    private SearchAdapter adapter;
 
     public static SearchFragment newInstance(String parentListId, int contextType) {
         Bundle args = new Bundle();
@@ -95,9 +95,9 @@ public class SearchFragment extends BaseFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.onCreate(getArguments(), savedInstanceState);
+        presenter.onCreate(getArguments(), savedInstanceState);
         if (getArguments() != null) {
-            mContextType = getArguments().getInt(Const.SEARCH_CONTEXT_TYPE, Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST);
+            contextType = getArguments().getInt(Const.SEARCH_CONTEXT_TYPE, Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST);
         }
     }
 
@@ -117,7 +117,7 @@ public class SearchFragment extends BaseFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.detachView();
+        presenter.detachView();
         ButterKnife.unbind(this);
     }
 
@@ -129,27 +129,27 @@ public class SearchFragment extends BaseFragment
 
     @Override
     protected void init(View view) {
-        mAdapter = new SearchAdapter(getContext(), mContextType);
-        mAdapter.setClickListener(this);
+        adapter = new SearchAdapter(getContext(), contextType);
+        adapter.setClickListener(this);
 
-        mSearchView.setAdapter(mAdapter);
+        searchView.setAdapter(adapter);
         updateNavigationIcon();
-        mSearchView.showIcon(true);
-        mSearchView.setOnIconClickListener(this);
-        mSearchView.setOnSearchListener(this);
-        mSearchView.setOnMenuItemClickListener(this);
-        mSearchView.setOnSearchFocusChangedListener(this);
-        mSearchView.setOnContainerTouchClickListener(this);
-        mSearchView.setText(null);
-        mSearchView.addTextChangedListener(new TextWatcher() {
+        searchView.showIcon(true);
+        searchView.setOnIconClickListener(this);
+        searchView.setOnSearchListener(this);
+        searchView.setOnMenuItemClickListener(this);
+        searchView.setOnSearchFocusChangedListener(this);
+        searchView.setOnContainerTouchClickListener(this);
+        searchView.setText(null);
+        searchView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
             public void onTextChanged(CharSequence query, int start, int before, int count) {
-                showVoiceButton(query.length() == 0 && mSearchView.isActivated());
-                showClearButton(query.length() > 0 && mSearchView.isActivated());
+                showVoiceButton(query.length() == 0 && searchView.isActivated());
+                showClearButton(query.length() > 0 && searchView.isActivated());
                 search(query.toString());
             }
 
@@ -158,49 +158,49 @@ public class SearchFragment extends BaseFragment
 
             }
         });
-        mSearchView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+        searchView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                mSearchView.removeOnLayoutChangeListener(this);
-                mSearchView.setActivated(true);
-                mPresenter.attachView(SearchFragment.this);
+                searchView.removeOnLayoutChangeListener(this);
+                searchView.setActivated(true);
+                presenter.attachView(SearchFragment.this);
             }
         });
-        mSearchView.setHint(getString(R.string.search));
+        searchView.setHint(getString(R.string.search));
     }
 
     private void updateNavigationIcon() {
-        Context context = mSearchView.getContext();
+        Context context = searchView.getContext();
         Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_arrow_back);
         drawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTint(drawable, ViewUtils.getThemeAttrColor(context, R.attr.colorControlNormal));
-        mSearchView.setIcon(drawable);
+        searchView.setIcon(drawable);
     }
 
     private void search(String query) {
-        mAdapter.getFilter().filter(query);
+        adapter.getFilter().filter(query);
     }
 
     private void showProgressBar(boolean show) {
-        mSearchView.getMenu().findItem(R.id.menu_progress_bar).setVisible(show);
+        searchView.getMenu().findItem(R.id.menu_progress_bar).setVisible(show);
     }
 
     private void showClearButton(boolean show) {
-        mSearchView.getMenu().findItem(R.id.menu_clear).setVisible(show);
+        searchView.getMenu().findItem(R.id.menu_clear).setVisible(show);
     }
 
     private void showVoiceButton(boolean show) {
-        mSearchView.getMenu().findItem(R.id.menu_voice_search).setVisible(show);
+        searchView.getMenu().findItem(R.id.menu_voice_search).setVisible(show);
     }
 
     @Override
     public void onNavigationClick() {
-        mPresenter.onNavigationClick();
+        presenter.onNavigationClick();
     }
 
     @Override
     public void onSearchAction(CharSequence charSequence) {
-        mSearchView.setActivated(false);
+        searchView.setActivated(false);
     }
 
     @Override
@@ -218,23 +218,23 @@ public class SearchFragment extends BaseFragment
 
     @Override
     public void onFocusChanged(boolean focused) {
-        if (mSearchView == null) return;
-        boolean textEmpty = mSearchView.getText().length() == 0;
+        if (searchView == null) return;
+        boolean textEmpty = searchView.getText().length() == 0;
         showClearButton(focused && !textEmpty);
         showVoiceButton(focused && textEmpty);
         if (!focused) showProgressBar(false);
-        mSearchView.showLogo(!focused && textEmpty);
+        searchView.showLogo(!focused && textEmpty);
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        mPresenter.onTouch();
+        presenter.onTouch();
         return true;
     }
 
     @Override
     public void onItemClick(BaseViewHolder holder, int position, long id) {
-        mPresenter.onListItemClick(mAdapter.getItem(position));
+        presenter.onListItemClick(adapter.getItem(position));
     }
 
     @Override
@@ -243,14 +243,14 @@ public class SearchFragment extends BaseFragment
     }
 
     public void clearSearch() {
-        mSearchView.setText(null);
-        mSearchView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+        searchView.setText(null);
+        searchView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
     }
 
     @Override
     public void showData(Map<String, ProductViewModel> data) {
-        mAdapter.setData(data);
-        mAdapter.notifyDataSetChanged();
+        adapter.setData(data);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -260,10 +260,10 @@ public class SearchFragment extends BaseFragment
 
     @Override
     public void fadeInSignal(@ColorInt int color) {
-        mSearchView.fadeInSignal(color, animator -> {
-            if (mSearchView == null) return;
+        searchView.fadeInSignal(color, animator -> {
+            if (searchView == null) return;
             int value = (int) animator.getAnimatedValue();
-            mSearchView.setBackgroundColor(value);
+            searchView.setBackgroundColor(value);
             ((BaseActivity) getActivity()).setStatusBarColor(value);
         });
     }
@@ -296,7 +296,7 @@ public class SearchFragment extends BaseFragment
 
     private void showEditGoodsDialog(AddGoodsDialogFragment dialog) {
         FragmentManager fm = getFragmentManager();
-        dialog.setCompleteListener(isUpdate -> mPresenter.loadData());
+        dialog.setCompleteListener(isUpdate -> presenter.loadData());
         dialog.show(fm, AddUnitsDialogFragment.class.getName());
     }
 
@@ -306,8 +306,8 @@ public class SearchFragment extends BaseFragment
         if (requestCode == REQ_CODE_SPEECH_INPUT) {
             if (resultCode == Activity.RESULT_OK && null != data) {
                 ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                mSearchView.setActivated(true);
-                mSearchView.setText(result.get(0));
+                searchView.setActivated(true);
+                searchView.setText(result.get(0));
             }
         }
     }

@@ -26,33 +26,33 @@ import java.lang.ref.WeakReference;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BasePresenter<V extends BaseMvpView> implements Presenter<V> {
+abstract class BasePresenter<V extends BaseMvpView> implements Presenter<V> {
 
-    private WeakReference<V> mView;
+    private WeakReference<V> view;
 
     @UiThread
     @Override
     public void attachView(V view) {
-        mView = new WeakReference<V>(view);
+        this.view = new WeakReference<V>(view);
     }
 
     @UiThread
     @Override
     public void detachView() {
-        if (mView != null) {
-            mView.clear();
-            mView = null;
+        if (view != null) {
+            view.clear();
+            view = null;
         }
     }
 
     @UiThread
     public boolean isViewAttached() {
-        return mView != null && mView.get() != null;
+        return view != null && view.get() != null;
     }
 
     @UiThread
     @Nullable
     public V getView() {
-        return mView == null ? null : mView.get();
+        return view == null ? null : view.get();
     }
 }

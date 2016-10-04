@@ -40,7 +40,7 @@ public class SelectUnitDialogFragment extends BaseSelectItemDialogFragment<UnitV
         implements SelectUnitView {
 
     @Inject
-    SelectUnitPresenter mPresenter;
+    SelectUnitPresenter presenter;
 
     public static SelectUnitDialogFragment newInstance() {
         return newInstance(null);
@@ -70,19 +70,19 @@ public class SelectUnitDialogFragment extends BaseSelectItemDialogFragment<UnitV
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.onCreate(getArguments(), savedInstanceState);
+        presenter.onCreate(getArguments(), savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.attachView(this);
+        presenter.attachView(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.detachView();
+        presenter.detachView();
     }
 
     @Override
@@ -93,7 +93,7 @@ public class SelectUnitDialogFragment extends BaseSelectItemDialogFragment<UnitV
     @Override
     public void init(View view) {
         super.init(view);
-        mPositiveButton.setText(R.string.ok);
+        positiveButton.setText(R.string.ok);
         getDialog().setTitle(R.string.change_unit);
     }
 
@@ -101,7 +101,7 @@ public class SelectUnitDialogFragment extends BaseSelectItemDialogFragment<UnitV
     public void showUnitDialog(final UnitViewModel editUnit) {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         AddUnitsDialogFragment dialog = AddUnitsDialogFragment.newInstance(editUnit);
-        dialog.setCompleteListener(isUpdate -> mPresenter.loadUnits());
+        dialog.setCompleteListener(isUpdate -> presenter.loadUnits());
         dialog.show(fm, AddUnitsDialogFragment.class.getName());
     }
 
@@ -109,34 +109,34 @@ public class SelectUnitDialogFragment extends BaseSelectItemDialogFragment<UnitV
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_button:
-                mPresenter.onAddUnitClick();
+                presenter.onAddUnitClick();
                 break;
             case R.id.edit_button:
-                mPresenter.onEditUnitClick(mSelectView.getSelectedItem());
+                presenter.onEditUnitClick(selectView.getSelectedItem());
                 break;
             case R.id.positive_button:
-                mPresenter.onPositiveButtonClick(mSelectView.getSelectedItem());
+                presenter.onPositiveButtonClick(selectView.getSelectedItem());
                 break;
             case R.id.negative_button:
-                mPresenter.onNegativeButtonClick();
+                presenter.onNegativeButtonClick();
                 break;
         }
     }
 
     @Override
     public void setUnits(List<UnitViewModel> unit) {
-        mSelectView.setData(unit);
+        selectView.setData(unit);
     }
 
     @Override
     public void selectUnit(String id) {
-        mSelectView.selectItem(id);
+        selectView.selectItem(id);
     }
 
     @Override
     public void onComplete(UnitViewModel unit, boolean isUpdate) {
-        if (mCompleteListener != null) {
-            mCompleteListener.onComplete(unit, isUpdate);
+        if (completeListener != null) {
+            completeListener.onComplete(unit, isUpdate);
         }
     }
 

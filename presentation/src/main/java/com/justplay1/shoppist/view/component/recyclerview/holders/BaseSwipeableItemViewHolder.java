@@ -34,17 +34,17 @@ import butterknife.ButterKnife;
 public abstract class BaseSwipeableItemViewHolder extends BaseItemHolder implements SwipeableItemViewHolder {
 
     @SwipeableItemStateFlags
-    private int mSwipeStateFlags;
+    private int swipeStateFlags;
     @SwipeableItemResults
-    private int mSwipeResult = RecyclerViewSwipeManager.RESULT_NONE;
+    private int swipeResult = RecyclerViewSwipeManager.RESULT_NONE;
     @SwipeableItemReactions
-    private int mAfterSwipeReaction = RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
-    private float mHorizontalSwipeAmount;
-    private float mVerticalSwipeAmount;
-    private float mMaxLeftSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT;
-    private float mMaxUpSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_TOP;
-    private float mMaxRightSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_RIGHT;
-    private float mMaxDownSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_BOTTOM;
+    private int afterSwipeReaction = RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
+    private float horizontalSwipeAmount;
+    private float verticalSwipeAmount;
+    private float maxLeftSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT;
+    private float maxUpSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_TOP;
+    private float maxRightSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_RIGHT;
+    private float maxDownSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_BOTTOM;
 
     @Bind(R.id.swipe_container)
     public View container;
@@ -60,35 +60,35 @@ public abstract class BaseSwipeableItemViewHolder extends BaseItemHolder impleme
 
     @Override
     public void setSwipeStateFlags(@SwipeableItemStateFlags int flags) {
-        mSwipeStateFlags = flags;
+        swipeStateFlags = flags;
     }
 
     @Override
     @SwipeableItemStateFlags
     public int getSwipeStateFlags() {
-        return mSwipeStateFlags;
+        return swipeStateFlags;
     }
 
     @Override
     public void setSwipeResult(@SwipeableItemResults int result) {
-        mSwipeResult = result;
+        swipeResult = result;
     }
 
     @Override
     @SwipeableItemResults
     public int getSwipeResult() {
-        return mSwipeResult;
+        return swipeResult;
     }
 
     @Override
     @SwipeableItemReactions
     public int getAfterSwipeReaction() {
-        return mAfterSwipeReaction;
+        return afterSwipeReaction;
     }
 
     @Override
     public void setAfterSwipeReaction(@SwipeableItemReactions int reaction) {
-        mAfterSwipeReaction = reaction;
+        afterSwipeReaction = reaction;
     }
 
     /**
@@ -113,22 +113,22 @@ public abstract class BaseSwipeableItemViewHolder extends BaseItemHolder impleme
 
     @Override
     public void setSwipeItemVerticalSlideAmount(float amount) {
-        mVerticalSwipeAmount = amount;
+        verticalSwipeAmount = amount;
     }
 
     @Override
     public float getSwipeItemVerticalSlideAmount() {
-        return mVerticalSwipeAmount;
+        return verticalSwipeAmount;
     }
 
     @Override
     public void setSwipeItemHorizontalSlideAmount(float amount) {
-        mHorizontalSwipeAmount = amount;
+        horizontalSwipeAmount = amount;
     }
 
     @Override
     public float getSwipeItemHorizontalSlideAmount() {
-        return mHorizontalSwipeAmount;
+        return horizontalSwipeAmount;
     }
 
     @Override
@@ -138,42 +138,42 @@ public abstract class BaseSwipeableItemViewHolder extends BaseItemHolder impleme
 
     @Override
     public void setMaxLeftSwipeAmount(float amount) {
-        mMaxLeftSwipeAmount = amount;
+        maxLeftSwipeAmount = amount;
     }
 
     @Override
     public float getMaxLeftSwipeAmount() {
-        return mMaxLeftSwipeAmount;
+        return maxLeftSwipeAmount;
     }
 
     @Override
     public void setMaxUpSwipeAmount(float amount) {
-        mMaxUpSwipeAmount = amount;
+        maxUpSwipeAmount = amount;
     }
 
     @Override
     public float getMaxUpSwipeAmount() {
-        return mMaxUpSwipeAmount;
+        return maxUpSwipeAmount;
     }
 
     @Override
     public void setMaxRightSwipeAmount(float amount) {
-        mMaxRightSwipeAmount = amount;
+        maxRightSwipeAmount = amount;
     }
 
     @Override
     public float getMaxRightSwipeAmount() {
-        return mMaxRightSwipeAmount;
+        return maxRightSwipeAmount;
     }
 
     @Override
     public void setMaxDownSwipeAmount(float amount) {
-        mMaxDownSwipeAmount = amount;
+        maxDownSwipeAmount = amount;
     }
 
     @Override
     public float getMaxDownSwipeAmount() {
-        return mMaxDownSwipeAmount;
+        return maxDownSwipeAmount;
     }
 
     @Override

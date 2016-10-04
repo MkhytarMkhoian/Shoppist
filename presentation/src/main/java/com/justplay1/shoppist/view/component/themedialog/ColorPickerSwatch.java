@@ -32,11 +32,11 @@ import com.justplay1.shoppist.R;
  * Creates a circular swatch of a specified color.  Adds a checkmark if marked as checked.
  */
 public class ColorPickerSwatch extends FrameLayout implements View.OnClickListener {
-    private int mColorsPrimary;
-    private int mColorPrimaryDark;
-    private ImageView mSwatchImage;
-    private ImageView mCheckmarkImage;
-    private OnColorSelectedListener mOnColorSelectedListener;
+    private int colorsPrimary;
+    private int colorPrimaryDark;
+    private ImageView swatchImage;
+    private ImageView checkmarkImage;
+    private OnColorSelectedListener onColorSelectedListener;
 
     /**
      * Interface for a callback when a color square is selected.
@@ -68,13 +68,13 @@ public class ColorPickerSwatch extends FrameLayout implements View.OnClickListen
 
     public ColorPickerSwatch(Context context, int colorPrimary, int colorPrimaryDark, boolean checked, OnColorSelectedListener listener) {
         super(context);
-        mColorsPrimary = colorPrimary;
-        mColorPrimaryDark = colorPrimaryDark;
-        mOnColorSelectedListener = listener;
+        colorsPrimary = colorPrimary;
+        this.colorPrimaryDark = colorPrimaryDark;
+        onColorSelectedListener = listener;
 
         inflate(context, R.layout.calendar_color_picker_swatch, this);
-        mSwatchImage = (ImageView) findViewById(R.id.color_picker_swatch);
-        mCheckmarkImage = (ImageView) findViewById(R.id.color_picker_checkmark);
+        swatchImage = (ImageView) findViewById(R.id.color_picker_swatch);
+        checkmarkImage = (ImageView) findViewById(R.id.color_picker_checkmark);
         setColor(colorPrimary);
         setChecked(checked);
         setOnClickListener(this);
@@ -83,21 +83,21 @@ public class ColorPickerSwatch extends FrameLayout implements View.OnClickListen
     protected void setColor(int color) {
         Drawable[] colorDrawable = new Drawable[]
                 {ContextCompat.getDrawable(getContext(), R.drawable.calendar_color_picker_swatch)};
-        mSwatchImage.setImageDrawable(new ColorStateDrawable(colorDrawable, color));
+        swatchImage.setImageDrawable(new ColorStateDrawable(colorDrawable, color));
     }
 
     private void setChecked(boolean checked) {
         if (checked) {
-            mCheckmarkImage.setVisibility(View.VISIBLE);
+            checkmarkImage.setVisibility(View.VISIBLE);
         } else {
-            mCheckmarkImage.setVisibility(View.GONE);
+            checkmarkImage.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void onClick(View v) {
-        if (mOnColorSelectedListener != null) {
-            mOnColorSelectedListener.onColorSelected(mColorsPrimary, mColorPrimaryDark);
+        if (onColorSelectedListener != null) {
+            onColorSelectedListener.onColorSelected(colorsPrimary, colorPrimaryDark);
         }
     }
 }

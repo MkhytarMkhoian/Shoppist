@@ -45,22 +45,22 @@ import butterknife.ButterKnife;
  */
 public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHeaderHolder, GoodsAdapter.GoodsViewHolder> {
 
-    private AppPreferences mPreferences;
+    private AppPreferences mPreferpreferencesnces;
 
     public GoodsAdapter(Context context, ActionModeInteractionListener listener,
                         RecyclerView recyclerView, AppPreferences preferences) {
         super(context, listener, recyclerView);
-        mPreferences = preferences;
+        mPreferpreferencesnces = preferences;
     }
 
     @Override
     public void onBindGroupViewHolder(BaseHeaderHolder holder, int groupPosition, int viewType) {
         HeaderViewModel model = getGroupItem(groupPosition);
         HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
-        if (mPreferences.getSortForGoods() == SortType.SORT_BY_PRIORITY) {
+        if (mPreferpreferencesnces.getSortForGoods() == SortType.SORT_BY_PRIORITY) {
             setPriorityTextColor(model.getPriority(), headerHolder.name);
         } else {
-            headerHolder.name.setTextColor(mPreferences.getColorPrimary());
+            headerHolder.name.setTextColor(mPreferpreferencesnces.getColorPrimary());
         }
         headerHolder.name.setText(model.getName());
 
@@ -79,7 +79,7 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
 
         holder.name.setText(item.getName());
 
-        if (mPreferences.getSortForGoods() == SortType.SORT_BY_CATEGORIES) {
+        if (mPreferpreferencesnces.getSortForGoods() == SortType.SORT_BY_CATEGORIES) {
             holder.categoryName.setVisibility(View.GONE);
         } else {
             holder.categoryName.setVisibility(View.VISIBLE);
@@ -100,7 +100,7 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
     public GoodsViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product, parent, false);
         GoodsViewHolder holder = new GoodsViewHolder(view);
-        holder.setClickListener(mItemClickListener);
+        holder.setClickListener(itemClickListener);
         return holder;
     }
 

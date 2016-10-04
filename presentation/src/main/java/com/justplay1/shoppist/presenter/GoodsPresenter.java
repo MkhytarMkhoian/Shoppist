@@ -57,15 +57,15 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
 
     private final BehaviorSubject<List<Pair<HeaderViewModel, List<ProductViewModel>>>> cache = BehaviorSubject.create();
 
-    private final GoodsModelDataMapper mGoodsModelDataMapper;
-    private final CategoryModelDataMapper mCategoryModelDataMapper;
-    private final UnitsDataModelMapper mUnitsDataModelMapper;
+    private final GoodsModelDataMapper goodsModelDataMapper;
+    private final CategoryModelDataMapper categoryModelDataMapper;
+    private final UnitsDataModelMapper unitsDataModelMapper;
 
-    private final GetCategory mGetCategory;
-    private final GetUnit mGetUnit;
-    private final GetGoodsList mGetGoodsList;
-    private final DeleteGoods mDeleteGoods;
-    private final UpdateGoods mUpdateGoods;
+    private final GetCategory getCategory;
+    private final GetUnit getUnit;
+    private final GetGoodsList getGoodsList;
+    private final DeleteGoods deleteGoods;
+    private final UpdateGoods updateGoods;
 
     @Inject
     GoodsPresenter(AppPreferences preferences,
@@ -78,14 +78,14 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
                    CategoryModelDataMapper categoryModelDataMapper,
                    UnitsDataModelMapper unitsDataModelMapper) {
         super(preferences);
-        this.mGoodsModelDataMapper = dataMapper;
-        this.mGetGoodsList = getGoodsList;
-        this.mDeleteGoods = deleteGoods;
-        this.mUpdateGoods = updateGoods;
-        this.mGetCategory = getCategory;
-        this.mGetUnit = getUnit;
-        this.mCategoryModelDataMapper = categoryModelDataMapper;
-        this.mUnitsDataModelMapper = unitsDataModelMapper;
+        this.goodsModelDataMapper = dataMapper;
+        this.getGoodsList = getGoodsList;
+        this.deleteGoods = deleteGoods;
+        this.updateGoods = updateGoods;
+        this.getCategory = getCategory;
+        this.getUnit = getUnit;
+        this.categoryModelDataMapper = categoryModelDataMapper;
+        this.unitsDataModelMapper = unitsDataModelMapper;
 
         loadData();
     }
@@ -93,7 +93,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     @Override
     public void attachView(GoodsView view) {
         super.attachView(view);
-        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ProductViewModel>>>>() {
+        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ProductViewModel>>>>() {
 
             @Override
             public void onStart() {
@@ -132,17 +132,17 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     }
 
     public void onSortByNameClick(final List<ProductViewModel> data) {
-        mPreferences.setSortForGoods(SortType.SORT_BY_NAME);
+        preferences.setSortForGoods(SortType.SORT_BY_NAME);
         showData(sort(data, SortType.SORT_BY_NAME));
     }
 
     public void onSortByTimeCreatedClick(final List<ProductViewModel> data) {
-        mPreferences.setSortForGoods(SortType.SORT_BY_TIME_CREATED);
+        preferences.setSortForGoods(SortType.SORT_BY_TIME_CREATED);
         showData(sort(data, SortType.SORT_BY_TIME_CREATED));
     }
 
     public void onSortByCategoryClick(final List<ProductViewModel> data) {
-        mPreferences.setSortForGoods(SortType.SORT_BY_CATEGORIES);
+        preferences.setSortForGoods(SortType.SORT_BY_CATEGORIES);
         showData(sort(data, SortType.SORT_BY_CATEGORIES));
     }
 
@@ -179,43 +179,43 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
 
     @SuppressWarnings("ResourceType")
     private Observable<List<Pair<HeaderViewModel, List<ProductViewModel>>>> loadGoods() {
-        return mGetGoodsList.get()
-                .map(mGoodsModelDataMapper::transformToViewModel)
-                .map(goods -> sort(goods, mPreferences.getSortForGoods()));
+        return getGoodsList.get()
+                .map(goodsModelDataMapper::transformToViewModel)
+                .map(goods -> sort(goods, preferences.getSortForGoods()));
     }
 
     private Observable<UnitViewModel> loadDefaultUnit() {
-        mGetUnit.setId(UnitViewModel.NO_UNIT_ID);
-        return mGetUnit.get()
-                .map(mUnitsDataModelMapper::transformToViewModel);
+        getUnit.setId(UnitViewModel.NO_UNIT_ID);
+        return getUnit.get()
+                .map(unitsDataModelMapper::transformToViewModel);
     }
 
     private Observable<CategoryViewModel> loadDefaultCategory() {
-        mGetCategory.setId(CategoryViewModel.NO_CATEGORY_ID);
-        return mGetCategory.get()
-                .map(mCategoryModelDataMapper::transformToViewModel);
+        getCategory.setId(CategoryViewModel.NO_CATEGORY_ID);
+        return getCategory.get()
+                .map(categoryModelDataMapper::transformToViewModel);
     }
 
     public void deleteItems(Collection<ProductViewModel> data) {
-        mSubscriptions.add(Observable.fromCallable(() -> mGoodsModelDataMapper.transform(data))
+        subscriptions.add(Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
                 .flatMap(goods -> {
-                    mDeleteGoods.setData(goods);
-                    return mDeleteGoods.get();
+                    deleteGoods.setData(goods);
+                    return deleteGoods.get();
                 }).subscribe(new DefaultSubscriber<>()));
     }
 
     public void changeUnit(UnitViewModel unit, List<ProductViewModel> editProducts) {
-        mSubscriptions.add(Observable.fromCallable(() -> {
+        subscriptions.add(Observable.fromCallable(() -> {
             for (ProductViewModel product : editProducts) {
                 if (!unit.equals(product.getUnit())) {
                     product.setUnit(unit);
                 }
             }
             return editProducts;
-        }).map(mGoodsModelDataMapper::transform)
+        }).map(goodsModelDataMapper::transform)
                 .flatMap(data -> {
-                    mUpdateGoods.setData(data);
-                    return mUpdateGoods.get();
+                    updateGoods.setData(data);
+                    return updateGoods.get();
                 }).subscribe(new DefaultSubscriber<Boolean>() {
                     @Override
                     public void onNext(Boolean aBoolean) {
@@ -225,17 +225,17 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     }
 
     public void changeCategory(CategoryViewModel category, List<ProductViewModel> editProducts) {
-        mSubscriptions.add(Observable.fromCallable(() -> {
+        subscriptions.add(Observable.fromCallable(() -> {
             for (ProductViewModel product : editProducts) {
                 if (!category.equals(product.getCategory())) {
                     product.setCategory(category);
                 }
             }
             return editProducts;
-        }).map(mGoodsModelDataMapper::transform)
+        }).map(goodsModelDataMapper::transform)
                 .flatMap(data -> {
-                    mUpdateGoods.setData(data);
-                    return mUpdateGoods.get();
+                    updateGoods.setData(data);
+                    return updateGoods.get();
                 }).subscribe(new DefaultSubscriber<Boolean>() {
                     @Override
                     public void onNext(Boolean aBoolean) {

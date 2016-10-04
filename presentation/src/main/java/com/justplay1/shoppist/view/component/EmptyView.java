@@ -33,8 +33,8 @@ import com.justplay1.shoppist.R;
  */
 public class EmptyView extends RelativeLayout {
 
-    private ProgressBarCircularIndeterminate mProgressBar;
-    private TextView mInfoText;
+    private ProgressBarCircularIndeterminate progressBar;
+    private TextView infoText;
 
     public EmptyView(Context context) {
         super(context);
@@ -59,34 +59,34 @@ public class EmptyView extends RelativeLayout {
 
     private void init(Context context) {
         inflate(context, R.layout.view_empty_list, this);
-        mProgressBar = (ProgressBarCircularIndeterminate) findViewById(R.id.progress_bar);
-        mProgressBar.setVisibility(INVISIBLE);
-        mInfoText = (TextView) findViewById(R.id.empty_text);
+        progressBar = (ProgressBarCircularIndeterminate) findViewById(R.id.progress_bar);
+        progressBar.setVisibility(INVISIBLE);
+        infoText = (TextView) findViewById(R.id.empty_text);
     }
 
     public void showProgressBar() {
-        mInfoText.setVisibility(INVISIBLE);
-        mProgressBar.setVisibility(VISIBLE);
+        infoText.setVisibility(INVISIBLE);
+        progressBar.setVisibility(VISIBLE);
     }
 
     public void hideProgressBar() {
-        mInfoText.setVisibility(VISIBLE);
-        mProgressBar.setVisibility(INVISIBLE);
+        infoText.setVisibility(VISIBLE);
+        progressBar.setVisibility(INVISIBLE);
     }
 
     public void setProgressBarColor(int color) {
-        mProgressBar.setBackgroundColor(color);
+        progressBar.setBackgroundColor(color);
     }
 
     public void setInfoText(int resId) {
-        mInfoText.setText(resId);
+        infoText.setText(resId);
     }
 
     public void setInfoImage(@DrawableRes int resId) {
         Drawable drawable = ContextCompat.getDrawable(getContext(), resId);
-        mInfoText.setCompoundDrawables(null, drawable, null, null);
+        infoText.setCompoundDrawables(null, drawable, null, null);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            mInfoText.setCompoundDrawablesRelative(null, drawable, null, null);
+            infoText.setCompoundDrawablesRelative(null, drawable, null, null);
         }
     }
 }

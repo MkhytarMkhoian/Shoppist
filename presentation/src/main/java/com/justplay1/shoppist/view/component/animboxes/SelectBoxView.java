@@ -23,6 +23,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.support.annotation.DrawableRes;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
@@ -42,20 +43,20 @@ import butterknife.ButterKnife;
 public class SelectBoxView extends FrameLayout implements View.OnClickListener, Animation.AnimationListener {
 
     @Bind(R.id.item_logo)
-    ImageView mMainView;
+    ImageView mainView;
     @Bind(R.id.logo_text)
-    TextView mInnerTextView;
+    TextView innerTextView;
 
-    private int mSelectedStateColor;
-    private int mNormalStateColor;
+    private int selectedStateColor;
+    private int normalStateColor;
     private boolean isChecked;
-    private String mInnerText;
-    private SelectBoxCheckListener mEventListener;
-    private Animation mToMiddleAnimation;
-    private Animation mFromMiddleAnimation;
-    private Animation mZoomAnimation;
-    private int mDimen;
-    private ShapeDrawable mShapeDrawable;
+    private String innerText;
+    private SelectBoxCheckListener eventListener;
+    private Animation toMiddleAnimation;
+    private Animation fromMiddleAnimation;
+    private Animation zoomAnimation;
+    private int dimen;
+    private ShapeDrawable shapeDrawable;
     private boolean isClickable = true;
     private boolean isAttachedToWindow;
 
@@ -83,18 +84,18 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
         inflate(context, R.layout.view_select_box, this);
         ButterKnife.bind(this);
 
-        mMainView.setOnClickListener(this);
+        mainView.setOnClickListener(this);
         OvalShape ovalShape = new OvalShape();
-        mShapeDrawable = new ShapeDrawable(ovalShape);
+        shapeDrawable = new ShapeDrawable(ovalShape);
 
-        mDimen = getResources().getDimensionPixelSize(R.dimen.select_box_check);
-        mSelectedStateColor = context.getResources().getColor(R.color.action_mode_toolbar_color);
+        dimen = getResources().getDimensionPixelSize(R.dimen.select_box_check);
+        selectedStateColor = ContextCompat.getColor(context, R.color.action_mode_toolbar_color);
 
-        mToMiddleAnimation = AnimationUtils.loadAnimation(context, R.anim.to_middle);
-        mToMiddleAnimation.setAnimationListener(this);
-        mFromMiddleAnimation = AnimationUtils.loadAnimation(context, R.anim.from_middle);
-        mZoomAnimation = AnimationUtils.loadAnimation(context, R.anim.zoom);
-        mZoomAnimation.setAnimationListener(new Animation.AnimationListener() {
+        toMiddleAnimation = AnimationUtils.loadAnimation(context, R.anim.to_middle);
+        toMiddleAnimation.setAnimationListener(this);
+        fromMiddleAnimation = AnimationUtils.loadAnimation(context, R.anim.from_middle);
+        zoomAnimation = AnimationUtils.loadAnimation(context, R.anim.zoom);
+        zoomAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
 
@@ -116,9 +117,9 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
         if (color == null) return null;
 
         OvalShape ovalShape = new OvalShape();
-        mShapeDrawable.setShape(ovalShape);
-        mShapeDrawable.getPaint().setColor(color);
-        return mShapeDrawable;
+        shapeDrawable.setShape(ovalShape);
+        shapeDrawable.getPaint().setColor(color);
+        return shapeDrawable;
     }
 
     @Override
@@ -141,32 +142,24 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
         this.isClickable = isClickable;
     }
 
-    public ImageView getMainView() {
-        return mMainView;
-    }
-
-    public String getInnerText() {
-        return mInnerText;
-    }
-
     public void setInnerText(String innerText) {
-        this.mInnerText = innerText;
-        mInnerTextView.setText(innerText);
+        this.innerText = innerText;
+        innerTextView.setText(innerText);
     }
 
     public void setInnerImage(@DrawableRes int resid) {
-        mInnerTextView.setText("");
-        mInnerTextView.setBackgroundResource(resid);
-        mInnerTextView.getLayoutParams().height = mDimen;
-        mInnerTextView.getLayoutParams().width = mDimen;
+        innerTextView.setText("");
+        innerTextView.setBackgroundResource(resid);
+        innerTextView.getLayoutParams().height = dimen;
+        innerTextView.getLayoutParams().width = dimen;
     }
 
     public void setInnerTextColor(int color) {
-        mInnerTextView.setTextColor(color);
+        innerTextView.setTextColor(color);
     }
 
     public void setEventListener(SelectBoxCheckListener eventListener) {
-        this.mEventListener = eventListener;
+        this.eventListener = eventListener;
     }
 
     public boolean isChecked() {
@@ -188,20 +181,20 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
     }
 
     public int getSelectedStateColor() {
-        return mSelectedStateColor;
+        return selectedStateColor;
     }
 
     public void setSelectedStateColor(int selectedStateColor) {
-        this.mSelectedStateColor = selectedStateColor;
+        this.selectedStateColor = selectedStateColor;
     }
 
     public int getNormalStateColor() {
-        return mNormalStateColor;
+        return normalStateColor;
     }
 
     public void setNormalStateColor(int normalStateColor) {
-        this.mNormalStateColor = normalStateColor;
-        setDrawable(mMainView, normalStateColor);
+        this.normalStateColor = normalStateColor;
+        setDrawable(mainView, normalStateColor);
     }
 
     @SuppressWarnings("deprecation")
@@ -214,15 +207,15 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
     }
 
     private void doAnimation() {
-        if (mEventListener != null) {
-            mEventListener.onCheck(isChecked);
+        if (eventListener != null) {
+            eventListener.onCheck(isChecked);
         }
         clearAnimation();
-        startAnimation(mToMiddleAnimation);
+        startAnimation(toMiddleAnimation);
     }
 
     public void setInnerTextTypeface(Typeface innerTextTypeface) {
-        mInnerTextView.setTypeface(innerTextTypeface);
+        innerTextView.setTypeface(innerTextTypeface);
     }
 
     @Override
@@ -234,9 +227,9 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
     public void onAnimationEnd(Animation animation) {
         switchBox();
         clearAnimation();
-        startAnimation(mFromMiddleAnimation);
+        startAnimation(fromMiddleAnimation);
         if (isChecked) {
-            mInnerTextView.startAnimation(mZoomAnimation);
+            innerTextView.startAnimation(zoomAnimation);
         }
     }
 
@@ -247,17 +240,17 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
 
     private void switchBox() {
         if (isChecked) {
-            mInnerTextView.setText("");
-            mInnerTextView.setBackgroundResource(R.drawable.ic_check_white);
-            mInnerTextView.getLayoutParams().height = mDimen;
-            mInnerTextView.getLayoutParams().width = mDimen;
-            setDrawable(mMainView, mSelectedStateColor);
+            innerTextView.setText("");
+            innerTextView.setBackgroundResource(R.drawable.ic_check_white);
+            innerTextView.getLayoutParams().height = dimen;
+            innerTextView.getLayoutParams().width = dimen;
+            setDrawable(mainView, selectedStateColor);
         } else {
-            setDrawable(mInnerTextView, null);
-            mInnerTextView.setText(mInnerText);
-            mInnerTextView.getLayoutParams().height = LayoutParams.WRAP_CONTENT;
-            mInnerTextView.getLayoutParams().width = LayoutParams.WRAP_CONTENT;
-            setDrawable(mMainView, mNormalStateColor);
+            setDrawable(innerTextView, null);
+            innerTextView.setText(innerText);
+            innerTextView.getLayoutParams().height = LayoutParams.WRAP_CONTENT;
+            innerTextView.getLayoutParams().width = LayoutParams.WRAP_CONTENT;
+            setDrawable(mainView, normalStateColor);
         }
     }
 
@@ -274,8 +267,8 @@ public class SelectBoxView extends FrameLayout implements View.OnClickListener, 
         if (animate() != null) {
             animate().cancel();
         }
-        if (mInnerTextView.animate() != null) {
-            mInnerTextView.animate().cancel();
+        if (innerTextView.animate() != null) {
+            innerTextView.animate().cancel();
         }
     }
 }

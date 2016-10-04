@@ -49,13 +49,11 @@ public class MainActivity extends BaseListActivity
         implements MenuFragment.MenuFragmentInteraction, Toolbar.OnMenuItemClickListener,
         ListRouter {
 
-    protected static final String FRAGMENT_TAG = "list_fragment";
+    private ListFragment listFragment;
 
-    private ListFragment mListFragment;
-
-    private Toolbar mToolbar;
-    private ActionBarDrawerToggle mToggle;
-    private DrawerLayout mMenuDrawer;
+    private Toolbar toolbar;
+    private ActionBarDrawerToggle toggle;
+    private DrawerLayout menuDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +62,11 @@ public class MainActivity extends BaseListActivity
         setContentView(R.layout.activity_main);
         initToolbar();
 
-        mListFragment = (ListFragment) getSupportFragmentManager().findFragmentByTag(ListFragment.class.getName());
-        if (mListFragment == null) {
-            mListFragment = ListFragment.newInstance();
+        listFragment = (ListFragment) getSupportFragmentManager().findFragmentByTag(ListFragment.class.getName());
+        if (listFragment == null) {
+            listFragment = ListFragment.newInstance();
         }
-        replaceFragment(R.id.container, mListFragment, FRAGMENT_TAG);
+        replaceFragment(R.id.container, listFragment, ListFragment.class.getName());
     }
 
     private void createNewInjectorIfNeeded() {
@@ -83,43 +81,38 @@ public class MainActivity extends BaseListActivity
 
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mToggle.syncState();
-    }
-
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        getSupportFragmentManager().putFragment(outState, FRAGMENT_TAG, mListFragment);
+        toggle.syncState();
     }
 
     private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(R.string.title_activity_shopping_lists);
-        mToolbar.setBackgroundColor(mPreferences.getColorPrimary());
-        mToolbar.setOnMenuItemClickListener(this);
-        mToolbar.inflateMenu(R.menu.shopping_list_toolbar);
-        ViewCompat.setElevation(mToolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_activity_shopping_lists);
+        toolbar.setBackgroundColor(preferences.getColorPrimary());
+        toolbar.setOnMenuItemClickListener(this);
+        toolbar.inflateMenu(R.menu.shopping_list_toolbar);
+        ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
 
-        mToolbar.getMenu().findItem(R.id.sort_by_category).setVisible(false);
-        mToolbar.getMenu().findItem(R.id.action_strike_out_all).setVisible(false);
-        mToolbar.getMenu().findItem(R.id.action_return_all_to_list).setVisible(false);
+        toolbar.getMenu().findItem(R.id.sort_by_category).setVisible(false);
+        toolbar.getMenu().findItem(R.id.action_strike_out_all).setVisible(false);
+        toolbar.getMenu().findItem(R.id.action_return_all_to_list).setVisible(false);
 
-        mMenuDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mMenuDrawer.setStatusBarBackgroundColor(mPreferences.getColorPrimaryDark());
-        mToggle = new ActionBarDrawerToggle(this, mMenuDrawer, mToolbar, R.string.open, R.string.close);
-        mMenuDrawer.addDrawerListener(mToggle);
+        menuDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        menuDrawer.setStatusBarBackgroundColor(preferences.getColorPrimaryDark());
+        toggle = new ActionBarDrawerToggle(this, menuDrawer, toolbar, R.string.open, R.string.close);
+        menuDrawer.addDrawerListener(toggle);
     }
 
     public void refreshToolbarColor() {
-        mToolbar.setBackgroundColor(mPreferences.getColorPrimary());
+        toolbar.setBackgroundColor(preferences.getColorPrimary());
     }
 
     @Override
     public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
-            if (!mMenuDrawer.isDrawerOpen(GravityCompat.START)) {
-                mMenuDrawer.openDrawer(GravityCompat.START);
+            if (!menuDrawer.isDrawerOpen(GravityCompat.START)) {
+                menuDrawer.openDrawer(GravityCompat.START);
             } else {
-                mMenuDrawer.closeDrawer(GravityCompat.START);
+                menuDrawer.closeDrawer(GravityCompat.START);
             }
             return true;
         }
@@ -129,15 +122,15 @@ public class MainActivity extends BaseListActivity
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mToggle.onConfigurationChanged(newConfig);
+        toggle.onConfigurationChanged(newConfig);
     }
 
     @Override
     public void onBackPressed() {
         if (isActionModeShowing()) {
             closeActionMode();
-        } else if (mMenuDrawer.isDrawerOpen(GravityCompat.START)) {
-            mMenuDrawer.closeDrawer(GravityCompat.START);
+        } else if (menuDrawer.isDrawerOpen(GravityCompat.START)) {
+            menuDrawer.closeDrawer(GravityCompat.START);
         } else {
             finishActivity(this);
         }
@@ -145,37 +138,37 @@ public class MainActivity extends BaseListActivity
 
     @Override
     public void openEditScreen(ListViewModel list) {
-        mNavigator.navigateToAddListScreen(this, list);
+        navigator.navigateToAddListScreen(this, list);
     }
 
     @Override
     public void openListDetailScreen(ListViewModel list) {
-        mNavigator.navigateToListItemsScreen(this, list);
+        navigator.navigateToListItemsScreen(this, list);
     }
 
     @Override
     public boolean onMenuItemClick(final MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.menu_check_all:
-                mListFragment.onCheckAllItemsClick();
+                listFragment.onCheckAllItemsClick();
                 break;
             case R.id.action_settings:
-                mNavigator.navigateToSettingScreen(this, 0);
+                navigator.navigateToSettingScreen(this, 0);
                 break;
             case R.id.sort_by_name:
-                mListFragment.onSortByNameClick();
+                listFragment.onSortByNameClick();
                 break;
             case R.id.sort_by_priority:
-                mListFragment.onSortByPriorityClick();
+                listFragment.onSortByPriorityClick();
                 break;
             case R.id.sort_by_time_created:
-                mListFragment.onSortByTimeCreatedClick();
+                listFragment.onSortByTimeCreatedClick();
                 break;
             case R.id.menu_expand_all:
-                mListFragment.onExpandAllClick();
+                listFragment.onExpandAllClick();
                 break;
             case R.id.menu_collapse_all:
-                mListFragment.onCollapseAllClick();
+                listFragment.onCollapseAllClick();
                 break;
         }
         return true;
@@ -196,19 +189,19 @@ public class MainActivity extends BaseListActivity
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                mListFragment.onEditItemClick();
+                listFragment.onEditItemClick();
                 break;
             case R.id.menu_delete:
-                mListFragment.onDeleteCheckedItemsClick();
+                listFragment.onDeleteCheckedItemsClick();
                 break;
             case R.id.menu_check_all:
-                mListFragment.onCheckAllItemsClick();
+                listFragment.onCheckAllItemsClick();
                 break;
             case R.id.action_email_share:
-                mListFragment.onEmailShareClick();
+                listFragment.onEmailShareClick();
                 break;
             case R.id.menu_uncheck_all:
-                mListFragment.onUnCheckAllItemsClick();
+                listFragment.onUnCheckAllItemsClick();
                 break;
         }
         return true;
@@ -219,46 +212,46 @@ public class MainActivity extends BaseListActivity
         super.onPrepareActionMode(mode, menu);
         MenuItem edit = menu.findItem(R.id.action_edit);
         if (edit != null) {
-            edit.setVisible(mListFragment.isEditButtonEnable());
+            edit.setVisible(listFragment.isEditButtonEnable());
         }
         MenuItem checkAll = menu.findItem(R.id.menu_check_all);
-        checkAll.setEnabled(mListFragment.isCheckAllButtonEnable());
+        checkAll.setEnabled(listFragment.isCheckAllButtonEnable());
         return true;
     }
 
     @Override
     public void onDestroyActionMode(ActionMode actionMode) {
         super.onDestroyActionMode(actionMode);
-        mListFragment.onUnCheckAllItemsClick();
+        listFragment.onUnCheckAllItemsClick();
     }
 
     @Override
     public void onCategoryClick() {
-        mMenuDrawer.addDrawerListener(new DrawerListener() {
+        menuDrawer.addDrawerListener(new DrawerListener() {
             @Override
             public void onDrawerClosed(View drawerView) {
-                mNavigator.navigateToCategoriesScreen(MainActivity.this);
-                mMenuDrawer.removeDrawerListener(this);
+                navigator.navigateToCategoriesScreen(MainActivity.this);
+                menuDrawer.removeDrawerListener(this);
             }
         });
-        mMenuDrawer.closeDrawers();
+        menuDrawer.closeDrawers();
     }
 
     @Override
     public void onCurrencyClick() {
-        mMenuDrawer.addDrawerListener(new DrawerListener() {
+        menuDrawer.addDrawerListener(new DrawerListener() {
             @Override
             public void onDrawerClosed(View drawerView) {
-                mNavigator.navigateToCurrencyScreen(MainActivity.this);
-                mMenuDrawer.removeDrawerListener(this);
+                navigator.navigateToCurrencyScreen(MainActivity.this);
+                menuDrawer.removeDrawerListener(this);
             }
         });
-        mMenuDrawer.closeDrawers();
+        menuDrawer.closeDrawers();
     }
 
     @Override
     public void onFeedbackClick() {
-        mMenuDrawer.addDrawerListener(new DrawerListener() {
+        menuDrawer.addDrawerListener(new DrawerListener() {
             @Override
             public void onDrawerClosed(View drawerView) {
                 Intent sendIntent = new Intent();
@@ -268,46 +261,46 @@ public class MainActivity extends BaseListActivity
                         " Version: " + ShoppistUtils.getAppVersion(MainActivity.this));
                 sendIntent.setType("message/rfc822");
                 startActivity(Intent.createChooser(sendIntent, getString(R.string.send_mail_using)));
-                mMenuDrawer.removeDrawerListener(this);
+                menuDrawer.removeDrawerListener(this);
             }
         });
-        mMenuDrawer.closeDrawers();
+        menuDrawer.closeDrawers();
     }
 
     @Override
     public void onGoodsClick() {
-        mMenuDrawer.addDrawerListener(new DrawerListener() {
+        menuDrawer.addDrawerListener(new DrawerListener() {
             @Override
             public void onDrawerClosed(View drawerView) {
-                mNavigator.navigateToGoodsScreen(MainActivity.this);
-                mMenuDrawer.removeDrawerListener(this);
+                navigator.navigateToGoodsScreen(MainActivity.this);
+                menuDrawer.removeDrawerListener(this);
             }
         });
-        mMenuDrawer.closeDrawers();
+        menuDrawer.closeDrawers();
     }
 
     @Override
     public void onUnitsClick() {
-        mMenuDrawer.addDrawerListener(new DrawerListener() {
+        menuDrawer.addDrawerListener(new DrawerListener() {
             @Override
             public void onDrawerClosed(View drawerView) {
-                mNavigator.navigateToUnitsScreen(MainActivity.this);
-                mMenuDrawer.removeDrawerListener(this);
+                navigator.navigateToUnitsScreen(MainActivity.this);
+                menuDrawer.removeDrawerListener(this);
             }
         });
-        mMenuDrawer.closeDrawers();
+        menuDrawer.closeDrawers();
     }
 
     @Override
     public void onSettingClick(int settingId) {
-        mMenuDrawer.addDrawerListener(new DrawerListener() {
+        menuDrawer.addDrawerListener(new DrawerListener() {
             @Override
             public void onDrawerClosed(View drawerView) {
-                mNavigator.navigateToSettingScreen(MainActivity.this, settingId);
-                mMenuDrawer.removeDrawerListener(this);
+                navigator.navigateToSettingScreen(MainActivity.this, settingId);
+                menuDrawer.removeDrawerListener(this);
             }
         });
-        mMenuDrawer.closeDrawers();
+        menuDrawer.closeDrawers();
     }
 
     private static abstract class DrawerListener implements DrawerLayout.DrawerListener {

@@ -67,24 +67,23 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
 
     private final BehaviorSubject<List<Pair<HeaderViewModel, List<ListItemViewModel>>>> cache = BehaviorSubject.create();
 
-    private final CategoryModelDataMapper mCategoryModelDataMapper;
-    private final UnitsDataModelMapper mUnitsDataModelMapper;
-    private final CurrencyModelDataMapper mCurrencyModelDataMapper;
-    private final ListItemsModelDataMapper mListItemsModelDataMapper;
+    private final CategoryModelDataMapper categoryModelDataMapper;
+    private final UnitsDataModelMapper unitsDataModelMapper;
+    private final CurrencyModelDataMapper currencyModelDataMapper;
+    private final ListItemsModelDataMapper listItemsModelDataMapper;
 
-    private final GetCategory mGetCategory;
-    private final GetUnit mGetUnit;
-    private final GetCurrency mGetCurrency;
-    private final GetListItems mGetListItems;
-    private final UpdateListItems mUpdateListItems;
-    private final DeleteListItems mDeleteListItems;
+    private final GetCategory getCategory;
+    private final GetUnit getUnit;
+    private final GetCurrency getCurrency;
+    private final GetListItems getListItems;
+    private final UpdateListItems updateListItems;
+    private final DeleteListItems deleteListItems;
 
-    private Subscription mDataBusSubscription;
-    private ListViewModel mParentList;
-    private ListItemViewModel mItem;
+    private Subscription dataBusSubscription;
+    private ListViewModel parentList;
 
     @Inject
-    public ListItemsPresenter(AppPreferences preferences,
+    ListItemsPresenter(AppPreferences preferences,
                               CategoryModelDataMapper categoryModelDataMapper,
                               UnitsDataModelMapper unitsDataModelMapper,
                               CurrencyModelDataMapper currencyModelDataMapper,
@@ -96,16 +95,16 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
                               UpdateListItems updateListItems,
                               DeleteListItems deleteListItems) {
         super(preferences);
-        this.mCategoryModelDataMapper = categoryModelDataMapper;
-        this.mUnitsDataModelMapper = unitsDataModelMapper;
-        this.mCurrencyModelDataMapper = currencyModelDataMapper;
-        this.mListItemsModelDataMapper = listItemsModelDataMapper;
-        this.mGetCategory = getCategory;
-        this.mGetUnit = getUnit;
-        this.mGetCurrency = getCurrency;
-        this.mGetListItems = getListItems;
-        this.mUpdateListItems = updateListItems;
-        this.mDeleteListItems = deleteListItems;
+        this.categoryModelDataMapper = categoryModelDataMapper;
+        this.unitsDataModelMapper = unitsDataModelMapper;
+        this.currencyModelDataMapper = currencyModelDataMapper;
+        this.listItemsModelDataMapper = listItemsModelDataMapper;
+        this.getCategory = getCategory;
+        this.getUnit = getUnit;
+        this.getCurrency = getCurrency;
+        this.getListItems = getListItems;
+        this.updateListItems = updateListItems;
+        this.deleteListItems = deleteListItems;
 
         loadData();
     }
@@ -114,7 +113,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     public void onCreate(Bundle arguments, Bundle savedInstanceState) {
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
-            mParentList = arguments.getParcelable(ListViewModel.class.getName());
+            parentList = arguments.getParcelable(ListViewModel.class.getName());
         }
     }
 
@@ -122,14 +121,14 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     public void attachView(ListItemsView view) {
         super.attachView(view);
         DataEventBus.instanceOf().filteredObservable(ListItemsDataUpdatedEvent.class);
-        mDataBusSubscription = DataEventBus.instanceOf().observable().subscribe(new DefaultSubscriber<Object>() {
+        dataBusSubscription = DataEventBus.instanceOf().observable().subscribe(new DefaultSubscriber<Object>() {
             @Override
             public void onNext(Object o) {
                 loadData();
             }
         });
 
-        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListItemViewModel>>>>() {
+        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListItemViewModel>>>>() {
 
             @Override
             public void onStart() {
@@ -153,15 +152,15 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     @Override
     public void detachView() {
         super.detachView();
-        mDataBusSubscription.unsubscribe();
+        dataBusSubscription.unsubscribe();
     }
 
     @SuppressWarnings("ResourceType")
     private Observable<List<Pair<HeaderViewModel, List<ListItemViewModel>>>> loadListItems() {
-        mGetListItems.setParentId(mParentList.getId());
-        return mGetListItems.get()
-                .map(mListItemsModelDataMapper::transformToViewModel)
-                .map(listItems -> sort(listItems, mPreferences.getSortForShoppingListItems()));
+        getListItems.setParentId(parentList.getId());
+        return getListItems.get()
+                .map(listItemsModelDataMapper::transformToViewModel)
+                .map(listItems -> sort(listItems, preferences.getSortForShoppingListItems()));
     }
 
     private void loadData() {
@@ -197,53 +196,53 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     }
 
     private Observable<CurrencyViewModel> loadDefaultCurrency() {
-        mGetCurrency.setId(CurrencyViewModel.NO_CURRENCY_ID);
-        return mGetCurrency.get()
+        getCurrency.setId(CurrencyViewModel.NO_CURRENCY_ID);
+        return getCurrency.get()
                 .flatMap(currencyModel -> {
                     if (currencyModel == null) {
-                        mGetCurrency.setId(CurrencyViewModel.NO_CURRENCY_ID);
-                        return mGetCurrency.get();
+                        getCurrency.setId(CurrencyViewModel.NO_CURRENCY_ID);
+                        return getCurrency.get();
                     }
                     return Observable.fromCallable(() -> currencyModel);
                 })
-                .map(mCurrencyModelDataMapper::transformToViewModel);
+                .map(currencyModelDataMapper::transformToViewModel);
     }
 
     private Observable<UnitViewModel> loadDefaultUnit() {
-        mGetUnit.setId(UnitViewModel.NO_UNIT_ID);
-        return mGetUnit.get()
-                .map(mUnitsDataModelMapper::transformToViewModel);
+        getUnit.setId(UnitViewModel.NO_UNIT_ID);
+        return getUnit.get()
+                .map(unitsDataModelMapper::transformToViewModel);
     }
 
     private Observable<CategoryViewModel> loadDefaultCategory() {
-        mGetCategory.setId(CategoryViewModel.NO_CATEGORY_ID);
-        return mGetCategory.get()
-                .map(mCategoryModelDataMapper::transformToViewModel);
+        getCategory.setId(CategoryViewModel.NO_CATEGORY_ID);
+        return getCategory.get()
+                .map(categoryModelDataMapper::transformToViewModel);
     }
 
     public void onChildItemMoved(final ListItemViewModel moveItem) {
-        mSubscriptions.add(Observable.fromCallable(() -> {
+        subscriptions.add(Observable.fromCallable(() -> {
             moveItem.setStatus(!moveItem.getStatus());
             return moveItem;
-        }).map(mListItemsModelDataMapper::transform)
+        }).map(listItemsModelDataMapper::transform)
                 .flatMap(listItemViewModel -> {
-                    mUpdateListItems.setData(Collections.singletonList(listItemViewModel));
-                    return mUpdateListItems.get();
+                    updateListItems.setData(Collections.singletonList(listItemViewModel));
+                    return updateListItems.get();
                 })
-                .subscribe(new DefaultSubscriber<Boolean>()));
+                .subscribe(new DefaultSubscriber<>()));
     }
 
     public void onEditItemClick(ListItemViewModel editItem) {
-        openEditScreen(mParentList, editItem);
+        openEditScreen(parentList, editItem);
     }
 
     public void onChildItemEdit(ListItemViewModel editItem) {
         editItem.setPinned(false);
-        openEditScreen(mParentList, editItem);
+        openEditScreen(parentList, editItem);
     }
 
     public void onListItemClick(ListItemViewModel item) {
-        openEditScreen(mParentList, item);
+        openEditScreen(parentList, item);
     }
 
     public void onAddButtonClick() {
@@ -255,19 +254,19 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     }
 
     private void clickAction(boolean isLongClick) {
-        switch (mPreferences.getAddButtonClickAction()) {
+        switch (preferences.getAddButtonClickAction()) {
             case 0:
                 if (!isLongClick) {
-                    openEditScreen(mParentList, null);
+                    openEditScreen(parentList, null);
                 } else {
-                    openQuickMode(mParentList.getId());
+                    openQuickMode(parentList.getId());
                 }
                 break;
             case 1:
                 if (!isLongClick) {
-                    openQuickMode(mParentList.getId());
+                    openQuickMode(parentList.getId());
                 } else {
-                    openEditScreen(mParentList, null);
+                    openEditScreen(parentList, null);
                 }
                 break;
         }
@@ -282,51 +281,51 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     }
 
     public void deleteItems(Collection<ListItemViewModel> data) {
-        mSubscriptions.add(Observable.fromCallable(() -> mListItemsModelDataMapper.transform(data))
+        subscriptions.add(Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
                 .flatMap(listItemModels -> {
-                    mDeleteListItems.setData(listItemModels);
-                    return mDeleteListItems.get();
-                }).subscribe(new DefaultSubscriber<Boolean>()));
+                    deleteListItems.setData(listItemModels);
+                    return deleteListItems.get();
+                }).subscribe(new DefaultSubscriber<>()));
     }
 
     public void onCopyItemsClick(List<ListItemViewModel> items) {
         if (isViewAttached()) {
-            getView().openCopyGoodsDialog(mParentList, items);
+            getView().openCopyGoodsDialog(parentList, items);
         }
     }
 
     public void onMoveItemsClick(List<ListItemViewModel> items) {
         if (isViewAttached()) {
-            getView().openMoveGoodsDialog(mParentList, items);
+            getView().openMoveGoodsDialog(parentList, items);
         }
     }
 
     public void onEmailShareClick() {
-        showEmailShareDialog(mParentList.getName());
+        showEmailShareDialog(parentList.getName());
     }
 
     public void onSortByNameClick(List<ListItemViewModel> data) {
-        mPreferences.setSortForShoppingListItems(SortType.SORT_BY_NAME);
+        preferences.setSortForShoppingListItems(SortType.SORT_BY_NAME);
         showData(sort(data, SortType.SORT_BY_NAME));
     }
 
     public void onSortByPriorityClick(List<ListItemViewModel> data) {
-        mPreferences.setSortForShoppingListItems(SortType.SORT_BY_PRIORITY);
+        preferences.setSortForShoppingListItems(SortType.SORT_BY_PRIORITY);
         showData(sort(data, SortType.SORT_BY_PRIORITY));
     }
 
     public void onSortByCategoryClick(List<ListItemViewModel> data) {
-        mPreferences.setSortForShoppingListItems(SortType.SORT_BY_CATEGORIES);
+        preferences.setSortForShoppingListItems(SortType.SORT_BY_CATEGORIES);
         showData(sort(data, SortType.SORT_BY_CATEGORIES));
     }
 
     public void onSortByTimeCreatedClick(List<ListItemViewModel> data) {
-        mPreferences.setSortForShoppingListItems(SortType.SORT_BY_TIME_CREATED);
+        preferences.setSortForShoppingListItems(SortType.SORT_BY_TIME_CREATED);
         showData(sort(data, SortType.SORT_BY_TIME_CREATED));
     }
 
     private void strikeOut(List<ListItemViewModel> items, boolean toShoppingCart) {
-        mSubscriptions.add(Observable.fromCallable(() -> {
+        subscriptions.add(Observable.fromCallable(() -> {
             List<ListItemViewModel> itemsToMove = new ArrayList<>();
             for (ListItemViewModel item : items) {
                 if (toShoppingCart) {
@@ -343,10 +342,10 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
             }
             return itemsToMove;
         }).filter(itemsToMove -> itemsToMove.size() > 0)
-                .map(mListItemsModelDataMapper::transform)
+                .map(listItemsModelDataMapper::transform)
                 .flatMap(listItemViewModels -> {
-                    mUpdateListItems.setData(listItemViewModels);
-                    return mUpdateListItems.get();
+                    updateListItems.setData(listItemViewModels);
+                    return updateListItems.get();
                 })
                 .subscribe(new DefaultSubscriber<Boolean>() {
                     @Override

@@ -34,11 +34,11 @@ public class ListsSettingFragment extends BaseSettingFragment {
     public static final String SHOPPING_LIST_RIGHT_SWIPE_ACTION_ID = "shopping_list_right_swipe_action_id";
     public static final String ADD_BUTTON_CLICK_ACTION_ID = "add_button_click_action";
 
-    private Preference mShoppingListLeftSwipeActionBtn;
-    private Preference mShoppingListRightSwipeActionBtn;
-    private Preference mAddButtonClickAction;
+    private Preference shoppingListLeftSwipeActionBtn;
+    private Preference shoppingListRightSwipeActionBtn;
+    private Preference addButtonClickAction;
 
-    private AlertDialog mDialog;
+    private AlertDialog dialog;
 
     public static ListsSettingFragment newInstance() {
         return new ListsSettingFragment();
@@ -52,24 +52,24 @@ public class ListsSettingFragment extends BaseSettingFragment {
     protected void initFrame() {
         super.initFrame();
         updateShoppingListCheckBox();
-        mShoppingListLeftSwipeActionBtn.setOnPreferenceClickListener(this);
-        mShoppingListRightSwipeActionBtn.setOnPreferenceClickListener(this);
-        mAddButtonClickAction.setOnPreferenceClickListener(this);
+        shoppingListLeftSwipeActionBtn.setOnPreferenceClickListener(this);
+        shoppingListRightSwipeActionBtn.setOnPreferenceClickListener(this);
+        addButtonClickAction.setOnPreferenceClickListener(this);
     }
 
     public void onClickPositiveBtn(String id, int[] selectedItem, ArrayAdapter<String> adapter) {
         switch (id) {
             case SHOPPING_LIST_LEFT_SWIPE_ACTION_ID:
-                mPreferences.setLeftShoppingListItemSwipeAction(selectedItem[0]);
-                mShoppingListLeftSwipeActionBtn.setSummary(adapter.getItem(selectedItem[0]));
+                preferences.setLeftShoppingListItemSwipeAction(selectedItem[0]);
+                shoppingListLeftSwipeActionBtn.setSummary(adapter.getItem(selectedItem[0]));
                 break;
             case SHOPPING_LIST_RIGHT_SWIPE_ACTION_ID:
-                mPreferences.setRightShoppingListItemSwipeAction(selectedItem[0]);
-                mShoppingListRightSwipeActionBtn.setSummary(adapter.getItem(selectedItem[0]));
+                preferences.setRightShoppingListItemSwipeAction(selectedItem[0]);
+                shoppingListRightSwipeActionBtn.setSummary(adapter.getItem(selectedItem[0]));
                 break;
             case ADD_BUTTON_CLICK_ACTION_ID:
-                mPreferences.setAddButtonClickAction(selectedItem[0]);
-                mAddButtonClickAction.setSummary(adapter.getItem(selectedItem[0]));
+                preferences.setAddButtonClickAction(selectedItem[0]);
+                addButtonClickAction.setSummary(adapter.getItem(selectedItem[0]));
                 break;
         }
     }
@@ -95,59 +95,59 @@ public class ListsSettingFragment extends BaseSettingFragment {
     }
 
     protected void updateShoppingListCheckBox() {
-        if (mShoppingListLeftSwipeActionBtn == null) {
-            mShoppingListLeftSwipeActionBtn = new Preference(getActivity());
-            mShoppingListLeftSwipeActionBtn.setKey(SHOPPING_LIST_LEFT_SWIPE_ACTION_ID);
-            mShoppingListLeftSwipeActionBtn.setTitle(R.string.left_swipe_action);
-            switch (mPreferences.getLeftShoppingListItemSwipeAction()) {
+        if (shoppingListLeftSwipeActionBtn == null) {
+            shoppingListLeftSwipeActionBtn = new Preference(getActivity());
+            shoppingListLeftSwipeActionBtn.setKey(SHOPPING_LIST_LEFT_SWIPE_ACTION_ID);
+            shoppingListLeftSwipeActionBtn.setTitle(R.string.left_swipe_action);
+            switch (preferences.getLeftShoppingListItemSwipeAction()) {
                 case 0:
-                    mShoppingListLeftSwipeActionBtn.setSummary(getString(R.string.move_item_to_cart));
+                    shoppingListLeftSwipeActionBtn.setSummary(getString(R.string.move_item_to_cart));
                     break;
                 case 1:
-                    mShoppingListLeftSwipeActionBtn.setSummary(getString(R.string.delete_item));
+                    shoppingListLeftSwipeActionBtn.setSummary(getString(R.string.delete_item));
                     break;
                 case 2:
-                    mShoppingListLeftSwipeActionBtn.setSummary(getString(R.string.edit_item));
+                    shoppingListLeftSwipeActionBtn.setSummary(getString(R.string.edit_item));
                     break;
             }
         }
-        getPreferenceScreen().removePreference(mShoppingListLeftSwipeActionBtn);
-        getPreferenceScreen().addPreference(mShoppingListLeftSwipeActionBtn);
+        getPreferenceScreen().removePreference(shoppingListLeftSwipeActionBtn);
+        getPreferenceScreen().addPreference(shoppingListLeftSwipeActionBtn);
 
-        if (mShoppingListRightSwipeActionBtn == null) {
-            mShoppingListRightSwipeActionBtn = new Preference(getActivity());
-            mShoppingListRightSwipeActionBtn.setKey(SHOPPING_LIST_RIGHT_SWIPE_ACTION_ID);
-            mShoppingListRightSwipeActionBtn.setTitle(R.string.right_swipe_action);
-            switch (mPreferences.getRightShoppingListItemSwipeAction()) {
+        if (shoppingListRightSwipeActionBtn == null) {
+            shoppingListRightSwipeActionBtn = new Preference(getActivity());
+            shoppingListRightSwipeActionBtn.setKey(SHOPPING_LIST_RIGHT_SWIPE_ACTION_ID);
+            shoppingListRightSwipeActionBtn.setTitle(R.string.right_swipe_action);
+            switch (preferences.getRightShoppingListItemSwipeAction()) {
                 case 0:
-                    mShoppingListRightSwipeActionBtn.setSummary(getString(R.string.move_item_to_cart));
+                    shoppingListRightSwipeActionBtn.setSummary(getString(R.string.move_item_to_cart));
                     break;
                 case 1:
-                    mShoppingListRightSwipeActionBtn.setSummary(getString(R.string.delete_item));
+                    shoppingListRightSwipeActionBtn.setSummary(getString(R.string.delete_item));
                     break;
                 case 2:
-                    mShoppingListRightSwipeActionBtn.setSummary(getString(R.string.edit_item));
+                    shoppingListRightSwipeActionBtn.setSummary(getString(R.string.edit_item));
                     break;
             }
         }
-        getPreferenceScreen().removePreference(mShoppingListRightSwipeActionBtn);
-        getPreferenceScreen().addPreference(mShoppingListRightSwipeActionBtn);
+        getPreferenceScreen().removePreference(shoppingListRightSwipeActionBtn);
+        getPreferenceScreen().addPreference(shoppingListRightSwipeActionBtn);
 
-        if (mAddButtonClickAction == null) {
-            mAddButtonClickAction = new Preference(getActivity());
-            mAddButtonClickAction.setKey(ADD_BUTTON_CLICK_ACTION_ID);
-            mAddButtonClickAction.setTitle(R.string.add_button_click_action);
-            switch (mPreferences.getAddButtonClickAction()) {
+        if (addButtonClickAction == null) {
+            addButtonClickAction = new Preference(getActivity());
+            addButtonClickAction.setKey(ADD_BUTTON_CLICK_ACTION_ID);
+            addButtonClickAction.setTitle(R.string.add_button_click_action);
+            switch (preferences.getAddButtonClickAction()) {
                 case 0:
-                    mAddButtonClickAction.setSummary(R.string.standart_mode);
+                    addButtonClickAction.setSummary(R.string.standart_mode);
                     break;
                 case 1:
-                    mAddButtonClickAction.setSummary(R.string.quick_mode);
+                    addButtonClickAction.setSummary(R.string.quick_mode);
                     break;
             }
         }
-        getPreferenceScreen().removePreference(mAddButtonClickAction);
-        getPreferenceScreen().addPreference(mAddButtonClickAction);
+        getPreferenceScreen().removePreference(addButtonClickAction);
+        getPreferenceScreen().addPreference(addButtonClickAction);
     }
 
     private void showChooseActionDialog(Context context, final String id) {
@@ -157,13 +157,13 @@ public class ListsSettingFragment extends BaseSettingFragment {
         final int[] selectedItem = {-1};
         switch (id) {
             case ListsSettingFragment.SHOPPING_LIST_LEFT_SWIPE_ACTION_ID:
-                selectedItem[0] = mPreferences.getLeftShoppingListItemSwipeAction();
+                selectedItem[0] = preferences.getLeftShoppingListItemSwipeAction();
                 break;
             case ListsSettingFragment.SHOPPING_LIST_RIGHT_SWIPE_ACTION_ID:
-                selectedItem[0] = mPreferences.getRightShoppingListItemSwipeAction();
+                selectedItem[0] = preferences.getRightShoppingListItemSwipeAction();
                 break;
             case ListsSettingFragment.ADD_BUTTON_CLICK_ACTION_ID:
-                selectedItem[0] = mPreferences.getAddButtonClickAction();
+                selectedItem[0] = preferences.getAddButtonClickAction();
                 actions = new String[]{context.getString(R.string.standart_mode), context.getString(R.string.quick_mode)};
                 break;
         }
@@ -189,17 +189,17 @@ public class ListsSettingFragment extends BaseSettingFragment {
         builder.setTitle(R.string.choose_actions);
         builder.setPositiveButton(R.string.choose, listener);
         builder.setNegativeButton(R.string.cancel, listener);
-        mDialog = builder.create();
-        mDialog.show();
-        mDialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(mPreferences.getColorPrimary());
-        mDialog.getButton(Dialog.BUTTON_NEGATIVE).setTextColor(mPreferences.getColorPrimary());
+        dialog = builder.create();
+        dialog.show();
+        dialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(preferences.getColorPrimary());
+        dialog.getButton(Dialog.BUTTON_NEGATIVE).setTextColor(preferences.getColorPrimary());
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismiss();
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
         }
     }
 }

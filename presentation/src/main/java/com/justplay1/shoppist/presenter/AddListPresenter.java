@@ -42,68 +42,68 @@ import rx.Observable;
 @NonConfigurationScope
 public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
 
-    private final ListModelDataMapper mDataMapper;
-    private final AddList mAddList;
-    private final UpdateLists mUpdateLists;
+    private final ListModelDataMapper dataMapper;
+    private final AddList addList;
+    private final UpdateLists updateLists;
 
-    private ListViewModel mItem;
-    private int mPriority = Priority.NO_PRIORITY;
-    private int mColor = Color.DKGRAY;
-    private String mName = "";
+    private ListViewModel item;
+    private int priority = Priority.NO_PRIORITY;
+    private int color = Color.DKGRAY;
+    private String name = "";
 
     @Inject
     AddListPresenter(ListModelDataMapper dataMapper, AddList addList, UpdateLists updateLists) {
-        this.mDataMapper = dataMapper;
-        this.mAddList = addList;
-        this.mUpdateLists = updateLists;
+        this.dataMapper = dataMapper;
+        this.addList = addList;
+        this.updateLists = updateLists;
     }
 
     @Override
     public void onCreate(Bundle arguments, Bundle savedInstanceState) {
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
-            mItem = arguments.getParcelable(ListViewModel.class.getName());
+            item = arguments.getParcelable(ListViewModel.class.getName());
         }
     }
 
     @Override
     public void attachView(AddListView view) {
         super.attachView(view);
-        if (mItem != null) {
-            mColor = mItem.getColor();
-            mName = mItem.getName();
-            mPriority = mItem.getPriority();
-            setToolbarTitle(mName);
+        if (item != null) {
+            color = item.getColor();
+            name = item.getName();
+            priority = item.getPriority();
+            setToolbarTitle(name);
         } else {
             setDefaultToolbarTitle();
         }
-        setName(mName);
-        setPriority(mPriority);
-        if (mColor == Color.DKGRAY) {
+        setName(name);
+        setPriority(priority);
+        if (color == Color.DKGRAY) {
             setRandomColor();
         } else {
-            setColorToButton(mColor);
+            setColorToButton(color);
         }
     }
 
     public void selectPriority(@Priority int priority) {
-        mPriority = priority;
-        if (mItem != null) {
-            mItem.setPriority(priority);
+        this.priority = priority;
+        if (item != null) {
+            item.setPriority(priority);
         }
     }
 
     public void selectColor(int color) {
-        mColor = color;
-        if (mItem != null) {
-            mItem.setColor(color);
+        this.color = color;
+        if (item != null) {
+            item.setColor(color);
         }
     }
 
     public void selectName(String name) {
-        this.mName = name;
-        if (mItem != null) {
-            mItem.setName(name);
+        this.name = name;
+        if (item != null) {
+            item.setName(name);
         }
     }
 
@@ -120,7 +120,7 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
     }
 
     public boolean isItemEdit() {
-        return mItem != null;
+        return item != null;
     }
 
     public void onColorButtonClick() {
@@ -128,34 +128,34 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
     }
 
     public void onDoneButtonClick() {
-        saveList(mName, false);
+        saveList(name, false);
     }
 
     public void onDoneButtonLongClick() {
-        saveList(mName, true);
+        saveList(name, true);
     }
 
     private void addList(ListViewModel data, boolean isLongClick) {
-        mSubscriptions.add(
-                Observable.fromCallable(() -> mDataMapper.transform(data))
+        subscriptions.add(
+                Observable.fromCallable(() -> dataMapper.transform(data))
                         .flatMap(list -> {
-                            mAddList.setData(Collections.singletonList(list));
-                            return mAddList.get();
+                            addList.setData(Collections.singletonList(list));
+                            return addList.get();
                         }).subscribe(new SaveListSubscriber(isLongClick, true)));
     }
 
     private void updateList(ListViewModel data, boolean isLongClick) {
-        mSubscriptions.add(
-                Observable.fromCallable(() -> mDataMapper.transform(data))
+        subscriptions.add(
+                Observable.fromCallable(() -> dataMapper.transform(data))
                         .flatMap(list -> {
-                            mUpdateLists.setData(Collections.singletonList(list));
-                            return mUpdateLists.get();
+                            updateLists.setData(Collections.singletonList(list));
+                            return updateLists.get();
                         }).subscribe(new SaveListSubscriber(isLongClick, false)));
     }
 
     private void showSelectColorDialog() {
         if (isViewAttached()) {
-            getView().showSelectColorDialog(mColor);
+            getView().showSelectColorDialog(color);
         }
     }
 
@@ -166,11 +166,11 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
     }
 
     private void clearUI() {
-        mColor = Color.DKGRAY;
+        color = Color.DKGRAY;
         setName("");
-        setColorToButton(mColor);
+        setColorToButton(color);
         setPriority(Priority.NO_PRIORITY);
-        mItem = null;
+        item = null;
     }
 
     private boolean checkDataForErrors(String name) {
@@ -186,13 +186,13 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
     private ListViewModel buildList(String name) {
         ListViewModel list = new ListViewModel();
         list.setName(name);
-        list.setColor(mColor);
-        list.setPriority(mPriority);
+        list.setColor(color);
+        list.setPriority(priority);
 
-        if (mItem != null) {
-            list.setId(mItem.getId());
-            list.setChecked(mItem.isChecked());
-            list.setTimeCreated(mItem.getTimeCreated());
+        if (item != null) {
+            list.setId(item.getId());
+            list.setChecked(item.isChecked());
+            list.setTimeCreated(item.getTimeCreated());
         } else {
             list.setId(ModelUtils.generateId());
             list.setTimeCreated(System.currentTimeMillis());
@@ -204,7 +204,7 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
     private void saveList(String name, boolean isLongClick) {
         if (checkDataForErrors(name)) {
             ListViewModel category = buildList(name);
-            if (mItem != null) {
+            if (item != null) {
                 updateList(category, isLongClick);
             } else {
                 addList(category, isLongClick);

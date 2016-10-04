@@ -52,17 +52,17 @@ public abstract class BaseListFragment<M extends BaseViewModel, T extends BaseAd
     private static final String CHECKED_ITEMS_COUNT = "checked_items_count";
 
     @Bind(android.R.id.empty)
-    protected EmptyView mEmptyView;
+    protected EmptyView emptyView;
     @Bind(R.id.recycler_view)
-    protected ShoppistRecyclerView mRecyclerView;
+    protected ShoppistRecyclerView recyclerView;
     @Bind(R.id.add_button)
-    protected FloatingActionButton mActionButton;
+    protected FloatingActionButton actionButton;
 
-    protected CustomProgressDialog mProgressDialog;
-    protected LinearLayoutManager mLayoutManager;
-    protected ActionModeInteractionListener mActionModeInteractionListener;
-    protected AlertDialog mDialog;
-    protected T mAdapter;
+    protected CustomProgressDialog progressDialog;
+    protected LinearLayoutManager layoutManager;
+    protected ActionModeInteractionListener actionModeInteractionListener;
+    protected AlertDialog dialog;
+    protected T adapter;
 
     @LayoutRes
     protected abstract int getLayoutId();
@@ -73,7 +73,7 @@ public abstract class BaseListFragment<M extends BaseViewModel, T extends BaseAd
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mActionModeInteractionListener = (ActionModeInteractionListener) context;
+            actionModeInteractionListener = (ActionModeInteractionListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement ActionModeInteractionListener");
@@ -92,55 +92,55 @@ public abstract class BaseListFragment<M extends BaseViewModel, T extends BaseAd
 
     @Override
     protected void init(View view) {
-        mProgressDialog = new CustomProgressDialog(getContext());
-        mProgressDialog.setMessage(getString(R.string.please_wait));
-        mProgressDialog.setColor(mPreferences.getColorPrimary());
+        progressDialog = new CustomProgressDialog(getContext());
+        progressDialog.setMessage(getString(R.string.please_wait));
+        progressDialog.setColor(preferences.getColorPrimary());
 
-        mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
-        mActionButton.setOnClickListener(this);
+        actionButton.setBackgroundTintList(ColorStateList.valueOf(preferences.getColorPrimary()));
+        actionButton.setOnClickListener(this);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (savedInstanceState != null) {
-            mAdapter.setCheckedItemsCount(savedInstanceState.getInt(CHECKED_ITEMS_COUNT));
+            adapter.setCheckedItemsCount(savedInstanceState.getInt(CHECKED_ITEMS_COUNT));
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (mActionModeInteractionListener.isActionModeShowing()) {
-            outState.putInt(CHECKED_ITEMS_COUNT, mAdapter.getCheckedItemsCount());
+        if (actionModeInteractionListener.isActionModeShowing()) {
+            outState.putInt(CHECKED_ITEMS_COUNT, adapter.getCheckedItemsCount());
         }
     }
 
     protected void initRecyclerView(View view, Bundle savedInstanceState) {
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setEmptyView(mEmptyView);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setEmptyView(emptyView);
         initAdapter();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismiss();
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
         }
         ButterKnife.unbind(this);
-        if (mRecyclerView != null) {
-            mRecyclerView.setItemAnimator(null);
-            mRecyclerView.setAdapter(null);
-            mRecyclerView = null;
+        if (recyclerView != null) {
+            recyclerView.setItemAnimator(null);
+            recyclerView.setAdapter(null);
+            recyclerView = null;
         }
-        mLayoutManager = null;
+        layoutManager = null;
     }
 
     protected void deleteItems(String message, @NonNull DeleteListener listener) {
-        if (mPreferences.isNeedShowConfirmDeleteDialog()) {
+        if (preferences.isNeedShowConfirmDeleteDialog()) {
             showConfirmDeleteDialog(message, (dialog, which) -> {
                 switch (which) {
                     case Dialog.BUTTON_POSITIVE:
@@ -161,10 +161,10 @@ public abstract class BaseListFragment<M extends BaseViewModel, T extends BaseAd
         builder.setMessage(message);
         builder.setPositiveButton(R.string.action_delete, listener);
         builder.setNegativeButton(R.string.cancel, listener);
-        mDialog = builder.create();
-        mDialog.show();
-        mDialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(mPreferences.getColorPrimary());
-        mDialog.getButton(Dialog.BUTTON_NEGATIVE).setTextColor(mPreferences.getColorPrimary());
+        dialog = builder.create();
+        dialog.show();
+        dialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(preferences.getColorPrimary());
+        dialog.getButton(Dialog.BUTTON_NEGATIVE).setTextColor(preferences.getColorPrimary());
     }
 
     public interface DeleteListener {

@@ -41,58 +41,58 @@ import rx.Observable;
 @NonConfigurationScope
 public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryView> {
 
-    private final CategoryModelDataMapper mDataMapper;
-    private final AddCategory mAddCategory;
-    private final UpdateCategory mUpdateCategory;
+    private final CategoryModelDataMapper dataMapper;
+    private final AddCategory addCategory;
+    private final UpdateCategory updateCategory;
 
-    private CategoryViewModel mItem;
-    private int mColor = Color.DKGRAY;
-    private String mName = "";
+    private CategoryViewModel item;
+    private int color = Color.DKGRAY;
+    private String name = "";
 
     @Inject
     AddCategoryPresenter(CategoryModelDataMapper dataMapper, AddCategory addCategory, UpdateCategory updateCategory) {
-        this.mAddCategory = addCategory;
-        this.mUpdateCategory = updateCategory;
-        this.mDataMapper = dataMapper;
+        this.addCategory = addCategory;
+        this.updateCategory = updateCategory;
+        this.dataMapper = dataMapper;
     }
 
     @Override
     public void onCreate(Bundle arguments, Bundle savedInstanceState) {
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
-            mItem = arguments.getParcelable(CategoryViewModel.class.getName());
+            item = arguments.getParcelable(CategoryViewModel.class.getName());
         }
     }
 
     @Override
     public void attachView(AddCategoryView view) {
         super.attachView(view);
-        if (mItem != null) {
-            mColor = mItem.getColor();
-            mName = mItem.getName();
-            setToolbarTitle(mName);
+        if (item != null) {
+            color = item.getColor();
+            name = item.getName();
+            setToolbarTitle(name);
         } else {
             setDefaultToolbarTitle();
         }
-        setColorToButton(mColor);
-        setName(mName);
+        setColorToButton(color);
+        setName(name);
     }
 
     public boolean isItemEdit() {
-        return mItem != null;
+        return item != null;
     }
 
     public void selectColor(int color) {
-        mColor = color;
-        if (mItem != null) {
-            mItem.setColor(color);
+        this.color = color;
+        if (item != null) {
+            item.setColor(color);
         }
     }
 
     public void selectName(String name) {
-        this.mName = name;
-        if (mItem != null) {
-            mItem.setName(name);
+        this.name = name;
+        if (item != null) {
+            item.setName(name);
         }
     }
 
@@ -101,34 +101,34 @@ public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryVie
     }
 
     public void onDoneButtonClick() {
-        saveCategory(mName, false);
+        saveCategory(name, false);
     }
 
     public void onDoneButtonLongClick() {
-        saveCategory(mName, true);
+        saveCategory(name, true);
     }
 
     private void addCategory(CategoryViewModel data, boolean isLongClick) {
-        mSubscriptions.add(
-                Observable.fromCallable(() -> mDataMapper.transform(data))
+        subscriptions.add(
+                Observable.fromCallable(() -> dataMapper.transform(data))
                         .flatMap(category -> {
-                            mAddCategory.setData(Collections.singletonList(category));
-                            return mAddCategory.get();
+                            addCategory.setData(Collections.singletonList(category));
+                            return addCategory.get();
                         }).subscribe(new SaveCategorySubscriber(isLongClick, true)));
     }
 
     private void updateCategory(CategoryViewModel data, boolean isLongClick) {
-        mSubscriptions.add(
-                Observable.fromCallable(() -> mDataMapper.transform(data))
+        subscriptions.add(
+                Observable.fromCallable(() -> dataMapper.transform(data))
                         .flatMap(category -> {
-                            mUpdateCategory.setData(Collections.singletonList(category));
-                            return mUpdateCategory.get();
+                            updateCategory.setData(Collections.singletonList(category));
+                            return updateCategory.get();
                         }).subscribe(new SaveCategorySubscriber(isLongClick, false)));
     }
 
     private void showSelectColorDialog() {
         if (isViewAttached()) {
-            getView().showSelectColorDialog(mColor);
+            getView().showSelectColorDialog(color);
         }
     }
 
@@ -139,10 +139,10 @@ public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryVie
     }
 
     private void clearUI() {
-        mColor = Color.DKGRAY;
+        color = Color.DKGRAY;
         setName("");
-        setColorToButton(mColor);
-        mItem = null;
+        setColorToButton(color);
+        item = null;
     }
 
     private boolean checkDataForErrors(String name) {
@@ -158,11 +158,11 @@ public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryVie
     private CategoryViewModel buildCategory(String name) {
         CategoryViewModel category = new CategoryViewModel();
         category.setName(name);
-        category.setColor(mColor);
+        category.setColor(color);
 
-        if (mItem != null) {
-            category.setId(mItem.getId());
-            category.setCreateByUser(mItem.isCreateByUser());
+        if (item != null) {
+            category.setId(item.getId());
+            category.setCreateByUser(item.isCreateByUser());
         } else {
             category.setId(ModelUtils.generateId());
             category.setCreateByUser(true);
@@ -173,7 +173,7 @@ public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryVie
     private void saveCategory(String name, boolean isLongClick) {
         if (checkDataForErrors(name)) {
             CategoryViewModel category = buildCategory(name);
-            if (mItem != null) {
+            if (item != null) {
                 updateCategory(category, isLongClick);
             } else {
                 addCategory(category, isLongClick);

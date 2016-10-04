@@ -31,12 +31,12 @@ import com.justplay1.shoppist.view.component.recyclerview.holders.BaseItemHolder
 public abstract class BaseListGroupAdapter<T extends BaseViewModel, GVH extends BaseHeaderHolder, CVH extends BaseItemHolder>
         extends BaseExpandableAdapter<T, GVH, CVH> {
 
-    protected AppPreferences mPreferences;
+    protected AppPreferences preferences;
 
     public BaseListGroupAdapter(Context context, ActionModeInteractionListener listener,
                                 RecyclerView recyclerView, AppPreferences preferences) {
         super(context, listener, recyclerView);
-        mPreferences = preferences;
+        this.preferences = preferences;
     }
 
     @Override

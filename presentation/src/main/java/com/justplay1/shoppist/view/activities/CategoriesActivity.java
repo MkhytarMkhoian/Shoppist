@@ -40,7 +40,7 @@ import com.justplay1.shoppist.view.fragments.CategoryFragment;
 public class CategoriesActivity extends BaseListActivity
         implements Toolbar.OnMenuItemClickListener, CategoryRouter {
 
-    private CategoryFragment mFragment;
+    private CategoryFragment fragment;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, CategoriesActivity.class);
@@ -57,17 +57,17 @@ public class CategoriesActivity extends BaseListActivity
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
 
-        mFragment = (CategoryFragment) getSupportFragmentManager().findFragmentByTag(CategoryFragment.class.getName());
-        if (mFragment == null) {
-            mFragment = createFragment();
+        fragment = (CategoryFragment) getSupportFragmentManager().findFragmentByTag(CategoryFragment.class.getName());
+        if (fragment == null) {
+            fragment = createFragment();
         }
-        replaceFragment(R.id.container, mFragment, CategoryFragment.class.getName());
+        replaceFragment(R.id.container, fragment, CategoryFragment.class.getName());
     }
 
     protected void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_category);
-        toolbar.setBackgroundColor(mPreferences.getColorPrimary());
+        toolbar.setBackgroundColor(preferences.getColorPrimary());
         toolbar.setNavigationIcon(R.drawable.ic_back_white);
         toolbar.setNavigationOnClickListener(v -> finishActivity());
         toolbar.setOnMenuItemClickListener(this);
@@ -89,7 +89,7 @@ public class CategoriesActivity extends BaseListActivity
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.menu_check_all:
-                mFragment.onCheckAllItemsClick();
+                fragment.onCheckAllItemsClick();
                 break;
         }
         return true;
@@ -97,7 +97,7 @@ public class CategoriesActivity extends BaseListActivity
 
     @Override
     public void openEditCategoryScreen(CategoryViewModel category) {
-        mNavigator.navigateToAddCategoryScreen(this, category);
+        navigator.navigateToAddCategoryScreen(this, category);
     }
 
     @Override
@@ -111,13 +111,13 @@ public class CategoriesActivity extends BaseListActivity
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_check_all:
-                mFragment.onCheckAllItemsClick();
+                fragment.onCheckAllItemsClick();
                 break;
             case R.id.menu_uncheck_all:
-                mFragment.onUnCheckAllItemsClick();
+                fragment.onUnCheckAllItemsClick();
                 break;
             case R.id.menu_delete:
-                mFragment.onDeleteCheckedItemsClick();
+                fragment.onDeleteCheckedItemsClick();
                 break;
         }
         return true;
@@ -127,16 +127,16 @@ public class CategoriesActivity extends BaseListActivity
     public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
         super.onPrepareActionMode(actionMode, menu);
         MenuItem delete = menu.findItem(R.id.menu_delete);
-        delete.setVisible(mFragment.isDeleteButtonEnable());
+        delete.setVisible(fragment.isDeleteButtonEnable());
 
         MenuItem checkAll = menu.findItem(R.id.menu_check_all);
-        checkAll.setEnabled(mFragment.isCheckAllButtonEnable());
+        checkAll.setEnabled(fragment.isCheckAllButtonEnable());
         return true;
     }
 
     @Override
     public void onDestroyActionMode(ActionMode actionMode) {
         super.onDestroyActionMode(actionMode);
-        mFragment.onUnCheckAllItemsClick();
+        fragment.onUnCheckAllItemsClick();
     }
 }

@@ -42,81 +42,81 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
         extends BaseAdapter<T>
         implements ExpandableItemAdapter<GVH, CVH> {
 
-    protected List<Pair<HeaderViewModel, List<T>>> mData;
+    protected List<Pair<HeaderViewModel, List<T>>> data;
 
-    @ColorInt private int mNoPriority;
-    @ColorInt private int mNoPriorityBackground;
-    @ColorInt private int mHighPriority;
-    @ColorInt private int mLowPriority;
-    @ColorInt private int mMediumPriority;
+    @ColorInt private int noPriority;
+    @ColorInt private int noPriorityBackground;
+    @ColorInt private int highPriority;
+    @ColorInt private int lowPriority;
+    @ColorInt private int mediumPriority;
 
-    public BaseExpandableAdapter(Context context, ActionModeInteractionListener listener,
+    BaseExpandableAdapter(Context context, ActionModeInteractionListener listener,
                                  RecyclerView recyclerView) {
         super(context, listener, recyclerView);
 
-        mNoPriority = ContextCompat.getColor(context, R.color.action_mode_toolbar_color);
-        mNoPriorityBackground = ContextCompat.getColor(context, android.R.color.transparent);
-        mHighPriority = ContextCompat.getColor(context, R.color.red_color);
-        mLowPriority = ContextCompat.getColor(context, R.color.green_500);
-        mMediumPriority = ContextCompat.getColor(context, R.color.orange_500);
+        noPriority = ContextCompat.getColor(context, R.color.action_mode_toolbar_color);
+        noPriorityBackground = ContextCompat.getColor(context, android.R.color.transparent);
+        highPriority = ContextCompat.getColor(context, R.color.red_color);
+        lowPriority = ContextCompat.getColor(context, R.color.green_500);
+        mediumPriority = ContextCompat.getColor(context, R.color.orange_500);
 
-        mData = new ArrayList<>(1);
+        data = new ArrayList<>(1);
     }
 
     public List<Pair<HeaderViewModel, List<T>>> getData() {
-        return mData;
+        return data;
     }
 
     public void setData(List<Pair<HeaderViewModel, List<T>>> data) {
-        this.mData = data;
+        this.data = data;
     }
 
-    protected void setPriorityTextColor(@Priority int priority, TextView view) {
+    void setPriorityTextColor(@Priority int priority, TextView view) {
         switch (priority) {
             case Priority.HIGH:
-                view.setTextColor(mHighPriority);
+                view.setTextColor(highPriority);
                 break;
             case Priority.LOW:
-                view.setTextColor(mLowPriority);
+                view.setTextColor(lowPriority);
                 break;
             case Priority.MEDIUM:
-                view.setTextColor(mMediumPriority);
+                view.setTextColor(mediumPriority);
                 break;
             case Priority.NO_PRIORITY:
-                view.setTextColor(mNoPriority);
+                view.setTextColor(noPriority);
                 break;
         }
     }
 
-    protected void setPriorityBackgroundColor(@Priority int priority, View view) {
+    void setPriorityBackgroundColor(@Priority int priority, View view) {
         switch (priority) {
             case Priority.HIGH:
-                view.setBackgroundColor(mHighPriority);
+                view.setBackgroundColor(highPriority);
                 break;
             case Priority.LOW:
-                view.setBackgroundColor(mLowPriority);
+                view.setBackgroundColor(lowPriority);
                 break;
             case Priority.MEDIUM:
-                view.setBackgroundColor(mMediumPriority);
+                view.setBackgroundColor(mediumPriority);
                 break;
             case Priority.NO_PRIORITY:
-                view.setBackgroundColor(mNoPriorityBackground);
+                view.setBackgroundColor(noPriorityBackground);
                 break;
         }
     }
 
     @Override
     protected void refreshInvisibleItems() {
-        if (mLinearLayoutManager.findFirstVisibleItemPosition() > 0) {
-            notifyItemRangeChanged(0, mLinearLayoutManager.findFirstVisibleItemPosition());
+        if (linearLayoutManager.findFirstVisibleItemPosition() > 0) {
+            notifyItemRangeChanged(0, linearLayoutManager.findFirstVisibleItemPosition());
         }
-        notifyItemRangeChanged(mLinearLayoutManager.findLastVisibleItemPosition() + 1,
-                (getGroupCount() + getChildItemsCount()) - mLinearLayoutManager.findLastVisibleItemPosition());
+        notifyItemRangeChanged(linearLayoutManager.findLastVisibleItemPosition() + 1,
+                (getGroupCount() + getChildItemsCount()) - linearLayoutManager.findLastVisibleItemPosition());
     }
 
     private List<T> getItems(boolean checked) {
         List<T> items = new ArrayList<>();
-        for (Pair<HeaderViewModel, List<T>> pair : mData) {
+        for (Pair<HeaderViewModel, List<T>> pair : data) {
             for (T item : pair.second) {
                 if (checked) {
                     if (item.isChecked()) {
@@ -131,9 +131,9 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
     }
 
     public int getChildItemsCount() {
-        if (mData == null) return 0;
+        if (data == null) return 0;
         int count = 0;
-        for (Pair<HeaderViewModel, List<T>> pair : mData) {
+        for (Pair<HeaderViewModel, List<T>> pair : data) {
             count += pair.second.size();
         }
         return count;
@@ -151,14 +151,14 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
         if (groupPosition < 0 || groupPosition >= getGroupCount()) {
             throw new IndexOutOfBoundsException("groupPosition = " + groupPosition);
         }
-        return mData.get(groupPosition).second.size();
+        return data.get(groupPosition).second.size();
     }
 
     public HeaderViewModel getGroupItem(int groupPosition) {
         if (groupPosition < 0 || groupPosition >= getGroupCount()) {
             throw new IndexOutOfBoundsException("groupPosition = " + groupPosition + " getGroupCount()" + getGroupCount());
         }
-        return mData.get(groupPosition).first;
+        return data.get(groupPosition).first;
     }
 
     public T getChildItem(int groupPosition, int childPosition) {
@@ -166,7 +166,7 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
             throw new IndexOutOfBoundsException("groupPosition = " + groupPosition);
         }
 
-        final List<T> children = mData.get(groupPosition).second;
+        final List<T> children = data.get(groupPosition).second;
 
         if (childPosition < 0 || childPosition >= children.size()) {
             throw new IndexOutOfBoundsException("childPosition = " + childPosition);
@@ -176,8 +176,8 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
 
     @Override
     public int getGroupCount() {
-        if (mData == null) return 0;
-        return mData.size();
+        if (data == null) return 0;
+        return data.size();
     }
 
     @Override
@@ -192,7 +192,7 @@ public abstract class BaseExpandableAdapter<T extends BaseViewModel, GVH extends
 
     @Override
     public int getChildCount(int groupPosition) {
-        return mData.get(groupPosition).second.size();
+        return data.get(groupPosition).second.size();
     }
 
     @Override

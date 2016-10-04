@@ -42,17 +42,17 @@ public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
 
     private final BehaviorSubject<List<UnitViewModel>> cache = BehaviorSubject.create();
 
-    private final UnitsDataModelMapper mDataMapper;
-    private final GetUnitsList mGetUnitsList;
-    private final DeleteUnits mDeleteUnits;
+    private final UnitsDataModelMapper dataMapper;
+    private final GetUnitsList getUnitsList;
+    private final DeleteUnits deleteUnits;
 
     @Inject
     UnitsPresenter(UnitsDataModelMapper unitsDataModelMapper,
                    GetUnitsList getUnitsList,
                    DeleteUnits deleteUnits) {
-        this.mDataMapper = unitsDataModelMapper;
-        this.mGetUnitsList = getUnitsList;
-        this.mDeleteUnits = deleteUnits;
+        this.dataMapper = unitsDataModelMapper;
+        this.getUnitsList = getUnitsList;
+        this.deleteUnits = deleteUnits;
 
         loadData();
     }
@@ -60,7 +60,7 @@ public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
     @Override
     public void attachView(UnitsView view) {
         super.attachView(view);
-        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
+        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
 
             @Override
             public void onNext(List<UnitViewModel> currencyViewModels) {
@@ -77,16 +77,16 @@ public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
     }
 
     private void loadData() {
-        mGetUnitsList.get()
-                .map(mDataMapper::transformToViewModel)
+        getUnitsList.get()
+                .map(dataMapper::transformToViewModel)
                 .subscribe(cache);
     }
 
     public void deleteItems(Collection<UnitViewModel> data) {
-        mSubscriptions.add(Observable.fromCallable(() -> mDataMapper.transform(data))
+        subscriptions.add(Observable.fromCallable(() -> dataMapper.transform(data))
                 .flatMap(items -> {
-                    mDeleteUnits.setData(items);
-                    return mDeleteUnits.get();
+                    deleteUnits.setData(items);
+                    return deleteUnits.get();
                 }).subscribe(new DefaultSubscriber<>()));
     }
 

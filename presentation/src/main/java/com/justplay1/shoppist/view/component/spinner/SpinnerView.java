@@ -45,13 +45,13 @@ import butterknife.ButterKnife;
 public class SpinnerView<T extends BaseViewModel> extends FrameLayout {
 
     @Bind(R.id.spinner)
-    protected Spinner mSpinner;
+    protected Spinner spinner;
     @Bind(R.id.add_button)
-    protected ImageButton mAddBtn;
+    protected ImageButton addBtn;
     @Bind(R.id.edit_button)
-    protected ImageButton mEditBtn;
+    protected ImageButton editBtn;
 
-    protected SpinnerAdapter<T> mAdapter;
+    protected SpinnerAdapter<T> adapter;
 
     public SpinnerView(Context context) {
         super(context);
@@ -80,49 +80,49 @@ public class SpinnerView<T extends BaseViewModel> extends FrameLayout {
     }
 
     public void setData(List<T> data) {
-        mAdapter = new SpinnerAdapter<>(getContext(), android.R.layout.simple_spinner_item, data);
-        mSpinner.setAdapter(mAdapter);
+        adapter = new SpinnerAdapter<>(getContext(), android.R.layout.simple_spinner_item, data);
+        spinner.setAdapter(adapter);
     }
 
     public void setOnAddBtnClickListener(View.OnClickListener listener) {
-        mAddBtn.setOnClickListener(listener);
+        addBtn.setOnClickListener(listener);
     }
 
     public void setOnEditBtnClickListener(View.OnClickListener listener) {
-        mEditBtn.setOnClickListener(listener);
+        editBtn.setOnClickListener(listener);
     }
 
     public void setAddBtnVisibility(int visibility) {
-        mAddBtn.setVisibility(visibility);
+        addBtn.setVisibility(visibility);
     }
 
     public void setEditBtnVisibility(int visibility) {
-        mEditBtn.setVisibility(visibility);
+        editBtn.setVisibility(visibility);
     }
 
     public Spinner getSpinner() {
-        return mSpinner;
+        return spinner;
     }
 
     public void setOnItemSelectedListener(@Nullable AdapterView.OnItemSelectedListener listener) {
-        mSpinner.setOnItemSelectedListener(listener);
+        spinner.setOnItemSelectedListener(listener);
     }
 
     public void setSelection(int position) {
-        mSpinner.setSelection(position);
+        spinner.setSelection(position);
     }
 
     public T getSelectedItem() {
-        return (T) mSpinner.getSelectedItem();
+        return (T) spinner.getSelectedItem();
     }
 
     public void selectItem(String currentId) {
-        int spinnerCount = mSpinner.getCount();
+        int spinnerCount = spinner.getCount();
         for (int i = 0; i < spinnerCount; i++) {
-            T value = (T) mSpinner.getItemAtPosition(i);
+            T value = (T) spinner.getItemAtPosition(i);
             String id = value.getId();
             if (id.equals(currentId)) {
-                mSpinner.setSelection(i);
+                spinner.setSelection(i);
                 break;
             }
         }

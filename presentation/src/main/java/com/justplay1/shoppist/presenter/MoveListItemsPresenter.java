@@ -47,39 +47,39 @@ public class MoveListItemsPresenter extends BaseRxPresenter<MoveListItemsView, R
 
     private final BehaviorSubject<ArrayList<Map<String, Object>>> cache = BehaviorSubject.create();
 
-    private final ListModelDataMapper mDataMapper;
-    private final ListItemsModelDataMapper mListItemsModelDataMapper;
-    private final GetLists mGetLists;
-    private final MoveToList mMoveToList;
+    private final ListModelDataMapper dataMapper;
+    private final ListItemsModelDataMapper listItemsModelDataMapper;
+    private final GetLists getLists;
+    private final MoveToList moveToList;
 
     private boolean isCopy;
-    private ListViewModel mCurrentList;
-    private ArrayList<ListItemViewModel> mListItems;
+    private ListViewModel currentList;
+    private ArrayList<ListItemViewModel> listItems;
 
     @Inject
     MoveListItemsPresenter(ListModelDataMapper dataMapper,
                            ListItemsModelDataMapper listItemsModelDataMapper,
                            GetLists getLists,
                            MoveToList moveToList) {
-        this.mDataMapper = dataMapper;
-        this.mListItemsModelDataMapper = listItemsModelDataMapper;
-        this.mGetLists = getLists;
-        this.mMoveToList = moveToList;
+        this.dataMapper = dataMapper;
+        this.listItemsModelDataMapper = listItemsModelDataMapper;
+        this.getLists = getLists;
+        this.moveToList = moveToList;
 
         loadData();
     }
 
     @Override
     public void onCreate(Bundle arguments, Bundle savedInstanceState) {
-        mCurrentList = arguments.getParcelable(ListViewModel.class.getName());
-        mListItems = arguments.getParcelableArrayList(ListItemViewModel.class.getName());
+        currentList = arguments.getParcelable(ListViewModel.class.getName());
+        listItems = arguments.getParcelableArrayList(ListItemViewModel.class.getName());
         isCopy = arguments.getBoolean("isCopy");
     }
 
     @Override
     public void attachView(MoveListItemsView view) {
         super.attachView(view);
-        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<ArrayList<Map<String, Object>>>() {
+        subscriptions.add(cache.subscribe(new DefaultSubscriber<ArrayList<Map<String, Object>>>() {
 
             @Override
             public void onError(Throwable e) {
@@ -95,13 +95,13 @@ public class MoveListItemsPresenter extends BaseRxPresenter<MoveListItemsView, R
     }
 
     private void loadData() {
-        mGetLists.get()
-                .map(mDataMapper::transformToViewModel)
+        getLists.get()
+                .map(dataMapper::transformToViewModel)
                 .map(lists -> {
                     ArrayList<Map<String, Object>> data = new ArrayList<>(lists.size());
                     Map<String, Object> m;
                     for (ListViewModel item : lists) {
-                        if (item.getId().equals(mCurrentList.getId())) continue;
+                        if (item.getId().equals(currentList.getId())) continue;
                         m = new HashMap<>();
                         m.put("name", item.getName());
                         m.put("object", item);
@@ -114,12 +114,12 @@ public class MoveListItemsPresenter extends BaseRxPresenter<MoveListItemsView, R
 
     public void onPositiveButtonClick(ListViewModel newList) {
         showLoading();
-        mMoveToList.setCopy(isCopy);
-        mMoveToList.setNewParentListId(newList.getId());
-        Observable.fromCallable(() -> mListItemsModelDataMapper.transform(mListItems))
+        moveToList.setCopy(isCopy);
+        moveToList.setNewParentListId(newList.getId());
+        Observable.fromCallable(() -> listItemsModelDataMapper.transform(listItems))
                 .flatMap(listItemModels -> {
-                    mMoveToList.setData(listItemModels);
-                    return mMoveToList.get();
+                    moveToList.setData(listItemModels);
+                    return moveToList.get();
                 }).subscribe(new DefaultSubscriber<Boolean>() {
 
             @Override

@@ -40,7 +40,7 @@ import com.justplay1.shoppist.view.fragments.GoodsFragment;
 public class GoodsActivity extends BaseListActivity
         implements Toolbar.OnMenuItemClickListener, GoodsRouter {
 
-    private GoodsFragment mFragment;
+    private GoodsFragment fragment;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, GoodsActivity.class);
@@ -57,17 +57,17 @@ public class GoodsActivity extends BaseListActivity
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
 
-        mFragment = (GoodsFragment) getSupportFragmentManager().findFragmentByTag(GoodsFragment.class.getName());
-        if (mFragment == null) {
-            mFragment = createFragment();
+        fragment = (GoodsFragment) getSupportFragmentManager().findFragmentByTag(GoodsFragment.class.getName());
+        if (fragment == null) {
+            fragment = createFragment();
         }
-        replaceFragment(R.id.container, mFragment, GoodsFragment.class.getName());
+        replaceFragment(R.id.container, fragment, GoodsFragment.class.getName());
     }
 
     protected void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.goods);
-        toolbar.setBackgroundColor(mPreferences.getColorPrimary());
+        toolbar.setBackgroundColor(preferences.getColorPrimary());
         toolbar.inflateMenu(R.menu.goods_toolbar);
         toolbar.setOnMenuItemClickListener(this);
         ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
@@ -89,25 +89,25 @@ public class GoodsActivity extends BaseListActivity
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sort_by_name:
-                mFragment.onSortByNameClick();
+                fragment.onSortByNameClick();
                 break;
             case R.id.sort_by_time_created:
-                mFragment.onSortByTimeCreatedClick();
+                fragment.onSortByTimeCreatedClick();
                 break;
             case R.id.sort_by_category:
-                mFragment.onSortByCategoryClick();
+                fragment.onSortByCategoryClick();
                 break;
             case R.id.menu_search:
-                mFragment.onSearchClick();
+                fragment.onSearchClick();
                 break;
             case R.id.menu_check_all:
-                mFragment.onCheckAllItemsClick();
+                fragment.onCheckAllItemsClick();
                 break;
             case R.id.menu_expand_all:
-                mFragment.onExpandAllClick();
+                fragment.onExpandAllClick();
                 break;
             case R.id.menu_collapse_all:
-                mFragment.onCollapseAllClick();
+                fragment.onCollapseAllClick();
                 break;
         }
         return true;
@@ -124,19 +124,19 @@ public class GoodsActivity extends BaseListActivity
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_delete:
-                mFragment.onDeleteCheckedItemsClick();
+                fragment.onDeleteCheckedItemsClick();
                 break;
             case R.id.menu_check_all:
-                mFragment.onCheckAllItemsClick();
+                fragment.onCheckAllItemsClick();
                 break;
             case R.id.menu_uncheck_all:
-                mFragment.onUnCheckAllItemsClick();
+                fragment.onUnCheckAllItemsClick();
                 break;
             case R.id.menu_change_category:
-                mFragment.onChangeCategoryClick();
+                fragment.onChangeCategoryClick();
                 break;
             case R.id.menu_change_unit:
-                mFragment.onChangeUnitClick();
+                fragment.onChangeUnitClick();
                 break;
         }
         return true;
@@ -147,22 +147,22 @@ public class GoodsActivity extends BaseListActivity
         super.onPrepareActionMode(mode, menu);
         MenuItem edit = menu.findItem(R.id.action_edit);
         if (edit != null) {
-            edit.setVisible(mFragment.isEditButtonEnable());
+            edit.setVisible(fragment.isEditButtonEnable());
         }
 
         MenuItem checkAll = menu.findItem(R.id.menu_check_all);
-        checkAll.setEnabled(mFragment.isCheckAllButtonEnable());
+        checkAll.setEnabled(fragment.isCheckAllButtonEnable());
         return true;
     }
 
     @Override
     public void onDestroyActionMode(ActionMode actionMode) {
         super.onDestroyActionMode(actionMode);
-        mFragment.onUnCheckAllItemsClick();
+        fragment.onUnCheckAllItemsClick();
     }
 
     @Override
     public void openSearchScreen() {
-        mNavigator.navigateToSearchScreen(this, Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST, null);
+        navigator.navigateToSearchScreen(this, Const.CONTEXT_QUICK_SEARCH_IN_GOODS_LIST, null);
     }
 }

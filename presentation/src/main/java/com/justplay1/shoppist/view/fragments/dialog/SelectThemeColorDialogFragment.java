@@ -28,9 +28,9 @@ import android.widget.ProgressBar;
 
 import com.justplay1.shoppist.R;
 import com.justplay1.shoppist.utils.Const;
+import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.component.themedialog.ColorPickerPalette;
 import com.justplay1.shoppist.view.component.themedialog.ColorPickerSwatch;
-import com.justplay1.shoppist.utils.ShoppistUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,17 +48,17 @@ public class SelectThemeColorDialogFragment extends DialogFragment implements Co
     protected static final String KEY_COLORS = "colors";
     protected static final String KEY_SELECTED_COLOR = "selected_color";
 
-    private int[] mColorsPrimary;
-    private int[] mColorPrimaryDark;
-    private @ColorInt int mSelectedColor;
-    private int mColumns = 4;
-    private int mSize;
+    private int[] colorsPrimary;
+    private int[] colorPrimaryDark;
+    @ColorInt private int selectedColor;
+    private int columns = 4;
+    private int size;
+    private ColorPickerSwatch.OnColorSelectedListener listener;
 
     @Bind(R.id.color_picker)
-    ColorPickerPalette mPalette;
+    ColorPickerPalette palette;
     @Bind(android.R.id.progress)
-    ProgressBar mProgress;
-    private ColorPickerSwatch.OnColorSelectedListener mListener;
+    ProgressBar progress;
 
     public static SelectThemeColorDialogFragment newInstance(@ColorInt int selectedColor) {
         Bundle args = new Bundle();
@@ -69,23 +69,23 @@ public class SelectThemeColorDialogFragment extends DialogFragment implements Co
     }
 
     public void setOnColorSelectedListener(ColorPickerSwatch.OnColorSelectedListener listener) {
-        mListener = listener;
+        this.listener = listener;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSize = ShoppistUtils.isTablet(getActivity()) ? SelectThemeColorDialogFragment.SIZE_LARGE : SelectThemeColorDialogFragment.SIZE_SMALL;
-        mColorsPrimary = getResources().getIntArray(R.array.color_theme);
-        mColorPrimaryDark = getResources().getIntArray(R.array.color_status_bar);
+        size = ShoppistUtils.isTablet(getActivity()) ? SelectThemeColorDialogFragment.SIZE_LARGE : SelectThemeColorDialogFragment.SIZE_SMALL;
+        colorsPrimary = getResources().getIntArray(R.array.color_theme);
+        colorPrimaryDark = getResources().getIntArray(R.array.color_status_bar);
 
-        if (getArguments() != null){
-            mSelectedColor = getArguments().getInt(Const.SELECTED_COLOR);
+        if (getArguments() != null) {
+            selectedColor = getArguments().getInt(Const.SELECTED_COLOR);
         }
 
         if (savedInstanceState != null) {
-            mColorsPrimary = savedInstanceState.getIntArray(KEY_COLORS);
-            mSelectedColor = savedInstanceState.getInt(KEY_SELECTED_COLOR);
+            colorsPrimary = savedInstanceState.getIntArray(KEY_COLORS);
+            selectedColor = savedInstanceState.getInt(KEY_SELECTED_COLOR);
         }
     }
 
@@ -97,8 +97,8 @@ public class SelectThemeColorDialogFragment extends DialogFragment implements Co
         View view = inflater.inflate(R.layout.dialog_calendar_color_picker, container, false);
         ButterKnife.bind(this, view);
 
-        mPalette.init(mSize, mColumns, this);
-        if (mColorsPrimary != null) {
+        palette.init(size, columns, this);
+        if (colorsPrimary != null) {
             showPaletteView();
         }
         return view;
@@ -106,73 +106,73 @@ public class SelectThemeColorDialogFragment extends DialogFragment implements Co
 
     @Override
     public void onColorSelected(int colorPrimary, int colorPrimaryDark) {
-        if (mListener != null) {
-            mListener.onColorSelected(colorPrimary, colorPrimaryDark);
+        if (listener != null) {
+            listener.onColorSelected(colorPrimary, colorPrimaryDark);
         }
 
-        if (colorPrimary != mSelectedColor) {
-            mSelectedColor = colorPrimary;
+        if (colorPrimary != selectedColor) {
+            selectedColor = colorPrimary;
             // Redraw palette to show checkmark on newly selected color before dismissing.
-            mPalette.drawPalette(mColorsPrimary, mColorPrimaryDark, mSelectedColor);
+            palette.drawPalette(colorsPrimary, this.colorPrimaryDark, selectedColor);
         }
         dismiss();
     }
 
     public void showPaletteView() {
-        if (mProgress != null && mPalette != null) {
-            mProgress.setVisibility(View.GONE);
+        if (progress != null && palette != null) {
+            progress.setVisibility(View.GONE);
             refreshPalette();
-            mPalette.setVisibility(View.VISIBLE);
+            palette.setVisibility(View.VISIBLE);
         }
     }
 
     public void showProgressBarView() {
-        if (mProgress != null && mPalette != null) {
-            mProgress.setVisibility(View.VISIBLE);
-            mPalette.setVisibility(View.GONE);
+        if (progress != null && palette != null) {
+            progress.setVisibility(View.VISIBLE);
+            palette.setVisibility(View.GONE);
         }
     }
 
     public void setColors(int[] colors, int selectedColor) {
-        if (mColorsPrimary != colors || mSelectedColor != selectedColor) {
-            mColorsPrimary = colors;
-            mSelectedColor = selectedColor;
+        if (colorsPrimary != colors || this.selectedColor != selectedColor) {
+            colorsPrimary = colors;
+            this.selectedColor = selectedColor;
             refreshPalette();
         }
     }
 
     public void setColors(int[] colors) {
-        if (mColorsPrimary != colors) {
-            mColorsPrimary = colors;
+        if (colorsPrimary != colors) {
+            colorsPrimary = colors;
             refreshPalette();
         }
     }
 
     public void setSelectedColor(int color) {
-        if (mSelectedColor != color) {
-            mSelectedColor = color;
+        if (selectedColor != color) {
+            selectedColor = color;
             refreshPalette();
         }
     }
 
     private void refreshPalette() {
-        if (mPalette != null && mColorsPrimary != null) {
-            mPalette.drawPalette(mColorsPrimary, mColorPrimaryDark, mSelectedColor);
+        if (palette != null && colorsPrimary != null) {
+            palette.drawPalette(colorsPrimary, colorPrimaryDark, selectedColor);
         }
     }
 
     public int[] getColors() {
-        return mColorsPrimary;
+        return colorsPrimary;
     }
 
     public int getSelectedColor() {
-        return mSelectedColor;
+        return selectedColor;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putIntArray(KEY_COLORS, mColorsPrimary);
-        outState.putInt(KEY_SELECTED_COLOR, mSelectedColor);
+        outState.putIntArray(KEY_COLORS, colorsPrimary);
+        outState.putInt(KEY_SELECTED_COLOR, selectedColor);
     }
 }

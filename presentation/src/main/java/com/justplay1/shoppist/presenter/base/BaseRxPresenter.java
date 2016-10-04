@@ -29,10 +29,10 @@ import rx.subscriptions.CompositeSubscription;
  */
 public abstract class BaseRxPresenter<V extends BaseMvpView, R extends Router> extends RouterPresenter<V, R> {
 
-    protected CompositeSubscription mSubscriptions;
+    protected CompositeSubscription subscriptions;
 
     public BaseRxPresenter() {
-        mSubscriptions = new CompositeSubscription();
+        subscriptions = new CompositeSubscription();
     }
 
     @UiThread
@@ -45,6 +45,6 @@ public abstract class BaseRxPresenter<V extends BaseMvpView, R extends Router> e
     @Override
     public void detachView() {
         super.detachView();
-        mSubscriptions.clear();
+        subscriptions.clear();
     }
 }

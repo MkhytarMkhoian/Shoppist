@@ -38,7 +38,7 @@ import com.justplay1.shoppist.view.fragments.CurrencyFragment;
 public class CurrencyActivity extends BaseListActivity
         implements Toolbar.OnMenuItemClickListener {
 
-    private CurrencyFragment mFragment;
+    private CurrencyFragment fragment;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, CurrencyActivity.class);
@@ -55,17 +55,17 @@ public class CurrencyActivity extends BaseListActivity
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
 
-        mFragment = (CurrencyFragment) getSupportFragmentManager().findFragmentByTag(CurrencyFragment.class.getName());
-        if (mFragment == null) {
-            mFragment = createFragment();
+        fragment = (CurrencyFragment) getSupportFragmentManager().findFragmentByTag(CurrencyFragment.class.getName());
+        if (fragment == null) {
+            fragment = createFragment();
         }
-        replaceFragment(R.id.container, mFragment, CurrencyFragment.class.getName());
+        replaceFragment(R.id.container, fragment, CurrencyFragment.class.getName());
     }
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.currency);
-        toolbar.setBackgroundColor(mPreferences.getColorPrimary());
+        toolbar.setBackgroundColor(preferences.getColorPrimary());
         toolbar.setNavigationIcon(R.drawable.ic_back_white);
         toolbar.setNavigationOnClickListener(v -> finishActivity());
         toolbar.setOnMenuItemClickListener(this);
@@ -87,7 +87,7 @@ public class CurrencyActivity extends BaseListActivity
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_check_all:
-                mFragment.onCheckAllItemsClick();
+                fragment.onCheckAllItemsClick();
                 break;
         }
         return true;
@@ -104,13 +104,13 @@ public class CurrencyActivity extends BaseListActivity
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_delete:
-                mFragment.onDeleteCheckedItemsClick();
+                fragment.onDeleteCheckedItemsClick();
                 break;
             case R.id.menu_check_all:
-                mFragment.onCheckAllItemsClick();
+                fragment.onCheckAllItemsClick();
                 break;
             case R.id.menu_uncheck_all:
-                mFragment.onUnCheckAllItemsClick();
+                fragment.onUnCheckAllItemsClick();
                 break;
         }
         return true;
@@ -119,16 +119,16 @@ public class CurrencyActivity extends BaseListActivity
     @Override
     public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
         MenuItem delete = menu.findItem(R.id.menu_delete);
-        delete.setVisible(mFragment.isDeleteButtonEnable());
+        delete.setVisible(fragment.isDeleteButtonEnable());
 
         MenuItem checkAll = menu.findItem(R.id.menu_check_all);
-        checkAll.setEnabled(mFragment.isCheckAllButtonEnable());
+        checkAll.setEnabled(fragment.isCheckAllButtonEnable());
         return true;
     }
 
     @Override
     public void onDestroyActionMode(ActionMode actionMode) {
         super.onDestroyActionMode(actionMode);
-        mFragment.onUnCheckAllItemsClick();
+        fragment.onUnCheckAllItemsClick();
     }
 }

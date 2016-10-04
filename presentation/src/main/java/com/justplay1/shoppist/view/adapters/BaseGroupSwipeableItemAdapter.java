@@ -45,8 +45,8 @@ public abstract class BaseGroupSwipeableItemAdapter<T extends BaseViewModel, GVH
         extends BaseListGroupAdapter<T, GVH, CVH>
         implements ExpandableSwipeableItemAdapter<GVH, CVH> {
 
-    private SwipeEventListener<T> mSwipeEventListener;
-    private RecyclerViewExpandableItemManager mExpandableItemManager;
+    private SwipeEventListener<T> swipeEventListener;
+    private RecyclerViewExpandableItemManager expandableItemManager;
 
     public BaseGroupSwipeableItemAdapter(Context context, ActionModeInteractionListener listener,
                                          RecyclerView recyclerView, AppPreferences preferences) {
@@ -54,11 +54,11 @@ public abstract class BaseGroupSwipeableItemAdapter<T extends BaseViewModel, GVH
     }
 
     public void setExpandableItemManager(RecyclerViewExpandableItemManager expandableItemManager) {
-        this.mExpandableItemManager = expandableItemManager;
+        this.expandableItemManager = expandableItemManager;
     }
 
     public RecyclerViewExpandableItemManager getExpandableItemManager() {
-        return mExpandableItemManager;
+        return expandableItemManager;
     }
 
     @Override
@@ -96,7 +96,7 @@ public abstract class BaseGroupSwipeableItemAdapter<T extends BaseViewModel, GVH
     @Override
     public void onSetChildItemSwipeBackground(CVH holder, int groupPosition, int childPosition, int type) {
         int bgResId = R.drawable.bg_swipe_item_neutral;
-        LayerDrawable drawable = (LayerDrawable) ContextCompat.getDrawable(mContext, bgResId);
+        LayerDrawable drawable = (LayerDrawable) ContextCompat.getDrawable(context, bgResId);
         switch (type) {
             case SwipeableItemConstants.DRAWABLE_SWIPE_LEFT_BACKGROUND:
                 switch (getLeftSwipeActionType()) {
@@ -114,7 +114,7 @@ public abstract class BaseGroupSwipeableItemAdapter<T extends BaseViewModel, GVH
                         bgResId = R.drawable.bg_swipe_item_edit_action;
                         break;
                 }
-                drawable = (LayerDrawable) ContextCompat.getDrawable(mContext, bgResId);
+                drawable = (LayerDrawable) ContextCompat.getDrawable(context, bgResId);
                 ((BitmapDrawable) drawable.findDrawableByLayerId(R.id.image)).setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
                 break;
             case SwipeableItemConstants.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
@@ -134,7 +134,7 @@ public abstract class BaseGroupSwipeableItemAdapter<T extends BaseViewModel, GVH
                         bgResId = R.drawable.bg_swipe_item_edit_action;
                         break;
                 }
-                drawable = (LayerDrawable) ContextCompat.getDrawable(mContext, bgResId);
+                drawable = (LayerDrawable) ContextCompat.getDrawable(context, bgResId);
                 ((BitmapDrawable) drawable.findDrawableByLayerId(R.id.image)).setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
                 break;
         }
@@ -186,11 +186,11 @@ public abstract class BaseGroupSwipeableItemAdapter<T extends BaseViewModel, GVH
     }
 
     public void removeChildItem(int groupPosition, int childPosition) {
-        mData.get(groupPosition).second.remove(childPosition);
+        data.get(groupPosition).second.remove(childPosition);
     }
 
     public void removeGroupItem(int groupPosition) {
-        mData.remove(groupPosition);
+        data.remove(groupPosition);
     }
 
     public interface SwipeEventListener<T extends BaseViewModel> {
@@ -202,7 +202,7 @@ public abstract class BaseGroupSwipeableItemAdapter<T extends BaseViewModel, GVH
     }
 
     public void setSwipeEventListener(SwipeEventListener<T> swipeEventListener) {
-        mSwipeEventListener = swipeEventListener;
+        this.swipeEventListener = swipeEventListener;
     }
 
     protected abstract int getMoveToStatusNotDoneIcon();
@@ -240,8 +240,8 @@ public abstract class BaseGroupSwipeableItemAdapter<T extends BaseViewModel, GVH
         @Override
         protected void onSlideAnimationEnd() {
             super.onSlideAnimationEnd();
-            if (mSetPinned && mSwipeEventListener != null) {
-                mSwipeEventListener.onChildItemEdit(mCurrentItem, mGroupPosition, mChildPosition);
+            if (mSetPinned && swipeEventListener != null) {
+                swipeEventListener.onChildItemEdit(mCurrentItem, mGroupPosition, mChildPosition);
             }
         }
     }
@@ -260,7 +260,7 @@ public abstract class BaseGroupSwipeableItemAdapter<T extends BaseViewModel, GVH
             mAdapter.removeChildItem(mGroupPosition, mChildPosition);
             mAdapter.getExpandableItemManager().notifyChildItemRemoved(mGroupPosition, mChildPosition);
 
-            if (mAdapter.mData.get(mGroupPosition).second.size() == 0) {
+            if (mAdapter.data.get(mGroupPosition).second.size() == 0) {
                 mAdapter.removeGroupItem(mGroupPosition);
                 mAdapter.getExpandableItemManager().notifyGroupItemRemoved(mGroupPosition);
             }
@@ -276,8 +276,8 @@ public abstract class BaseGroupSwipeableItemAdapter<T extends BaseViewModel, GVH
         @Override
         protected void onSlideAnimationEnd() {
             super.onSlideAnimationEnd();
-            if (mSwipeEventListener != null) {
-                mSwipeEventListener.onChildItemMoved(mCurrentItem);
+            if (swipeEventListener != null) {
+                swipeEventListener.onChildItemMoved(mCurrentItem);
             }
         }
     }
@@ -290,13 +290,13 @@ public abstract class BaseGroupSwipeableItemAdapter<T extends BaseViewModel, GVH
 
         @Override
         protected void onPerformAction() {
-            if (!mPreferences.isNeedShowConfirmDeleteDialog()) {
+            if (!preferences.isNeedShowConfirmDeleteDialog()) {
                 super.onPerformAction();
             } else {
                 mCurrentItem = getChildItem(mGroupPosition, mChildPosition);
                 if (!mCurrentItem.isPinned()) {
                     mCurrentItem.setPinned(true);
-                    mAdapter.mExpandableItemManager.notifyGroupItemChanged(mGroupPosition);
+                    mAdapter.expandableItemManager.notifyGroupItemChanged(mGroupPosition);
                 }
             }
         }
@@ -304,8 +304,8 @@ public abstract class BaseGroupSwipeableItemAdapter<T extends BaseViewModel, GVH
         @Override
         protected void onSlideAnimationEnd() {
             super.onSlideAnimationEnd();
-            if (mSwipeEventListener != null) {
-                mSwipeEventListener.onChildItemRemoved(mCurrentItem, mGroupPosition, mChildPosition);
+            if (swipeEventListener != null) {
+                swipeEventListener.onChildItemRemoved(mCurrentItem, mGroupPosition, mChildPosition);
             }
         }
     }

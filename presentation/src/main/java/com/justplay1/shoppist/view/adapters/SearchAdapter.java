@@ -55,17 +55,17 @@ import butterknife.ButterKnife;
  */
 public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
-    private Map<String, ProductViewModel> mItems;
-    private List<ProductViewModel> mItemsToDisplay;
-    private ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> mItemClickListener;
-    private final int mContextType;
+    private Map<String, ProductViewModel> data;
+    private List<ProductViewModel> itemsToDisplay;
+    private ShoppistRecyclerView.OnItemClickListener<BaseViewHolder> itemClickListener;
+    private final int contextType;
     private final Drawable iconEndDrawable;
 
     public SearchAdapter(Context context, final int contextType) {
-        mContextType = contextType;
+        this.contextType = contextType;
         setHasStableIds(true);
-        mItems = new HashMap<>();
-        mItemsToDisplay = new ArrayList<>();
+        data = new HashMap<>();
+        itemsToDisplay = new ArrayList<>();
         iconEndDrawable = ContextCompat.getDrawable(context, R.drawable.ic_add_black_24dp);
         iconEndDrawable.setColorFilter(ContextCompat.getColor(context, R.color.action_mode_toolbar_color), PorterDuff.Mode.SRC_IN);
     }
@@ -74,7 +74,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_suggestion, parent, false);
         SearchViewHolder holder = new SearchViewHolder(view);
-        holder.setClickListener(mItemClickListener);
+        holder.setClickListener(itemClickListener);
         return holder;
     }
 
@@ -94,7 +94,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             holder.text2.setVisibility(View.GONE);
         }
 
-        switch (mContextType) {
+        switch (contextType) {
             case Const.CONTEXT_QUICK_ADD_GOODS_TO_LIST:
                 ViewUtils.setBackground(holder.iconEnd, iconEndDrawable);
                 break;
@@ -105,23 +105,23 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public void setData(Map<String, ProductViewModel> items) {
-        mItems = items;
-        mItemsToDisplay.clear();
-        mItemsToDisplay.addAll(mItems.values());
+        data = items;
+        itemsToDisplay.clear();
+        itemsToDisplay.addAll(data.values());
     }
 
     public ProductViewModel getItem(int position) {
-        return mItemsToDisplay.get(position);
+        return itemsToDisplay.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return mItemsToDisplay.size();
+        return itemsToDisplay.size();
     }
 
     @Override
     public long getItemId(int position) {
-        return mItemsToDisplay.get(position).hashCode();
+        return itemsToDisplay.get(position).hashCode();
     }
 
     @Override
@@ -131,13 +131,13 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();
                 if (constraint == null || constraint.length() == 0) {
-                    results.values = mItems.values();
-                    results.count = mItems.size();
+                    results.values = data.values();
+                    results.count = data.size();
                 } else {
                     String prefixString = constraint.toString().toLowerCase();
                     final List<ProductViewModel> newValues = new ArrayList<>();
 
-                    if (!mItems.containsKey(prefixString)) {
+                    if (!data.containsKey(prefixString)) {
                         ProductViewModel product = new ProductViewModel();
                         product.setId(SearchView.JUST_NAME);
                         product.setName(constraint.toString());
@@ -150,7 +150,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         newValues.add(product);
                     }
 
-                    for (final ProductViewModel value : mItems.values()) {
+                    for (final ProductViewModel value : data.values()) {
                         final String valueText = value.getName().toLowerCase();
 
                         if (valueText.startsWith(prefixString)) {
@@ -179,8 +179,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 if (constraint == null) return;
                 if (results.values == null) return;
 
-                mItemsToDisplay.clear();
-                mItemsToDisplay.addAll((Collection<ProductViewModel>) results.values);
+                itemsToDisplay.clear();
+                itemsToDisplay.addAll((Collection<ProductViewModel>) results.values);
                 if (results.count > 0) {
                     notifyDataSetChanged();
                 } else {
@@ -191,14 +191,14 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public ShoppistRecyclerView.OnItemClickListener getClickListener() {
-        return mItemClickListener;
+        return itemClickListener;
     }
 
     public void setClickListener(ShoppistRecyclerView.OnItemClickListener clickListener) {
-        this.mItemClickListener = clickListener;
+        this.itemClickListener = clickListener;
     }
 
-    public static class SearchViewHolder extends BaseViewHolder {
+    static class SearchViewHolder extends BaseViewHolder {
         @Bind(R.id.icon_end)
         ImageView iconEnd;
         @Bind(R.id.type_icon)
@@ -208,7 +208,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         @Bind(R.id.text1)
         TextView text1;
 
-        public SearchViewHolder(View itemView) {
+        SearchViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

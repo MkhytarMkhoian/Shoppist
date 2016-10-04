@@ -22,7 +22,7 @@ import com.justplay1.shoppist.view.fragments.UnitFragment;
 public class UnitsActivity extends BaseListActivity
         implements Toolbar.OnMenuItemClickListener {
 
-    private UnitFragment mFragment;
+    private UnitFragment fragment;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, UnitsActivity.class);
@@ -38,17 +38,17 @@ public class UnitsActivity extends BaseListActivity
         createNewInjectorIfNeeded();
         setContentView(R.layout.layout_single_fragment);
         initToolbar();
-        mFragment = (UnitFragment) getSupportFragmentManager().findFragmentByTag(UnitFragment.class.getName());
-        if (mFragment == null) {
-            mFragment = createFragment();
+        fragment = (UnitFragment) getSupportFragmentManager().findFragmentByTag(UnitFragment.class.getName());
+        if (fragment == null) {
+            fragment = createFragment();
         }
-        replaceFragment(R.id.container, mFragment, UnitFragment.class.getName());
+        replaceFragment(R.id.container, fragment, UnitFragment.class.getName());
     }
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.units);
-        toolbar.setBackgroundColor(mPreferences.getColorPrimary());
+        toolbar.setBackgroundColor(preferences.getColorPrimary());
         toolbar.setNavigationIcon(R.drawable.ic_back_white);
         toolbar.setNavigationOnClickListener(v -> finishActivity());
         toolbar.setOnMenuItemClickListener(this);
@@ -70,7 +70,7 @@ public class UnitsActivity extends BaseListActivity
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_check_all:
-                mFragment.onCheckAllItemsClick();
+                fragment.onCheckAllItemsClick();
                 break;
         }
         return true;
@@ -87,10 +87,10 @@ public class UnitsActivity extends BaseListActivity
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_delete:
-                mFragment.onDeleteCheckedItemsClick();
+                fragment.onDeleteCheckedItemsClick();
                 break;
             case R.id.menu_check_all:
-                mFragment.onCheckAllItemsClick();
+                fragment.onCheckAllItemsClick();
                 break;
             case R.id.menu_uncheck_all:
                 closeActionMode();
@@ -103,16 +103,16 @@ public class UnitsActivity extends BaseListActivity
     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
         super.onPrepareActionMode(mode, menu);
         MenuItem delete = menu.findItem(R.id.menu_delete);
-        delete.setVisible(mFragment.isDeleteButtonEnable());
+        delete.setVisible(fragment.isDeleteButtonEnable());
 
         MenuItem checkAll = menu.findItem(R.id.menu_check_all);
-        checkAll.setEnabled(mFragment.isCheckAllButtonEnable());
+        checkAll.setEnabled(fragment.isCheckAllButtonEnable());
         return true;
     }
 
     @Override
     public void onDestroyActionMode(ActionMode actionMode) {
         super.onDestroyActionMode(actionMode);
-        mFragment.onUnCheckAllItemsClick();
+        fragment.onUnCheckAllItemsClick();
     }
 }

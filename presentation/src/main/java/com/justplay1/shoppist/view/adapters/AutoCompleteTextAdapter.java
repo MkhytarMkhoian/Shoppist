@@ -48,68 +48,68 @@ import butterknife.ButterKnife;
  */
 public class AutoCompleteTextAdapter extends BaseAdapter implements Filterable {
 
-    private Context mContext;
-    private OnAddButtonClickListener mListener;
-    private Map<String, ProductViewModel> mProducts;
-    private List<SpannableStringBuilder> mProductsToDisplay;
+    private Context context;
+    private OnAddButtonClickListener listener;
+    private Map<String, ProductViewModel> products;
+    private List<SpannableStringBuilder> productsToDisplay;
 
-    private String mCurrentText = "";
-    private String mNotEqualText = "";
+    private String currentText = "";
+    private String notEqualText = "";
 
     public AutoCompleteTextAdapter(Context context) {
-        mContext = context;
-        mProducts = new HashMap<>();
-        mProductsToDisplay = new ArrayList<>();
+        this.context = context;
+        products = new HashMap<>();
+        productsToDisplay = new ArrayList<>();
     }
 
     public ProductViewModel getProduct(String name) {
-        return mProducts.get(name.toLowerCase());
+        return products.get(name.toLowerCase());
     }
 
     public String getCurrentText() {
-        return mCurrentText;
+        return currentText;
     }
 
     public void setNotEqualText(String notEqual) {
-        this.mNotEqualText = notEqual;
+        this.notEqualText = notEqual;
     }
 
     @Override
     public int getCount() {
-        return mProductsToDisplay.size();
+        return productsToDisplay.size();
     }
 
     @Override
     public String getItem(int position) {
-        return mProductsToDisplay.get(position).toString();
+        return productsToDisplay.get(position).toString();
     }
 
     @Override
     public long getItemId(int position) {
-        return mProductsToDisplay.get(position).hashCode();
+        return productsToDisplay.get(position).hashCode();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.view_avto_complete_text, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.view_avto_complete_text, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        if (mProductsToDisplay.get(position).toString().equals(mCurrentText)) {
+        if (productsToDisplay.get(position).toString().equals(currentText)) {
             holder.addBtn.setVisibility(View.VISIBLE);
         } else {
             holder.addBtn.setVisibility(View.GONE);
         }
         holder.addBtn.setOnClickListener(v -> {
-            if (mListener != null) {
-                mListener.OnAddButtonClick(mProductsToDisplay.get(position).toString());
+            if (listener != null) {
+                listener.OnAddButtonClick(productsToDisplay.get(position).toString());
             }
         });
-        holder.name.setText(mProductsToDisplay.get(position), TextView.BufferType.SPANNABLE);
+        holder.name.setText(productsToDisplay.get(position), TextView.BufferType.SPANNABLE);
         return convertView;
     }
 
@@ -120,22 +120,22 @@ public class AutoCompleteTextAdapter extends BaseAdapter implements Filterable {
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();
                 if (constraint == null || constraint.length() == 0) {
-                    results.values = mProducts;
-                    results.count = mProducts.size();
+                    results.values = products;
+                    results.count = products.size();
                 } else {
                     String prefixString = constraint.toString().toLowerCase();
                     final List<SpannableStringBuilder> newValues = new ArrayList<>();
 
-                    if (prefixString.equals(mNotEqualText.toLowerCase())) {
+                    if (prefixString.equals(notEqualText.toLowerCase())) {
                         return results;
                     }
 
-                    if (!mProducts.containsKey(prefixString)) {
-                        mCurrentText = constraint.toString();
+                    if (!products.containsKey(prefixString)) {
+                        currentText = constraint.toString();
                         newValues.add(getSpannableStringBuilder(constraint.toString(), 0, constraint.length()));
                     }
 
-                    for (final ProductViewModel value : mProducts.values()) {
+                    for (final ProductViewModel value : products.values()) {
                         final String valueText = value.getName().toLowerCase();
 
                         if (valueText.startsWith(prefixString)) {
@@ -164,7 +164,7 @@ public class AutoCompleteTextAdapter extends BaseAdapter implements Filterable {
                 if (constraint == null) return;
                 if (results.values == null) return;
 
-                mProductsToDisplay = (List<SpannableStringBuilder>) results.values;
+                productsToDisplay = (List<SpannableStringBuilder>) results.values;
                 if (results.count > 0) {
                     notifyDataSetChanged();
                 } else {
@@ -185,12 +185,12 @@ public class AutoCompleteTextAdapter extends BaseAdapter implements Filterable {
     }
 
     public void setData(Map<String, ProductViewModel> data) {
-        mProducts = data;
+        products = data;
         notifyDataSetChanged();
     }
 
     public void setListener(OnAddButtonClickListener listener) {
-        this.mListener = listener;
+        this.listener = listener;
     }
 
     public interface OnAddButtonClickListener {

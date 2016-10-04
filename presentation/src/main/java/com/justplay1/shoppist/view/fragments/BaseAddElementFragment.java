@@ -44,12 +44,12 @@ public abstract class BaseAddElementFragment extends BaseFragment
         implements View.OnLongClickListener, View.OnClickListener {
 
     @Bind(R.id.name_edit)
-    protected MaterialAutoCompleteTextView mNameEdit;
+    protected MaterialAutoCompleteTextView nameEdit;
     @Bind(R.id.done_button)
-    protected FloatingActionButton mActionButton;
+    protected FloatingActionButton actionButton;
 
-    protected CustomProgressDialog mProgressDialog;
-    protected AddElementListener mListener;
+    protected CustomProgressDialog progressDialog;
+    protected AddElementListener listener;
 
     protected abstract boolean isItemEdit();
 
@@ -61,7 +61,7 @@ public abstract class BaseAddElementFragment extends BaseFragment
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mListener = (AddElementListener) context;
+            listener = (AddElementListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement FragmentInteractionListener");
@@ -88,37 +88,37 @@ public abstract class BaseAddElementFragment extends BaseFragment
         init(view);
 
         if (savedInstanceState != null) {
-            mNameEdit.setText(savedInstanceState.getString(Const.NAME));
+            nameEdit.setText(savedInstanceState.getString(Const.NAME));
         }
     }
 
     @Override
     protected void init(View view) {
-        mProgressDialog = new CustomProgressDialog(getActivity());
-        mProgressDialog.setMessage(getString(R.string.please_wait));
-        mProgressDialog.setCancelable(false);
+        progressDialog = new CustomProgressDialog(getActivity());
+        progressDialog.setMessage(getString(R.string.please_wait));
+        progressDialog.setCancelable(false);
 
-        mNameEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
-        mNameEdit.setPrimaryColor(mPreferences.getColorPrimary());
-        mNameEdit.setOnKeyListener((v, keyCode, event) -> {
+        nameEdit.setFloatingLabelTextSize(getResources().getDimensionPixelSize(R.dimen.edit_label_text_size));
+        nameEdit.setPrimaryColor(preferences.getColorPrimary());
+        nameEdit.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() != KeyEvent.ACTION_DOWN)
                 return false;
             if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                ShoppistUtils.hideKeyboard(getContext(), mNameEdit);
+                ShoppistUtils.hideKeyboard(getContext(), nameEdit);
                 return true;
             }
             return false;
         });
 
-        mActionButton.setOnLongClickListener(this);
-        mActionButton.setOnClickListener(this);
-        mActionButton.setBackgroundTintList(ColorStateList.valueOf(mPreferences.getColorPrimary()));
+        actionButton.setOnLongClickListener(this);
+        actionButton.setOnClickListener(this);
+        actionButton.setBackgroundTintList(ColorStateList.valueOf(preferences.getColorPrimary()));
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(Const.NAME, mNameEdit.getText().toString());
+        outState.putString(Const.NAME, nameEdit.getText().toString());
     }
 
     @Override

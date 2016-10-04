@@ -41,15 +41,15 @@ public class SelectCategoryPresenter extends BaseRxPresenter<SelectCategoryView,
 
     private final BehaviorSubject<List<CategoryViewModel>> cache = BehaviorSubject.create();
 
-    private final CategoryModelDataMapper mDataMapper;
-    private final GetCategoryList mGetCategoryList;
+    private final CategoryModelDataMapper dataMapper;
+    private final GetCategoryList getCategoryList;
 
-    private CategoryViewModel mItem;
+    private CategoryViewModel item;
 
     @Inject
     SelectCategoryPresenter(CategoryModelDataMapper dataMapper, GetCategoryList getCategoryList) {
-        this.mDataMapper = dataMapper;
-        this.mGetCategoryList = getCategoryList;
+        this.dataMapper = dataMapper;
+        this.getCategoryList = getCategoryList;
 
         loadCategories();
     }
@@ -58,20 +58,20 @@ public class SelectCategoryPresenter extends BaseRxPresenter<SelectCategoryView,
     public void onCreate(Bundle arguments, Bundle savedInstanceState) {
         super.onCreate(arguments, savedInstanceState);
         if (arguments != null) {
-            mItem = arguments.getParcelable(CategoryViewModel.class.getName());
+            item = arguments.getParcelable(CategoryViewModel.class.getName());
         }
     }
 
     @Override
     public void attachView(SelectCategoryView view) {
         super.attachView(view);
-        mSubscriptions.add(cache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
+        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
 
             @Override
             public void onNext(List<CategoryViewModel> category) {
                 setCategory(category);
-                if (mItem != null) {
-                    selectCategory(mItem.getCategory().getId());
+                if (item != null) {
+                    selectCategory(item.getCategory().getId());
                 } else {
                     selectCategory(CategoryViewModel.NO_CATEGORY_ID);
                 }
@@ -90,8 +90,8 @@ public class SelectCategoryPresenter extends BaseRxPresenter<SelectCategoryView,
 
 
     private void loadCategories() {
-        mGetCategoryList.get()
-                .map(mDataMapper::transformToViewModel)
+        getCategoryList.get()
+                .map(dataMapper::transformToViewModel)
                 .subscribe(cache);
     }
 

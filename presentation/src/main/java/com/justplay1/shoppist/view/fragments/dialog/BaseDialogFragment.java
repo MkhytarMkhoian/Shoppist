@@ -46,23 +46,23 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment
         implements View.OnClickListener {
 
     @Inject
-    protected AppPreferences mPreferences;
+    protected AppPreferences preferences;
     @Bind(R.id.positive_button)
-    protected Button mPositiveButton;
+    protected Button positiveButton;
     @Bind(R.id.negative_button)
-    protected Button mNegativeButton;
-    protected CustomProgressDialog mProgressDialog;
+    protected Button negativeButton;
+    protected CustomProgressDialog progressDialog;
 
     @LayoutRes
     protected abstract int getLayoutId();
 
-    private HasInjector mHasInjector;
+    private HasInjector hasInjector;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mHasInjector = (HasInjector) context;
+            hasInjector = (HasInjector) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement HasInjector");
@@ -87,21 +87,21 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment
      */
     @SuppressWarnings("unchecked")
     protected <C> C getInjector(Class<C> injectorType) {
-        return injectorType.cast(mHasInjector.getInjector(injectorType.getName()));
+        return injectorType.cast(hasInjector.getInjector(injectorType.getName()));
     }
 
     protected void putInjector(String id, Object component) {
-        mHasInjector.putInjector(id, component);
+        hasInjector.putInjector(id, component);
     }
 
     public void init(View view) {
-        mPositiveButton.setTextColor(mPreferences.getColorPrimary());
-        mNegativeButton.setTextColor(mPreferences.getColorPrimary());
-        mPositiveButton.setOnClickListener(this);
-        mNegativeButton.setOnClickListener(this);
+        positiveButton.setTextColor(preferences.getColorPrimary());
+        negativeButton.setTextColor(preferences.getColorPrimary());
+        positiveButton.setOnClickListener(this);
+        negativeButton.setOnClickListener(this);
 
-        mProgressDialog = new CustomProgressDialog(getContext());
-        mProgressDialog.setMessage(getString(R.string.please_wait));
+        progressDialog = new CustomProgressDialog(getContext());
+        progressDialog.setMessage(getString(R.string.please_wait));
     }
 
     @Nullable

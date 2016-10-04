@@ -39,13 +39,13 @@ import java.util.Map;
  */
 public class MainSettingFragment extends PreferenceFragment implements ColorThemeUpdater, AdapterView.OnItemClickListener {
 
-    private MainSettingFragmentInteractionListener mListener;
+    private MainSettingFragmentInteractionListener listener;
 
     @Override
     public void onAttach(Activity context) {
         super.onAttach(context);
         try {
-            mListener = (MainSettingFragmentInteractionListener) context;
+            listener = (MainSettingFragmentInteractionListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement FragmentInteractionListener");
@@ -94,13 +94,13 @@ public class MainSettingFragment extends PreferenceFragment implements ColorThem
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             case 0:
-                mListener.openGeneralSetting();
+                listener.openGeneralSetting();
                 break;
             case 1:
-                mListener.openListsSetting();
+                listener.openListsSetting();
                 break;
             case 2:
-                mListener.openSystemSetting();
+                listener.openSystemSetting();
                 break;
         }
     }

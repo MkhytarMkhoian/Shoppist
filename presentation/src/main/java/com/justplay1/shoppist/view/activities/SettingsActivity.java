@@ -39,7 +39,7 @@ public class SettingsActivity extends BaseActivity implements MainSettingFragmen
     public static final int LISTS_SETTING = 2;
     public static final int SYSTEM_SETTING = 3;
 
-    private Toolbar mToolbar;
+    private Toolbar toolbar;
 
     public static Intent getCallingIntent(Context context, int settingId) {
         Intent callingIntent = new Intent(context, SettingsActivity.class);
@@ -65,16 +65,16 @@ public class SettingsActivity extends BaseActivity implements MainSettingFragmen
             int flag = getIntent().getIntExtra(Const.SETTING_ID, 0);
             switch (flag) {
                 case GENERAL_SETTING:
-                    mToolbar.setTitle(R.string.category_general);
+                    toolbar.setTitle(R.string.category_general);
                     return GeneralSettingFragment.newInstance();
                 case LISTS_SETTING:
-                    mToolbar.setTitle(R.string.shopping_lists);
+                    toolbar.setTitle(R.string.shopping_lists);
                     return ListsSettingFragment.newInstance();
                 case SYSTEM_SETTING:
-                    mToolbar.setTitle(R.string.category_system);
+                    toolbar.setTitle(R.string.category_system);
                     return SystemSettingFragment.newInstance();
                 default:
-                    mToolbar.setTitle(R.string.title_activity_settings);
+                    toolbar.setTitle(R.string.title_activity_settings);
                     return new MainSettingFragment();
             }
         }
@@ -82,16 +82,16 @@ public class SettingsActivity extends BaseActivity implements MainSettingFragmen
     }
 
     private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(R.string.title_activity_settings);
-        mToolbar.setBackgroundColor(mPreferences.getColorPrimary());
-        mToolbar.setNavigationIcon(R.drawable.ic_back_white);
-        mToolbar.setNavigationOnClickListener(v -> finishActivity());
-        ViewCompat.setElevation(mToolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_activity_settings);
+        toolbar.setBackgroundColor(preferences.getColorPrimary());
+        toolbar.setNavigationIcon(R.drawable.ic_back_white);
+        toolbar.setNavigationOnClickListener(v -> finishActivity());
+        ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
     }
 
     public void refreshToolbarColor() {
-        mToolbar.setBackgroundColor(mPreferences.getColorPrimary());
+        toolbar.setBackgroundColor(preferences.getColorPrimary());
     }
 
     @Override
@@ -106,16 +106,16 @@ public class SettingsActivity extends BaseActivity implements MainSettingFragmen
 
     @Override
     public void openGeneralSetting() {
-        mNavigator.navigateToSettingScreen(this, GENERAL_SETTING);
+        navigator.navigateToSettingScreen(this, GENERAL_SETTING);
     }
 
     @Override
     public void openListsSetting() {
-        mNavigator.navigateToSettingScreen(this, LISTS_SETTING);
+        navigator.navigateToSettingScreen(this, LISTS_SETTING);
     }
 
     @Override
     public void openSystemSetting() {
-        mNavigator.navigateToSettingScreen(this, SYSTEM_SETTING);
+        navigator.navigateToSettingScreen(this, SYSTEM_SETTING);
     }
 }

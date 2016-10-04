@@ -28,19 +28,19 @@ import com.justplay1.shoppist.view.component.spinner.SpinnerView;
 public abstract class BaseSelectItemDialogFragment<T extends BaseViewModel>
         extends BaseDialogFragment {
 
-    protected SpinnerView<T> mSelectView;
-    protected OnCompleteListener<T> mCompleteListener;
+    protected SpinnerView<T> selectView;
+    protected OnCompleteListener<T> completeListener;
 
     @Override
     public void init(View view) {
         super.init(view);
-        mSelectView = (SpinnerView<T>) view.findViewById(R.id.custom_spinner);
-        mSelectView.setOnAddBtnClickListener(this);
-        mSelectView.setOnEditBtnClickListener(this);
+        selectView = (SpinnerView<T>) view.findViewById(R.id.custom_spinner);
+        selectView.setOnAddBtnClickListener(this);
+        selectView.setOnEditBtnClickListener(this);
     }
 
     public void setCompleteListener(OnCompleteListener<T> listener) {
-        mCompleteListener = listener;
+        completeListener = listener;
     }
 
     public interface OnCompleteListener<T> {

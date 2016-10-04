@@ -42,8 +42,8 @@ import com.justplay1.shoppist.view.fragments.ListItemsFragment;
 public class ListItemActivity extends BaseListActivity
         implements Toolbar.OnMenuItemClickListener, ListItemsRouter {
 
-    private ListItemsFragment mFragment;
-    private ListViewModel mParentList;
+    private ListItemsFragment fragment;
+    private ListViewModel parentList;
 
     public static Intent getCallingIntent(Context context, ListViewModel parentList) {
         Intent callingIntent = new Intent(context, ListItemActivity.class);
@@ -52,7 +52,7 @@ public class ListItemActivity extends BaseListActivity
     }
 
     public ListItemsFragment createFragment() {
-        return ListItemsFragment.newInstance(mParentList);
+        return ListItemsFragment.newInstance(parentList);
     }
 
     @Override
@@ -61,22 +61,22 @@ public class ListItemActivity extends BaseListActivity
         createNewInjectorIfNeeded();
         setContentView(R.layout.layout_single_fragment);
         if (getIntent() != null) {
-            mParentList = getIntent().getParcelableExtra(ListViewModel.class.getName());
+            parentList = getIntent().getParcelableExtra(ListViewModel.class.getName());
         }
         initToolbar();
 
-        mFragment = (ListItemsFragment) getSupportFragmentManager().findFragmentByTag(ListItemsFragment.class.getName());
-        if (mFragment == null) {
-            mFragment = createFragment();
+        fragment = (ListItemsFragment) getSupportFragmentManager().findFragmentByTag(ListItemsFragment.class.getName());
+        if (fragment == null) {
+            fragment = createFragment();
         }
-        replaceFragment(R.id.container, mFragment, ListItemsFragment.class.getName());
+        replaceFragment(R.id.container, fragment, ListItemsFragment.class.getName());
     }
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(mParentList.getName());
+        toolbar.setTitle(parentList.getName());
         ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.toolbar_elevation));
-        toolbar.setBackgroundColor(mPreferences.getColorPrimary());
+        toolbar.setBackgroundColor(preferences.getColorPrimary());
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationIcon(R.drawable.ic_back_white);
         toolbar.setNavigationOnClickListener(v -> finish());
@@ -98,31 +98,31 @@ public class ListItemActivity extends BaseListActivity
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.menu_check_all:
-                mFragment.onCheckAllItemsClick();
+                fragment.onCheckAllItemsClick();
                 break;
             case R.id.sort_by_name:
-                mFragment.onSortByNameClick();
+                fragment.onSortByNameClick();
                 break;
             case R.id.sort_by_priority:
-                mFragment.onSortByPriorityClick();
+                fragment.onSortByPriorityClick();
                 break;
             case R.id.sort_by_time_created:
-                mFragment.onSortByTimeCreatedClick();
+                fragment.onSortByTimeCreatedClick();
                 break;
             case R.id.sort_by_category:
-                mFragment.onSortByCategoryClick();
+                fragment.onSortByCategoryClick();
                 break;
             case R.id.action_return_all_to_list:
-                mFragment.onReturnAllToListClick();
+                fragment.onReturnAllToListClick();
                 break;
             case R.id.action_strike_out_all:
-                mFragment.onStrikeOutAllClick();
+                fragment.onStrikeOutAllClick();
                 break;
             case R.id.menu_expand_all:
-                mFragment.onExpandAll();
+                fragment.onExpandAll();
                 break;
             case R.id.menu_collapse_all:
-                mFragment.onCollapseAll();
+                fragment.onCollapseAll();
                 break;
         }
         return true;
@@ -139,31 +139,31 @@ public class ListItemActivity extends BaseListActivity
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                mFragment.onEditItemClick();
+                fragment.onEditItemClick();
                 break;
             case R.id.menu_delete:
-                mFragment.onDeleteCheckedItemsClick();
+                fragment.onDeleteCheckedItemsClick();
                 break;
             case R.id.menu_check_all:
-                mFragment.onCheckAllItemsClick();
+                fragment.onCheckAllItemsClick();
                 break;
             case R.id.action_move:
-                mFragment.onMoveItemsClick();
+                fragment.onMoveItemsClick();
                 break;
             case R.id.action_copy:
-                mFragment.onCopyItemsClick();
+                fragment.onCopyItemsClick();
                 break;
             case R.id.action_email_share:
-                mFragment.onEmailShareClick();
+                fragment.onEmailShareClick();
                 break;
             case R.id.menu_uncheck_all:
-                mFragment.onUnCheckAllItemsClick();
+                fragment.onUnCheckAllItemsClick();
                 break;
             case R.id.action_return_to_list:
-                mFragment.onReturnCheckedItemsToListClick();
+                fragment.onReturnCheckedItemsToListClick();
                 break;
             case R.id.action_strike_out:
-                mFragment.onStrikeOutCheckedItemsClick();
+                fragment.onStrikeOutCheckedItemsClick();
                 break;
         }
         return true;
@@ -174,34 +174,34 @@ public class ListItemActivity extends BaseListActivity
         super.onPrepareActionMode(mode, menu);
         MenuItem move = menu.findItem(R.id.action_move);
         MenuItem copy = menu.findItem(R.id.action_copy);
-        boolean enable = mFragment.isMoveCopyButtonEnable();
+        boolean enable = fragment.isMoveCopyButtonEnable();
         move.setEnabled(enable);
         copy.setEnabled(enable);
 
         MenuItem edit = menu.findItem(R.id.action_edit);
         if (edit != null) {
-            edit.setVisible(mFragment.isEditButtonEnable());
+            edit.setVisible(fragment.isEditButtonEnable());
         }
 
         MenuItem checkAll = menu.findItem(R.id.menu_check_all);
-        checkAll.setEnabled(mFragment.isCheckAllButtonEnable());
+        checkAll.setEnabled(fragment.isCheckAllButtonEnable());
         return true;
     }
 
     @Override
     public void onDestroyActionMode(ActionMode actionMode) {
         super.onDestroyActionMode(actionMode);
-        mFragment.onUnCheckAllItemsClick();
+        fragment.onUnCheckAllItemsClick();
     }
 
     @Override
     public void openEditScreen(ListViewModel list, ListItemViewModel item) {
-        mNavigator.navigateToAddListItemScreen(this, list, item);
+        navigator.navigateToAddListItemScreen(this, list, item);
     }
 
     @Override
     public void openQuickMode(String parentListId) {
-        mNavigator.navigateToSearchScreen(this, Const.CONTEXT_QUICK_ADD_GOODS_TO_LIST, parentListId);
+        navigator.navigateToSearchScreen(this, Const.CONTEXT_QUICK_ADD_GOODS_TO_LIST, parentListId);
     }
 
     @Override
