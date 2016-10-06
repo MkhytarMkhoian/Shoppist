@@ -113,7 +113,7 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
                 } else {
                     headerViewHolder.name.setTextColor(preferences.getColorPrimary());
                 }
-                headerViewHolder.indicator.setBackgroundResource(R.drawable.ic_expand_less);
+                headerViewHolder.indicator.setBackgroundResource(R.drawable.ic_expand);
                 headerViewHolder.name.setText(model.getName());
                 break;
             case ItemType.CART_HEADER:
@@ -122,7 +122,7 @@ public class ListItemAdapter extends BaseGroupSwipeableItemAdapter<ListItemViewM
 
                 if (header.isShowExpandIndicator()) {
                     cartViewHolder.indicator.setVisibility(View.VISIBLE);
-                    cartViewHolder.indicator.setBackgroundResource(R.drawable.ic_expand_more_white);
+                    cartViewHolder.indicator.setBackgroundResource(R.drawable.ic_expand_white);
                 } else {
                     cartViewHolder.indicator.setVisibility(View.INVISIBLE);
                 }

@@ -211,8 +211,8 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
         showLoading();
         subscriptions.add(
                 Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
-                        .flatMap(currency -> {
-                            addGoods.setData(Collections.singletonList(currency));
+                        .flatMap(item -> {
+                            addGoods.setData(Collections.singletonList(item));
                             return addGoods.get();
                         }).subscribe(new SaveGoodsSubscriber(true)));
     }
@@ -221,8 +221,8 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
         showLoading();
         subscriptions.add(
                 Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
-                        .flatMap(currency -> {
-                            updateGoods.setData(Collections.singletonList(currency));
+                        .flatMap(item -> {
+                            updateGoods.setData(Collections.singletonList(item));
                             return updateGoods.get();
                         }).subscribe(new SaveGoodsSubscriber(false)));
     }

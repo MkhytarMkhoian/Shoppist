@@ -49,5 +49,5 @@
         app:met_floatingLabelText="@string/short_unit_name"
         app:met_maxCharacters="3" />
 
-    <include layout="@layout/dialog_button_layout" />
+    <include layout="@layout/layout_dialog_button" />
 </LinearLayout>

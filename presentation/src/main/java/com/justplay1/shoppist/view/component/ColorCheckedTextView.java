@@ -44,8 +44,8 @@ public class ColorCheckedTextView extends AppCompatCheckedTextView {
     private void setColor(@ColorInt int color) {
         StateListDrawable states = new StateListDrawable();
 
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.abc_btn_radio_to_on_mtrl_000);
-        Drawable checked = ContextCompat.getDrawable(getContext(), R.drawable.abc_btn_radio_to_on_mtrl_015);
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.btn_radio_to_on_000);
+        Drawable checked = ContextCompat.getDrawable(getContext(), R.drawable.btn_radio_to_on_015);
 
         if (isEnabled()) {
             states.setColorFilter(DrawableUtils.getColorFilter(color));

@@ -343,9 +343,9 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     private void loadGoods() {
         getGoodsList.get()
                 .map(goodsModelDataMapper::transformToViewModel)
-                .map(productViewModels -> {
+                .map(items -> {
                     Map<String, ProductViewModel> result = new HashMap<>();
-                    for (ProductViewModel item : productViewModels) {
+                    for (ProductViewModel item : items) {
                         result.put(item.getName().toLowerCase(), item);
                     }
                     return result;
@@ -356,8 +356,8 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     private void addListItem(ListItemViewModel data, boolean isLongClick) {
         subscriptions.add(
                 Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
-                        .flatMap(list -> {
-                            addListItems.setData(Collections.singletonList(list));
+                        .flatMap(item -> {
+                            addListItems.setData(Collections.singletonList(item));
                             return addListItems.get();
                         }).subscribe(new SaveListItemSubscriber(isLongClick, true)));
     }
@@ -365,8 +365,8 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     private void updateListItem(ListItemViewModel data, boolean isLongClick) {
         subscriptions.add(
                 Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
-                        .flatMap(list -> {
-                            updateListItems.setData(Collections.singletonList(list));
+                        .flatMap(item -> {
+                            updateListItems.setData(Collections.singletonList(item));
                             return updateListItems.get();
                         })
                         .flatMap(result -> {

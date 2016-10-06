@@ -95,5 +95,5 @@
             android:thumbTint="@color/seek_bar_blue" />
     </LinearLayout>
 
-    <include layout="@layout/dialog_button_layout" />
+    <include layout="@layout/layout_dialog_button" />
 </LinearLayout>

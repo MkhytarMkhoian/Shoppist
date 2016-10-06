@@ -29,5 +29,5 @@
         android:layout_marginRight="24dp"
         android:layout_marginStart="24dp"/>
 
-    <include layout="@layout/dialog_button_layout" />
+    <include layout="@layout/layout_dialog_button" />
 </LinearLayout>

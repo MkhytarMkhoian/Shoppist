@@ -42,6 +42,9 @@ import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.fragments.ListFragment;
 import com.justplay1.shoppist.view.fragments.MenuFragment;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Mkhytar Mkhoian.
  */
@@ -49,9 +52,10 @@ public class MainActivity extends BaseListActivity
         implements MenuFragment.MenuFragmentInteraction, Toolbar.OnMenuItemClickListener,
         ListRouter {
 
-    private ListFragment listFragment;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
-    private Toolbar toolbar;
+    private ListFragment listFragment;
     private ActionBarDrawerToggle toggle;
     private DrawerLayout menuDrawer;
 
@@ -60,6 +64,7 @@ public class MainActivity extends BaseListActivity
         super.onCreate(savedInstanceState);
         createNewInjectorIfNeeded();
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         initToolbar();
 
         listFragment = (ListFragment) getSupportFragmentManager().findFragmentByTag(ListFragment.class.getName());
@@ -85,7 +90,6 @@ public class MainActivity extends BaseListActivity
     }
 
     private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_shopping_lists);
         toolbar.setBackgroundColor(preferences.getColorPrimary());
         toolbar.setOnMenuItemClickListener(this);

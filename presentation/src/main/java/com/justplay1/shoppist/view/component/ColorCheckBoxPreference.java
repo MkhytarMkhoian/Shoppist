@@ -48,8 +48,8 @@ public class ColorCheckBoxPreference extends CheckBoxPreference {
         CheckBox checkboxView = (CheckBox) view.findViewById(R.id.checkbox);
         StateListDrawable states = new StateListDrawable();
 
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.abc_btn_check_to_on_mtrl_000);
-        Drawable checked = ContextCompat.getDrawable(getContext(), R.drawable.abc_btn_check_to_on_mtrl_015);
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.btn_check_to_on_000);
+        Drawable checked = ContextCompat.getDrawable(getContext(), R.drawable.btn_check_to_on_015);
 
         if (isEnabled()) {
             states.setColorFilter(DrawableUtils.getColorFilter(color));

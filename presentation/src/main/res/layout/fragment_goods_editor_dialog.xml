@@ -75,5 +75,5 @@
 
     <include
         android:id="@+id/button_container"
-        layout="@layout/dialog_button_layout" />
+        layout="@layout/layout_dialog_button" />
 </LinearLayout>
