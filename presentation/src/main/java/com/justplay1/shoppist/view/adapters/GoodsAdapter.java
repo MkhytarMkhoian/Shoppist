@@ -45,22 +45,22 @@ import butterknife.ButterKnife;
  */
 public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHeaderHolder, GoodsAdapter.GoodsViewHolder> {
 
-    private AppPreferences mPreferpreferencesnces;
+    private AppPreferences preferences;
 
     public GoodsAdapter(Context context, ActionModeInteractionListener listener,
                         RecyclerView recyclerView, AppPreferences preferences) {
         super(context, listener, recyclerView);
-        mPreferpreferencesnces = preferences;
+        this.preferences = preferences;
     }
 
     @Override
     public void onBindGroupViewHolder(BaseHeaderHolder holder, int groupPosition, int viewType) {
         HeaderViewModel model = getGroupItem(groupPosition);
         HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
-        if (mPreferpreferencesnces.getSortForGoods() == SortType.SORT_BY_PRIORITY) {
+        if (preferences.getSortForGoods() == SortType.SORT_BY_PRIORITY) {
             setPriorityTextColor(model.getPriority(), headerHolder.name);
         } else {
-            headerHolder.name.setTextColor(mPreferpreferencesnces.getColorPrimary());
+            headerHolder.name.setTextColor(preferences.getColorPrimary());
         }
         headerHolder.name.setText(model.getName());
 
@@ -79,7 +79,7 @@ public class GoodsAdapter extends BaseExpandableAdapter<ProductViewModel, BaseHe
 
         holder.name.setText(item.getName());
 
-        if (mPreferpreferencesnces.getSortForGoods() == SortType.SORT_BY_CATEGORIES) {
+        if (preferences.getSortForGoods() == SortType.SORT_BY_CATEGORIES) {
             holder.categoryName.setVisibility(View.GONE);
         } else {
             holder.categoryName.setVisibility(View.VISIBLE);
