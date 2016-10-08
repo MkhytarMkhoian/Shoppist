@@ -32,6 +32,7 @@ import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.ContextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -159,7 +160,7 @@ public abstract class BaseSortablePresenter<V extends ContextView, T extends Bas
 
         final int day = currentTime.get(Calendar.DAY_OF_YEAR);
 
-        long flag = -1;
+        int flag = -1;
         List<T> items = null;
         for (int i = 0; i < data.size(); i++) {
             itemTime.setTimeInMillis(data.get(i).getTimeCreated());
@@ -169,13 +170,9 @@ public abstract class BaseSortablePresenter<V extends ContextView, T extends Bas
             if (flag != diffDay) {
                 flag = diffDay;
                 HeaderViewModel header = new HeaderViewModel();
-                if (flag < 1) {
-                    header.setName(getString(com.justplay1.shoppist.R.string.today));
-                } else if (flag == 1) {
-                    header.setName(getString(com.justplay1.shoppist.R.string.yesterday));
-                } else {
-                    header.setName(flag + " " + getString(com.justplay1.shoppist.R.string.days_ago));
-                }
+                SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                String headerTitle = format.format(itemTime.getTime());
+                header.setName(headerTitle);
                 header.setItemType(ItemType.HEADER_ITEM);
 
                 items = new ArrayList<>();

@@ -120,10 +120,6 @@
     <string name="action_return_all_to_list">Вернуть всех в список</string>
     <string name="action_strike_out">Вычеркнуть</string>
     <string name="action_return_to_list">Вернуть в список</string>
-    <string name="version">Версия: </string>
-    <string name="today">Сегодня</string>
-    <string name="yesterday">Вчера</string>
-    <string name="days_ago">дней назад</string>
     <string name="edit_currency">Редактировать валюту</string>
     <string name="edit_unit">Редактировать единицу</string>
     <string name="edit_goods">Редактировать товар</string>

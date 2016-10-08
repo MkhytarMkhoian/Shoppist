@@ -126,10 +126,6 @@
     <string name="action_return_all_to_list">Return all to list</string>
     <string name="action_strike_out">Strike out</string>
     <string name="action_return_to_list">Return to list</string>
-    <string name="version">Version: </string>
-    <string name="today">Today</string>
-    <string name="yesterday">Yesterday</string>
-    <string name="days_ago">days ago</string>
     <string name="edit_currency">Edit currency</string>
     <string name="edit_unit">Edit unit</string>
     <string name="edit_goods">Edit goods</string>
