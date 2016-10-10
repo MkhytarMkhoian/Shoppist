@@ -25,7 +25,7 @@ import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
 import com.justplay1.shoppist.navigation.Router;
-import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
+import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.view.SelectUnitView;
 
 import java.util.List;
@@ -38,7 +38,7 @@ import rx.subjects.BehaviorSubject;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView, Router> {
+public class SelectUnitPresenter extends BaseRouterPresenter<SelectUnitView, Router> {
 
     private final BehaviorSubject<List<UnitViewModel>> cache = BehaviorSubject.create();
 
@@ -66,7 +66,7 @@ public class SelectUnitPresenter extends BaseRxPresenter<SelectUnitView, Router>
     @Override
     public void attachView(SelectUnitView view) {
         super.attachView(view);
-        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
+        addSubscription(cache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
 
             @Override
             public void onNext(List<UnitViewModel> units) {

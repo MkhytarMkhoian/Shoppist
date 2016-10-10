@@ -93,7 +93,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     @Override
     public void attachView(GoodsView view) {
         super.attachView(view);
-        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ProductViewModel>>>>() {
+        addSubscription(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ProductViewModel>>>>() {
 
             @Override
             public void onStart() {
@@ -197,7 +197,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     }
 
     public void deleteItems(Collection<ProductViewModel> data) {
-        subscriptions.add(Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
+        addSubscription(Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
                 .flatMap(goods -> {
                     deleteGoods.setData(goods);
                     return deleteGoods.get();
@@ -205,7 +205,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     }
 
     public void changeUnit(UnitViewModel unit, List<ProductViewModel> editProducts) {
-        subscriptions.add(Observable.fromCallable(() -> {
+        addSubscription(Observable.fromCallable(() -> {
             for (ProductViewModel product : editProducts) {
                 if (!unit.equals(product.getUnit())) {
                     product.setUnit(unit);
@@ -225,7 +225,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     }
 
     public void changeCategory(CategoryViewModel category, List<ProductViewModel> editProducts) {
-        subscriptions.add(Observable.fromCallable(() -> {
+        addSubscription(Observable.fromCallable(() -> {
             for (ProductViewModel product : editProducts) {
                 if (!category.equals(product.getCategory())) {
                     product.setCategory(category);

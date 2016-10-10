@@ -25,7 +25,7 @@ import com.justplay1.shoppist.interactor.units.UpdateUnits;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
 import com.justplay1.shoppist.navigation.Router;
-import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
+import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.utils.ModelUtils;
 import com.justplay1.shoppist.view.AddUnitView;
 
@@ -40,7 +40,7 @@ import rx.Observable;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class AddUnitPresenter extends BaseRxPresenter<AddUnitView, Router> {
+public class AddUnitPresenter extends BaseRouterPresenter<AddUnitView, Router> {
 
     private final UnitsDataModelMapper dataMapper;
     private final UpdateUnits updateUnits;
@@ -104,22 +104,20 @@ public class AddUnitPresenter extends BaseRxPresenter<AddUnitView, Router> {
 
     private void addUnit(UnitViewModel data) {
         showLoading();
-        subscriptions.add(
-                Observable.fromCallable(() -> dataMapper.transform(data))
-                        .flatMap(unit -> {
-                            addUnits.setData(Collections.singletonList(unit));
-                            return addUnits.get();
-                        }).subscribe(new SaveUnitSubscriber(true)));
+        addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
+                .flatMap(unit -> {
+                    addUnits.setData(Collections.singletonList(unit));
+                    return addUnits.get();
+                }).subscribe(new SaveUnitSubscriber(true)));
     }
 
     private void updateUnit(UnitViewModel data) {
         showLoading();
-        subscriptions.add(
-                Observable.fromCallable(() -> dataMapper.transform(data))
-                        .flatMap(unit -> {
-                            updateUnits.setData(Collections.singletonList(unit));
-                            return updateUnits.get();
-                        }).subscribe(new SaveUnitSubscriber(false)));
+        addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
+                .flatMap(unit -> {
+                    updateUnits.setData(Collections.singletonList(unit));
+                    return updateUnits.get();
+                }).subscribe(new SaveUnitSubscriber(false)));
     }
 
     private boolean checkDataForErrors(String fullName, String shortName) {

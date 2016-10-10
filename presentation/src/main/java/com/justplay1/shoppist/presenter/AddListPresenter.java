@@ -136,21 +136,19 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
     }
 
     private void addList(ListViewModel data, boolean isLongClick) {
-        subscriptions.add(
-                Observable.fromCallable(() -> dataMapper.transform(data))
-                        .flatMap(list -> {
-                            addList.setData(Collections.singletonList(list));
-                            return addList.get();
-                        }).subscribe(new SaveListSubscriber(isLongClick, true)));
+        addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
+                .flatMap(list -> {
+                    addList.setData(Collections.singletonList(list));
+                    return addList.get();
+                }).subscribe(new SaveListSubscriber(isLongClick, true)));
     }
 
     private void updateList(ListViewModel data, boolean isLongClick) {
-        subscriptions.add(
-                Observable.fromCallable(() -> dataMapper.transform(data))
-                        .flatMap(list -> {
-                            updateLists.setData(Collections.singletonList(list));
-                            return updateLists.get();
-                        }).subscribe(new SaveListSubscriber(isLongClick, false)));
+        addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
+                .flatMap(list -> {
+                    updateLists.setData(Collections.singletonList(list));
+                    return updateLists.get();
+                }).subscribe(new SaveListSubscriber(isLongClick, false)));
     }
 
     private void showSelectColorDialog() {

@@ -93,7 +93,7 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
             }
         });
 
-        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListViewModel>>>>() {
+        addSubscription(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListViewModel>>>>() {
             @Override
             public void onNext(List<Pair<HeaderViewModel, List<ListViewModel>>> data) {
                 showData(data);
@@ -184,7 +184,7 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
     }
 
     public void deleteItems(Collection<ListViewModel> data) {
-        subscriptions.add(Observable.fromCallable(() -> dataMapper.transform(data))
+        addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
                 .flatMap(list -> {
                     deleteLists.setData(list);
                     return deleteLists.get();
@@ -193,7 +193,7 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
 
     public void emailShare(List<ListViewModel> data) {
         showLoadingDialog();
-        subscriptions.add(Observable.from(data)
+        addSubscription(Observable.from(data)
                 .flatMap(shoppingList -> {
                     getListItems.setParentId(shoppingList.getId());
                     return getListItems.get()

@@ -84,16 +84,16 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
 
     @Inject
     ListItemsPresenter(AppPreferences preferences,
-                              CategoryModelDataMapper categoryModelDataMapper,
-                              UnitsDataModelMapper unitsDataModelMapper,
-                              CurrencyModelDataMapper currencyModelDataMapper,
-                              ListItemsModelDataMapper listItemsModelDataMapper,
-                              GetCategory getCategory,
-                              GetUnit getUnit,
-                              GetCurrency getCurrency,
-                              GetListItems getListItems,
-                              UpdateListItems updateListItems,
-                              DeleteListItems deleteListItems) {
+                       CategoryModelDataMapper categoryModelDataMapper,
+                       UnitsDataModelMapper unitsDataModelMapper,
+                       CurrencyModelDataMapper currencyModelDataMapper,
+                       ListItemsModelDataMapper listItemsModelDataMapper,
+                       GetCategory getCategory,
+                       GetUnit getUnit,
+                       GetCurrency getCurrency,
+                       GetListItems getListItems,
+                       UpdateListItems updateListItems,
+                       DeleteListItems deleteListItems) {
         super(preferences);
         this.categoryModelDataMapper = categoryModelDataMapper;
         this.unitsDataModelMapper = unitsDataModelMapper;
@@ -128,7 +128,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
             }
         });
 
-        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListItemViewModel>>>>() {
+        addSubscription(cache.subscribe(new DefaultSubscriber<List<Pair<HeaderViewModel, List<ListItemViewModel>>>>() {
 
             @Override
             public void onStart() {
@@ -221,7 +221,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     }
 
     public void onChildItemMoved(final ListItemViewModel moveItem) {
-        subscriptions.add(Observable.fromCallable(() -> {
+        addSubscription(Observable.fromCallable(() -> {
             moveItem.setStatus(!moveItem.getStatus());
             return moveItem;
         }).map(listItemsModelDataMapper::transform)
@@ -281,7 +281,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     }
 
     public void deleteItems(Collection<ListItemViewModel> data) {
-        subscriptions.add(Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
+        addSubscription(Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
                 .flatMap(listItemModels -> {
                     deleteListItems.setData(listItemModels);
                     return deleteListItems.get();
@@ -325,7 +325,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     }
 
     private void strikeOut(List<ListItemViewModel> items, boolean toShoppingCart) {
-        subscriptions.add(Observable.fromCallable(() -> {
+        addSubscription(Observable.fromCallable(() -> {
             List<ListItemViewModel> itemsToMove = new ArrayList<>();
             for (ListItemViewModel item : items) {
                 if (toShoppingCart) {

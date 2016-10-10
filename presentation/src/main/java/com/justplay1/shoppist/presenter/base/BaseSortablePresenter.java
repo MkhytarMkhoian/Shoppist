@@ -43,7 +43,7 @@ import java.util.Locale;
  * Created by Mkhytar Mkhoian.
  */
 public abstract class BaseSortablePresenter<V extends ContextView, T extends BaseViewModel, R extends Router>
-        extends BaseRxPresenter<V, R> {
+        extends BaseRouterPresenter<V, R> {
 
     protected final AppPreferences preferences;
 

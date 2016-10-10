@@ -33,7 +33,7 @@ import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
 import com.justplay1.shoppist.models.mappers.GoodsModelDataMapper;
 import com.justplay1.shoppist.models.mappers.ListItemsModelDataMapper;
 import com.justplay1.shoppist.navigation.Router;
-import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
+import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.SearchView;
 
@@ -52,7 +52,7 @@ import rx.subjects.BehaviorSubject;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
+public class SearchPresenter extends BaseRouterPresenter<SearchView, Router> {
 
     private final BehaviorSubject<Map<String, ProductViewModel>> cache = BehaviorSubject.create();
 
@@ -96,7 +96,7 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
     @Override
     public void attachView(SearchView view) {
         super.attachView(view);
-        subscriptions.add(cache.subscribe(new DefaultSubscriber<Map<String, ProductViewModel>>() {
+        addSubscription(cache.subscribe(new DefaultSubscriber<Map<String, ProductViewModel>>() {
             @Override
             public void onNext(Map<String, ProductViewModel> data) {
                 showData(data);
@@ -168,12 +168,11 @@ public class SearchPresenter extends BaseRxPresenter<SearchView, Router> {
         listItem.setCategory(product.getCategory());
         listItem.setPriority(Priority.NO_PRIORITY);
 
-        subscriptions.add(
-                Observable.fromCallable(() -> listItemsModelDataMapper.transform(listItem))
-                        .flatMap(item -> {
-                            addListItems.setData(Collections.singletonList(item));
-                            return addListItems.get();
-                        }).subscribe(new DefaultSubscriber<Boolean>() {
+        addSubscription(Observable.fromCallable(() -> listItemsModelDataMapper.transform(listItem))
+                .flatMap(item -> {
+                    addListItems.setData(Collections.singletonList(item));
+                    return addListItems.get();
+                }).subscribe(new DefaultSubscriber<Boolean>() {
 
                     @Override
                     public void onNext(Boolean result) {

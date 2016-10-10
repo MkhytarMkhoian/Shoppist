@@ -153,7 +153,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         setViewPrice(String.valueOf(price));
         setViewQuantity(String.valueOf(quantity));
 
-        subscriptions.add(categoryCache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
+        addSubscription(categoryCache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
 
             @Override
             public void onNext(List<CategoryViewModel> category) {
@@ -168,7 +168,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
             }
         }));
 
-        subscriptions.add(unitsCache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
+        addSubscription(unitsCache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
 
             @Override
             public void onNext(List<UnitViewModel> unitViewModels) {
@@ -183,7 +183,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
             }
         }));
 
-        subscriptions.add(currencyCache.subscribe(new DefaultSubscriber<List<CurrencyViewModel>>() {
+        addSubscription(currencyCache.subscribe(new DefaultSubscriber<List<CurrencyViewModel>>() {
 
             @Override
             public void onNext(List<CurrencyViewModel> currency) {
@@ -198,7 +198,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
             }
         }));
 
-        subscriptions.add(goodsCache.subscribe(new DefaultSubscriber<Map<String, ProductViewModel>>() {
+        addSubscription(goodsCache.subscribe(new DefaultSubscriber<Map<String, ProductViewModel>>() {
 
             @Override
             public void onNext(Map<String, ProductViewModel> map) {
@@ -354,32 +354,30 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     }
 
     private void addListItem(ListItemViewModel data, boolean isLongClick) {
-        subscriptions.add(
-                Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
-                        .flatMap(item -> {
-                            addListItems.setData(Collections.singletonList(item));
-                            return addListItems.get();
-                        }).subscribe(new SaveListItemSubscriber(isLongClick, true)));
+        addSubscription(Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
+                .flatMap(item -> {
+                    addListItems.setData(Collections.singletonList(item));
+                    return addListItems.get();
+                }).subscribe(new SaveListItemSubscriber(isLongClick, true)));
     }
 
     private void updateListItem(ListItemViewModel data, boolean isLongClick) {
-        subscriptions.add(
-                Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
-                        .flatMap(item -> {
-                            updateListItems.setData(Collections.singletonList(item));
-                            return updateListItems.get();
-                        })
-                        .flatMap(result -> {
-                            if (productModel != null) {
-                                productModel.setUnit(unitModel);
-                                ProductModel product = goodsModelDataMapper.transform(productModel);
-                                updateGoods.setData(Collections.singletonList(product));
-                                return updateGoods.get();
-                            } else {
-                                return Observable.just(result);
-                            }
-                        })
-                        .subscribe(new SaveListItemSubscriber(isLongClick, false)));
+        addSubscription(Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
+                .flatMap(item -> {
+                    updateListItems.setData(Collections.singletonList(item));
+                    return updateListItems.get();
+                })
+                .flatMap(result -> {
+                    if (productModel != null) {
+                        productModel.setUnit(unitModel);
+                        ProductModel product = goodsModelDataMapper.transform(productModel);
+                        updateGoods.setData(Collections.singletonList(product));
+                        return updateGoods.get();
+                    } else {
+                        return Observable.just(result);
+                    }
+                })
+                .subscribe(new SaveListItemSubscriber(isLongClick, false)));
     }
 
     private void clearUI() {

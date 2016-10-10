@@ -27,7 +27,7 @@ import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.mappers.ListItemsModelDataMapper;
 import com.justplay1.shoppist.models.mappers.ListModelDataMapper;
 import com.justplay1.shoppist.navigation.Router;
-import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
+import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.view.MoveListItemsView;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ import rx.subjects.BehaviorSubject;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class MoveListItemsPresenter extends BaseRxPresenter<MoveListItemsView, Router> {
+public class MoveListItemsPresenter extends BaseRouterPresenter<MoveListItemsView, Router> {
 
     private final BehaviorSubject<ArrayList<Map<String, Object>>> cache = BehaviorSubject.create();
 
@@ -79,7 +79,7 @@ public class MoveListItemsPresenter extends BaseRxPresenter<MoveListItemsView, R
     @Override
     public void attachView(MoveListItemsView view) {
         super.attachView(view);
-        subscriptions.add(cache.subscribe(new DefaultSubscriber<ArrayList<Map<String, Object>>>() {
+        addSubscription(cache.subscribe(new DefaultSubscriber<ArrayList<Map<String, Object>>>() {
 
             @Override
             public void onError(Throwable e) {

@@ -23,7 +23,7 @@ import com.justplay1.shoppist.interactor.category.GetCategoryList;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
 import com.justplay1.shoppist.navigation.CategoryRouter;
-import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
+import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.view.CategoryView;
 
 import java.util.Collection;
@@ -38,7 +38,7 @@ import rx.subjects.BehaviorSubject;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRouter> {
+public class CategoryPresenter extends BaseRouterPresenter<CategoryView, CategoryRouter> {
 
     private final BehaviorSubject<List<CategoryViewModel>> cache = BehaviorSubject.create();
 
@@ -65,7 +65,7 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRou
     @Override
     public void attachView(CategoryView view) {
         super.attachView(view);
-        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
+        addSubscription(cache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
 
             @Override
             public void onStart() {
@@ -100,7 +100,7 @@ public class CategoryPresenter extends BaseRxPresenter<CategoryView, CategoryRou
     }
 
     public void deleteItems(Collection<CategoryViewModel> data) {
-        subscriptions.add(Observable.fromCallable(() -> dataMapper.transform(data))
+        addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
                 .flatMap(items -> {
                     deleteCategory.setData(items);
                     return deleteCategory.get();

@@ -23,7 +23,7 @@ import com.justplay1.shoppist.interactor.currency.GetCurrencyList;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
 import com.justplay1.shoppist.navigation.CurrencyRouter;
-import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
+import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.view.CurrencyView;
 
 import java.util.Collection;
@@ -38,7 +38,7 @@ import rx.subjects.BehaviorSubject;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class CurrencyPresenter extends BaseRxPresenter<CurrencyView, CurrencyRouter> {
+public class CurrencyPresenter extends BaseRouterPresenter<CurrencyView, CurrencyRouter> {
 
     private final BehaviorSubject<List<CurrencyViewModel>> cache = BehaviorSubject.create();
 
@@ -66,7 +66,7 @@ public class CurrencyPresenter extends BaseRxPresenter<CurrencyView, CurrencyRou
     @Override
     public void attachView(CurrencyView view) {
         super.attachView(view);
-        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<CurrencyViewModel>>() {
+        addSubscription(cache.subscribe(new DefaultSubscriber<List<CurrencyViewModel>>() {
 
             @Override
             public void onNext(List<CurrencyViewModel> currencyViewModels) {
@@ -94,7 +94,7 @@ public class CurrencyPresenter extends BaseRxPresenter<CurrencyView, CurrencyRou
     }
 
     public void deleteItems(Collection<CurrencyViewModel> data) {
-        subscriptions.add(Observable.fromCallable(() -> dataMapper.transform(data))
+        addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
                 .flatMap(items -> {
                     deleteCurrency.setData(items);
                     return deleteCurrency.get();

@@ -23,7 +23,7 @@ import com.justplay1.shoppist.interactor.units.GetUnitsList;
 import com.justplay1.shoppist.models.UnitViewModel;
 import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
 import com.justplay1.shoppist.navigation.UnitRouter;
-import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
+import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.view.UnitsView;
 
 import java.util.Collection;
@@ -38,7 +38,7 @@ import rx.subjects.BehaviorSubject;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
+public class UnitsPresenter extends BaseRouterPresenter<UnitsView, UnitRouter> {
 
     private final BehaviorSubject<List<UnitViewModel>> cache = BehaviorSubject.create();
 
@@ -60,7 +60,7 @@ public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
     @Override
     public void attachView(UnitsView view) {
         super.attachView(view);
-        subscriptions.add(cache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
+        addSubscription(cache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
 
             @Override
             public void onNext(List<UnitViewModel> currencyViewModels) {
@@ -83,7 +83,7 @@ public class UnitsPresenter extends BaseRxPresenter<UnitsView, UnitRouter> {
     }
 
     public void deleteItems(Collection<UnitViewModel> data) {
-        subscriptions.add(Observable.fromCallable(() -> dataMapper.transform(data))
+        addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
                 .flatMap(items -> {
                     deleteUnits.setData(items);
                     return deleteUnits.get();

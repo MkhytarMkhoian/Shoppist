@@ -31,7 +31,7 @@ import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
 import com.justplay1.shoppist.models.mappers.GoodsModelDataMapper;
 import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
 import com.justplay1.shoppist.navigation.Router;
-import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
+import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.utils.ModelUtils;
 import com.justplay1.shoppist.view.AddGoodsView;
@@ -48,7 +48,7 @@ import rx.subjects.BehaviorSubject;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
+public class AddGoodsPresenter extends BaseRouterPresenter<AddGoodsView, Router> {
 
     private final BehaviorSubject<List<UnitViewModel>> unitsCache = BehaviorSubject.create();
     private final BehaviorSubject<List<CategoryViewModel>> categoryCache = BehaviorSubject.create();
@@ -107,7 +107,7 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
         }
         setViewName(name);
 
-        subscriptions.add(unitsCache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
+        addSubscription(unitsCache.subscribe(new DefaultSubscriber<List<UnitViewModel>>() {
 
             @Override
             public void onNext(List<UnitViewModel> unitViewModels) {
@@ -122,7 +122,7 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
             }
         }));
 
-        subscriptions.add(categoryCache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
+        addSubscription(categoryCache.subscribe(new DefaultSubscriber<List<CategoryViewModel>>() {
 
             @Override
             public void onNext(List<CategoryViewModel> category) {
@@ -209,22 +209,20 @@ public class AddGoodsPresenter extends BaseRxPresenter<AddGoodsView, Router> {
 
     private void addGoods(ProductViewModel data) {
         showLoading();
-        subscriptions.add(
-                Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
-                        .flatMap(item -> {
-                            addGoods.setData(Collections.singletonList(item));
-                            return addGoods.get();
-                        }).subscribe(new SaveGoodsSubscriber(true)));
+        addSubscription(Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
+                .flatMap(item -> {
+                    addGoods.setData(Collections.singletonList(item));
+                    return addGoods.get();
+                }).subscribe(new SaveGoodsSubscriber(true)));
     }
 
     private void updateGoods(ProductViewModel data) {
         showLoading();
-        subscriptions.add(
-                Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
-                        .flatMap(item -> {
-                            updateGoods.setData(Collections.singletonList(item));
-                            return updateGoods.get();
-                        }).subscribe(new SaveGoodsSubscriber(false)));
+        addSubscription(Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
+                .flatMap(item -> {
+                    updateGoods.setData(Collections.singletonList(item));
+                    return updateGoods.get();
+                }).subscribe(new SaveGoodsSubscriber(false)));
     }
 
     private boolean checkDataForErrors(String name) {

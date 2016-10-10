@@ -24,7 +24,7 @@ import java.lang.ref.WeakReference;
 import dagger.internal.Preconditions;
 
 
-public abstract class RouterPresenter<V extends BaseMvpView, R extends Router> extends BasePresenter<V> {
+public abstract class BaseRouterPresenter<V extends BaseMvpView, R extends Router> extends BasePresenter<V> {
 
     private WeakReference<R> routerRef;
 

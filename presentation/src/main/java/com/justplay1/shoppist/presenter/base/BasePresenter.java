@@ -16,6 +16,7 @@
 
 package com.justplay1.shoppist.presenter.base;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 
@@ -23,12 +24,21 @@ import com.justplay1.shoppist.view.BaseMvpView;
 
 import java.lang.ref.WeakReference;
 
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
+
 /**
  * Created by Mkhytar Mkhoian.
  */
 abstract class BasePresenter<V extends BaseMvpView> implements Presenter<V> {
 
     private WeakReference<V> view;
+    private CompositeSubscription subscriptions = new CompositeSubscription();
+
+    @Override
+    public void onCreate(Bundle arguments, Bundle savedInstanceState) {
+
+    }
 
     @UiThread
     @Override
@@ -39,6 +49,7 @@ abstract class BasePresenter<V extends BaseMvpView> implements Presenter<V> {
     @UiThread
     @Override
     public void detachView() {
+        subscriptions.clear();
         if (view != null) {
             view.clear();
             view = null;
@@ -54,5 +65,9 @@ abstract class BasePresenter<V extends BaseMvpView> implements Presenter<V> {
     @Nullable
     public V getView() {
         return view == null ? null : view.get();
+    }
+
+    protected void addSubscription(Subscription subscription) {
+        this.subscriptions.add(subscription);
     }
 }

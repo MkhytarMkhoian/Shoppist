@@ -25,7 +25,7 @@ import com.justplay1.shoppist.interactor.currency.UpdateCurrency;
 import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
 import com.justplay1.shoppist.navigation.Router;
-import com.justplay1.shoppist.presenter.base.BaseRxPresenter;
+import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.utils.ModelUtils;
 import com.justplay1.shoppist.view.AddCurrencyView;
 
@@ -39,7 +39,7 @@ import rx.Observable;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class AddCurrencyPresenter extends BaseRxPresenter<AddCurrencyView, Router> {
+public class AddCurrencyPresenter extends BaseRouterPresenter<AddCurrencyView, Router> {
 
     private final CurrencyModelDataMapper dataMapper;
     private final UpdateCurrency updateCurrency;
@@ -100,22 +100,20 @@ public class AddCurrencyPresenter extends BaseRxPresenter<AddCurrencyView, Route
 
     private void addCurrency(CurrencyViewModel data) {
         showLoading();
-        subscriptions.add(
-                Observable.fromCallable(() -> dataMapper.transform(data))
-                        .flatMap(currency -> {
-                            addCurrency.setData(Collections.singletonList(currency));
-                            return addCurrency.get();
-                        }).subscribe(new SaveCurrencySubscriber(true)));
+        addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
+                .flatMap(currency -> {
+                    addCurrency.setData(Collections.singletonList(currency));
+                    return addCurrency.get();
+                }).subscribe(new SaveCurrencySubscriber(true)));
     }
 
     private void updateCurrency(CurrencyViewModel data) {
         showLoading();
-        subscriptions.add(
-                Observable.fromCallable(() -> dataMapper.transform(data))
-                        .flatMap(currency -> {
-                            updateCurrency.setData(Collections.singletonList(currency));
-                            return updateCurrency.get();
-                        }).subscribe(new SaveCurrencySubscriber(false)));
+        addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
+                .flatMap(currency -> {
+                    updateCurrency.setData(Collections.singletonList(currency));
+                    return updateCurrency.get();
+                }).subscribe(new SaveCurrencySubscriber(false)));
     }
 
     private boolean checkDataForErrors(String name) {

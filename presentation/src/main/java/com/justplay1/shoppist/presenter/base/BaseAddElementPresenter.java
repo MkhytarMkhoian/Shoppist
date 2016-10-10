@@ -24,7 +24,7 @@ import java.util.UUID;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseAddElementPresenter<V extends AddElementView> extends BaseRxPresenter<V, Router> {
+public abstract class BaseAddElementPresenter<V extends AddElementView> extends BaseRouterPresenter<V, Router> {
 
     protected void setName(String name) {
         if (isViewAttached()) {
