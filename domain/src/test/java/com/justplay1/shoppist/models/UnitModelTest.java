@@ -16,9 +16,15 @@
 
 package com.justplay1.shoppist.models;
 
+import com.justplay1.shoppist.TestUtil;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.justplay1.shoppist.TestUtil.FAKE_ID;
+import static com.justplay1.shoppist.TestUtil.FAKE_NAME;
+import static com.justplay1.shoppist.TestUtil.FAKE_SHORT_NAME;
+import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -28,22 +34,15 @@ import static org.junit.Assert.assertThat;
 
 public class UnitModelTest {
 
-    private static final String FAKE_ID = "id";
-    private static final String FAKE_NAME = "name";
-    private static final String FAKE_SHORT_NAME = "short_name";
-
     private UnitModel model;
 
     @Before
     public void setUp() {
-        model = new UnitModel();
-        model.setId(FAKE_ID);
-        model.setName(FAKE_NAME);
-        model.setShortName(FAKE_SHORT_NAME);
+        model = createFakeUnitModel();
     }
 
     @Test
-    public void testUserConstructorHappyCase() {
+    public void unitConstructor_HappyCase() {
         String id = model.getId();
         String name = model.getName();
         String shortName = model.getShortName();

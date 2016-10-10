@@ -52,8 +52,8 @@ public class UpdateListItemsTest {
     }
 
     @Test
-    public void testAddCurrencyUseCaseObservableHappyCase() {
-        useCase.buildUseCaseObservable();
+    public void updateListItemsUseCase_HappyCase() {
+        useCase.buildUseCaseObservable().subscribe();
 
         verify(mockListItemsRepository).update(models);
         verifyNoMoreInteractions(mockListItemsRepository);

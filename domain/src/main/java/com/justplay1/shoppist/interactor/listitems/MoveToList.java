@@ -65,8 +65,8 @@ public class MoveToList extends UseCase<Boolean> {
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
-        return Observable.just(getListItemModels(mData))
-                .flatMap(new Func1<List<ListItemModel>, Observable<?>>() {
+        return Observable.just(getListItems(mData))
+                .flatMap(new Func1<List<ListItemModel>, Observable<Boolean>>() {
                     @Override
                     public Observable<Boolean> call(List<ListItemModel> needAdd) {
                         if (needAdd.size() > 0) {
@@ -75,9 +75,9 @@ public class MoveToList extends UseCase<Boolean> {
                         }
                         return Observable.just(false);
                     }
-                }).flatMap(new Func1<Object, Observable<Boolean>>() {
+                }).flatMap(new Func1<Boolean, Observable<Boolean>>() {
                     @Override
-                    public Observable<Boolean> call(Object o) {
+                    public Observable<Boolean> call(Boolean o) {
                         if (!mCopy) {
                             mDeleteListItems.setData(mData);
                             return mDeleteListItems.buildUseCaseObservable();
@@ -87,11 +87,11 @@ public class MoveToList extends UseCase<Boolean> {
                 });
     }
 
-    private List<ListItemModel> getListItemModels(Collection<ListItemModel> data) {
+    private List<ListItemModel> getListItems(Collection<ListItemModel> data) {
         List<ListItemModel> needAdd = new ArrayList<>();
         for (ListItemModel item : data) {
             ListItemModel newItem = new ListItemModel(item);
-            newItem.setId(UUID.nameUUIDFromBytes((System.nanoTime() + "").getBytes()).toString());
+            newItem.setId(UUID.nameUUIDFromBytes((String.valueOf(System.nanoTime())).getBytes()).toString());
             newItem.setParentListId(mNewParentListId);
             needAdd.add(newItem);
         }

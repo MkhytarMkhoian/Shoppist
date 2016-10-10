@@ -28,6 +28,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 
+import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -48,15 +49,15 @@ public class DeleteCategoryTest {
         useCase = new DeleteCategory(mockCategoryRepository, mockThreadExecutor,
                 mockPostExecutionThread);
 
-        models = Collections.singletonList(new CategoryModel());
+        models = Collections.singletonList(createFakeCategoryModel());
         useCase.setData(models);
     }
 
     @Test
-    public void testDeleteCategoryUseCaseObservableHappyCase() {
-        useCase.buildUseCaseObservable();
+    public void deleteCategoryUseCase_HappyCase() {
+        useCase.buildUseCaseObservable().subscribe();
 
-        verify(mockCategoryRepository).save(models);
+        verify(mockCategoryRepository).delete(models);
         verifyNoMoreInteractions(mockCategoryRepository);
         verifyZeroInteractions(mockThreadExecutor);
         verifyZeroInteractions(mockPostExecutionThread);

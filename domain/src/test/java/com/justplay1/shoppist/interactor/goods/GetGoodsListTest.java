@@ -24,9 +24,17 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Collections;
+
+import rx.Observable;
+
+import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.TestUtil.createFakeProductModel;
+import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 public class GetGoodsListTest {
 
@@ -43,7 +51,9 @@ public class GetGoodsListTest {
     }
 
     @Test
-    public void testAddCurrencyUseCaseObservableHappyCase() {
+    public void getGoodsListUseCase_HappyCase() {
+        when(useCase.buildUseCaseObservable()).thenReturn(
+                Observable.just(Collections.singletonList(createFakeProductModel(createFakeUnitModel(), createFakeCategoryModel()))));
         useCase.buildUseCaseObservable();
 
         verify(mockGoodsRepository).getItems();

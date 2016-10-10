@@ -52,8 +52,8 @@ public class DeleteUnitsTest {
     }
 
     @Test
-    public void testAddCurrencyUseCaseObservableHappyCase() {
-        useCase.buildUseCaseObservable();
+    public void deleteUnitsUseCase_HappyCase() {
+        useCase.buildUseCaseObservable().subscribe();
 
         verify(mockUnitsRepository).delete(models);
         verifyNoMoreInteractions(mockUnitsRepository);

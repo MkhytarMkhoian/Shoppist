@@ -24,9 +24,17 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import rx.Observable;
+
+import static com.justplay1.shoppist.TestUtil.FAKE_ID;
+import static com.justplay1.shoppist.TestUtil.createFakeCallViewModelList;
+import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.TestUtil.createFakeCurrencyModel;
+import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 public class GetListItemsTest {
 
@@ -40,13 +48,16 @@ public class GetListItemsTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         useCase = new GetListItems(mockListItemsRepository, mockThreadExecutor, mockPostExecutionThread);
+        useCase.setParentId(FAKE_ID);
     }
 
     @Test
-    public void testAddCurrencyUseCaseObservableHappyCase() {
+    public void getListItemsUseCase_HappyCase() {
+        when(useCase.buildUseCaseObservable()).thenReturn(Observable.just(createFakeCallViewModelList(createFakeCategoryModel(),
+                createFakeUnitModel(), createFakeCurrencyModel())));
         useCase.buildUseCaseObservable();
 
-        verify(mockListItemsRepository).getItems();
+        verify(mockListItemsRepository).getItems(FAKE_ID);
         verifyNoMoreInteractions(mockListItemsRepository);
         verifyZeroInteractions(mockThreadExecutor);
         verifyZeroInteractions(mockPostExecutionThread);

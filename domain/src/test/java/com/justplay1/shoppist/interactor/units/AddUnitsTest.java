@@ -54,8 +54,8 @@ public class AddUnitsTest {
     }
 
     @Test
-    public void testAddCurrencyUseCaseObservableHappyCase() {
-        useCase.buildUseCaseObservable();
+    public void addUnitsUseCase_HappyCase() {
+        useCase.buildUseCaseObservable().subscribe();
 
         verify(mockUnitsRepository).save(models);
         verifyNoMoreInteractions(mockUnitsRepository);

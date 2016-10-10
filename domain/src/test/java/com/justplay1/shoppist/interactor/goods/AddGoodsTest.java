@@ -53,8 +53,8 @@ public class AddGoodsTest {
     }
 
     @Test
-    public void testAddCurrencyUseCaseObservableHappyCase() {
-        useCase.buildUseCaseObservable();
+    public void addGoodsUseCase_HappyCase() {
+        useCase.buildUseCaseObservable().subscribe();
 
         verify(mockGoodsRepository).save(models);
         verifyNoMoreInteractions(mockGoodsRepository);

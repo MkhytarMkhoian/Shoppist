@@ -53,8 +53,8 @@ public class DeleteCurrencyTest {
     }
 
     @Test
-    public void testGetCategoriesUseCaseObservableHappyCase() {
-        useCase.buildUseCaseObservable();
+    public void deleteCurrencyUseCase_HappyCase() {
+        useCase.buildUseCaseObservable().subscribe();
 
         verify(mockCurrencyRepository).delete(models);
         verifyNoMoreInteractions(mockCurrencyRepository);

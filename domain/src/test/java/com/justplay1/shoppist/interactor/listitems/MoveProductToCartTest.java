@@ -52,8 +52,8 @@ public class MoveProductToCartTest {
     }
 
     @Test
-    public void testAddCurrencyUseCaseObservableHappyCase() {
-        useCase.buildUseCaseObservable();
+    public void moveProductToCartUseCase_HappyCase() {
+        useCase.buildUseCaseObservable().subscribe();
 
         verify(mockListItemsRepository).update(models);
         verifyNoMoreInteractions(mockListItemsRepository);

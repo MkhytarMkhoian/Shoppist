@@ -24,9 +24,15 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Collections;
+
+import rx.Observable;
+
+import static com.justplay1.shoppist.TestUtil.createFakeCurrencyModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 public class GetCurrencyListTest {
 
@@ -44,7 +50,8 @@ public class GetCurrencyListTest {
     }
 
     @Test
-    public void testGetCurrencyListUseCaseObservableHappyCase() {
+    public void getCurrencyListUseCase_HappyCase() {
+        when(useCase.buildUseCaseObservable()).thenReturn(Observable.just(Collections.singletonList(createFakeCurrencyModel())));
         useCase.buildUseCaseObservable();
 
         verify(mockCurrencyRepository).getItems();

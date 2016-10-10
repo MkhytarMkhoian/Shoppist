@@ -24,13 +24,16 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import rx.Observable;
+
+import static com.justplay1.shoppist.TestUtil.FAKE_ID;
+import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 public class GetCategoryTest {
-
-    private static final String FAKE_ID = "id";
 
     private GetCategory useCase;
 
@@ -47,7 +50,8 @@ public class GetCategoryTest {
     }
 
     @Test
-    public void testGetCategoryUseCaseObservableHappyCase() {
+    public void getCategoryUseCase_HappyCase() {
+        when(useCase.buildUseCaseObservable()).thenReturn(Observable.just(createFakeCategoryModel()));
         useCase.buildUseCaseObservable();
 
         verify(mockCategoryRepository).getItem(FAKE_ID);

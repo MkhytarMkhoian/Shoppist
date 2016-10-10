@@ -24,13 +24,16 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import rx.Observable;
+
+import static com.justplay1.shoppist.TestUtil.FAKE_ID;
+import static com.justplay1.shoppist.TestUtil.createFakeCurrencyModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 public class GetCurrencyTest {
-
-    private static final String FAKE_ID = "id";
 
     private GetCurrency useCase;
 
@@ -46,7 +49,8 @@ public class GetCurrencyTest {
     }
 
     @Test
-    public void testGetCurrencyUseCaseObservableHappyCase() {
+    public void getCurrencyUseCase_HappyCase() {
+        when(useCase.buildUseCaseObservable()).thenReturn(Observable.just(createFakeCurrencyModel()));
         useCase.buildUseCaseObservable();
 
         verify(mockCurrencyRepository).getItem(FAKE_ID);

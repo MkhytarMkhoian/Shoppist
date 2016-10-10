@@ -50,7 +50,7 @@ public class UseCaseTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testBuildUseCaseObservableReturnCorrectResult() {
+    public void buildUseCaseObservable_ReturnCorrectResult() {
         TestSubscriber<Integer> testSubscriber = new TestSubscriber<>();
         TestScheduler testScheduler = new TestScheduler();
         given(mockPostExecutionThread.getScheduler()).willReturn(testScheduler);
@@ -61,7 +61,7 @@ public class UseCaseTest {
     }
 
     @Test
-    public void testSubscriptionWhenExecutingUseCase() {
+    public void subscription_WhenExecutingUseCase() {
         TestSubscriber<Integer> testSubscriber = new TestSubscriber<>();
 
         Subscription subscription = useCase.get().subscribe(testSubscriber);

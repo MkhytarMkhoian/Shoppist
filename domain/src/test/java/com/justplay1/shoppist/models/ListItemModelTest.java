@@ -19,6 +19,19 @@ package com.justplay1.shoppist.models;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.justplay1.shoppist.TestUtil.FAKE_ID;
+import static com.justplay1.shoppist.TestUtil.FAKE_NAME;
+import static com.justplay1.shoppist.TestUtil.FAKE_NOTE;
+import static com.justplay1.shoppist.TestUtil.FAKE_PARENT_LIST_ID;
+import static com.justplay1.shoppist.TestUtil.FAKE_PRICE;
+import static com.justplay1.shoppist.TestUtil.FAKE_PRIORITY;
+import static com.justplay1.shoppist.TestUtil.FAKE_QUANTITY;
+import static com.justplay1.shoppist.TestUtil.FAKE_STATUS;
+import static com.justplay1.shoppist.TestUtil.FAKE_TIME_CREATED;
+import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.TestUtil.createFakeCurrencyModel;
+import static com.justplay1.shoppist.TestUtil.createFakeListItemModel;
+import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -29,16 +42,6 @@ import static org.junit.Assert.assertThat;
 
 public class ListItemModelTest {
 
-    private static final String FAKE_ID = "id";
-    private static final String FAKE_PARENT_LIST_ID = "parent_list_id";
-    private static final String FAKE_NAME = "name";
-    private static final double FAKE_PRICE = 5.56;
-    private static final double FAKE_QUANTITY = 2.333;
-    private static final String FAKE_NOTE = "note";
-    private static final int FAKE_PRIORITY = 2;
-    private static final long FAKE_TIME_CREATED = 55555L;
-    private static final boolean FAKE_STATUS = true;
-
     private ListItemModel model;
     private CategoryModel categoryModel;
     private UnitModel unitModel;
@@ -46,27 +49,15 @@ public class ListItemModelTest {
 
     @Before
     public void setUp() {
-        currencyModel = new CurrencyModel();
-        unitModel = new UnitModel();
-        categoryModel = new CategoryModel();
+        currencyModel = createFakeCurrencyModel();
+        unitModel = createFakeUnitModel();
+        categoryModel = createFakeCategoryModel();
 
-        model = new ListItemModel();
-        model.setId(FAKE_ID);
-        model.setNote(FAKE_NOTE);
-        model.setPrice(FAKE_PRICE);
-        model.setName(FAKE_NAME);
-        model.setPriority(FAKE_PRIORITY);
-        model.setTimeCreated(FAKE_TIME_CREATED);
-        model.setQuantity(FAKE_QUANTITY);
-        model.setParentListId(FAKE_PARENT_LIST_ID);
-        model.setStatus(FAKE_STATUS);
-        model.setUnit(unitModel);
-        model.setCurrency(currencyModel);
-        model.setCategory(categoryModel);
+        model = createFakeListItemModel(categoryModel, unitModel, currencyModel);
     }
 
     @Test
-    public void testUserConstructorHappyCase() {
+    public void listItemConstructor_HappyCase() {
         String id = model.getId();
         String name = model.getName();
         String note = model.getNote();

@@ -16,9 +16,16 @@
 
 package com.justplay1.shoppist.models;
 
+import com.justplay1.shoppist.TestUtil;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.justplay1.shoppist.TestUtil.FAKE_COLOR;
+import static com.justplay1.shoppist.TestUtil.FAKE_CREATE_BY_USER;
+import static com.justplay1.shoppist.TestUtil.FAKE_ID;
+import static com.justplay1.shoppist.TestUtil.FAKE_NAME;
+import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -28,24 +35,15 @@ import static org.junit.Assert.assertThat;
 
 public class CategoryModelTest {
 
-    private static final String FAKE_ID = "id";
-    private static final int FAKE_COLOR = 22222;
-    private static final String FAKE_NAME = "name";
-    private static final boolean FAKE_CREATE_BY_USER = true;
-
     private CategoryModel model;
 
     @Before
     public void setUp() {
-        model = new CategoryModel();
-        model.setId(FAKE_ID);
-        model.setColor(FAKE_COLOR);
-        model.setCreateByUser(FAKE_CREATE_BY_USER);
-        model.setName(FAKE_NAME);
+        model = createFakeCategoryModel();
     }
 
     @Test
-    public void testUserConstructorHappyCase() {
+    public void categoryConstructor_HappyCase() {
         String id = model.getId();
         String name = model.getName();
         int color = model.getColor();

@@ -24,9 +24,15 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Collections;
+
+import rx.Observable;
+
+import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 public class GetCategoryListTest {
 
@@ -44,7 +50,8 @@ public class GetCategoryListTest {
     }
 
     @Test
-    public void testGetCategoryListUseCaseObservableHappyCase() {
+    public void getCategoryListUseCase_HappyCase() {
+        when(useCase.buildUseCaseObservable()).thenReturn(Observable.just(Collections.singletonList(createFakeCategoryModel())));
         useCase.buildUseCaseObservable();
 
         verify(mockCategoryRepository).getItems();

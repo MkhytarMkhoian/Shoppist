@@ -53,8 +53,8 @@ public class UpdateCategoryTest {
     }
 
     @Test
-    public void testUpdateCategoryUseCaseObservableHappyCase() {
-        useCase.buildUseCaseObservable();
+    public void updateCategoryUseCase_HappyCase() {
+        useCase.buildUseCaseObservable().subscribe();
 
         verify(mockCategoryRepository).update(models);
         verifyNoMoreInteractions(mockCategoryRepository);

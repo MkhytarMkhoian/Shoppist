@@ -24,13 +24,16 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import rx.Observable;
+
+import static com.justplay1.shoppist.TestUtil.FAKE_ID;
+import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 public class GetUnitTest {
-
-    private static final String FAKE_ID = "id";
 
     private GetUnit useCase;
 
@@ -46,10 +49,11 @@ public class GetUnitTest {
     }
 
     @Test
-    public void testAddCurrencyUseCaseObservableHappyCase() {
+    public void getUnitUseCase_HappyCase() {
+        when(useCase.buildUseCaseObservable()).thenReturn(Observable.just(createFakeUnitModel()));
         useCase.buildUseCaseObservable();
 
-        verify(mockUnitsRepository).getItems();
+        verify(mockUnitsRepository).getItem(FAKE_ID);
         verifyNoMoreInteractions(mockUnitsRepository);
         verifyZeroInteractions(mockThreadExecutor);
         verifyZeroInteractions(mockPostExecutionThread);

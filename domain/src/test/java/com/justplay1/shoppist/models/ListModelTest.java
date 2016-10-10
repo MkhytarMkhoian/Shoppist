@@ -19,6 +19,14 @@ package com.justplay1.shoppist.models;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.justplay1.shoppist.TestUtil.FAKE_BOUGHT_COUNT;
+import static com.justplay1.shoppist.TestUtil.FAKE_COLOR;
+import static com.justplay1.shoppist.TestUtil.FAKE_ID;
+import static com.justplay1.shoppist.TestUtil.FAKE_NAME;
+import static com.justplay1.shoppist.TestUtil.FAKE_PRIORITY;
+import static com.justplay1.shoppist.TestUtil.FAKE_SIZE;
+import static com.justplay1.shoppist.TestUtil.FAKE_TIME_CREATED;
+import static com.justplay1.shoppist.TestUtil.createFakeListModel;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -28,30 +36,15 @@ import static org.junit.Assert.assertThat;
 
 public class ListModelTest {
 
-    private static final String FAKE_ID = "id";
-    private static final int FAKE_COLOR = 22222;
-    private static final String FAKE_NAME = "name";
-    private static final int FAKE_BOUGHT_COUNT = 5;
-    private static final int FAKE_SIZE = 10;
-    private static final int FAKE_PRIORITY = 2;
-    private static final long FAKE_TIME_CREATED = 55555L;
-
     private ListModel model;
 
     @Before
     public void setUp() {
-        model = new ListModel();
-        model.setId(FAKE_ID);
-        model.setColor(FAKE_COLOR);
-        model.setBoughtCount(FAKE_BOUGHT_COUNT);
-        model.setName(FAKE_NAME);
-        model.setPriority(FAKE_PRIORITY);
-        model.setTimeCreated(FAKE_TIME_CREATED);
-        model.setSize(FAKE_SIZE);
+        model = createFakeListModel();
     }
 
     @Test
-    public void testUserConstructorHappyCase() {
+    public void listConstructor_HappyCase() {
         String id = model.getId();
         String name = model.getName();
         int color = model.getColor();
@@ -66,6 +59,6 @@ public class ListModelTest {
         assertThat(boughtCount, is(FAKE_BOUGHT_COUNT));
         assertThat(priority, is(FAKE_PRIORITY));
         assertThat(timeCreated, is(FAKE_TIME_CREATED));
-        assertThat(size, is(FAKE_PRIORITY));
+        assertThat(size, is(FAKE_SIZE));
     }
 }

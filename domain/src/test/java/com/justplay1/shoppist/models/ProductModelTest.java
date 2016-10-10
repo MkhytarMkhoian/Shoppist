@@ -19,6 +19,12 @@ package com.justplay1.shoppist.models;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.justplay1.shoppist.TestUtil.FAKE_CREATE_BY_USER;
+import static com.justplay1.shoppist.TestUtil.FAKE_ID;
+import static com.justplay1.shoppist.TestUtil.FAKE_NAME;
+import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.TestUtil.createFakeProductModel;
+import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -29,29 +35,20 @@ import static org.junit.Assert.assertThat;
 
 public class ProductModelTest {
 
-    private static final String FAKE_ID = "id";
-    private static final String FAKE_NAME = "name";
-    private static final boolean FAKE_CREATE_BY_USER = true;
-
     private ProductModel model;
     private CategoryModel categoryModel;
     private UnitModel unitModel;
 
     @Before
     public void setUp() {
-        unitModel = new UnitModel();
-        categoryModel = new CategoryModel();
+        unitModel = createFakeUnitModel();
+        categoryModel = createFakeCategoryModel();
 
-        model = new ProductModel();
-        model.setId(FAKE_ID);
-        model.setCreateByUser(FAKE_CREATE_BY_USER);
-        model.setName(FAKE_NAME);
-        model.setCategory(categoryModel);
-        model.setUnit(unitModel);
+        model = createFakeProductModel(unitModel, categoryModel);
     }
 
     @Test
-    public void testUserConstructorHappyCase() {
+    public void productConstructor_HappyCase() {
         String id = model.getId();
         String name = model.getName();
         boolean isCreateByUser = model.isCreateByUser();

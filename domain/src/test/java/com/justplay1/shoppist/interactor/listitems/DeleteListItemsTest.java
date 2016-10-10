@@ -52,8 +52,8 @@ public class DeleteListItemsTest {
     }
 
     @Test
-    public void testAddCurrencyUseCaseObservableHappyCase() {
-        useCase.buildUseCaseObservable();
+    public void deleteListItemsUseCase_HappyCase() {
+        useCase.buildUseCaseObservable().subscribe();
 
         verify(mockListItemsRepository).delete(models);
         verifyNoMoreInteractions(mockListItemsRepository);

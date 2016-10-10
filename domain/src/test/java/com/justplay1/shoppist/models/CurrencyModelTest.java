@@ -19,6 +19,9 @@ package com.justplay1.shoppist.models;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.justplay1.shoppist.TestUtil.FAKE_ID;
+import static com.justplay1.shoppist.TestUtil.FAKE_NAME;
+import static com.justplay1.shoppist.TestUtil.createFakeCurrencyModel;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -28,20 +31,15 @@ import static org.junit.Assert.assertThat;
 
 public class CurrencyModelTest {
 
-    private static final String FAKE_ID = "id";
-    private static final String FAKE_NAME = "name";
-
     private CurrencyModel model;
 
     @Before
     public void setUp() {
-        model = new CurrencyModel();
-        model.setId(FAKE_ID);
-        model.setName(FAKE_NAME);
+        model = createFakeCurrencyModel();
     }
 
     @Test
-    public void testUserConstructorHappyCase() {
+    public void currencyConstructor_HappyCase() {
         String id = model.getId();
         String name = model.getName();
 

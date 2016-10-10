@@ -18,50 +18,66 @@ package com.justplay1.shoppist.interactor.listitems;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.models.ListItemModel;
-import com.justplay1.shoppist.repository.ListItemsRepository;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
 import java.util.List;
 
+import rx.Observable;
+
+import static com.justplay1.shoppist.TestUtil.FAKE_ID;
+import static com.justplay1.shoppist.TestUtil.createFakeCallViewModelList;
+import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.TestUtil.createFakeCurrencyModel;
+import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 public class MoveToListTest {
-
-    private static final String FAKE_ID = "id";
 
     private MoveToList useCase;
 
     @Mock private ThreadExecutor mockThreadExecutor;
     @Mock private PostExecutionThread mockPostExecutionThread;
-    @Mock private ListItemsRepository mockListItemsRepository;
-
-    private List<ListItemModel> models;
+    @Mock private DeleteListItems mockDeleteListItems;
+    @Mock private AddListItems mockAddListItems;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        useCase = new MoveToList(mockListItemsRepository, mockThreadExecutor, mockPostExecutionThread);
+        useCase = new MoveToList(mockDeleteListItems, mockAddListItems, mockThreadExecutor, mockPostExecutionThread);
 
-        models = Collections.singletonList(new ListItemModel());
+        List<ListItemModel> models = createFakeCallViewModelList(createFakeCategoryModel(), createFakeUnitModel(), createFakeCurrencyModel());
         useCase.setData(models);
         useCase.setNewParentListId(FAKE_ID);
-        useCase.setCopy(true);
     }
 
     @Test
-    public void testAddCurrencyUseCaseObservableHappyCase() {
-        useCase.buildUseCaseObservable();
+    public void moveToListUseCase_HappyCase() {
+        useCase.setCopy(false);
+        when(mockAddListItems.buildUseCaseObservable()).thenReturn(Observable.just(true));
+        when(mockDeleteListItems.buildUseCaseObservable()).thenReturn(Observable.just(true));
+        useCase.buildUseCaseObservable().subscribe();
 
-        verify(mockListItemsRepository).save(models);
-        verify(mockListItemsRepository).delete(models);
-        verifyNoMoreInteractions(mockListItemsRepository);
+        verify(mockAddListItems).buildUseCaseObservable();
+        verify(mockDeleteListItems).buildUseCaseObservable();
+        verifyZeroInteractions(mockThreadExecutor);
+        verifyZeroInteractions(mockPostExecutionThread);
+    }
+
+    @Test
+    public void copyToListUseCase_HappyCase() {
+        useCase.setCopy(true);
+        when(mockAddListItems.buildUseCaseObservable()).thenReturn(Observable.just(true));
+        useCase.buildUseCaseObservable().subscribe();
+
+        verify(mockAddListItems).buildUseCaseObservable();
+        verifyNoMoreInteractions(mockDeleteListItems);
         verifyZeroInteractions(mockThreadExecutor);
         verifyZeroInteractions(mockPostExecutionThread);
     }
