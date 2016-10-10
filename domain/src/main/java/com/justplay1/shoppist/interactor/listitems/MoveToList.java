@@ -20,7 +20,6 @@ import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.interactor.UseCase;
 import com.justplay1.shoppist.models.ListItemModel;
-import com.justplay1.shoppist.repository.ListItemsRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,21 +29,26 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 public class MoveToList extends UseCase<Boolean> {
 
-    private final ListItemsRepository repository;
     private Collection<ListItemModel> data;
     private String newParentListId;
     private boolean copy;
 
+    private final DeleteListItems deleteListItems;
+    private final AddListItems addListItems;
+
     @Inject
-    public MoveToList(ListItemsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    public MoveToList(DeleteListItems deleteListItems, AddListItems addListItems,
+                      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        this.repository = repository;
+        this.deleteListItems = deleteListItems;
+        this.addListItems = addListItems;
     }
 
     public void setData(Collection<ListItemModel> data) {
@@ -61,22 +65,36 @@ public class MoveToList extends UseCase<Boolean> {
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
-        return Observable.fromCallable(() -> {
-            List<ListItemModel> needAdd = new ArrayList<>();
+        return Observable.just(getListItems(data))
+                .flatMap(new Func1<List<ListItemModel>, Observable<Boolean>>() {
+                    @Override
+                    public Observable<Boolean> call(List<ListItemModel> needAdd) {
+                        if (needAdd.size() > 0) {
+                            addListItems.setData(needAdd);
+                            return addListItems.buildUseCaseObservable();
+                        }
+                        return Observable.just(false);
+                    }
+                }).flatMap(new Func1<Boolean, Observable<Boolean>>() {
+                    @Override
+                    public Observable<Boolean> call(Boolean o) {
+                        if (!copy) {
+                            deleteListItems.setData(data);
+                            return deleteListItems.buildUseCaseObservable();
+                        }
+                        return Observable.just(false);
+                    }
+                });
+    }
 
-            for (ListItemModel item : data) {
-                ListItemModel newItem = new ListItemModel(item);
-                newItem.setId(UUID.nameUUIDFromBytes((newItem.getName() + UUID.randomUUID()).getBytes()).toString());
-                newItem.setParentListId(newParentListId);
-                needAdd.add(newItem);
-            }
-            if (needAdd.size() > 0) {
-                repository.save(needAdd);
-            }
-            if (!copy) {
-                repository.delete(data);
-            }
-            return true;
-        });
+    private List<ListItemModel> getListItems(Collection<ListItemModel> data) {
+        List<ListItemModel> needAdd = new ArrayList<>();
+        for (ListItemModel item : data) {
+            ListItemModel newItem = new ListItemModel(item);
+            newItem.setId(UUID.nameUUIDFromBytes((String.valueOf(System.nanoTime())).getBytes()).toString());
+            newItem.setParentListId(newParentListId);
+            needAdd.add(newItem);
+        }
+        return needAdd;
     }
 }
