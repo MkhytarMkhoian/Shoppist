@@ -3,6 +3,9 @@
 Shoppist is a showcase of simple and functional shopping list. 
 It demonstrates how to implement Clean Architecture with MVP for presentation layer
 and how to presenters survive when configuration changes.
+Also its example of how to use DI(Dagger 2), RxJava and SQLite with SQLBrite in scope of Clean Architecture.
+
+I was inspired these project [project](https://github.com/android10/Android-CleanArchitecture)
 
 ### Download the app
 
