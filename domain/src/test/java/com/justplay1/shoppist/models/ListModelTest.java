@@ -16,7 +16,6 @@
 
 package com.justplay1.shoppist.models;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static com.justplay1.shoppist.TestUtil.FAKE_BOUGHT_COUNT;
@@ -28,6 +27,8 @@ import static com.justplay1.shoppist.TestUtil.FAKE_SIZE;
 import static com.justplay1.shoppist.TestUtil.FAKE_TIME_CREATED;
 import static com.justplay1.shoppist.TestUtil.createFakeListModel;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -36,15 +37,10 @@ import static org.junit.Assert.assertThat;
 
 public class ListModelTest {
 
-    private ListModel model;
-
-    @Before
-    public void setUp() {
-        model = createFakeListModel();
-    }
-
     @Test
     public void listConstructor_HappyCase() {
+        ListModel model = createFakeListModel();
+
         String id = model.getId();
         String name = model.getName();
         int color = model.getColor();
@@ -60,5 +56,34 @@ public class ListModelTest {
         assertThat(priority, is(FAKE_PRIORITY));
         assertThat(timeCreated, is(FAKE_TIME_CREATED));
         assertThat(size, is(FAKE_SIZE));
+    }
+
+    @Test
+    public void listHashCode_HappyCase() {
+        ListModel model = createFakeListModel();
+        int hashCode = model.hashCode();
+
+        assertThat(hashCode, is(FAKE_ID.hashCode()));
+    }
+
+    @Test
+    public void listEquals_HappyCase() {
+        ListModel x = createFakeListModel();
+        ListModel y = createFakeListModel();
+        ListModel z = createFakeListModel();
+
+        // reflection rule
+        assertEquals(x, x);
+
+        // symmetry rule
+        assertEquals(x, y);
+        assertEquals(y, x);
+
+        // transitivity rule
+        assertEquals(x, y);
+        assertEquals(y, z);
+        assertEquals(x, z);
+
+        assertNotEquals(x, null);
     }
 }

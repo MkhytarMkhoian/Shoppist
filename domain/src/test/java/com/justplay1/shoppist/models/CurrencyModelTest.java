@@ -16,13 +16,14 @@
 
 package com.justplay1.shoppist.models;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static com.justplay1.shoppist.TestUtil.FAKE_ID;
 import static com.justplay1.shoppist.TestUtil.FAKE_NAME;
 import static com.justplay1.shoppist.TestUtil.createFakeCurrencyModel;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -31,19 +32,43 @@ import static org.junit.Assert.assertThat;
 
 public class CurrencyModelTest {
 
-    private CurrencyModel model;
-
-    @Before
-    public void setUp() {
-        model = createFakeCurrencyModel();
-    }
-
     @Test
     public void currencyConstructor_HappyCase() {
+        CurrencyModel model = createFakeCurrencyModel();
+
         String id = model.getId();
         String name = model.getName();
 
         assertThat(id, is(FAKE_ID));
         assertThat(name, is(FAKE_NAME));
+    }
+
+    @Test
+    public void currencyHashCode_HappyCase() {
+        CurrencyModel model = createFakeCurrencyModel();
+        int hashCode = model.hashCode();
+
+        assertThat(hashCode, is(FAKE_ID.hashCode()));
+    }
+
+    @Test
+    public void currencyEquals_HappyCase() {
+        CurrencyModel x = createFakeCurrencyModel();
+        CurrencyModel y = createFakeCurrencyModel();
+        CurrencyModel z = createFakeCurrencyModel();
+
+        // reflection rule
+        assertEquals(x, x);
+
+        // symmetry rule
+        assertEquals(x, y);
+        assertEquals(y, x);
+
+        // transitivity rule
+        assertEquals(x, y);
+        assertEquals(y, z);
+        assertEquals(x, z);
+
+        assertNotEquals(x, null);
     }
 }

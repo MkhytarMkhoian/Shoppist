@@ -56,6 +56,6 @@ public class CategoryModel extends BaseModel {
 
     @Override
     public int hashCode() {
-        return 31 * id.hashCode();
+        return id.hashCode();
     }
 }

@@ -16,7 +16,6 @@
 
 package com.justplay1.shoppist.models;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static com.justplay1.shoppist.TestUtil.FAKE_ID;
@@ -34,6 +33,7 @@ import static com.justplay1.shoppist.TestUtil.createFakeListItemModel;
 import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -42,22 +42,13 @@ import static org.junit.Assert.assertThat;
 
 public class ListItemModelTest {
 
-    private ListItemModel model;
-    private CategoryModel categoryModel;
-    private UnitModel unitModel;
-    private CurrencyModel currencyModel;
-
-    @Before
-    public void setUp() {
-        currencyModel = createFakeCurrencyModel();
-        unitModel = createFakeUnitModel();
-        categoryModel = createFakeCategoryModel();
-
-        model = createFakeListItemModel(categoryModel, unitModel, currencyModel);
-    }
-
     @Test
     public void listItemConstructor_HappyCase() {
+        CurrencyModel currencyModel = createFakeCurrencyModel();
+        UnitModel unitModel = createFakeUnitModel();
+        CategoryModel categoryModel = createFakeCategoryModel();
+        ListItemModel model = createFakeListItemModel(categoryModel, unitModel, currencyModel);
+
         String id = model.getId();
         String name = model.getName();
         String note = model.getNote();
@@ -84,5 +75,34 @@ public class ListItemModelTest {
         assertEquals(categoryModel, category);
         assertEquals(currencyModel, currency);
         assertEquals(unitModel, unit);
+    }
+
+    @Test
+    public void listItemHashCode_HappyCase() {
+        ListItemModel model = createFakeListItemModel(createFakeCategoryModel(), createFakeUnitModel(), createFakeCurrencyModel());
+        int hashCode = model.hashCode();
+
+        assertThat(hashCode, is(FAKE_ID.hashCode() + FAKE_PARENT_LIST_ID.hashCode()));
+    }
+
+    @Test
+    public void listItemEquals_HappyCase() {
+        ListItemModel x = createFakeListItemModel(createFakeCategoryModel(), createFakeUnitModel(), createFakeCurrencyModel());
+        ListItemModel y = createFakeListItemModel(createFakeCategoryModel(), createFakeUnitModel(), createFakeCurrencyModel());
+        ListItemModel z = createFakeListItemModel(createFakeCategoryModel(), createFakeUnitModel(), createFakeCurrencyModel());
+
+        // reflection rule
+        assertEquals(x, x);
+
+        // symmetry rule
+        assertEquals(x, y);
+        assertEquals(y, x);
+
+        // transitivity rule
+        assertEquals(x, y);
+        assertEquals(y, z);
+        assertEquals(x, z);
+
+        assertNotEquals(x, null);
     }
 }

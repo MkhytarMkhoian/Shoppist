@@ -16,9 +16,6 @@
 
 package com.justplay1.shoppist.models;
 
-import com.justplay1.shoppist.TestUtil;
-
-import org.junit.Before;
 import org.junit.Test;
 
 import static com.justplay1.shoppist.TestUtil.FAKE_COLOR;
@@ -27,6 +24,8 @@ import static com.justplay1.shoppist.TestUtil.FAKE_ID;
 import static com.justplay1.shoppist.TestUtil.FAKE_NAME;
 import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -35,15 +34,10 @@ import static org.junit.Assert.assertThat;
 
 public class CategoryModelTest {
 
-    private CategoryModel model;
-
-    @Before
-    public void setUp() {
-        model = createFakeCategoryModel();
-    }
-
     @Test
     public void categoryConstructor_HappyCase() {
+        CategoryModel model = createFakeCategoryModel();
+
         String id = model.getId();
         String name = model.getName();
         int color = model.getColor();
@@ -53,5 +47,34 @@ public class CategoryModelTest {
         assertThat(color, is(FAKE_COLOR));
         assertThat(name, is(FAKE_NAME));
         assertThat(isCreateByUser, is(FAKE_CREATE_BY_USER));
+    }
+
+    @Test
+    public void categoryHashCode_HappyCase() {
+        CategoryModel model = createFakeCategoryModel();
+        int hashCode = model.hashCode();
+
+        assertThat(hashCode, is(FAKE_ID.hashCode()));
+    }
+
+    @Test
+    public void categoryEquals_HappyCase() {
+        CategoryModel x = createFakeCategoryModel();
+        CategoryModel y = createFakeCategoryModel();
+        CategoryModel z = createFakeCategoryModel();
+
+        // reflection rule
+        assertEquals(x, x);
+
+        // symmetry rule
+        assertEquals(x, y);
+        assertEquals(y, x);
+
+        // transitivity rule
+        assertEquals(x, y);
+        assertEquals(y, z);
+        assertEquals(x, z);
+
+        assertNotEquals(x, null);
     }
 }

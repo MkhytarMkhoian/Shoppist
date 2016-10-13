@@ -16,7 +16,6 @@
 
 package com.justplay1.shoppist.models;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static com.justplay1.shoppist.TestUtil.FAKE_CREATE_BY_USER;
@@ -27,6 +26,7 @@ import static com.justplay1.shoppist.TestUtil.createFakeProductModel;
 import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -35,20 +35,12 @@ import static org.junit.Assert.assertThat;
 
 public class ProductModelTest {
 
-    private ProductModel model;
-    private CategoryModel categoryModel;
-    private UnitModel unitModel;
-
-    @Before
-    public void setUp() {
-        unitModel = createFakeUnitModel();
-        categoryModel = createFakeCategoryModel();
-
-        model = createFakeProductModel(unitModel, categoryModel);
-    }
-
     @Test
     public void productConstructor_HappyCase() {
+        UnitModel unitModel = createFakeUnitModel();
+        CategoryModel categoryModel = createFakeCategoryModel();
+        ProductModel model = createFakeProductModel(createFakeUnitModel(), createFakeCategoryModel());
+
         String id = model.getId();
         String name = model.getName();
         boolean isCreateByUser = model.isCreateByUser();
@@ -61,5 +53,34 @@ public class ProductModelTest {
 
         assertEquals(categoryModel, category);
         assertEquals(unitModel, unit);
+    }
+
+    @Test
+    public void productHashCode_HappyCase() {
+        ProductModel model = createFakeProductModel(createFakeUnitModel(), createFakeCategoryModel());
+        int hashCode = model.hashCode();
+
+        assertThat(hashCode, is(FAKE_ID.hashCode()));
+    }
+
+    @Test
+    public void productEquals_HappyCase() {
+        ProductModel x = createFakeProductModel(createFakeUnitModel(), createFakeCategoryModel());
+        ProductModel y = createFakeProductModel(createFakeUnitModel(), createFakeCategoryModel());
+        ProductModel z = createFakeProductModel(createFakeUnitModel(), createFakeCategoryModel());
+
+        // reflection rule
+        assertEquals(x, x);
+
+        // symmetry rule
+        assertEquals(x, y);
+        assertEquals(y, x);
+
+        // transitivity rule
+        assertEquals(x, y);
+        assertEquals(y, z);
+        assertEquals(x, z);
+
+        assertNotEquals(x, null);
     }
 }

@@ -29,7 +29,7 @@ import java.util.List;
 import rx.Observable;
 
 import static com.justplay1.shoppist.TestUtil.FAKE_ID;
-import static com.justplay1.shoppist.TestUtil.createFakeCallViewModelList;
+import static com.justplay1.shoppist.TestUtil.createFakeListItemModelList;
 import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
 import static com.justplay1.shoppist.TestUtil.createFakeCurrencyModel;
 import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
@@ -52,7 +52,7 @@ public class MoveToListTest {
         MockitoAnnotations.initMocks(this);
         useCase = new MoveToList(mockDeleteListItems, mockAddListItems, mockThreadExecutor, mockPostExecutionThread);
 
-        List<ListItemModel> models = createFakeCallViewModelList(createFakeCategoryModel(), createFakeUnitModel(), createFakeCurrencyModel());
+        List<ListItemModel> models = createFakeListItemModelList(createFakeCategoryModel(), createFakeUnitModel(), createFakeCurrencyModel());
         useCase.setData(models);
         useCase.setNewParentListId(FAKE_ID);
     }

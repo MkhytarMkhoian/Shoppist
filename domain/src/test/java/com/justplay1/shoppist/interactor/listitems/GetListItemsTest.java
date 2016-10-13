@@ -27,7 +27,7 @@ import org.mockito.MockitoAnnotations;
 import rx.Observable;
 
 import static com.justplay1.shoppist.TestUtil.FAKE_ID;
-import static com.justplay1.shoppist.TestUtil.createFakeCallViewModelList;
+import static com.justplay1.shoppist.TestUtil.createFakeListItemModelList;
 import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
 import static com.justplay1.shoppist.TestUtil.createFakeCurrencyModel;
 import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
@@ -53,7 +53,7 @@ public class GetListItemsTest {
 
     @Test
     public void getListItemsUseCase_HappyCase() {
-        when(useCase.buildUseCaseObservable()).thenReturn(Observable.just(createFakeCallViewModelList(createFakeCategoryModel(),
+        when(useCase.buildUseCaseObservable()).thenReturn(Observable.just(createFakeListItemModelList(createFakeCategoryModel(),
                 createFakeUnitModel(), createFakeCurrencyModel())));
         useCase.buildUseCaseObservable();
 

@@ -50,7 +50,7 @@ public class TestUtil {
     public static final int FAKE_BOUGHT_COUNT = 5;
     public static final int FAKE_SIZE = 10;
 
-    public static List<ListItemModel> createFakeCallViewModelList(CategoryModel categoryModel,
+    public static List<ListItemModel> createFakeListItemModelList(CategoryModel categoryModel,
                                                                   UnitModel unitModel,
                                                                   CurrencyModel currencyModel) {
         return Collections.singletonList(createFakeListItemModel(categoryModel, unitModel, currencyModel));
