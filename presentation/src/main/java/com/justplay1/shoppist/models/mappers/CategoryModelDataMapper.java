@@ -36,51 +36,50 @@ public class CategoryModelDataMapper {
     public CategoryModelDataMapper() {
     }
 
-    public CategoryViewModel transformToViewModel(CategoryModel category) {
-        CategoryViewModel categoryModel = null;
-        if (category != null) {
-            categoryModel = new CategoryViewModel();
-            categoryModel.setId(category.getId());
-            categoryModel.setName(category.getName());
-            categoryModel.setColor(category.getColor());
-            categoryModel.setCreateByUser(category.isCreateByUser());
+    public CategoryViewModel transformToViewModel(CategoryModel model) {
+        CategoryViewModel viewModel = null;
+        if (model != null) {
+            viewModel = new CategoryViewModel();
+            viewModel.setId(model.getId());
+            viewModel.setName(model.getName());
+            viewModel.setColor(model.getColor());
+            viewModel.setCreateByUser(model.isCreateByUser());
         }
-        return categoryModel;
+        return viewModel;
     }
 
-    public List<CategoryViewModel> transformToViewModel(Collection<CategoryModel> categories) {
-        List<CategoryViewModel> categoriesModels = new ArrayList<>();
-        CategoryViewModel categoryModel;
-        for (CategoryModel category : categories) {
-            categoryModel = transformToViewModel(category);
-            if (categoryModel != null) {
-                categoriesModels.add(categoryModel);
+    public List<CategoryViewModel> transformToViewModel(Collection<CategoryModel> models) {
+        List<CategoryViewModel> viewModels = new ArrayList<>();
+        CategoryViewModel viewModel;
+        for (CategoryModel model : models) {
+            viewModel = transformToViewModel(model);
+            if (viewModel != null) {
+                viewModels.add(viewModel);
             }
         }
-        return categoriesModels;
+        return viewModels;
     }
 
-    public CategoryModel transform(CategoryViewModel category) {
-        CategoryModel entity = null;
-        if (category != null) {
-            entity = new CategoryModel();
-            entity.setId(category.getId());
-            entity.setName(category.getName());
-            entity.setColor(category.getColor());
-            entity.setCreateByUser(category.isCreateByUser());
+    public CategoryModel transform(CategoryViewModel viewModel) {
+        CategoryModel model = null;
+        if (viewModel != null) {
+            model = new CategoryModel(viewModel.getId(),
+                    viewModel.getName(),
+                    viewModel.getColor(),
+                    viewModel.isCreateByUser());
         }
-        return entity;
+        return model;
     }
 
-    public List<CategoryModel> transform(Collection<CategoryViewModel> categories) {
-        List<CategoryModel> entities = new ArrayList<>();
-        CategoryModel entity;
-        for (CategoryViewModel category : categories) {
-            entity = transform(category);
-            if (entity != null) {
-                entities.add(entity);
+    public List<CategoryModel> transform(Collection<CategoryViewModel> viewModels) {
+        List<CategoryModel> models = new ArrayList<>();
+        CategoryModel model;
+        for (CategoryViewModel viewModel : viewModels) {
+            model = transform(viewModel);
+            if (model != null) {
+                models.add(model);
             }
         }
-        return entities;
+        return models;
     }
 }

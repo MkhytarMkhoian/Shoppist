@@ -44,67 +44,66 @@ public class ListItemsModelDataMapper {
     }
 
     @SuppressWarnings("ResourceType")
-    public ListItemViewModel transformToViewModel(ListItemModel item) {
-        ListItemViewModel itemModel = null;
-        if (item != null) {
-            itemModel = new ListItemViewModel();
-            itemModel.setId(item.getId());
-            itemModel.setName(item.getName());
-            itemModel.setNote(item.getNote());
-            itemModel.setParentListId(item.getParentListId());
-            itemModel.setPrice(item.getPrice());
-            itemModel.setPriority(item.getPriority());
-            itemModel.setStatus(item.getStatus());
-            itemModel.setCategory(categoryModelDataMapper.transformToViewModel(item.getCategory()));
-            itemModel.setCurrency(currencyModelDataMapper.transformToViewModel(item.getCurrency()));
-            itemModel.setUnit(unitsDataModelMapper.transformToViewModel(item.getUnit()));
-            itemModel.setQuantity(item.getQuantity());
-            itemModel.setTimeCreated(item.getTimeCreated());
+    public ListItemViewModel transformToViewModel(ListItemModel model) {
+        ListItemViewModel viewModel = null;
+        if (model != null) {
+            viewModel = new ListItemViewModel();
+            viewModel.setId(model.getId());
+            viewModel.setName(model.getName());
+            viewModel.setNote(model.getNote());
+            viewModel.setParentListId(model.getParentListId());
+            viewModel.setPrice(model.getPrice());
+            viewModel.setPriority(model.getPriority());
+            viewModel.setStatus(model.getStatus());
+            viewModel.setCategory(categoryModelDataMapper.transformToViewModel(model.getCategory()));
+            viewModel.setCurrency(currencyModelDataMapper.transformToViewModel(model.getCurrency()));
+            viewModel.setUnit(unitsDataModelMapper.transformToViewModel(model.getUnit()));
+            viewModel.setQuantity(model.getQuantity());
+            viewModel.setTimeCreated(model.getTimeCreated());
         }
-        return itemModel;
+        return viewModel;
     }
 
-    public List<ListItemViewModel> transformToViewModel(Collection<ListItemModel> listItems) {
-        List<ListItemViewModel> itemModels = new ArrayList<>();
-        ListItemViewModel itemModel;
-        for (ListItemModel item : listItems) {
-            itemModel = transformToViewModel(item);
-            if (itemModel != null) {
-                itemModels.add(itemModel);
+    public List<ListItemViewModel> transformToViewModel(Collection<ListItemModel> models) {
+        List<ListItemViewModel> viewModels = new ArrayList<>();
+        ListItemViewModel viewModel;
+        for (ListItemModel item : models) {
+            viewModel = transformToViewModel(item);
+            if (viewModel != null) {
+                viewModels.add(viewModel);
             }
         }
-        return itemModels;
+        return viewModels;
     }
 
-    public ListItemModel transform(ListItemViewModel itemModel) {
-        ListItemModel item = null;
-        if (itemModel != null) {
-            item = new ListItemModel();
-            item.setId(itemModel.getId());
-            item.setName(itemModel.getName());
-            item.setNote(itemModel.getNote());
-            item.setParentListId(itemModel.getParentListId());
-            item.setPrice(itemModel.getPrice());
-            item.setPriority(itemModel.getPriority());
-            item.setStatus(itemModel.getStatus());
-            item.setCategory(categoryModelDataMapper.transform(itemModel.getCategory()));
-            item.setCurrency(currencyModelDataMapper.transform(itemModel.getCurrency()));
-            item.setUnit(unitsDataModelMapper.transform(itemModel.getUnit()));
-            item.setQuantity(itemModel.getQuantity());
-            item.setTimeCreated(itemModel.getTimeCreated());
+    public ListItemModel transform(ListItemViewModel viewModel) {
+        ListItemModel model = null;
+        if (viewModel != null) {
+            model = new ListItemModel(viewModel.getId(),
+                    viewModel.getName(),
+                    viewModel.getParentListId(),
+                    viewModel.getNote(),
+                    viewModel.getStatus(),
+                    categoryModelDataMapper.transform(viewModel.getCategory()),
+                    viewModel.getPriority(),
+                    viewModel.getPrice(),
+                    viewModel.getQuantity(),
+                    unitsDataModelMapper.transform(viewModel.getUnit()),
+                    viewModel.getTimeCreated(),
+                    currencyModelDataMapper.transform(viewModel.getCurrency()));
         }
-        return item;
+        return model;
     }
 
-    public List<ListItemModel> transform(Collection<ListItemViewModel> itemModels) {
-        List<ListItemModel> items = new ArrayList<>();
-        ListItemModel item;
-        for (ListItemViewModel itemModel : itemModels) {
-            item = transform(itemModel);
-            if (item != null) {
-                items.add(item);
+    public List<ListItemModel> transform(Collection<ListItemViewModel> viewModels) {
+        List<ListItemModel> models = new ArrayList<>();
+        ListItemModel model;
+        for (ListItemViewModel viewModel : viewModels) {
+            model = transform(viewModel);
+            if (model != null) {
+                models.add(model);
             }
         }
-        return items;
+        return models;
     }
 }

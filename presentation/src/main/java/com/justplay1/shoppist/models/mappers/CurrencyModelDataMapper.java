@@ -36,47 +36,45 @@ public class CurrencyModelDataMapper {
     public CurrencyModelDataMapper() {
     }
 
-    public CurrencyViewModel transformToViewModel(CurrencyModel currency) {
-        CurrencyViewModel currencyModel = null;
-        if (currency != null) {
-            currencyModel = new CurrencyViewModel();
-            currencyModel.setId(currency.getId());
-            currencyModel.setName(currency.getName());
+    public CurrencyViewModel transformToViewModel(CurrencyModel model) {
+        CurrencyViewModel viewModel = null;
+        if (model != null) {
+            viewModel = new CurrencyViewModel();
+            viewModel.setId(model.getId());
+            viewModel.setName(model.getName());
         }
-        return currencyModel;
+        return viewModel;
     }
 
-    public List<CurrencyViewModel> transformToViewModel(Collection<CurrencyModel> currencies) {
-        List<CurrencyViewModel> currencyModels = new ArrayList<>();
-        CurrencyViewModel currency;
-        for (CurrencyModel entity : currencies) {
-            currency = transformToViewModel(entity);
-            if (currency != null) {
-                currencyModels.add(currency);
+    public List<CurrencyViewModel> transformToViewModel(Collection<CurrencyModel> models) {
+        List<CurrencyViewModel> viewModels = new ArrayList<>();
+        CurrencyViewModel viewModel;
+        for (CurrencyModel model : models) {
+            viewModel = transformToViewModel(model);
+            if (viewModel != null) {
+                viewModels.add(viewModel);
             }
         }
-        return currencyModels;
+        return viewModels;
     }
 
-    public CurrencyModel transform(CurrencyViewModel currencyModel) {
-        CurrencyModel currency = null;
-        if (currencyModel != null) {
-            currency = new CurrencyModel();
-            currency.setId(currencyModel.getId());
-            currency.setName(currencyModel.getName());
+    public CurrencyModel transform(CurrencyViewModel viewModel) {
+        CurrencyModel model = null;
+        if (viewModel != null) {
+            model = new CurrencyModel(viewModel.getId(), viewModel.getName());
         }
-        return currency;
+        return model;
     }
 
-    public List<CurrencyModel> transform(Collection<CurrencyViewModel> currencyModels) {
-        List<CurrencyModel> currencies = new ArrayList<>();
-        CurrencyModel entity;
-        for (CurrencyViewModel currency : currencyModels) {
-            entity = transform(currency);
-            if (entity != null) {
-                currencies.add(entity);
+    public List<CurrencyModel> transform(Collection<CurrencyViewModel> viewModels) {
+        List<CurrencyModel> models = new ArrayList<>();
+        CurrencyModel model;
+        for (CurrencyViewModel viewModel : viewModels) {
+            model = transform(viewModel);
+            if (model != null) {
+                models.add(model);
             }
         }
-        return currencies;
+        return models;
     }
 }

@@ -24,9 +24,6 @@ public abstract class BaseModel {
     protected String id;
     protected String name;
 
-    public BaseModel() {
-    }
-
     public BaseModel(String id, String name) {
         this.id = id;
         this.name = name;

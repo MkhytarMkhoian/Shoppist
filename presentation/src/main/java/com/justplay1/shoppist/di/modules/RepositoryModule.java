@@ -67,7 +67,7 @@ public class RepositoryModule {
     @Provides
     @Singleton
     GoodsRepository provideGoodsRepository(LocalGoodsDataStoreImpl dataStore, GoodsDAODataMapper dataMapper) {
-        return new GoodsDataRepository(dataStore, dataMapper);
+        return new GoodsDataRepository(dataMapper, dataStore);
     }
 
     @Provides

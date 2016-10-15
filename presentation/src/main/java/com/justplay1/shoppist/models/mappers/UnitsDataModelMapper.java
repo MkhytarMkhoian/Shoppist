@@ -36,50 +36,49 @@ public class UnitsDataModelMapper {
     public UnitsDataModelMapper() {
     }
 
-    public UnitViewModel transformToViewModel(UnitModel unit) {
-        UnitViewModel unitModel = null;
-        if (unit != null) {
-            unitModel = new UnitViewModel();
-            unitModel.setId(unit.getId());
-            unitModel.setName(unit.getName());
-            unitModel.setShortName(unit.getShortName());
+    public UnitViewModel transformToViewModel(UnitModel model) {
+        UnitViewModel viewModel = null;
+        if (model != null) {
+            viewModel = new UnitViewModel();
+            viewModel.setId(model.getId());
+            viewModel.setName(model.getName());
+            viewModel.setShortName(model.getShortName());
         }
-        return unitModel;
+        return viewModel;
     }
 
-    public List<UnitViewModel> transformToViewModel(Collection<UnitModel> units) {
-        List<UnitViewModel> unitModels = new ArrayList<>();
-        UnitViewModel unit;
-        for (UnitModel unitEntity : units) {
-            unit = transformToViewModel(unitEntity);
-            if (unit != null) {
-                unitModels.add(unit);
+    public List<UnitViewModel> transformToViewModel(Collection<UnitModel> models) {
+        List<UnitViewModel> viewModels = new ArrayList<>();
+        UnitViewModel viewModel;
+        for (UnitModel model : models) {
+            viewModel = transformToViewModel(model);
+            if (viewModel != null) {
+                viewModels.add(viewModel);
             }
         }
-        return unitModels;
+        return viewModels;
     }
 
-    public UnitModel transform(UnitViewModel unitModel) {
-        UnitModel unit = null;
-        if (unitModel != null) {
-            unit = new UnitModel();
-            unit.setId(unitModel.getId());
-            unit.setName(unitModel.getName());
-            unit.setShortName(unitModel.getShortName());
+    public UnitModel transform(UnitViewModel viewModel) {
+        UnitModel model = null;
+        if (viewModel != null) {
+            model = new UnitModel(model.getId(),
+                    model.getName(),
+                    model.getShortName());
         }
-        return unit;
+        return model;
     }
 
-    public List<UnitModel> transform(Collection<UnitViewModel> unitModels) {
-        List<UnitModel> units = new ArrayList<>();
-        UnitModel unit;
-        for (UnitViewModel unitModel : unitModels) {
-            unit = transform(unitModel);
-            if (unit != null) {
-                units.add(unit);
+    public List<UnitModel> transform(Collection<UnitViewModel> viewModels) {
+        List<UnitModel> models = new ArrayList<>();
+        UnitModel model;
+        for (UnitViewModel viewModel : viewModels) {
+            model = transform(viewModel);
+            if (model != null) {
+                models.add(model);
             }
         }
-        return units;
+        return models;
     }
 
 }

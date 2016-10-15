@@ -41,55 +41,54 @@ public class GoodsModelDataMapper {
         this.categoryModelDataMapper = categoryDataMapper;
     }
 
-    public ProductViewModel transformToViewModel(ProductModel product) {
-        ProductViewModel productModel = null;
-        if (product != null) {
-            productModel = new ProductViewModel();
-            productModel.setId(product.getId());
-            productModel.setName(product.getName());
-            productModel.setCategory(categoryModelDataMapper.transformToViewModel(product.getCategory()));
-            productModel.setUnit(unitsDataModelMapper.transformToViewModel(product.getUnit()));
-            productModel.setTimeCreated(product.getTimeCreated());
-            productModel.setCreateByUser(product.isCreateByUser());
+    public ProductViewModel transformToViewModel(ProductModel model) {
+        ProductViewModel viewModel = null;
+        if (model != null) {
+            viewModel = new ProductViewModel();
+            viewModel.setId(model.getId());
+            viewModel.setName(model.getName());
+            viewModel.setCategory(categoryModelDataMapper.transformToViewModel(model.getCategory()));
+            viewModel.setUnit(unitsDataModelMapper.transformToViewModel(model.getUnit()));
+            viewModel.setTimeCreated(model.getTimeCreated());
+            viewModel.setCreateByUser(model.isCreateByUser());
         }
-        return productModel;
+        return viewModel;
     }
 
-    public List<ProductViewModel> transformToViewModel(Collection<ProductModel> entities) {
-        List<ProductViewModel> items = new ArrayList<>();
-        ProductViewModel item;
-        for (ProductModel product : entities) {
-            item = transformToViewModel(product);
-            if (item != null) {
-                items.add(item);
+    public List<ProductViewModel> transformToViewModel(Collection<ProductModel> models) {
+        List<ProductViewModel> viewModels = new ArrayList<>();
+        ProductViewModel viewModel;
+        for (ProductModel model : models) {
+            viewModel = transformToViewModel(model);
+            if (viewModel != null) {
+                viewModels.add(viewModel);
             }
         }
-        return items;
+        return viewModels;
     }
 
-    public ProductModel transform(ProductViewModel product) {
-        ProductModel item = null;
-        if (product != null) {
-            item = new ProductModel();
-            item.setId(product.getId());
-            item.setName(product.getName());
-            item.setCategory(categoryModelDataMapper.transform(product.getCategory()));
-            item.setUnit(unitsDataModelMapper.transform(product.getUnit()));
-            item.setTimeCreated(product.getTimeCreated());
-            item.setCreateByUser(product.isCreateByUser());
+    public ProductModel transform(ProductViewModel viewModel) {
+        ProductModel model = null;
+        if (viewModel != null) {
+            model = new ProductModel(viewModel.getId(),
+                    viewModel.getName(),
+                    categoryModelDataMapper.transform(viewModel.getCategory()),
+                    viewModel.isCreateByUser(),
+                    viewModel.getTimeCreated(),
+                    unitsDataModelMapper.transform(viewModel.getUnit()));
         }
-        return item;
+        return model;
     }
 
-    public List<ProductModel> transform(Collection<ProductViewModel> products) {
-        List<ProductModel> items = new ArrayList<>();
-        ProductModel item;
-        for (ProductViewModel productModel : products) {
-            item = transform(productModel);
-            if (item != null) {
-                items.add(item);
+    public List<ProductModel> transform(Collection<ProductViewModel> viewModels) {
+        List<ProductModel> models = new ArrayList<>();
+        ProductModel model;
+        for (ProductViewModel viewModel : viewModels) {
+            model = transform(viewModel);
+            if (model != null) {
+                models.add(model);
             }
         }
-        return items;
+        return models;
     }
 }

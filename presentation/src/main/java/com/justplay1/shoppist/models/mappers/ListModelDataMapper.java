@@ -37,57 +37,56 @@ public class ListModelDataMapper {
     }
 
     @SuppressWarnings("ResourceType")
-    public ListViewModel transformToViewModel(ListModel list) {
-        ListViewModel listModel = null;
-        if (list != null) {
-            listModel = new ListViewModel();
-            listModel.setId(list.getId());
-            listModel.setName(list.getName());
-            listModel.setTimeCreated(list.getTimeCreated());
-            listModel.setPriority(list.getPriority());
-            listModel.setBoughtCount(list.getBoughtCount());
-            listModel.setColor(list.getColor());
-            listModel.setSize(list.getSize());
+    public ListViewModel transformToViewModel(ListModel model) {
+        ListViewModel viewModel = null;
+        if (model != null) {
+            viewModel = new ListViewModel();
+            viewModel.setId(model.getId());
+            viewModel.setName(model.getName());
+            viewModel.setTimeCreated(model.getTimeCreated());
+            viewModel.setPriority(model.getPriority());
+            viewModel.setBoughtCount(model.getBoughtCount());
+            viewModel.setColor(model.getColor());
+            viewModel.setSize(model.getSize());
         }
-        return listModel;
+        return viewModel;
     }
 
-    public List<ListViewModel> transformToViewModel(Collection<ListModel> lists) {
-        List<ListViewModel> listModels = new ArrayList<>();
-        ListViewModel listModel;
-        for (ListModel list : lists) {
-            listModel = transformToViewModel(list);
-            if (listModel != null) {
-                listModels.add(listModel);
+    public List<ListViewModel> transformToViewModel(Collection<ListModel> models) {
+        List<ListViewModel> viewModels = new ArrayList<>();
+        ListViewModel viewModel;
+        for (ListModel model : models) {
+            viewModel = transformToViewModel(model);
+            if (viewModel != null) {
+                viewModels.add(viewModel);
             }
         }
-        return listModels;
+        return viewModels;
     }
 
-    public ListModel transform(ListViewModel listModel) {
-        ListModel list = null;
-        if (listModel != null) {
-            list = new ListModel();
-            list.setId(listModel.getId());
-            list.setName(listModel.getName());
-            list.setTimeCreated(listModel.getTimeCreated());
-            list.setPriority(listModel.getPriority());
-            list.setBoughtCount(listModel.getBoughtCount());
-            list.setColor(listModel.getColor());
-            list.setSize(listModel.getSize());
+    public ListModel transform(ListViewModel viewModel) {
+        ListModel model = null;
+        if (viewModel != null) {
+            model = new ListModel(viewModel.getId(),
+                    viewModel.getName(),
+                    viewModel.getBoughtCount(),
+                    viewModel.getTimeCreated(),
+                    viewModel.getPriority(),
+                    viewModel.getColor(),
+                    viewModel.getSize());
         }
-        return list;
+        return model;
     }
 
-    public List<ListModel> transform(Collection<ListViewModel> listModels) {
-        List<ListModel> lists = new ArrayList<>();
-        ListModel list;
-        for (ListViewModel listModel : listModels) {
-            list = transform(listModel);
-            if (list != null) {
-                lists.add(list);
+    public List<ListModel> transform(Collection<ListViewModel> viewModels) {
+        List<ListModel> models = new ArrayList<>();
+        ListModel model;
+        for (ListViewModel viewModel : viewModels) {
+            model = transform(viewModel);
+            if (model != null) {
+                models.add(model);
             }
         }
-        return lists;
+        return models;
     }
 }
