@@ -15,6 +15,7 @@
  */
 package com.justplay1.shoppist.interactor.category;
 
+import com.justplay1.shoppist.TestUtil;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.models.CategoryModel;
@@ -28,6 +29,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 
+import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -48,7 +50,7 @@ public class AddCategoryTest {
         useCase = new AddCategory(mockCategoryRepository, mockThreadExecutor,
                 mockPostExecutionThread);
 
-        models = Collections.singletonList(new CategoryModel());
+        models = Collections.singletonList(createFakeCategoryModel());
         useCase.setData(models);
     }
 

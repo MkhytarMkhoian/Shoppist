@@ -36,50 +36,49 @@ public class CategoryDAODataMapper {
     public CategoryDAODataMapper() {
     }
 
-    public CategoryModel transformFromDAO(CategoryDAO categoryEntity) {
+    public CategoryModel transformFromDAO(CategoryDAO dao) {
         CategoryModel category = null;
-        if (categoryEntity != null) {
-            category = new CategoryModel();
-            category.setId(categoryEntity.getId());
-            category.setName(categoryEntity.getName());
-            category.setColor(categoryEntity.getColor());
-            category.setCreateByUser(categoryEntity.isCreateByUser());
+        if (dao != null) {
+            category = new CategoryModel(dao.getId(),
+                    dao.getName(),
+                    dao.getColor(),
+                    dao.isCreateByUser());
         }
         return category;
     }
 
-    public List<CategoryModel> transformFromDAO(Collection<CategoryDAO> categoryEntities) {
-        List<CategoryModel> categories = new ArrayList<>();
-        CategoryModel category;
-        for (CategoryDAO categoryEntity : categoryEntities) {
-            category = transformFromDAO(categoryEntity);
-            if (category != null) {
-                categories.add(category);
+    public List<CategoryModel> transformFromDAO(Collection<CategoryDAO> daos) {
+        List<CategoryModel> models = new ArrayList<>();
+        CategoryModel model;
+        for (CategoryDAO dao : daos) {
+            model = transformFromDAO(dao);
+            if (model != null) {
+                models.add(model);
             }
         }
-        return categories;
+        return models;
     }
 
-    public CategoryDAO transformToDAO(CategoryModel category) {
-        CategoryDAO entity = null;
-        if (category != null) {
-            entity = new CategoryDAO(category.getId(),
-                    category.getName(),
-                    category.getColor(),
-                    category.isCreateByUser());
+    public CategoryDAO transformToDAO(CategoryModel model) {
+        CategoryDAO dao = null;
+        if (model != null) {
+            dao = new CategoryDAO(model.getId(),
+                    model.getName(),
+                    model.getColor(),
+                    model.isCreateByUser());
         }
-        return entity;
+        return dao;
     }
 
-    public List<CategoryDAO> transformToDAO(Collection<CategoryModel> categories) {
-        List<CategoryDAO> entities = new ArrayList<>();
-        CategoryDAO entity;
-        for (CategoryModel category : categories) {
-            entity = transformToDAO(category);
-            if (entity != null) {
-                entities.add(entity);
+    public List<CategoryDAO> transformToDAO(Collection<CategoryModel> models) {
+        List<CategoryDAO> daos = new ArrayList<>();
+        CategoryDAO dao;
+        for (CategoryModel model : models) {
+            dao = transformToDAO(model);
+            if (dao != null) {
+                daos.add(dao);
             }
         }
-        return entities;
+        return daos;
     }
 }

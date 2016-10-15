@@ -36,46 +36,45 @@ public class CurrencyDAODataMapper {
     public CurrencyDAODataMapper() {
     }
 
-    public CurrencyModel transformFromDAO(CurrencyDAO listEntity) {
+    public CurrencyModel transformFromDAO(CurrencyDAO dao) {
         CurrencyModel list = null;
-        if (listEntity != null) {
-            list = new CurrencyModel();
-            list.setId(listEntity.getId());
-            list.setName(listEntity.getName());
+        if (dao != null) {
+            list = new CurrencyModel(dao.getId(),
+                    dao.getName());
         }
         return list;
     }
 
-    public List<CurrencyModel> transformFromDAO(Collection<CurrencyDAO> entities) {
-        List<CurrencyModel> currencies = new ArrayList<>();
-        CurrencyModel currency;
-        for (CurrencyDAO entity : entities) {
-            currency = transformFromDAO(entity);
-            if (currency != null) {
-                currencies.add(currency);
+    public List<CurrencyModel> transformFromDAO(Collection<CurrencyDAO> daos) {
+        List<CurrencyModel> models = new ArrayList<>();
+        CurrencyModel model;
+        for (CurrencyDAO dao : daos) {
+            model = transformFromDAO(dao);
+            if (model != null) {
+                models.add(model);
             }
         }
-        return currencies;
+        return models;
     }
 
-    public CurrencyDAO transformToDAO(CurrencyModel currency) {
-        CurrencyDAO list = null;
-        if (currency != null) {
-            list = new CurrencyDAO(currency.getId(),
-                    currency.getName());
+    public CurrencyDAO transformToDAO(CurrencyModel model) {
+        CurrencyDAO dao = null;
+        if (model != null) {
+            dao = new CurrencyDAO(model.getId(),
+                    model.getName());
         }
-        return list;
+        return dao;
     }
 
-    public List<CurrencyDAO> transformToDAO(Collection<CurrencyModel> currencies) {
-        List<CurrencyDAO> entities = new ArrayList<>();
-        CurrencyDAO entity;
-        for (CurrencyModel currency : currencies) {
-            entity = transformToDAO(currency);
-            if (entity != null) {
-                entities.add(entity);
+    public List<CurrencyDAO> transformToDAO(Collection<CurrencyModel> models) {
+        List<CurrencyDAO> daos = new ArrayList<>();
+        CurrencyDAO dao;
+        for (CurrencyModel currency : models) {
+            dao = transformToDAO(currency);
+            if (dao != null) {
+                daos.add(dao);
             }
         }
-        return entities;
+        return daos;
     }
 }

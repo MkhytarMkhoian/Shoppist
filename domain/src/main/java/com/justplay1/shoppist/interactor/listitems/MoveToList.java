@@ -88,13 +88,22 @@ public class MoveToList extends UseCase<Boolean> {
     }
 
     private List<ListItemModel> getListItems(Collection<ListItemModel> data) {
-        List<ListItemModel> needAdd = new ArrayList<>();
+        List<ListItemModel> result = new ArrayList<>();
         for (ListItemModel item : data) {
-            ListItemModel newItem = new ListItemModel(item);
-            newItem.setId(UUID.nameUUIDFromBytes((String.valueOf(System.nanoTime())).getBytes()).toString());
-            newItem.setParentListId(newParentListId);
-            needAdd.add(newItem);
+            ListItemModel newItem = new ListItemModel(UUID.nameUUIDFromBytes((String.valueOf(System.nanoTime())).getBytes()).toString(),
+                    item.getName(),
+                    newParentListId,
+                    item.getNote(),
+                    item.getStatus(),
+                    item.getCategory(),
+                    item.getPriority(),
+                    item.getPrice(),
+                    item.getQuantity(),
+                    item.getUnit(),
+                    item.getTimeCreated(),
+                    item.getCurrency());
+            result.add(newItem);
         }
-        return needAdd;
+        return result;
     }
 }

@@ -29,6 +29,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 
+import static com.justplay1.shoppist.TestUtil.createFakeCurrencyModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -49,7 +50,7 @@ public class AddCurrencyTest {
         useCase = new AddCurrency(mockCurrencyRepository, mockThreadExecutor,
                 mockPostExecutionThread);
 
-        models = Collections.singletonList(new CurrencyModel());
+        models = Collections.singletonList(createFakeCurrencyModel());
         useCase.setData(models);
     }
 

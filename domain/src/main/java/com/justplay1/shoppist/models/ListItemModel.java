@@ -32,105 +32,62 @@ public class ListItemModel extends BaseModel {
     private long timeCreated;
     private CurrencyModel currency;
 
-    public ListItemModel() {
-        note = "";
-        quantity = 1;
-    }
-
-    public ListItemModel(ListItemModel item) {
-        this();
-        setParentListId(item.getParentListId());
-        setId(item.getId());
-        setName(item.getName());
-        setNote(item.getNote());
-        setUnit(item.getUnit());
-        setCurrency(item.getCurrency());
-        setPrice(item.getPrice());
-        setTimeCreated(item.getTimeCreated());
-        setQuantity(item.getQuantity());
-        setStatus(item.getStatus());
-        setPriority(item.getPriority());
-        setCategory(item.getCategory());
+    public ListItemModel(String id, String name, String parentListId, String note, boolean status, CategoryModel category,
+                         int priority, double price, double quantity, UnitModel unit, long timeCreated,
+                         CurrencyModel currency) {
+        super(id, name);
+        this.parentListId = parentListId;
+        this.note = note;
+        this.status = status;
+        this.category = category;
+        this.priority = priority;
+        this.price = price;
+        this.quantity = quantity;
+        this.unit = unit;
+        this.timeCreated = timeCreated;
+        this.currency = currency;
     }
 
     public String getParentListId() {
         return parentListId;
     }
 
-    public void setParentListId(String parentListId) {
-        this.parentListId = parentListId;
-    }
 
     public String getNote() {
         return note;
-    }
-
-    public void setNote(String shortMessage) {
-        this.note = shortMessage;
     }
 
     public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
     public CategoryModel getCategory() {
         return category;
-    }
-
-    public void setCategory(CategoryModel category) {
-        this.category = category;
     }
 
     public int getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
     public double getPrice() {
         return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
-    }
-
     public UnitModel getUnit() {
         return unit;
     }
 
-    public void setUnit(UnitModel unit) {
-        this.unit = unit;
-    }
 
     public CurrencyModel getCurrency() {
         return currency;
     }
 
-    public void setCurrency(CurrencyModel currency) {
-        this.currency = currency;
-    }
-
     public long getTimeCreated() {
         return timeCreated;
-    }
-
-    public void setTimeCreated(long timeCreated) {
-        this.timeCreated = timeCreated;
     }
 
     @Override

@@ -27,50 +27,34 @@ public class ListModel extends BaseModel {
     private int color;
     private int size;
 
-    public ListModel() {
-        priority = 0;
-        boughtCount = 0;
-        size = 0;
+    public ListModel(String id, String name, int boughtCount, long timeCreated,
+                     int priority, int color, int size) {
+        super(id, name);
+        this.boughtCount = boughtCount;
+        this.timeCreated = timeCreated;
+        this.priority = priority;
+        this.color = color;
+        this.size = size;
     }
 
     public int getSize() {
         return size;
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
-
     public int getBoughtCount() {
         return boughtCount;
-    }
-
-    public void setBoughtCount(int boughtCount) {
-        this.boughtCount = boughtCount;
     }
 
     public long getTimeCreated() {
         return timeCreated;
     }
 
-    public void setTimeCreated(long timeCreated) {
-        this.timeCreated = timeCreated;
-    }
-
     public int getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
     public int getColor() {
         return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
     }
 
     @Override

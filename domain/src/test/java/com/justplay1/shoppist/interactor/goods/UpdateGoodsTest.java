@@ -15,6 +15,7 @@
  */
 package com.justplay1.shoppist.interactor.goods;
 
+import com.justplay1.shoppist.TestUtil;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.models.ProductModel;
@@ -28,6 +29,9 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 
+import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.TestUtil.createFakeProductModel;
+import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -47,7 +51,7 @@ public class UpdateGoodsTest {
         MockitoAnnotations.initMocks(this);
         useCase = new UpdateGoods(mockGoodsRepository, mockThreadExecutor, mockPostExecutionThread);
 
-        models = Collections.singletonList(new ProductModel());
+        models = Collections.singletonList(createFakeProductModel(createFakeUnitModel(), createFakeCategoryModel()));
         useCase.setData(models);
     }
 

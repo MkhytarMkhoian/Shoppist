@@ -36,56 +36,55 @@ public class ListDAODataMapper {
     public ListDAODataMapper() {
     }
 
-    public ListModel transformFromDAO(ListDAO listEntity) {
-        ListModel list = null;
-        if (listEntity != null) {
-            list = new ListModel();
-            list.setId(listEntity.getId());
-            list.setName(listEntity.getName());
-            list.setTimeCreated(listEntity.getTimeCreated());
-            list.setPriority(listEntity.getPriority());
-            list.setBoughtCount(listEntity.getBoughtCount());
-            list.setColor(listEntity.getColor());
-            list.setSize(listEntity.getSize());
+    public ListModel transformFromDAO(ListDAO dao) {
+        ListModel model = null;
+        if (dao != null) {
+            model = new ListModel(dao.getId(),
+                    dao.getName(),
+                    dao.getBoughtCount(),
+                    dao.getTimeCreated(),
+                    dao.getPriority(),
+                    dao.getColor(),
+                    dao.getSize());
         }
-        return list;
+        return model;
     }
 
-    public List<ListModel> transformFromDAO(Collection<ListDAO> listEntities) {
-        List<ListModel> lists = new ArrayList<>();
-        ListModel list;
-        for (ListDAO listEntity : listEntities) {
-            list = transformFromDAO(listEntity);
-            if (list != null) {
-                lists.add(list);
+    public List<ListModel> transformFromDAO(Collection<ListDAO> daos) {
+        List<ListModel> models = new ArrayList<>();
+        ListModel model;
+        for (ListDAO dao : daos) {
+            model = transformFromDAO(dao);
+            if (model != null) {
+                models.add(model);
             }
         }
-        return lists;
+        return models;
     }
 
-    public ListDAO transformToDAO(ListModel list) {
-        ListDAO entity = null;
-        if (list != null) {
-            entity = new ListDAO(list.getId(),
-                    list.getName(),
-                    list.getBoughtCount(),
-                    list.getTimeCreated(),
-                    list.getPriority(),
-                    list.getColor(),
-                    list.getSize());
+    public ListDAO transformToDAO(ListModel model) {
+        ListDAO dao = null;
+        if (model != null) {
+            dao = new ListDAO(model.getId(),
+                    model.getName(),
+                    model.getBoughtCount(),
+                    model.getTimeCreated(),
+                    model.getPriority(),
+                    model.getColor(),
+                    model.getSize());
         }
-        return entity;
+        return dao;
     }
 
-    public List<ListDAO> transformToDAO(Collection<ListModel> listEntities) {
-        List<ListDAO> lists = new ArrayList<>();
-        ListDAO list;
-        for (ListModel listEntity : listEntities) {
-            list = transformToDAO(listEntity);
-            if (list != null) {
-                lists.add(list);
+    public List<ListDAO> transformToDAO(Collection<ListModel> models) {
+        List<ListDAO> daos = new ArrayList<>();
+        ListDAO dao;
+        for (ListModel model : models) {
+            dao = transformToDAO(model);
+            if (dao != null) {
+                daos.add(dao);
             }
         }
-        return lists;
+        return daos;
     }
 }

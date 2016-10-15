@@ -25,16 +25,13 @@ public class UnitModel extends BaseModel {
 
     private String shortName;
 
-    public UnitModel() {
-        shortName = "";
+    public UnitModel(String id, String name, String shortName) {
+        super(id, name);
+        this.shortName = shortName;
     }
 
     public String getShortName() {
         return shortName;
-    }
-
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
     }
 
     @Override

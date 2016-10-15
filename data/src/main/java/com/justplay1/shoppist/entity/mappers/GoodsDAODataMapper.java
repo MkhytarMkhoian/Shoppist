@@ -41,54 +41,53 @@ public class GoodsDAODataMapper {
         this.categoryDAODataMapper = categoryDAODataMapper;
     }
 
-    public ProductModel transformFromDAO(ProductDAO itemEntity) {
-        ProductModel item = null;
-        if (itemEntity != null) {
-            item = new ProductModel();
-            item.setId(itemEntity.getId());
-            item.setName(itemEntity.getName());
-            item.setCategory(categoryDAODataMapper.transformFromDAO(itemEntity.getCategory()));
-            item.setUnit(unitsDAODataMapper.transformFromDAO(itemEntity.getUnit()));
-            item.setTimeCreated(itemEntity.getTimeCreated());
-            item.setCreateByUser(itemEntity.isCreateByUser());
+    public ProductModel transformFromDAO(ProductDAO dao) {
+        ProductModel model = null;
+        if (dao != null) {
+            model = new ProductModel(dao.getId(),
+                    dao.getName(),
+                    categoryDAODataMapper.transformFromDAO(dao.getCategory()),
+                    dao.isCreateByUser(),
+                    dao.getTimeCreated(),
+                    unitsDAODataMapper.transformFromDAO(dao.getUnit()));
         }
-        return item;
+        return model;
     }
 
-    public List<ProductModel> transformFromDAO(Collection<ProductDAO> entities) {
-        List<ProductModel> items = new ArrayList<>();
-        ProductModel item;
-        for (ProductDAO entity : entities) {
-            item = transformFromDAO(entity);
-            if (item != null) {
-                items.add(item);
+    public List<ProductModel> transformFromDAO(Collection<ProductDAO> daos) {
+        List<ProductModel> models = new ArrayList<>();
+        ProductModel model;
+        for (ProductDAO dao : daos) {
+            model = transformFromDAO(dao);
+            if (model != null) {
+                models.add(model);
             }
         }
-        return items;
+        return models;
     }
 
-    public ProductDAO transform(ProductModel product) {
-        ProductDAO item = null;
-        if (product != null) {
-            item = new ProductDAO(product.getId(),
-                    product.getName(),
-                    categoryDAODataMapper.transformToDAO(product.getCategory()),
-                    product.isCreateByUser(),
-                    product.getTimeCreated(),
-                    unitsDAODataMapper.transformToDAO(product.getUnit()));
+    public ProductDAO transformToDAO(ProductModel model) {
+        ProductDAO dao = null;
+        if (model != null) {
+            dao = new ProductDAO(model.getId(),
+                    model.getName(),
+                    categoryDAODataMapper.transformToDAO(model.getCategory()),
+                    model.isCreateByUser(),
+                    model.getTimeCreated(),
+                    unitsDAODataMapper.transformToDAO(model.getUnit()));
         }
-        return item;
+        return dao;
     }
 
-    public List<ProductDAO> transformToDAO(Collection<ProductModel> products) {
-        List<ProductDAO> items = new ArrayList<>();
-        ProductDAO item;
-        for (ProductModel entity : products) {
-            item = transform(entity);
-            if (item != null) {
-                items.add(item);
+    public List<ProductDAO> transformToDAO(Collection<ProductModel> models) {
+        List<ProductDAO> daos = new ArrayList<>();
+        ProductDAO dao;
+        for (ProductModel model : models) {
+            dao = transformToDAO(model);
+            if (dao != null) {
+                daos.add(dao);
             }
         }
-        return items;
+        return daos;
     }
 }

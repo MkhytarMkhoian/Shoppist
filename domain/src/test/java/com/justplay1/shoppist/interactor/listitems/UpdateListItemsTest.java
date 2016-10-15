@@ -28,6 +28,10 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 
+import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.TestUtil.createFakeCurrencyModel;
+import static com.justplay1.shoppist.TestUtil.createFakeListItemModel;
+import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -47,7 +51,7 @@ public class UpdateListItemsTest {
         MockitoAnnotations.initMocks(this);
         useCase = new UpdateListItems(mockListItemsRepository, mockThreadExecutor, mockPostExecutionThread);
 
-        models = Collections.singletonList(new ListItemModel());
+        models = Collections.singletonList(createFakeListItemModel(createFakeCategoryModel(), createFakeUnitModel(), createFakeCurrencyModel()));
         useCase.setData(models);
     }
 

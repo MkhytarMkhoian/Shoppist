@@ -49,7 +49,6 @@ public class UpdateCategory extends UseCase<Boolean> {
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
         return Observable.fromCallable(() -> {
-            if (data == null) throw new NullPointerException("CategoryModel == null");
             repository.update(data);
             return true;
         });

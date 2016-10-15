@@ -26,39 +26,28 @@ public class ProductModel extends BaseModel {
     private long timeCreated;
     private UnitModel unit;
 
-    public ProductModel() {
+    public ProductModel(String id, String name, CategoryModel category, boolean isCreateByUser, long timeCreated, UnitModel unit) {
+        super(id, name);
+        this.category = category;
+        this.isCreateByUser = isCreateByUser;
+        this.timeCreated = timeCreated;
+        this.unit = unit;
     }
 
     public UnitModel getUnit() {
         return unit;
     }
 
-    public void setUnit(UnitModel unit) {
-        this.unit = unit;
-    }
-
     public long getTimeCreated() {
         return timeCreated;
-    }
-
-    public void setTimeCreated(long timeCreated) {
-        this.timeCreated = timeCreated;
     }
 
     public boolean isCreateByUser() {
         return isCreateByUser;
     }
 
-    public void setCreateByUser(boolean isCreateByUser) {
-        this.isCreateByUser = isCreateByUser;
-    }
-
     public CategoryModel getCategory() {
         return category;
-    }
-
-    public void setCategory(CategoryModel category) {
-        this.category = category;
     }
 
     @Override
@@ -73,13 +62,5 @@ public class ProductModel extends BaseModel {
     @Override
     public int hashCode() {
         return id.hashCode();
-    }
-
-    public boolean isCategoryEmpty() {
-        return category == null || category.getId() == null || category.getName() == null;
-    }
-
-    public boolean isUnitEmpty() {
-        return unit == null || unit.getId() == null || unit.getName() == null;
     }
 }

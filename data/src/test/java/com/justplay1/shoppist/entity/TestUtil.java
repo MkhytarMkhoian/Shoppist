@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.justplay1.shoppist;
+package com.justplay1.shoppist.entity;
 
 import com.justplay1.shoppist.models.CategoryModel;
 import com.justplay1.shoppist.models.CurrencyModel;
@@ -23,14 +23,15 @@ import com.justplay1.shoppist.models.ListModel;
 import com.justplay1.shoppist.models.ProductModel;
 import com.justplay1.shoppist.models.UnitModel;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Created by Mkhytar Mkhoian.
  */
 
 public class TestUtil {
+
+    public static final String FAKE_CATEGORY_ID = "category_id";
+    public static final String FAKE_UNIT_ID = "unit_id";
+    public static final String FAKE_CURRENCY_ID = "currency_id";
 
     public static final String FAKE_ID = "id";
     public static final String FAKE_PARENT_LIST_ID = "parent_list_id";
@@ -50,10 +51,40 @@ public class TestUtil {
     public static final int FAKE_BOUGHT_COUNT = 5;
     public static final int FAKE_SIZE = 10;
 
-    public static List<ListItemModel> createFakeListItemModelList(CategoryModel categoryModel,
-                                                                  UnitModel unitModel,
-                                                                  CurrencyModel currencyModel) {
-        return Collections.singletonList(createFakeListItemModel(categoryModel, unitModel, currencyModel));
+    public static ListItemDAO createFakeListItemDAO(CategoryDAO categoryDAO,
+                                                    UnitDAO unitDAO,
+                                                    CurrencyDAO currencyDAO) {
+        return new ListItemDAO(FAKE_ID, FAKE_NAME,
+                FAKE_PARENT_LIST_ID,
+                FAKE_NOTE, FAKE_STATUS,
+                categoryDAO,
+                FAKE_PRIORITY,
+                FAKE_PRICE,
+                FAKE_QUANTITY,
+                unitDAO,
+                FAKE_TIME_CREATED,
+                currencyDAO);
+
+    }
+
+    public static CategoryDAO createFakeCategoryDAO() {
+        return new CategoryDAO(FAKE_ID, FAKE_NAME, FAKE_COLOR, FAKE_CREATE_BY_USER);
+    }
+
+    public static CurrencyDAO createFakeCurrencyDAO() {
+        return new CurrencyDAO(FAKE_ID, FAKE_NAME);
+    }
+
+    public static ListDAO createFakeListDAO() {
+        return new ListDAO(FAKE_ID, FAKE_NAME, FAKE_BOUGHT_COUNT, FAKE_TIME_CREATED, FAKE_PRIORITY, FAKE_COLOR, FAKE_SIZE);
+    }
+
+    public static UnitDAO createFakeUnitDAO() {
+        return new UnitDAO(FAKE_ID, FAKE_NAME, FAKE_SHORT_NAME);
+    }
+
+    public static ProductDAO createFakeProductDAO(UnitDAO unitDAO, CategoryDAO categoryDAO) {
+        return new ProductDAO(FAKE_ID, FAKE_NAME, categoryDAO, FAKE_CREATE_BY_USER, FAKE_TIME_CREATED, unitDAO);
     }
 
     public static CategoryModel createFakeCategoryModel() {

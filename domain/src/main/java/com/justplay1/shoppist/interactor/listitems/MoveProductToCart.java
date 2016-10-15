@@ -22,7 +22,9 @@ import com.justplay1.shoppist.interactor.UseCase;
 import com.justplay1.shoppist.models.ListItemModel;
 import com.justplay1.shoppist.repository.ListItemsRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -49,10 +51,23 @@ public class MoveProductToCart extends UseCase<Boolean> {
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
         return Observable.fromCallable(() -> {
+            List<ListItemModel> result = new ArrayList<>();
             for (ListItemModel item : data) {
-                item.setStatus(!item.getStatus());
+                ListItemModel newItem = new ListItemModel(item.getId(),
+                        item.getName(),
+                        item.getParentListId(),
+                        item.getNote(),
+                        !item.getStatus(),
+                        item.getCategory(),
+                        item.getPriority(),
+                        item.getPrice(),
+                        item.getQuantity(),
+                        item.getUnit(),
+                        item.getTimeCreated(),
+                        item.getCurrency());
+                result.add(newItem);
             }
-            repository.update(data);
+            repository.update(result);
             return true;
         });
     }

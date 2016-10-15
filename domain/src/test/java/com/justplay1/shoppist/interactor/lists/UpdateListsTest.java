@@ -15,6 +15,7 @@
  */
 package com.justplay1.shoppist.interactor.lists;
 
+import com.justplay1.shoppist.TestUtil;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.models.ListModel;
@@ -28,6 +29,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 
+import static com.justplay1.shoppist.TestUtil.createFakeListModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -47,7 +49,7 @@ public class UpdateListsTest {
         MockitoAnnotations.initMocks(this);
         useCase = new UpdateLists(mockListRepository, mockThreadExecutor, mockPostExecutionThread);
 
-        models = Collections.singletonList(new ListModel());
+        models = Collections.singletonList(createFakeListModel());
         useCase.setData(models);
     }
 

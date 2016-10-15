@@ -26,23 +26,18 @@ public class CategoryModel extends BaseModel {
     private int color;
     private boolean isCreateByUser;
 
-    public CategoryModel() {
+    public CategoryModel(String id, String name, int color, boolean isCreateByUser) {
+        super(id, name);
+        this.color = color;
+        this.isCreateByUser = isCreateByUser;
     }
 
     public int getColor() {
         return color;
     }
 
-    public void setColor(int color) {
-        this.color = color;
-    }
-
     public boolean isCreateByUser() {
         return isCreateByUser;
-    }
-
-    public void setCreateByUser(boolean isCreateByUser) {
-        this.isCreateByUser = isCreateByUser;
     }
 
     @Override

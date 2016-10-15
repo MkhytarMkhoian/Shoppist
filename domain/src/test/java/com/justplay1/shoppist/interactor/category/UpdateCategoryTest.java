@@ -28,6 +28,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 
+import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -48,7 +49,7 @@ public class UpdateCategoryTest {
         useCase = new UpdateCategory(mockCategoryRepository, mockThreadExecutor,
                 mockPostExecutionThread);
 
-        models = Collections.singletonList(new CategoryModel());
+        models = Collections.singletonList(createFakeCategoryModel());
         useCase.setData(models);
     }
 

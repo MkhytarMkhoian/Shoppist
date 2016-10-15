@@ -28,6 +28,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 
+import static com.justplay1.shoppist.TestUtil.createFakeListModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -47,7 +48,7 @@ public class DeleteListsTest {
         MockitoAnnotations.initMocks(this);
         useCase = new DeleteLists(mockListRepository, mockThreadExecutor, mockPostExecutionThread);
 
-        models = Collections.singletonList(new ListModel());
+        models = Collections.singletonList(createFakeListModel());
         useCase.setData(models);
     }
 

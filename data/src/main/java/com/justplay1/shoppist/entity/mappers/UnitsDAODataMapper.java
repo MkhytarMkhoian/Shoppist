@@ -36,48 +36,47 @@ public class UnitsDAODataMapper {
     public UnitsDAODataMapper() {
     }
 
-    public UnitModel transformFromDAO(UnitDAO unitEntity) {
-        UnitModel unit = null;
-        if (unitEntity != null) {
-            unit = new UnitModel();
-            unit.setId(unitEntity.getId());
-            unit.setName(unitEntity.getName());
-            unit.setShortName(unitEntity.getShortName());
+    public UnitModel transformFromDAO(UnitDAO dao) {
+        UnitModel model = null;
+        if (dao != null) {
+            model = new UnitModel(dao.getId(),
+                    dao.getName(),
+                    dao.getShortName());
         }
-        return unit;
+        return model;
     }
 
-    public List<UnitModel> transformFromDAO(Collection<UnitDAO> unitEntities) {
-        List<UnitModel> units = new ArrayList<>();
-        UnitModel unit;
-        for (UnitDAO unitEntity : unitEntities) {
-            unit = transformFromDAO(unitEntity);
-            if (unit != null) {
-                units.add(unit);
+    public List<UnitModel> transformFromDAO(Collection<UnitDAO> daos) {
+        List<UnitModel> models = new ArrayList<>();
+        UnitModel model;
+        for (UnitDAO dao : daos) {
+            model = transformFromDAO(dao);
+            if (model != null) {
+                models.add(model);
             }
         }
-        return units;
+        return models;
     }
 
-    public UnitDAO transformToDAO(UnitModel unit) {
-        UnitDAO unitEntity = null;
-        if (unit != null) {
-            unitEntity = new UnitDAO(unit.getId(),
-                    unit.getName(),
-                    unit.getShortName());
+    public UnitDAO transformToDAO(UnitModel model) {
+        UnitDAO dao = null;
+        if (model != null) {
+            dao = new UnitDAO(model.getId(),
+                    model.getName(),
+                    model.getShortName());
         }
-        return unitEntity;
+        return dao;
     }
 
-    public List<UnitDAO> transformToDAO(Collection<UnitModel> unitEntities) {
-        List<UnitDAO> units = new ArrayList<>();
-        UnitDAO unit;
-        for (UnitModel unitEntity : unitEntities) {
-            unit = transformToDAO(unitEntity);
-            if (unit != null) {
-                units.add(unit);
+    public List<UnitDAO> transformToDAO(Collection<UnitModel> models) {
+        List<UnitDAO> daos = new ArrayList<>();
+        UnitDAO dao;
+        for (UnitModel model : models) {
+            dao = transformToDAO(model);
+            if (dao != null) {
+                daos.add(dao);
             }
         }
-        return units;
+        return daos;
     }
 }

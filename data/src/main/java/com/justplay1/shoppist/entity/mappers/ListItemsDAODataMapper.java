@@ -43,66 +43,65 @@ public class ListItemsDAODataMapper {
         this.unitsDAODataMapper = unitsDAODataMapper;
     }
 
-    public ListItemModel transformFromDAO(ListItemDAO itemDAO) {
-        ListItemModel item = null;
-        if (itemDAO != null) {
-            item = new ListItemModel();
-            item.setId(itemDAO.getId());
-            item.setName(itemDAO.getName());
-            item.setNote(itemDAO.getNote());
-            item.setParentListId(itemDAO.getParentListId());
-            item.setPrice(itemDAO.getPrice());
-            item.setPriority(itemDAO.getPriority());
-            item.setStatus(itemDAO.getStatus());
-            item.setCategory(categoryDAODataMapper.transformFromDAO(itemDAO.getCategory()));
-            item.setCurrency(currencyDAODataMapper.transformFromDAO(itemDAO.getCurrency()));
-            item.setUnit(unitsDAODataMapper.transformFromDAO(itemDAO.getUnit()));
-            item.setQuantity(itemDAO.getQuantity());
-            item.setTimeCreated(itemDAO.getTimeCreated());
+    public ListItemModel transformFromDAO(ListItemDAO dao) {
+        ListItemModel model = null;
+        if (dao != null) {
+            model = new ListItemModel(dao.getId(),
+                    dao.getName(),
+                    dao.getParentListId(),
+                    dao.getNote(),
+                    dao.getStatus(),
+                    categoryDAODataMapper.transformFromDAO(dao.getCategory()),
+                    dao.getPriority(),
+                    dao.getPrice(),
+                    dao.getQuantity(),
+                    unitsDAODataMapper.transformFromDAO(dao.getUnit()),
+                    dao.getTimeCreated(),
+                    currencyDAODataMapper.transformFromDAO(dao.getCurrency()));
         }
-        return item;
+        return model;
     }
 
-    public List<ListItemModel> transformFromDAO(Collection<ListItemDAO> unitEntities) {
-        List<ListItemModel> items = new ArrayList<>();
-        ListItemModel item;
-        for (ListItemDAO itemEntity : unitEntities) {
-            item = transformFromDAO(itemEntity);
-            if (item != null) {
-                items.add(item);
+    public List<ListItemModel> transformFromDAO(Collection<ListItemDAO> daos) {
+        List<ListItemModel> models = new ArrayList<>();
+        ListItemModel model;
+        for (ListItemDAO dao : daos) {
+            model = transformFromDAO(dao);
+            if (model != null) {
+                models.add(model);
             }
         }
-        return items;
+        return models;
     }
 
-    public ListItemDAO transformToDAO(ListItemModel listItem) {
-        ListItemDAO item = null;
-        if (listItem != null) {
-            item = new ListItemDAO(listItem.getId(),
-                    listItem.getName(),
-                    listItem.getParentListId(),
-                    listItem.getNote(),
-                    listItem.getStatus(),
-                    categoryDAODataMapper.transformToDAO(listItem.getCategory()),
-                    listItem.getPriority(),
-                    listItem.getPrice(),
-                    listItem.getQuantity(),
-                    unitsDAODataMapper.transformToDAO(listItem.getUnit()),
-                    listItem.getTimeCreated(),
-                    currencyDAODataMapper.transformToDAO(listItem.getCurrency()));
+    public ListItemDAO transformToDAO(ListItemModel model) {
+        ListItemDAO dao = null;
+        if (model != null) {
+            dao = new ListItemDAO(model.getId(),
+                    model.getName(),
+                    model.getParentListId(),
+                    model.getNote(),
+                    model.getStatus(),
+                    categoryDAODataMapper.transformToDAO(model.getCategory()),
+                    model.getPriority(),
+                    model.getPrice(),
+                    model.getQuantity(),
+                    unitsDAODataMapper.transformToDAO(model.getUnit()),
+                    model.getTimeCreated(),
+                    currencyDAODataMapper.transformToDAO(model.getCurrency()));
         }
-        return item;
+        return dao;
     }
 
-    public List<ListItemDAO> transformToDAO(Collection<ListItemModel> unitEntities) {
-        List<ListItemDAO> items = new ArrayList<>();
-        ListItemDAO item;
-        for (ListItemModel itemEntity : unitEntities) {
-            item = transformToDAO(itemEntity);
-            if (item != null) {
-                items.add(item);
+    public List<ListItemDAO> transformToDAO(Collection<ListItemModel> models) {
+        List<ListItemDAO> daos = new ArrayList<>();
+        ListItemDAO dao;
+        for (ListItemModel model : models) {
+            dao = transformToDAO(model);
+            if (dao != null) {
+                daos.add(dao);
             }
         }
-        return items;
+        return daos;
     }
 }

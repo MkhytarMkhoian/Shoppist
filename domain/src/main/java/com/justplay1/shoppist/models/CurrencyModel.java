@@ -21,7 +21,8 @@ package com.justplay1.shoppist.models;
  */
 public class CurrencyModel extends BaseModel {
 
-    public CurrencyModel() {
+    public CurrencyModel(String id, String name) {
+        super(id, name);
     }
 
     @Override
