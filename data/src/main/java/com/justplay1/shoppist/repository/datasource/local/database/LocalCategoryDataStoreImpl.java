@@ -86,7 +86,7 @@ public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> 
     @Override
     public Observable<CategoryDAO> getItem(String id) {
         return db.createQuery(CategoryDAO.TABLE, CATEGORY_QUERY(CategoryDAO.WHERE_CATEGORY_ID), id)
-                .mapToOne(cursor -> CategoryDAO.map(cursor, CategoryDAO.CATEGORY_ID));
+                .mapToOne(cursor -> CategoryDAO.map(cursor, CategoryDAO.COL_ID));
     }
 
     @Override
@@ -168,6 +168,6 @@ public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> 
 
     private Observable<List<CategoryDAO>> getAllCategories() {
         return db.createQuery(CategoryDAO.TABLE, CATEGORY_QUERY(null), new String[]{})
-                .mapToList(cursor -> CategoryDAO.map(cursor, CategoryDAO.CATEGORY_ID));
+                .mapToList(cursor -> CategoryDAO.map(cursor, CategoryDAO.COL_ID));
     }
 }

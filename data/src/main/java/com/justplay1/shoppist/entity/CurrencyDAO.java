@@ -32,10 +32,10 @@ public class CurrencyDAO extends BaseDAO {
 
     public static final String TABLE = "currency";
 
-    public static final String CURRENCY_ID = "main_currency_id";
-    public static final String NAME = "currency_name";
+    public static final String COL_ID = "main_currency_id";
+    public static final String COL_NAME = "currency_name";
 
-    public static final String WHERE_STRING = CURRENCY_ID + " IN(?)";
+    public static final String WHERE_STRING = COL_ID + " IN(?)";
 
     public CurrencyDAO(String id, String name) {
         super(id, name);
@@ -52,12 +52,12 @@ public class CurrencyDAO extends BaseDAO {
 
     @Override
     public int hashCode() {
-        return 31 * id.hashCode();
+        return id.hashCode();
     }
 
     public static final Func1<Cursor, CurrencyDAO> MAPPER = (Func1<Cursor, CurrencyDAO>) cursor -> {
-        String id = DbUtil.getString(cursor, CURRENCY_ID);
-        String name = DbUtil.getString(cursor, NAME);
+        String id = DbUtil.getString(cursor, COL_ID);
+        String name = DbUtil.getString(cursor, COL_NAME);
         return new CurrencyDAO(id, name);
     };
 
@@ -65,12 +65,12 @@ public class CurrencyDAO extends BaseDAO {
         private final ContentValues values = new ContentValues();
 
         public Builder id(String id) {
-            values.put(CURRENCY_ID, id);
+            values.put(COL_ID, id);
             return this;
         }
 
         public Builder name(String name) {
-            values.put(NAME, name);
+            values.put(COL_NAME, name);
             return this;
         }
 

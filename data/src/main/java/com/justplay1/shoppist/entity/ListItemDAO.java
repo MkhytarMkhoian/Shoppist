@@ -30,20 +30,20 @@ public class ListItemDAO extends BaseDAO {
 
     public static final String TABLE = "shopping_list_items";
 
-    public static final String LIST_ITEM_ID = "shopping_list_item_id";
-    public static final String PARENT_LIST_ID = "shopping_list_item_parent_list_id";
-    public static final String LIST_ITEM_NAME = "shopping_list_item_name";
-    public static final String SHORT_DESCRIPTION = "shopping_list_item_short_description";
-    public static final String STATUS = "shopping_list_item_status";
-    public static final String PRIORITY = "shopping_list_item_priority";
-    public static final String PRICE = "shopping_list_item_price";
-    public static final String QUANTITY = "shopping_list_item_quantity";
-    public static final String UNIT_ID = "shopping_list_item_unit_id";
-    public static final String CURRENCY_ID = "shopping_list_item_currency_id";
-    public static final String TIME_CREATED = "shopping_list_item_time_created";
-    public static final String CATEGORY_ID = "shopping_list_item_category_id";
+    public static final String COL_ID = "shopping_list_item_id";
+    public static final String COL_PARENT_LIST_ID = "shopping_list_item_parent_list_id";
+    public static final String COL_NAME = "shopping_list_item_name";
+    public static final String COL_NOTE = "shopping_list_item_short_description";
+    public static final String COL_STATUS = "shopping_list_item_status";
+    public static final String COL_PRIORITY = "shopping_list_item_priority";
+    public static final String COL_PRICE = "shopping_list_item_price";
+    public static final String COL_QUANTITY = "shopping_list_item_quantity";
+    public static final String COL_UNIT_ID = "shopping_list_item_unit_id";
+    public static final String COL_CURRENCY_ID = "shopping_list_item_currency_id";
+    public static final String COL_TIME_CREATED = "shopping_list_item_time_created";
+    public static final String COL_CATEGORY_ID = "shopping_list_item_category_id";
 
-    public static final String WHERE_STRING = PARENT_LIST_ID + "=? and " + LIST_ITEM_ID + " IN(?)";
+    public static final String WHERE_STRING = COL_PARENT_LIST_ID + "=? and " + COL_ID + " IN(?)";
 
     private String parentListId;
     private String note;
@@ -142,16 +142,16 @@ public class ListItemDAO extends BaseDAO {
     }
 
     public static final Func1<Cursor, ListItemDAO> MAPPER = (Func1<Cursor, ListItemDAO>) cursor -> {
-        String id = DbUtil.getString(cursor, LIST_ITEM_ID);
-        String parentId = DbUtil.getString(cursor, PARENT_LIST_ID);
-        String name = DbUtil.getString(cursor, LIST_ITEM_NAME);
-        boolean status = DbUtil.getBoolean(cursor, STATUS);
-        long timeCreated = DbUtil.getLong(cursor, TIME_CREATED);
-        double price = DbUtil.getDouble(cursor, PRICE);
-        double quantity = DbUtil.getDouble(cursor, QUANTITY);
-        int priority = DbUtil.getInt(cursor, PRIORITY);
-        String note = DbUtil.getString(cursor, SHORT_DESCRIPTION);
-        CategoryDAO category = CategoryDAO.map(cursor, CATEGORY_ID);
+        String id = DbUtil.getString(cursor, COL_ID);
+        String parentId = DbUtil.getString(cursor, COL_PARENT_LIST_ID);
+        String name = DbUtil.getString(cursor, COL_NAME);
+        boolean status = DbUtil.getBoolean(cursor, COL_STATUS);
+        long timeCreated = DbUtil.getLong(cursor, COL_TIME_CREATED);
+        double price = DbUtil.getDouble(cursor, COL_PRICE);
+        double quantity = DbUtil.getDouble(cursor, COL_QUANTITY);
+        int priority = DbUtil.getInt(cursor, COL_PRIORITY);
+        String note = DbUtil.getString(cursor, COL_NOTE);
+        CategoryDAO category = CategoryDAO.map(cursor, COL_CATEGORY_ID);
         UnitDAO unit = UnitDAO.MAPPER.call(cursor);
         CurrencyDAO currency = CurrencyDAO.MAPPER.call(cursor);
         return new ListItemDAO(id, name, parentId, note, status, category, priority,
@@ -162,62 +162,62 @@ public class ListItemDAO extends BaseDAO {
         private final ContentValues values = new ContentValues();
 
         public Builder id(String id) {
-            values.put(LIST_ITEM_ID, id);
+            values.put(COL_ID, id);
             return this;
         }
 
         public Builder parentId(String parentId) {
-            values.put(PARENT_LIST_ID, parentId);
+            values.put(COL_PARENT_LIST_ID, parentId);
             return this;
         }
 
         public Builder name(String name) {
-            values.put(LIST_ITEM_NAME, name);
+            values.put(COL_NAME, name);
             return this;
         }
 
         public Builder status(boolean status) {
-            values.put(STATUS, status ? 1 : 0);
+            values.put(COL_STATUS, status ? 1 : 0);
             return this;
         }
 
         public Builder priority(int priority) {
-            values.put(PRIORITY, priority);
+            values.put(COL_PRIORITY, priority);
             return this;
         }
 
         public Builder timeCreated(long timeCreated) {
-            values.put(TIME_CREATED, timeCreated);
+            values.put(COL_TIME_CREATED, timeCreated);
             return this;
         }
 
         public Builder price(double price) {
-            values.put(PRICE, price);
+            values.put(COL_PRICE, price);
             return this;
         }
 
         public Builder quantity(double quantity) {
-            values.put(QUANTITY, quantity);
+            values.put(COL_QUANTITY, quantity);
             return this;
         }
 
-        public Builder description(String description) {
-            values.put(SHORT_DESCRIPTION, description);
+        public Builder note(String note) {
+            values.put(COL_NOTE, note);
             return this;
         }
 
         public Builder categoryId(String id) {
-            values.put(CATEGORY_ID, id);
+            values.put(COL_CATEGORY_ID, id);
             return this;
         }
 
         public Builder unitId(String id) {
-            values.put(UNIT_ID, id);
+            values.put(COL_UNIT_ID, id);
             return this;
         }
 
         public Builder currencyId(String id) {
-            values.put(CURRENCY_ID, id);
+            values.put(COL_CURRENCY_ID, id);
             return this;
         }
 

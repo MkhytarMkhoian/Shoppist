@@ -39,16 +39,16 @@ import rx.Observable;
 public class LocalListDataStoreImpl extends BaseLocalDataStore<ListDAO> implements LocalListDataStore {
 
     private static String LIST_QUERY(String selection) {
-        String query = "SELECT *, COUNT(i." + ListItemDAO.STATUS + ") " + ListDAO.SIZE
-                + ", SUM(i." + ListItemDAO.STATUS + ") " + ListDAO.BOUGHT_COUNT +
+        String query = "SELECT *, COUNT(i." + ListItemDAO.COL_STATUS + ") " + ListDAO.COL_SIZE
+                + ", SUM(i." + ListItemDAO.COL_STATUS + ") " + ListDAO.COL_BOUGHT_COUNT +
                 " FROM " + ListDAO.TABLE + " s" +
                 " LEFT OUTER JOIN " + ListItemDAO.TABLE + " i" +
-                " ON s." + ListDAO.LIST_ID + " = i." + ListItemDAO.PARENT_LIST_ID;
+                " ON s." + ListDAO.COL_ID + " = i." + ListItemDAO.COL_PARENT_LIST_ID;
         if (selection == null) {
-            return query + " GROUP BY s." + ListDAO.LIST_ID;
+            return query + " GROUP BY s." + ListDAO.COL_ID;
         }
         return query + " WHERE " + selection +
-                " GROUP BY s." + ListDAO.LIST_ID;
+                " GROUP BY s." + ListDAO.COL_ID;
     }
 
     @Inject
@@ -130,7 +130,7 @@ public class LocalListDataStoreImpl extends BaseLocalDataStore<ListDAO> implemen
     public void deleteListItems(String id) {
         BriteDatabase.Transaction transaction = db.newTransaction();
         try {
-            String selection = ListItemDAO.PARENT_LIST_ID + "=?";
+            String selection = ListItemDAO.COL_PARENT_LIST_ID + "=?";
             String[] selectionArgs = new String[]{id, ""};
             db.delete(ListItemDAO.TABLE, selection, selectionArgs);
             transaction.markSuccessful();

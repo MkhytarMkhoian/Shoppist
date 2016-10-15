@@ -47,11 +47,11 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
     private static String PRODUCTS_QUERY(String selection) {
         String query = "SELECT * FROM " + ProductDAO.TABLE +
                 " LEFT OUTER JOIN " + CategoryDAO.TABLE
-                + " ON " + ProductDAO.CATEGORY_ID + " = " + CategoryDAO.TABLE
-                + "." + CategoryDAO.CATEGORY_ID +
+                + " ON " + ProductDAO.COL_CATEGORY_ID + " = " + CategoryDAO.TABLE
+                + "." + CategoryDAO.COL_ID +
                 " LEFT OUTER JOIN " + UnitDAO.TABLE
-                + " ON " + ProductDAO.UNIT_ID + " = " + UnitDAO.TABLE
-                + "." + UnitDAO.UNIT_ID;
+                + " ON " + ProductDAO.COL_UNIT_ID + " = " + UnitDAO.TABLE
+                + "." + UnitDAO.COL_ID;
         if (selection == null) {
             return query;
         }

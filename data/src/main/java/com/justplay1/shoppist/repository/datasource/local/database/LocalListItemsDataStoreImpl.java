@@ -45,11 +45,11 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
     private static final String ALL_LIST_ITEMS =
             "SELECT * FROM " + ListItemDAO.TABLE +
                     " LEFT OUTER JOIN " + CategoryDAO.TABLE
-                    + " ON " + ListItemDAO.CATEGORY_ID + " = " + CategoryDAO.TABLE + "." + CategoryDAO.CATEGORY_ID +
+                    + " ON " + ListItemDAO.COL_CATEGORY_ID + " = " + CategoryDAO.TABLE + "." + CategoryDAO.COL_ID +
                     " LEFT OUTER JOIN " + UnitDAO.TABLE
-                    + " ON " + ListItemDAO.UNIT_ID + " = " + UnitDAO.TABLE + "." + UnitDAO.UNIT_ID +
+                    + " ON " + ListItemDAO.COL_UNIT_ID + " = " + UnitDAO.TABLE + "." + UnitDAO.COL_ID +
                     " LEFT OUTER JOIN " + CurrencyDAO.TABLE
-                    + " ON " + ListItemDAO.CURRENCY_ID + " = " + CurrencyDAO.TABLE + "." + CurrencyDAO.CURRENCY_ID;
+                    + " ON " + ListItemDAO.COL_CURRENCY_ID + " = " + CurrencyDAO.TABLE + "." + CurrencyDAO.COL_ID;
 
     private static String LIST_ITEMS_QUERY(String selection) {
         if (selection == null){
@@ -151,7 +151,7 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
 
     private Observable<List<ListItemDAO>> getListItems(String listId) {
         return db.createQuery(ListItemDAO.TABLE,
-                LIST_ITEMS_QUERY(ListItemDAO.PARENT_LIST_ID + "=?"),
+                LIST_ITEMS_QUERY(ListItemDAO.COL_PARENT_LIST_ID + "=?"),
                 listId)
                 .mapToList(ListItemDAO.MAPPER);
     }
@@ -166,7 +166,7 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
         builder.currencyId(item.getCurrency().getId());
         builder.price(item.getPrice());
         builder.quantity(item.getQuantity());
-        builder.description(item.getNote());
+        builder.note(item.getNote());
         builder.status(item.getStatus());
         builder.priority(item.getPriority());
         builder.timeCreated(item.getTimeCreated());

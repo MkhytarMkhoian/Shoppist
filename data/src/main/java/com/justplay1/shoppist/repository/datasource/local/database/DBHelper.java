@@ -54,58 +54,58 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_PRODUCTS_TABLE = "create table " + ProductDAO.TABLE + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
-            ProductDAO.PRODUCT_ID + " text, " +
-            ProductDAO.NAME + " text, " +
-            ProductDAO.IS_CREATE_BY_USER + " integer DEFAULT 0, " +
-            ProductDAO.TIME_CREATED + " integer, " +
-            ProductDAO.CATEGORY_ID + " text, " +
-            ProductDAO.UNIT_ID + " text DEFAULT " + UnitDAO.NO_UNIT_ID +
+            ProductDAO.COL_ID + " text, " +
+            ProductDAO.COL_NAME + " text, " +
+            ProductDAO.COL_IS_CREATE_BY_USER + " integer DEFAULT 0, " +
+            ProductDAO.COL_TIME_CREATED + " integer, " +
+            ProductDAO.COL_CATEGORY_ID + " text, " +
+            ProductDAO.COL_UNIT_ID + " text DEFAULT " + UnitDAO.NO_UNIT_ID +
             ");";
 
     private static final String CREATE_CATEGORIES_TABLE = "create table " + CategoryDAO.TABLE + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
-            CategoryDAO.NAME + " text, " +
-            CategoryDAO.COLOR + " integer, " +
-            CategoryDAO.CREATE_BY_USER + " integer DEFAULT 0, " +
-            CategoryDAO.CATEGORY_ID + " text " +
+            CategoryDAO.COL_NAME + " text, " +
+            CategoryDAO.COL_COLOR + " integer, " +
+            CategoryDAO.COL_CREATE_BY_USER + " integer DEFAULT 0, " +
+            CategoryDAO.COL_ID + " text " +
             ");";
 
     private static final String CREATE_UNITS_TABLE = "create table " + UnitDAO.TABLE + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
-            UnitDAO.FULL_NAME + " text, " +
-            UnitDAO.SHORT_NAME + " text, " +
-            UnitDAO.UNIT_ID + " text " +
+            UnitDAO.COL_FULL_NAME + " text, " +
+            UnitDAO.COL_SHORT_NAME + " text, " +
+            UnitDAO.COL_ID + " text " +
             ");";
 
     private static final String CREATE_CURRENCIES_TABLE = "create table " + CurrencyDAO.TABLE + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
-            CurrencyDAO.NAME + " text, " +
-            CurrencyDAO.CURRENCY_ID + " text " +
+            CurrencyDAO.COL_NAME + " text, " +
+            CurrencyDAO.COL_ID + " text " +
             ");";
 
     private static final String CREATE_LIST_ITEMS_TABLE = "create table " + ListItemDAO.TABLE + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
-            ListItemDAO.LIST_ITEM_ID + " text, " +
-            ListItemDAO.PARENT_LIST_ID + " text, " +
-            ListItemDAO.LIST_ITEM_NAME + " text, " +
-            ListItemDAO.SHORT_DESCRIPTION + " text, " +
-            ListItemDAO.STATUS + " integer, " +
-            ListItemDAO.PRIORITY + " integer, " +
-            ListItemDAO.PRICE + " real, " +
-            ListItemDAO.QUANTITY + " real, " +
-            ListItemDAO.UNIT_ID + " text, " +
-            ListItemDAO.CURRENCY_ID + " text, " +
-            ListItemDAO.CATEGORY_ID + " text, " +
-            ListItemDAO.TIME_CREATED + " integer " +
+            ListItemDAO.COL_ID + " text, " +
+            ListItemDAO.COL_PARENT_LIST_ID + " text, " +
+            ListItemDAO.COL_NAME + " text, " +
+            ListItemDAO.COL_NOTE + " text, " +
+            ListItemDAO.COL_STATUS + " integer, " +
+            ListItemDAO.COL_PRIORITY + " integer, " +
+            ListItemDAO.COL_PRICE + " real, " +
+            ListItemDAO.COL_QUANTITY + " real, " +
+            ListItemDAO.COL_UNIT_ID + " text, " +
+            ListItemDAO.COL_CURRENCY_ID + " text, " +
+            ListItemDAO.COL_CATEGORY_ID + " text, " +
+            ListItemDAO.COL_TIME_CREATED + " integer " +
             ");";
 
     private static final String CREATE_LISTS_TABLE = "create table " + ListDAO.TABLE + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
-            ListDAO.LIST_ID + " text, " +
-            ListDAO.LIST_NAME + " text, " +
-            ListDAO.PRIORITY + " integer, " +
-            ListDAO.COLOR + " integer, " +
-            ListDAO.TIME_CREATED + " integer " +
+            ListDAO.COL_ID + " text, " +
+            ListDAO.COL_LIST_NAME + " text, " +
+            ListDAO.COL_PRIORITY + " integer, " +
+            ListDAO.COL_COLOR + " integer, " +
+            ListDAO.COL_TIME_CREATED + " integer " +
             ");";
 
     private Context context;
@@ -203,7 +203,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     try {
                         db.beginTransaction();
                         db.execSQL("ALTER TABLE " + ProductDAO.TABLE + " ADD COLUMN "
-                                + ProductDAO.IS_CREATE_BY_USER + " integer DEFAULT 0");
+                                + ProductDAO.COL_IS_CREATE_BY_USER + " integer DEFAULT 0");
                         db.setTransactionSuccessful();
                     } finally {
                         db.endTransaction();
@@ -214,7 +214,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         db.beginTransaction();
                         long time = System.currentTimeMillis();
                         db.execSQL("ALTER TABLE " + ProductDAO.TABLE + " ADD COLUMN "
-                                + ProductDAO.TIME_CREATED + " integer DEFAULT " + time);
+                                + ProductDAO.COL_TIME_CREATED + " integer DEFAULT " + time);
                         db.setTransactionSuccessful();
                     } finally {
                         db.endTransaction();
@@ -241,11 +241,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 case 6:
                     try {
                         db.beginTransaction();
-                        if (!isColumnExist(db, ProductDAO.TABLE, ProductDAO.UNIT_ID)) {
+                        if (!isColumnExist(db, ProductDAO.TABLE, ProductDAO.COL_UNIT_ID)) {
                             db.execSQL("ALTER TABLE " + ProductDAO.TABLE + " ADD COLUMN "
-                                    + ProductDAO.UNIT_ID + " text DEFAULT " + UnitDAO.NO_UNIT_ID);
+                                    + ProductDAO.COL_UNIT_ID + " text DEFAULT " + UnitDAO.NO_UNIT_ID);
                         } else {
-                            Log.d("ALTER TABLE", ProductDAO.UNIT_ID + " column already exists");
+                            Log.d("ALTER TABLE", ProductDAO.COL_UNIT_ID + " column already exists");
                         }
 
                         String[] units = context.getResources().getStringArray(R.array.units);
@@ -279,12 +279,12 @@ public class DBHelper extends SQLiteOpenHelper {
                         try {
                             if (!cursor.isClosed() && cursor.moveToFirst()) {
                                 do {
-                                    String oldId = DbUtil.getString(cursor, ProductDAO.PRODUCT_ID);
+                                    String oldId = DbUtil.getString(cursor, ProductDAO.COL_ID);
                                     db.update(ProductDAO.TABLE,
                                             new ProductDAO.Builder()
-                                                    .id(UUID.nameUUIDFromBytes((DbUtil.getString(cursor, ProductDAO.NAME)).getBytes()).toString())
+                                                    .id(UUID.nameUUIDFromBytes((DbUtil.getString(cursor, ProductDAO.COL_NAME)).getBytes()).toString())
                                                     .build(),
-                                            ProductDAO.PRODUCT_ID + "=?", new String[]{oldId});
+                                            ProductDAO.COL_ID + "=?", new String[]{oldId});
                                 } while (cursor.moveToNext());
                             }
                         } catch (Exception e) {
@@ -328,10 +328,10 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL(CREATE_CATEGORIES_TABLE);
             db.execSQL("INSERT INTO " + CategoryDAO.TABLE + " SELECT " +
                     COLUMN_ID + "," +
-                    CategoryDAO.NAME + "," +
-                    CategoryDAO.COLOR + "," +
-                    CategoryDAO.CREATE_BY_USER + "," +
-                    "CAST(" + CategoryDAO.CATEGORY_ID + " AS TEXT)" +
+                    CategoryDAO.COL_NAME + "," +
+                    CategoryDAO.COL_COLOR + "," +
+                    CategoryDAO.COL_CREATE_BY_USER + "," +
+                    "CAST(" + CategoryDAO.COL_ID + " AS TEXT)" +
                     " FROM " + CategoryDAO.TABLE + "_backup;");
             db.execSQL("DROP TABLE " + CategoryDAO.TABLE + "_backup;");
             db.setTransactionSuccessful();
@@ -348,9 +348,9 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL(CREATE_UNITS_TABLE);
             db.execSQL("INSERT INTO " + UnitDAO.TABLE + " SELECT " +
                     COLUMN_ID + "," +
-                    UnitDAO.FULL_NAME + "," +
-                    UnitDAO.SHORT_NAME + "," +
-                    "CAST(" + UnitDAO.UNIT_ID + " AS TEXT)" +
+                    UnitDAO.COL_FULL_NAME + "," +
+                    UnitDAO.COL_SHORT_NAME + "," +
+                    "CAST(" + UnitDAO.COL_ID + " AS TEXT)" +
                     " FROM " + UnitDAO.TABLE + "_backup;");
             db.execSQL("DROP TABLE " + UnitDAO.TABLE + "_backup;");
             db.setTransactionSuccessful();
@@ -367,8 +367,8 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL(CREATE_CURRENCIES_TABLE);
             db.execSQL("INSERT INTO " + CurrencyDAO.TABLE + " SELECT " +
                     COLUMN_ID + "," +
-                    CurrencyDAO.NAME + "," +
-                    "CAST(" + CurrencyDAO.CURRENCY_ID + " AS TEXT)" +
+                    CurrencyDAO.COL_NAME + "," +
+                    "CAST(" + CurrencyDAO.COL_ID + " AS TEXT)" +
                     " FROM " + CurrencyDAO.TABLE + "_backup;");
             db.execSQL("DROP TABLE " + CurrencyDAO.TABLE + "_backup;");
             db.setTransactionSuccessful();
@@ -386,16 +386,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
             String insert = String.format("INSERT INTO %s (%s, %s, %s, %s) ",
                     ProductDAO.TABLE,
-                    ProductDAO.NAME,
-                    ProductDAO.IS_CREATE_BY_USER,
-                    ProductDAO.TIME_CREATED,
-                    ProductDAO.CATEGORY_ID);
+                    ProductDAO.COL_NAME,
+                    ProductDAO.COL_IS_CREATE_BY_USER,
+                    ProductDAO.COL_TIME_CREATED,
+                    ProductDAO.COL_CATEGORY_ID);
 
             db.execSQL(insert + "SELECT " +
-                    ProductDAO.NAME + "," +
-                    ProductDAO.IS_CREATE_BY_USER + "," +
-                    ProductDAO.TIME_CREATED + "," +
-                    "CAST(" + ProductDAO.CATEGORY_ID + " AS TEXT)" +
+                    ProductDAO.COL_NAME + "," +
+                    ProductDAO.COL_IS_CREATE_BY_USER + "," +
+                    ProductDAO.COL_TIME_CREATED + "," +
+                    "CAST(" + ProductDAO.COL_CATEGORY_ID + " AS TEXT)" +
                     " FROM " + ProductDAO.TABLE + "_backup;");
 
             db.execSQL("DROP TABLE " + ProductDAO.TABLE + "_backup;");
@@ -407,12 +407,12 @@ public class DBHelper extends SQLiteOpenHelper {
             try {
                 if (!cursor.isClosed() && cursor.moveToFirst()) {
                     do {
-                        String name = DbUtil.getString(cursor, ProductDAO.NAME);
+                        String name = DbUtil.getString(cursor, ProductDAO.COL_NAME);
                         db.update(ProductDAO.TABLE,
                                 new ProductDAO.Builder()
                                         .id(UUID.nameUUIDFromBytes((name).getBytes()).toString())
                                         .build(),
-                                ProductDAO.NAME + "=?", new String[]{name});
+                                ProductDAO.COL_NAME + "=?", new String[]{name});
                     } while (cursor.moveToNext());
                 }
             } catch (Exception e) {
@@ -433,27 +433,27 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             db.beginTransaction();
             db.execSQL("ALTER TABLE " + ListDAO.TABLE + " ADD COLUMN "
-                    + ListDAO.LIST_ID + " text");
+                    + ListDAO.COL_ID + " text");
 
-            String request = "SELECT *, COUNT(i." + ListItemDAO.STATUS + ") " + ListDAO.SIZE +
-                    ", SUM(i." + ListItemDAO.STATUS + ") " + ListDAO.BOUGHT_COUNT +
+            String request = "SELECT *, COUNT(i." + ListItemDAO.COL_STATUS + ") " + ListDAO.COL_SIZE +
+                    ", SUM(i." + ListItemDAO.COL_STATUS + ") " + ListDAO.COL_BOUGHT_COUNT +
                     " FROM " + ListDAO.TABLE + " s" +
                     " LEFT JOIN " + ListItemDAO.TABLE + " i" +
-                    " ON s." + ListDAO.LIST_NAME + " = i.shopping_list_item_parent_list_name" +
-                    " GROUP BY s." + ListDAO.LIST_NAME;
+                    " ON s." + ListDAO.COL_LIST_NAME + " = i.shopping_list_item_parent_list_name" +
+                    " GROUP BY s." + ListDAO.COL_LIST_NAME;
             Cursor cursor = db.rawQuery(request, null);
 
             Map<String, String> shoppingLists = new HashMap<>();
             try {
                 if (!cursor.isClosed() && cursor.moveToFirst()) {
                     do {
-                        String id = DbUtil.getString(cursor, ListDAO.LIST_ID);
-                        String name = DbUtil.getString(cursor, ListDAO.LIST_NAME);
+                        String id = DbUtil.getString(cursor, ListDAO.COL_ID);
+                        String name = DbUtil.getString(cursor, ListDAO.COL_LIST_NAME);
                         shoppingLists.put(id, name);
                         db.update(ListDAO.TABLE, new ListDAO.Builder()
                                         .id(UUID.nameUUIDFromBytes((name + UUID.randomUUID()).getBytes()).toString())
                                         .build(),
-                                ListDAO.LIST_NAME + "=?", new String[]{name});
+                                ListDAO.COL_LIST_NAME + "=?", new String[]{name});
                     } while (cursor.moveToNext());
                 }
             } catch (Exception e) {
@@ -484,7 +484,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 if (!cursor.isClosed() && cursor.moveToFirst()) {
                     do {
                         String parentListName = cursor.getString(cursor.getColumnIndex("shopping_list_item_parent_list_name"));
-                        String name = cursor.getString(cursor.getColumnIndex(ListItemDAO.LIST_ITEM_NAME));
+                        String name = cursor.getString(cursor.getColumnIndex(ListItemDAO.COL_NAME));
 
                         ListItemDAO.Builder cv = new ListItemDAO.Builder();
 
@@ -495,15 +495,15 @@ public class DBHelper extends SQLiteOpenHelper {
                         }
                         cv.id(UUID.nameUUIDFromBytes((name + UUID.randomUUID()).getBytes()).toString());
                         cv.name(name);
-                        cv.description(DbUtil.getString(cursor, ListItemDAO.SHORT_DESCRIPTION));
-                        cv.price(DbUtil.getDouble(cursor, ListItemDAO.PRICE));
-                        cv.timeCreated(DbUtil.getLong(cursor, ListItemDAO.TIME_CREATED));
-                        cv.quantity(DbUtil.getDouble(cursor, ListItemDAO.QUANTITY));
-                        cv.status(DbUtil.getBoolean(cursor, ListItemDAO.STATUS));
-                        cv.priority(DbUtil.getInt(cursor, ListItemDAO.PRIORITY));
-                        cv.categoryId(DbUtil.getString(cursor, ListItemDAO.CATEGORY_ID));
-                        cv.unitId(DbUtil.getString(cursor, ListItemDAO.UNIT_ID));
-                        cv.currencyId(DbUtil.getString(cursor, ListItemDAO.CURRENCY_ID));
+                        cv.note(DbUtil.getString(cursor, ListItemDAO.COL_NOTE));
+                        cv.price(DbUtil.getDouble(cursor, ListItemDAO.COL_PRICE));
+                        cv.timeCreated(DbUtil.getLong(cursor, ListItemDAO.COL_TIME_CREATED));
+                        cv.quantity(DbUtil.getDouble(cursor, ListItemDAO.COL_QUANTITY));
+                        cv.status(DbUtil.getBoolean(cursor, ListItemDAO.COL_STATUS));
+                        cv.priority(DbUtil.getInt(cursor, ListItemDAO.COL_PRIORITY));
+                        cv.categoryId(DbUtil.getString(cursor, ListItemDAO.COL_CATEGORY_ID));
+                        cv.unitId(DbUtil.getString(cursor, ListItemDAO.COL_UNIT_ID));
+                        cv.currencyId(DbUtil.getString(cursor, ListItemDAO.COL_CURRENCY_ID));
 
                         db.insert(ListItemDAO.TABLE, null, cv.build());
                     } while (cursor.moveToNext());

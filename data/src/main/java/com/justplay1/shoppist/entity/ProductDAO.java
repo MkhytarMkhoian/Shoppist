@@ -30,14 +30,14 @@ public class ProductDAO extends BaseDAO {
 
     public static final String TABLE = "products";
 
-    public static final String PRODUCT_ID = "product_id";
-    public static final String NAME = "product_name";
-    public static final String CATEGORY_ID = "product_category_id";
-    public static final String IS_CREATE_BY_USER = "product_is_create_by_user";
-    public static final String TIME_CREATED = "product_time_created";
-    public static final String UNIT_ID = "product_unit_id";
+    public static final String COL_ID = "product_id";
+    public static final String COL_NAME = "product_name";
+    public static final String COL_CATEGORY_ID = "product_category_id";
+    public static final String COL_IS_CREATE_BY_USER = "product_is_create_by_user";
+    public static final String COL_TIME_CREATED = "product_time_created";
+    public static final String COL_UNIT_ID = "product_unit_id";
 
-    public static final String WHERE_PRODUCT_ID = PRODUCT_ID + " IN(?)";
+    public static final String WHERE_PRODUCT_ID = COL_ID + " IN(?)";
 
     private CategoryDAO category;
     private boolean isCreateByUser;
@@ -91,11 +91,11 @@ public class ProductDAO extends BaseDAO {
     }
 
     public static final Func1<Cursor, ProductDAO> MAPPER = (Func1<Cursor, ProductDAO>) cursor -> {
-        String id = DbUtil.getString(cursor, PRODUCT_ID);
-        String name = DbUtil.getString(cursor, NAME);
-        boolean isCreateByUser = DbUtil.getBoolean(cursor, IS_CREATE_BY_USER);
-        long timeCreated = DbUtil.getLong(cursor, TIME_CREATED);
-        CategoryDAO category = CategoryDAO.map(cursor, CATEGORY_ID);
+        String id = DbUtil.getString(cursor, COL_ID);
+        String name = DbUtil.getString(cursor, COL_NAME);
+        boolean isCreateByUser = DbUtil.getBoolean(cursor, COL_IS_CREATE_BY_USER);
+        long timeCreated = DbUtil.getLong(cursor, COL_TIME_CREATED);
+        CategoryDAO category = CategoryDAO.map(cursor, COL_CATEGORY_ID);
         UnitDAO unit = UnitDAO.MAPPER.call(cursor);
         return new ProductDAO(id, name, category, isCreateByUser, timeCreated, unit);
     };
@@ -104,32 +104,32 @@ public class ProductDAO extends BaseDAO {
         private final ContentValues values = new ContentValues();
 
         public Builder id(String id) {
-            values.put(PRODUCT_ID, id);
+            values.put(COL_ID, id);
             return this;
         }
 
         public Builder name(String name) {
-            values.put(NAME, name);
+            values.put(COL_NAME, name);
             return this;
         }
 
         public Builder unitId(String id) {
-            values.put(UNIT_ID, id);
+            values.put(COL_UNIT_ID, id);
             return this;
         }
 
         public Builder categoryId(String id) {
-            values.put(CATEGORY_ID, id);
+            values.put(COL_CATEGORY_ID, id);
             return this;
         }
 
         public Builder isCreateByUser(boolean isCreate) {
-            values.put(IS_CREATE_BY_USER, isCreate ? 1 : 0);
+            values.put(COL_IS_CREATE_BY_USER, isCreate ? 1 : 0);
             return this;
         }
 
         public Builder timeCreated(long timeCreated) {
-            values.put(TIME_CREATED, timeCreated);
+            values.put(COL_TIME_CREATED, timeCreated);
             return this;
         }
 

@@ -31,15 +31,15 @@ public class ListDAO extends BaseDAO {
 
     public static final String TABLE = "shopping_lists";
 
-    public static final String LIST_ID = "shopping_list_id";
-    public static final String LIST_NAME = "shopping_list_name";
-    public static final String COLOR = "shopping_list_color";
-    public static final String PRIORITY = "shopping_list_priority";
-    public static final String TIME_CREATED = "shopping_list_time_created";
-    public static final String BOUGHT_COUNT = "shopping_list_bought_count";
-    public static final String SIZE = "shopping_list_size";
+    public static final String COL_ID = "shopping_list_id";
+    public static final String COL_LIST_NAME = "shopping_list_name";
+    public static final String COL_COLOR = "shopping_list_color";
+    public static final String COL_PRIORITY = "shopping_list_priority";
+    public static final String COL_TIME_CREATED = "shopping_list_time_created";
+    public static final String COL_BOUGHT_COUNT = "shopping_list_bought_count";
+    public static final String COL_SIZE = "shopping_list_size";
 
-    public static final String WHERE_STRING = LIST_ID + " IN(?)";
+    public static final String WHERE_STRING = COL_ID + " IN(?)";
 
     private int boughtCount;
     private long timeCreated;
@@ -94,13 +94,13 @@ public class ListDAO extends BaseDAO {
 
 
     public static final Func1<Cursor, ListDAO> MAPPER = (Func1<Cursor, ListDAO>) cursor -> {
-        String id = DbUtil.getString(cursor, LIST_ID);
-        String name = DbUtil.getString(cursor, LIST_NAME);
-        int color = DbUtil.getInt(cursor, COLOR);
-        long timeCreated = DbUtil.getLong(cursor, TIME_CREATED);
-        int size = DbUtil.getInt(cursor, SIZE);
-        int boughtCount = DbUtil.getInt(cursor, BOUGHT_COUNT);
-        int priority = DbUtil.getInt(cursor, PRIORITY);
+        String id = DbUtil.getString(cursor, COL_ID);
+        String name = DbUtil.getString(cursor, COL_LIST_NAME);
+        int color = DbUtil.getInt(cursor, COL_COLOR);
+        long timeCreated = DbUtil.getLong(cursor, COL_TIME_CREATED);
+        int size = DbUtil.getInt(cursor, COL_SIZE);
+        int boughtCount = DbUtil.getInt(cursor, COL_BOUGHT_COUNT);
+        int priority = DbUtil.getInt(cursor, COL_PRIORITY);
         return new ListDAO(id, name, boughtCount, timeCreated, priority, color, size);
     };
 
@@ -108,27 +108,27 @@ public class ListDAO extends BaseDAO {
         private final ContentValues values = new ContentValues();
 
         public Builder id(String id) {
-            values.put(LIST_ID, id);
+            values.put(COL_ID, id);
             return this;
         }
 
         public Builder name(String name) {
-            values.put(LIST_NAME, name);
+            values.put(COL_LIST_NAME, name);
             return this;
         }
 
         public Builder color(int color) {
-            values.put(COLOR, color);
+            values.put(COL_COLOR, color);
             return this;
         }
 
         public Builder priority(int priority) {
-            values.put(PRIORITY, priority);
+            values.put(COL_PRIORITY, priority);
             return this;
         }
 
         public Builder timeCreated(long timeCreated) {
-            values.put(TIME_CREATED, timeCreated);
+            values.put(COL_TIME_CREATED, timeCreated);
             return this;
         }
 

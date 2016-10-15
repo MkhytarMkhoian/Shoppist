@@ -32,11 +32,11 @@ public class UnitDAO extends BaseDAO {
 
     public static final String TABLE = "units";
 
-    public static final String UNIT_ID = "main_unit_id";
-    public static final String FULL_NAME = "unit_full_name";
-    public static final String SHORT_NAME = "unit_short_name";
+    public static final String COL_ID = "main_unit_id";
+    public static final String COL_FULL_NAME = "unit_full_name";
+    public static final String COL_SHORT_NAME = "unit_short_name";
 
-    public static final String WHERE_STRING = UNIT_ID + " IN(?)";
+    public static final String WHERE_STRING = COL_ID + " IN(?)";
 
     private String shortName;
 
@@ -68,9 +68,9 @@ public class UnitDAO extends BaseDAO {
     }
 
     public static final Func1<Cursor, UnitDAO> MAPPER = (Func1<Cursor, UnitDAO>) cursor -> {
-        String id = DbUtil.getString(cursor, UNIT_ID);
-        String fullName = DbUtil.getString(cursor, FULL_NAME);
-        String shortName = DbUtil.getString(cursor, SHORT_NAME);
+        String id = DbUtil.getString(cursor, COL_ID);
+        String fullName = DbUtil.getString(cursor, COL_FULL_NAME);
+        String shortName = DbUtil.getString(cursor, COL_SHORT_NAME);
         return new UnitDAO(id, fullName, shortName);
     };
 
@@ -78,17 +78,17 @@ public class UnitDAO extends BaseDAO {
         private final ContentValues values = new ContentValues();
 
         public Builder id(String id) {
-            values.put(UNIT_ID, id);
+            values.put(COL_ID, id);
             return this;
         }
 
         public Builder fullName(String fullName) {
-            values.put(FULL_NAME, fullName);
+            values.put(COL_FULL_NAME, fullName);
             return this;
         }
 
         public Builder shortName(String shortName) {
-            values.put(SHORT_NAME, shortName);
+            values.put(COL_SHORT_NAME, shortName);
             return this;
         }
 

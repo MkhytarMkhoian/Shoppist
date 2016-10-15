@@ -33,12 +33,12 @@ public class CategoryDAO extends BaseDAO {
 
     public static final String TABLE = "categories";
 
-    public static final String NAME = "category_name";
-    public static final String CATEGORY_ID = "main_category_id";
-    public static final String COLOR = "category_color";
-    public static final String CREATE_BY_USER = "category_create_by_user";
+    public static final String COL_NAME = "category_name";
+    public static final String COL_ID = "main_category_id";
+    public static final String COL_COLOR = "category_color";
+    public static final String COL_CREATE_BY_USER = "category_create_by_user";
 
-    public static final String WHERE_CATEGORY_ID = CATEGORY_ID + " IN(?)";
+    public static final String WHERE_CATEGORY_ID = COL_ID + " IN(?)";
 
     private int color = Color.DKGRAY;
     private boolean isCreateByUser;
@@ -72,16 +72,16 @@ public class CategoryDAO extends BaseDAO {
 
     @Override
     public int hashCode() {
-        return 31 * id.hashCode();
+        return id.hashCode();
     }
 
-    public static final Func1<Cursor, CategoryDAO> MAPPER = (Func1<Cursor, CategoryDAO>) cursor -> map(cursor, CATEGORY_ID);
+    public static final Func1<Cursor, CategoryDAO> MAPPER = (Func1<Cursor, CategoryDAO>) cursor -> map(cursor, COL_ID);
 
     public static CategoryDAO map(Cursor cursor, String categoryId) {
         String id = DbUtil.getString(cursor, categoryId);
-        String name = DbUtil.getString(cursor, NAME);
-        int color = DbUtil.getInt(cursor, COLOR);
-        boolean createByUser = DbUtil.getBoolean(cursor, CREATE_BY_USER);
+        String name = DbUtil.getString(cursor, COL_NAME);
+        int color = DbUtil.getInt(cursor, COL_COLOR);
+        boolean createByUser = DbUtil.getBoolean(cursor, COL_CREATE_BY_USER);
         return new CategoryDAO(id, name, color, createByUser);
     }
 
@@ -89,22 +89,22 @@ public class CategoryDAO extends BaseDAO {
         private final ContentValues values = new ContentValues();
 
         public Builder id(String id) {
-            values.put(CATEGORY_ID, id);
+            values.put(COL_ID, id);
             return this;
         }
 
         public Builder name(String name) {
-            values.put(NAME, name);
+            values.put(COL_NAME, name);
             return this;
         }
 
         public Builder color(int color) {
-            values.put(COLOR, color);
+            values.put(COL_COLOR, color);
             return this;
         }
 
         public Builder createByUser(boolean create) {
-            values.put(CREATE_BY_USER, create ? 1 : 0);
+            values.put(COL_CREATE_BY_USER, create ? 1 : 0);
             return this;
         }
 
