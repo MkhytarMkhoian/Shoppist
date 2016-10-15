@@ -38,7 +38,7 @@ public class GoodsDataRepository implements GoodsRepository {
     private final GoodsDAODataMapper dataMapper;
 
     @Inject
-    public GoodsDataRepository(LocalGoodsDataStore dataStore, GoodsDAODataMapper dataMapper) {
+    public GoodsDataRepository(GoodsDAODataMapper dataMapper, LocalGoodsDataStore dataStore) {
         this.dataStore = dataStore;
         this.dataMapper = dataMapper;
     }

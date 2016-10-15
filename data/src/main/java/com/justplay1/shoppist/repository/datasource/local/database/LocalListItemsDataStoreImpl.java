@@ -28,7 +28,6 @@ import com.justplay1.shoppist.repository.datasource.local.LocalListItemsDataStor
 import com.squareup.sqlbrite.BriteDatabase;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -52,7 +51,7 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
                     + " ON " + ListItemDAO.COL_CURRENCY_ID + " = " + CurrencyDAO.TABLE + "." + CurrencyDAO.COL_ID;
 
     private static String LIST_ITEMS_QUERY(String selection) {
-        if (selection == null){
+        if (selection == null) {
             return ALL_LIST_ITEMS;
         }
         return ALL_LIST_ITEMS + " WHERE " + selection;
@@ -93,11 +92,6 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
     }
 
     @Override
-    public void save(ListItemDAO data) {
-        save(Collections.singletonList(data));
-    }
-
-    @Override
     public void delete(Collection<ListItemDAO> data) {
         BriteDatabase.Transaction transaction = db.newTransaction();
         try {
@@ -112,11 +106,6 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
     }
 
     @Override
-    public void delete(ListItemDAO data) {
-        delete(Collections.singletonList(data));
-    }
-
-    @Override
     public void update(Collection<ListItemDAO> data) {
         BriteDatabase.Transaction transaction = db.newTransaction();
         try {
@@ -128,11 +117,6 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
             transaction.end();
         }
         notifyListsChange();
-    }
-
-    @Override
-    public void update(ListItemDAO data) {
-        update(Collections.singletonList(data));
     }
 
     @Override

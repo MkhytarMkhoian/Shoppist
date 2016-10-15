@@ -27,7 +27,6 @@ import com.justplay1.shoppist.repository.datasource.local.LocalGoodsDataStore;
 import com.squareup.sqlbrite.BriteDatabase;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,11 +107,6 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
     }
 
     @Override
-    public void save(ProductDAO data) {
-        save(Collections.singletonList(data));
-    }
-
-    @Override
     public void delete(Collection<ProductDAO> data) {
         BriteDatabase.Transaction transaction = db.newTransaction();
         try {
@@ -126,11 +120,6 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
     }
 
     @Override
-    public void delete(ProductDAO data) {
-        delete(Collections.singletonList(data));
-    }
-
-    @Override
     public void update(Collection<ProductDAO> data) {
         BriteDatabase.Transaction transaction = db.newTransaction();
         try {
@@ -141,11 +130,6 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
         } finally {
             transaction.end();
         }
-    }
-
-    @Override
-    public void update(ProductDAO data) {
-        update(Collections.singletonList(data));
     }
 
     @Override

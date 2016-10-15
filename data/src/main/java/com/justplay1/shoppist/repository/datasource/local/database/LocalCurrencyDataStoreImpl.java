@@ -27,7 +27,6 @@ import com.justplay1.shoppist.repository.datasource.local.LocalCurrencyDataStore
 import com.squareup.sqlbrite.BriteDatabase;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,11 +97,6 @@ public class LocalCurrencyDataStoreImpl extends BaseLocalDataStore<CurrencyDAO> 
     }
 
     @Override
-    public void save(CurrencyDAO data) {
-        save(Collections.singletonList(data));
-    }
-
-    @Override
     public void delete(Collection<CurrencyDAO> data) {
         BriteDatabase.Transaction transaction = db.newTransaction();
         try {
@@ -117,11 +111,6 @@ public class LocalCurrencyDataStoreImpl extends BaseLocalDataStore<CurrencyDAO> 
     }
 
     @Override
-    public void delete(CurrencyDAO data) {
-        delete(Collections.singletonList(data));
-    }
-
-    @Override
     public void update(Collection<CurrencyDAO> data) {
         BriteDatabase.Transaction transaction = db.newTransaction();
         try {
@@ -133,11 +122,6 @@ public class LocalCurrencyDataStoreImpl extends BaseLocalDataStore<CurrencyDAO> 
             transaction.end();
         }
         notifyShoppingListItemsChange();
-    }
-
-    @Override
-    public void update(CurrencyDAO data) {
-        update(Collections.singletonList(data));
     }
 
     @Override
