@@ -32,7 +32,7 @@ public class ListDAO extends BaseDAO {
     public static final String TABLE = "shopping_lists";
 
     public static final String COL_ID = "shopping_list_id";
-    public static final String COL_LIST_NAME = "shopping_list_name";
+    public static final String COL_NAME = "shopping_list_name";
     public static final String COL_COLOR = "shopping_list_color";
     public static final String COL_PRIORITY = "shopping_list_priority";
     public static final String COL_TIME_CREATED = "shopping_list_time_created";
@@ -95,7 +95,7 @@ public class ListDAO extends BaseDAO {
 
     public static final Func1<Cursor, ListDAO> MAPPER = (Func1<Cursor, ListDAO>) cursor -> {
         String id = DbUtil.getString(cursor, COL_ID);
-        String name = DbUtil.getString(cursor, COL_LIST_NAME);
+        String name = DbUtil.getString(cursor, COL_NAME);
         int color = DbUtil.getInt(cursor, COL_COLOR);
         long timeCreated = DbUtil.getLong(cursor, COL_TIME_CREATED);
         int size = DbUtil.getInt(cursor, COL_SIZE);
@@ -113,7 +113,7 @@ public class ListDAO extends BaseDAO {
         }
 
         public Builder name(String name) {
-            values.put(COL_LIST_NAME, name);
+            values.put(COL_NAME, name);
             return this;
         }
 

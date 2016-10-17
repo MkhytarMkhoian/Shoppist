@@ -102,7 +102,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CREATE_LISTS_TABLE = "create table " + ListDAO.TABLE + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
             ListDAO.COL_ID + " text, " +
-            ListDAO.COL_LIST_NAME + " text, " +
+            ListDAO.COL_NAME + " text, " +
             ListDAO.COL_PRIORITY + " integer, " +
             ListDAO.COL_COLOR + " integer, " +
             ListDAO.COL_TIME_CREATED + " integer " +
@@ -439,8 +439,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     ", SUM(i." + ListItemDAO.COL_STATUS + ") " + ListDAO.COL_BOUGHT_COUNT +
                     " FROM " + ListDAO.TABLE + " s" +
                     " LEFT JOIN " + ListItemDAO.TABLE + " i" +
-                    " ON s." + ListDAO.COL_LIST_NAME + " = i.shopping_list_item_parent_list_name" +
-                    " GROUP BY s." + ListDAO.COL_LIST_NAME;
+                    " ON s." + ListDAO.COL_NAME + " = i.shopping_list_item_parent_list_name" +
+                    " GROUP BY s." + ListDAO.COL_NAME;
             Cursor cursor = db.rawQuery(request, null);
 
             Map<String, String> shoppingLists = new HashMap<>();
@@ -448,12 +448,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 if (!cursor.isClosed() && cursor.moveToFirst()) {
                     do {
                         String id = DbUtil.getString(cursor, ListDAO.COL_ID);
-                        String name = DbUtil.getString(cursor, ListDAO.COL_LIST_NAME);
+                        String name = DbUtil.getString(cursor, ListDAO.COL_NAME);
                         shoppingLists.put(id, name);
                         db.update(ListDAO.TABLE, new ListDAO.Builder()
                                         .id(UUID.nameUUIDFromBytes((name + UUID.randomUUID()).getBytes()).toString())
                                         .build(),
-                                ListDAO.COL_LIST_NAME + "=?", new String[]{name});
+                                ListDAO.COL_NAME + "=?", new String[]{name});
                     } while (cursor.moveToNext());
                 }
             } catch (Exception e) {
