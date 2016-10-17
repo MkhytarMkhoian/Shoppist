@@ -84,7 +84,8 @@ public class LocalUnitsDataStoreImpl extends BaseLocalDataStore<UnitDAO> impleme
 
     @Override
     public Observable<List<UnitDAO>> getItems() {
-        return getAllUnits();
+        return db.createQuery(UnitDAO.TABLE, UNIT_QUERY(null), new String[]{})
+                .mapToList(UnitDAO.MAPPER);
     }
 
     @Override
@@ -142,10 +143,5 @@ public class LocalUnitsDataStoreImpl extends BaseLocalDataStore<UnitDAO> impleme
 
     private void notifyShoppingListItemsChange() {
         DataEventBus.instanceOf().post(new ListItemsDataUpdatedEvent());
-    }
-
-    private Observable<List<UnitDAO>> getAllUnits() {
-        return db.createQuery(UnitDAO.TABLE, UNIT_QUERY(null), new String[]{})
-                .mapToList(UnitDAO.MAPPER);
     }
 }

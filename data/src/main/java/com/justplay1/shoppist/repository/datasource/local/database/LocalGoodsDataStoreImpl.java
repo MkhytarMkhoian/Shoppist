@@ -84,7 +84,8 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
 
     @Override
     public Observable<List<ProductDAO>> getItems() {
-        return getAllProducts();
+        return db.createQuery(ProductDAO.TABLE, PRODUCTS_QUERY(null), new String[]{})
+                .mapToList(ProductDAO.MAPPER);
     }
 
     @Override
@@ -147,10 +148,5 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
     @Override
     public int clear() {
         return clear(ProductDAO.TABLE);
-    }
-
-    private Observable<List<ProductDAO>> getAllProducts() {
-        return db.createQuery(ProductDAO.TABLE, PRODUCTS_QUERY(null), new String[]{})
-                .mapToList(ProductDAO.MAPPER);
     }
 }

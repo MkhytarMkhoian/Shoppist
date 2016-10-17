@@ -64,12 +64,16 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
 
     @Override
     public Observable<List<ListItemDAO>> getItems(String parentId) {
-        return getListItems(parentId);
+        return db.createQuery(ListItemDAO.TABLE,
+                LIST_ITEMS_QUERY(ListItemDAO.COL_PARENT_LIST_ID + "=?"),
+                parentId)
+                .mapToList(ListItemDAO.MAPPER);
     }
 
     @Override
     public Observable<List<ListItemDAO>> getItems() {
-        return getAllShoppingListItems();
+        return db.createQuery(ListItemDAO.TABLE, LIST_ITEMS_QUERY(null), new String[]{})
+                .mapToList(ListItemDAO.MAPPER);
     }
 
     @Override
@@ -126,18 +130,6 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
 
     private void notifyListsChange() {
         DataEventBus.instanceOf().post(new ListsDataUpdatedEvent());
-    }
-
-    private Observable<List<ListItemDAO>> getAllShoppingListItems() {
-        return db.createQuery(ListItemDAO.TABLE, LIST_ITEMS_QUERY(null), new String[]{})
-                .mapToList(ListItemDAO.MAPPER);
-    }
-
-    private Observable<List<ListItemDAO>> getListItems(String listId) {
-        return db.createQuery(ListItemDAO.TABLE,
-                LIST_ITEMS_QUERY(ListItemDAO.COL_PARENT_LIST_ID + "=?"),
-                listId)
-                .mapToList(ListItemDAO.MAPPER);
     }
 
     @Override

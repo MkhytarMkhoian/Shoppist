@@ -57,7 +57,8 @@ public class LocalListDataStoreImpl extends BaseLocalDataStore<ListDAO> implemen
 
     @Override
     public Observable<List<ListDAO>> getItems() {
-        return getAllLists();
+        return db.createQuery(ListDAO.TABLE, LIST_QUERY(null), new String[]{})
+                .mapToList(ListDAO.MAPPER);
     }
 
     @Override
@@ -121,11 +122,6 @@ public class LocalListDataStoreImpl extends BaseLocalDataStore<ListDAO> implemen
         } finally {
             transaction.end();
         }
-    }
-
-    private Observable<List<ListDAO>> getAllLists() {
-        return db.createQuery(ListDAO.TABLE, LIST_QUERY(null), new String[]{})
-                .mapToList(ListDAO.MAPPER);
     }
 
     @Override

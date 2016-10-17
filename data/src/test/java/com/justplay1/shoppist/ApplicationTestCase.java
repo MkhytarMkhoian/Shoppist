@@ -27,6 +27,9 @@ import org.robolectric.annotation.Config;
  * Inherit from this class to create a test.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class, application = ApplicationStub.class, manifest = "src/main/AndroidManifest.xml")
+@Config(sdk = 21,
+        constants = BuildConfig.class,
+        application = ApplicationStub.class,
+        manifest = "src/main/AndroidManifest.xml")
 public abstract class ApplicationTestCase {
 }

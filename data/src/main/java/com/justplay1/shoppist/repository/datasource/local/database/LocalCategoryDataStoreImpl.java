@@ -79,7 +79,8 @@ public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> 
 
     @Override
     public Observable<List<CategoryDAO>> getItems() {
-        return getAllCategories();
+        return db.createQuery(CategoryDAO.TABLE, CATEGORY_QUERY(null), new String[]{})
+                .mapToList(cursor -> CategoryDAO.map(cursor, CategoryDAO.COL_ID));
     }
 
     @Override
@@ -148,10 +149,5 @@ public class LocalCategoryDataStoreImpl extends BaseLocalDataStore<CategoryDAO> 
 
     private void notifyShoppingListItemsChange() {
         DataEventBus.instanceOf().post(new ListItemsDataUpdatedEvent());
-    }
-
-    private Observable<List<CategoryDAO>> getAllCategories() {
-        return db.createQuery(CategoryDAO.TABLE, CATEGORY_QUERY(null), new String[]{})
-                .mapToList(cursor -> CategoryDAO.map(cursor, CategoryDAO.COL_ID));
     }
 }

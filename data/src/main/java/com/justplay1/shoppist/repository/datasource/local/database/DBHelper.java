@@ -118,10 +118,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        createAndFillDatabase(db);
-    }
-
-    private void createAndFillDatabase(SQLiteDatabase db) {
         try {
             createTables(db);
             fillDatabase(db);

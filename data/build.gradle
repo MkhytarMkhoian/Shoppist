@@ -67,11 +67,10 @@ dependencies {
     testCompile testDependencies.assertj
     testCompile testDependencies.mockito
     testCompile testDependencies.robolectric
-
-    testDependencies.powermockModuleJunit4
-    testDependencies.powermockModuleJunit4Rule
-    testDependencies.powermockApiMockito
-    testDependencies.powermockClassloadingXstream
+    testCompile testDependencies.powermockModuleJunit4
+    testCompile testDependencies.powermockModuleJunit4Rule
+    testCompile testDependencies.powermockApiMockito
+    testCompile testDependencies.powermockClassloadingXstream
 }
 
 dependencies {
