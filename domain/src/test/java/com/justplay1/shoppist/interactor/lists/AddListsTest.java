@@ -49,7 +49,7 @@ public class AddListsTest {
         useCase = new AddList(mockListRepository, mockThreadExecutor, mockPostExecutionThread);
 
         models = Collections.singletonList(createFakeListModel());
-        useCase.setData(models);
+        useCase.init(models);
     }
 
     @Test

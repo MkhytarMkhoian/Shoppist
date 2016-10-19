@@ -53,7 +53,7 @@ public class MoveProductToCartTest {
         useCase = new MoveProductToCart(mockListItemsRepository, mockThreadExecutor, mockPostExecutionThread);
 
         models = createFakeListItemModelList(createFakeCategoryModel(), createFakeUnitModel(), createFakeCurrencyModel());
-        useCase.setData(models);
+        useCase.init(models);
     }
 
     @Test

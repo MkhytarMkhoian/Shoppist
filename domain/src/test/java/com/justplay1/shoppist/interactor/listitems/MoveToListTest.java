@@ -29,10 +29,11 @@ import java.util.List;
 import rx.Observable;
 
 import static com.justplay1.shoppist.TestUtil.FAKE_ID;
-import static com.justplay1.shoppist.TestUtil.createFakeListItemModelList;
 import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
 import static com.justplay1.shoppist.TestUtil.createFakeCurrencyModel;
+import static com.justplay1.shoppist.TestUtil.createFakeListItemModelList;
 import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -47,22 +48,24 @@ public class MoveToListTest {
     @Mock private DeleteListItems mockDeleteListItems;
     @Mock private AddListItems mockAddListItems;
 
+    private List<ListItemModel> models;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         useCase = new MoveToList(mockDeleteListItems, mockAddListItems, mockThreadExecutor, mockPostExecutionThread);
 
-        List<ListItemModel> models = createFakeListItemModelList(createFakeCategoryModel(), createFakeUnitModel(), createFakeCurrencyModel());
-        useCase.setData(models);
-        useCase.setNewParentListId(FAKE_ID);
+        models = createFakeListItemModelList(createFakeCategoryModel(), createFakeUnitModel(), createFakeCurrencyModel());
     }
 
     @Test
     public void moveToListUseCase_HappyCase() {
-        useCase.setCopy(false);
+        when(mockAddListItems.init(anyObject())).thenReturn(mockAddListItems);
+        when(mockDeleteListItems.init(anyObject())).thenReturn(mockDeleteListItems);
+
         when(mockAddListItems.buildUseCaseObservable()).thenReturn(Observable.just(true));
         when(mockDeleteListItems.buildUseCaseObservable()).thenReturn(Observable.just(true));
-        useCase.buildUseCaseObservable().subscribe();
+        useCase.init(models, FAKE_ID, false).buildUseCaseObservable().subscribe();
 
         verify(mockAddListItems).buildUseCaseObservable();
         verify(mockDeleteListItems).buildUseCaseObservable();
@@ -72,9 +75,9 @@ public class MoveToListTest {
 
     @Test
     public void copyToListUseCase_HappyCase() {
-        useCase.setCopy(true);
+        when(mockAddListItems.init(anyObject())).thenReturn(mockAddListItems);
         when(mockAddListItems.buildUseCaseObservable()).thenReturn(Observable.just(true));
-        useCase.buildUseCaseObservable().subscribe();
+        useCase.init(models, FAKE_ID, true).buildUseCaseObservable().subscribe();
 
         verify(mockAddListItems).buildUseCaseObservable();
         verifyNoMoreInteractions(mockDeleteListItems);

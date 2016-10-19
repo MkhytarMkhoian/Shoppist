@@ -185,23 +185,19 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     }
 
     private Observable<UnitViewModel> loadDefaultUnit() {
-        getUnit.setId(UnitViewModel.NO_UNIT_ID);
-        return getUnit.get()
+        return getUnit.init(UnitViewModel.NO_UNIT_ID).get()
                 .map(unitsDataModelMapper::transformToViewModel);
     }
 
     private Observable<CategoryViewModel> loadDefaultCategory() {
-        getCategory.setId(CategoryViewModel.NO_CATEGORY_ID);
-        return getCategory.get()
+        return getCategory.init(CategoryViewModel.NO_CATEGORY_ID).get()
                 .map(categoryModelDataMapper::transformToViewModel);
     }
 
     public void deleteItems(Collection<ProductViewModel> data) {
         addSubscription(Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
-                .flatMap(goods -> {
-                    deleteGoods.setData(goods);
-                    return deleteGoods.get();
-                }).subscribe(new DefaultSubscriber<>()));
+                .flatMap(goods -> deleteGoods.init(goods).get())
+                .subscribe(new DefaultSubscriber<>()));
     }
 
     public void changeUnit(UnitViewModel unit, List<ProductViewModel> editProducts) {
@@ -213,15 +209,8 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
             }
             return editProducts;
         }).map(goodsModelDataMapper::transform)
-                .flatMap(data -> {
-                    updateGoods.setData(data);
-                    return updateGoods.get();
-                }).subscribe(new DefaultSubscriber<Boolean>() {
-                    @Override
-                    public void onNext(Boolean aBoolean) {
-
-                    }
-                }));
+                .flatMap(data -> updateGoods.init(data).get())
+                .subscribe(new DefaultSubscriber<Boolean>()));
     }
 
     public void changeCategory(CategoryViewModel category, List<ProductViewModel> editProducts) {
@@ -233,15 +222,8 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
             }
             return editProducts;
         }).map(goodsModelDataMapper::transform)
-                .flatMap(data -> {
-                    updateGoods.setData(data);
-                    return updateGoods.get();
-                }).subscribe(new DefaultSubscriber<Boolean>() {
-                    @Override
-                    public void onNext(Boolean aBoolean) {
-
-                    }
-                }));
+                .flatMap(data -> updateGoods.init(data).get())
+                .subscribe(new DefaultSubscriber<Boolean>()));
     }
 
     private void showData(List<Pair<HeaderViewModel, List<ProductViewModel>>> data) {

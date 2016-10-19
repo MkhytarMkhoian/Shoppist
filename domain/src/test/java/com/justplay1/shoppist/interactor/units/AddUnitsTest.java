@@ -51,7 +51,7 @@ public class AddUnitsTest {
         useCase = new AddUnits(mockUnitsRepository, mockThreadExecutor, mockPostExecutionThread);
 
         models = Collections.singletonList(createFakeUnitModel());
-        useCase.setData(models);
+        useCase.init(models);
     }
 
     @Test

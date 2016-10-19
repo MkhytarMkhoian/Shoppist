@@ -110,18 +110,14 @@ public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryVie
 
     private void addCategory(CategoryViewModel data, boolean isLongClick) {
         addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
-                .flatMap(category -> {
-                    addCategory.setData(Collections.singletonList(category));
-                    return addCategory.get();
-                }).subscribe(new SaveCategorySubscriber(isLongClick, true)));
+                .flatMap(category -> addCategory.init(Collections.singletonList(category)).get())
+                .subscribe(new SaveCategorySubscriber(isLongClick, true)));
     }
 
     private void updateCategory(CategoryViewModel data, boolean isLongClick) {
         addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
-                .flatMap(category -> {
-                    updateCategory.setData(Collections.singletonList(category));
-                    return updateCategory.get();
-                }).subscribe(new SaveCategorySubscriber(isLongClick, false)));
+                .flatMap(category -> updateCategory.init(Collections.singletonList(category)).get())
+                .subscribe(new SaveCategorySubscriber(isLongClick, false)));
     }
 
     private void showSelectColorDialog() {

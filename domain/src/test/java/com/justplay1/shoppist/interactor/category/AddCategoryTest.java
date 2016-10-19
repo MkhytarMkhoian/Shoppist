@@ -15,7 +15,6 @@
  */
 package com.justplay1.shoppist.interactor.category;
 
-import com.justplay1.shoppist.TestUtil;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.models.CategoryModel;
@@ -51,7 +50,7 @@ public class AddCategoryTest {
                 mockPostExecutionThread);
 
         models = Collections.singletonList(createFakeCategoryModel());
-        useCase.setData(models);
+        useCase.init(models);
     }
 
     @Test

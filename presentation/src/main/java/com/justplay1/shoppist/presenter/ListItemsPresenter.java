@@ -157,8 +157,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
 
     @SuppressWarnings("ResourceType")
     private Observable<List<Pair<HeaderViewModel, List<ListItemViewModel>>>> loadListItems() {
-        getListItems.setParentId(parentList.getId());
-        return getListItems.get()
+        return getListItems.init(parentList.getId()).get()
                 .map(listItemsModelDataMapper::transformToViewModel)
                 .map(listItems -> sort(listItems, preferences.getSortForShoppingListItems()));
     }
@@ -196,12 +195,10 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     }
 
     private Observable<CurrencyViewModel> loadDefaultCurrency() {
-        getCurrency.setId(CurrencyViewModel.NO_CURRENCY_ID);
-        return getCurrency.get()
+        return getCurrency.init(CurrencyViewModel.NO_CURRENCY_ID).get()
                 .flatMap(currencyModel -> {
                     if (currencyModel == null) {
-                        getCurrency.setId(CurrencyViewModel.NO_CURRENCY_ID);
-                        return getCurrency.get();
+                        return getCurrency.init(CurrencyViewModel.NO_CURRENCY_ID).get();
                     }
                     return Observable.fromCallable(() -> currencyModel);
                 })
@@ -209,14 +206,12 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     }
 
     private Observable<UnitViewModel> loadDefaultUnit() {
-        getUnit.setId(UnitViewModel.NO_UNIT_ID);
-        return getUnit.get()
+        return getUnit.init(UnitViewModel.NO_UNIT_ID).get()
                 .map(unitsDataModelMapper::transformToViewModel);
     }
 
     private Observable<CategoryViewModel> loadDefaultCategory() {
-        getCategory.setId(CategoryViewModel.NO_CATEGORY_ID);
-        return getCategory.get()
+        return getCategory.init(CategoryViewModel.NO_CATEGORY_ID).get()
                 .map(categoryModelDataMapper::transformToViewModel);
     }
 
@@ -225,10 +220,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
             moveItem.setStatus(!moveItem.getStatus());
             return moveItem;
         }).map(listItemsModelDataMapper::transform)
-                .flatMap(listItemViewModel -> {
-                    updateListItems.setData(Collections.singletonList(listItemViewModel));
-                    return updateListItems.get();
-                })
+                .flatMap(listItemViewModel -> updateListItems.init(Collections.singletonList(listItemViewModel)).get())
                 .subscribe(new DefaultSubscriber<>()));
     }
 
@@ -282,10 +274,8 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
 
     public void deleteItems(Collection<ListItemViewModel> data) {
         addSubscription(Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
-                .flatMap(listItemModels -> {
-                    deleteListItems.setData(listItemModels);
-                    return deleteListItems.get();
-                }).subscribe(new DefaultSubscriber<>()));
+                .flatMap(listItemModels -> deleteListItems.init(listItemModels).get())
+                .subscribe(new DefaultSubscriber<>()));
     }
 
     public void onCopyItemsClick(List<ListItemViewModel> items) {
@@ -343,16 +333,8 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
             return itemsToMove;
         }).filter(itemsToMove -> itemsToMove.size() > 0)
                 .map(listItemsModelDataMapper::transform)
-                .flatMap(listItemViewModels -> {
-                    updateListItems.setData(listItemViewModels);
-                    return updateListItems.get();
-                })
-                .subscribe(new DefaultSubscriber<Boolean>() {
-                    @Override
-                    public void onNext(Boolean aBoolean) {
-
-                    }
-                }));
+                .flatMap(listItemViewModels -> updateListItems.init(listItemViewModels).get())
+                .subscribe(new DefaultSubscriber<Boolean>()));
     }
 
     private void showData(List<Pair<HeaderViewModel, List<ListItemViewModel>>> data) {

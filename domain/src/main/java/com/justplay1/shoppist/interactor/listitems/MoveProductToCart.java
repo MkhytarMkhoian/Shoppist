@@ -44,12 +44,16 @@ public class MoveProductToCart extends UseCase<Boolean> {
         this.repository = repository;
     }
 
-    public void setData(Collection<ListItemModel> data) {
+    public MoveProductToCart init(Collection<ListItemModel> data) {
         this.data = data;
+        return this;
     }
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
+        if (this.data == null) {
+            throw new IllegalArgumentException("init(data) not called, or called with null argument.");
+        }
         return Observable.fromCallable(() -> {
             List<ListItemModel> result = new ArrayList<>();
             for (ListItemModel item : data) {

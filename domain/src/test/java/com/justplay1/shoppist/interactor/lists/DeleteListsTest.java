@@ -49,7 +49,7 @@ public class DeleteListsTest {
         useCase = new DeleteLists(mockListRepository, mockThreadExecutor, mockPostExecutionThread);
 
         models = Collections.singletonList(createFakeListModel());
-        useCase.setData(models);
+        useCase.init(models);
     }
 
     @Test

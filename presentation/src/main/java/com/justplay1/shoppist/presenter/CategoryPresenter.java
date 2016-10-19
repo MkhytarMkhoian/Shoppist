@@ -101,10 +101,8 @@ public class CategoryPresenter extends BaseRouterPresenter<CategoryView, Categor
 
     public void deleteItems(Collection<CategoryViewModel> data) {
         addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
-                .flatMap(items -> {
-                    deleteCategory.setData(items);
-                    return deleteCategory.get();
-                }).subscribe(new DefaultSubscriber<>()));
+                .flatMap(items -> deleteCategory.init(items).get())
+                .subscribe(new DefaultSubscriber<>()));
     }
 
     private void showData(List<CategoryViewModel> data) {

@@ -101,19 +101,15 @@ public class AddCurrencyPresenter extends BaseRouterPresenter<AddCurrencyView, R
     private void addCurrency(CurrencyViewModel data) {
         showLoading();
         addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
-                .flatMap(currency -> {
-                    addCurrency.setData(Collections.singletonList(currency));
-                    return addCurrency.get();
-                }).subscribe(new SaveCurrencySubscriber(true)));
+                .flatMap(currency -> addCurrency.init(Collections.singletonList(currency)).get())
+                .subscribe(new SaveCurrencySubscriber(true)));
     }
 
     private void updateCurrency(CurrencyViewModel data) {
         showLoading();
         addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
-                .flatMap(currency -> {
-                    updateCurrency.setData(Collections.singletonList(currency));
-                    return updateCurrency.get();
-                }).subscribe(new SaveCurrencySubscriber(false)));
+                .flatMap(currency -> updateCurrency.init(Collections.singletonList(currency)).get())
+                .subscribe(new SaveCurrencySubscriber(false)));
     }
 
     private boolean checkDataForErrors(String name) {

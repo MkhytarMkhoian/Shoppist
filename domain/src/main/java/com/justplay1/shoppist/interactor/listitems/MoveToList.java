@@ -38,7 +38,7 @@ public class MoveToList extends UseCase<Boolean> {
 
     private Collection<ListItemModel> data;
     private String newParentListId;
-    private boolean copy;
+    private boolean isCopy;
 
     private final DeleteListItems deleteListItems;
     private final AddListItems addListItems;
@@ -51,36 +51,32 @@ public class MoveToList extends UseCase<Boolean> {
         this.addListItems = addListItems;
     }
 
-    public void setData(Collection<ListItemModel> data) {
+    public MoveToList init(Collection<ListItemModel> data, String newParentListId, boolean isCopy) {
         this.data = data;
-    }
-
-    public void setNewParentListId(String newParentListId) {
         this.newParentListId = newParentListId;
-    }
-
-    public void setCopy(boolean copy) {
-        this.copy = copy;
+        this.isCopy = isCopy;
+        return this;
     }
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
+        if (data == null || newParentListId == null) {
+            throw new IllegalArgumentException("init(data) not called, or called with null argument.");
+        }
         return Observable.just(getListItems(data))
                 .flatMap(new Func1<List<ListItemModel>, Observable<Boolean>>() {
                     @Override
                     public Observable<Boolean> call(List<ListItemModel> needAdd) {
                         if (needAdd.size() > 0) {
-                            addListItems.setData(needAdd);
-                            return addListItems.buildUseCaseObservable();
+                            return addListItems.init(needAdd).buildUseCaseObservable();
                         }
                         return Observable.just(false);
                     }
                 }).flatMap(new Func1<Boolean, Observable<Boolean>>() {
                     @Override
                     public Observable<Boolean> call(Boolean o) {
-                        if (!copy) {
-                            deleteListItems.setData(data);
-                            return deleteListItems.buildUseCaseObservable();
+                        if (!isCopy) {
+                            return deleteListItems.init(data).buildUseCaseObservable();
                         }
                         return Observable.just(false);
                     }

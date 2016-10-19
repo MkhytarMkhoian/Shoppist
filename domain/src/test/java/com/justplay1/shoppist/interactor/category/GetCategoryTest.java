@@ -46,7 +46,7 @@ public class GetCategoryTest {
         MockitoAnnotations.initMocks(this);
         useCase = new GetCategory(mockCategoryRepository, mockThreadExecutor,
                 mockPostExecutionThread);
-        useCase.setId(FAKE_ID);
+        useCase.init(FAKE_ID);
     }
 
     @Test

@@ -15,7 +15,6 @@
  */
 package com.justplay1.shoppist.interactor.goods;
 
-import com.justplay1.shoppist.TestUtil;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.models.ProductModel;
@@ -52,7 +51,7 @@ public class UpdateGoodsTest {
         useCase = new UpdateGoods(mockGoodsRepository, mockThreadExecutor, mockPostExecutionThread);
 
         models = Collections.singletonList(createFakeProductModel(createFakeUnitModel(), createFakeCategoryModel()));
-        useCase.setData(models);
+        useCase.init(models);
     }
 
     @Test

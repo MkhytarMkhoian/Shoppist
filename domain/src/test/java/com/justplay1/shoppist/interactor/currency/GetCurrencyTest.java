@@ -45,7 +45,7 @@ public class GetCurrencyTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         useCase = new GetCurrency(mockCurrencyRepository, mockThreadExecutor, mockPostExecutionThread);
-        useCase.setId(FAKE_ID);
+        useCase.init(FAKE_ID);
     }
 
     @Test

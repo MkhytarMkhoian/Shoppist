@@ -210,19 +210,15 @@ public class AddGoodsPresenter extends BaseRouterPresenter<AddGoodsView, Router>
     private void addGoods(ProductViewModel data) {
         showLoading();
         addSubscription(Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
-                .flatMap(item -> {
-                    addGoods.setData(Collections.singletonList(item));
-                    return addGoods.get();
-                }).subscribe(new SaveGoodsSubscriber(true)));
+                .flatMap(item -> addGoods.init(Collections.singletonList(item)).get())
+                .subscribe(new SaveGoodsSubscriber(true)));
     }
 
     private void updateGoods(ProductViewModel data) {
         showLoading();
         addSubscription(Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
-                .flatMap(item -> {
-                    updateGoods.setData(Collections.singletonList(item));
-                    return updateGoods.get();
-                }).subscribe(new SaveGoodsSubscriber(false)));
+                .flatMap(item -> updateGoods.init(Collections.singletonList(item)).get())
+                .subscribe(new SaveGoodsSubscriber(false)));
     }
 
     private boolean checkDataForErrors(String name) {

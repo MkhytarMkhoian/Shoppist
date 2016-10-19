@@ -45,7 +45,7 @@ public class GetUnitTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         useCase = new GetUnit(mockUnitsRepository, mockThreadExecutor, mockPostExecutionThread);
-        useCase.setId(FAKE_ID);
+        useCase.init(FAKE_ID);
     }
 
     @Test

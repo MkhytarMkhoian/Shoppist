@@ -15,7 +15,6 @@
  */
 package com.justplay1.shoppist.interactor.currency;
 
-import com.justplay1.shoppist.TestUtil;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.models.CurrencyModel;
@@ -51,7 +50,7 @@ public class DeleteCurrencyTest {
                 mockPostExecutionThread);
 
         models = Collections.singletonList(createFakeCurrencyModel());
-        useCase.setData(models);
+        useCase.init(models);
     }
 
     @Test

@@ -185,22 +185,17 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
 
     public void deleteItems(Collection<ListViewModel> data) {
         addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
-                .flatMap(list -> {
-                    deleteLists.setData(list);
-                    return deleteLists.get();
-                }).subscribe(new DefaultSubscriber<>()));
+                .flatMap(list -> deleteLists.init(list).get())
+                .subscribe(new DefaultSubscriber<>()));
     }
 
     public void emailShare(List<ListViewModel> data) {
         showLoadingDialog();
         addSubscription(Observable.from(data)
-                .flatMap(shoppingList -> {
-                    getListItems.setParentId(shoppingList.getId());
-                    return getListItems.get()
-                            .map(listItemsModelDataMapper::transformToViewModel)
-                            .map(items -> shoppingList.getName() + "\n" + "\n" +
-                                    ShoppistUtils.buildShareString(items) + "\n");
-                })
+                .flatMap(shoppingList -> getListItems.init(shoppingList.getId()).get()
+                        .map(listItemsModelDataMapper::transformToViewModel)
+                        .map(items -> shoppingList.getName() + "\n" + "\n" +
+                                ShoppistUtils.buildShareString(items) + "\n"))
                 .buffer(data.size())
                 .map(strings -> {
                     String result = "";

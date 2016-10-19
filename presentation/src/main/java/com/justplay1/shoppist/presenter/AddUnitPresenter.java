@@ -105,19 +105,15 @@ public class AddUnitPresenter extends BaseRouterPresenter<AddUnitView, Router> {
     private void addUnit(UnitViewModel data) {
         showLoading();
         addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
-                .flatMap(unit -> {
-                    addUnits.setData(Collections.singletonList(unit));
-                    return addUnits.get();
-                }).subscribe(new SaveUnitSubscriber(true)));
+                .flatMap(unit -> addUnits.init(Collections.singletonList(unit)).get())
+                .subscribe(new SaveUnitSubscriber(true)));
     }
 
     private void updateUnit(UnitViewModel data) {
         showLoading();
         addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
-                .flatMap(unit -> {
-                    updateUnits.setData(Collections.singletonList(unit));
-                    return updateUnits.get();
-                }).subscribe(new SaveUnitSubscriber(false)));
+                .flatMap(unit -> updateUnits.init(Collections.singletonList(unit)).get())
+                .subscribe(new SaveUnitSubscriber(false)));
     }
 
     private boolean checkDataForErrors(String fullName, String shortName) {

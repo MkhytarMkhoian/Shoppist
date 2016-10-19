@@ -123,8 +123,7 @@ public class SearchPresenter extends BaseRouterPresenter<SearchView, Router> {
     }
 
     private Observable<CategoryViewModel> loadDefaultCategory() {
-        getCategory.setId(CategoryViewModel.NO_CATEGORY_ID);
-        return getCategory.get()
+        return getCategory.init(CategoryViewModel.NO_CATEGORY_ID).get()
                 .map(categoryModelDataMapper::transformToViewModel);
     }
 
@@ -169,10 +168,8 @@ public class SearchPresenter extends BaseRouterPresenter<SearchView, Router> {
         listItem.setPriority(Priority.NO_PRIORITY);
 
         addSubscription(Observable.fromCallable(() -> listItemsModelDataMapper.transform(listItem))
-                .flatMap(item -> {
-                    addListItems.setData(Collections.singletonList(item));
-                    return addListItems.get();
-                }).subscribe(new DefaultSubscriber<Boolean>() {
+                .flatMap(item -> addListItems.init(Collections.singletonList(item)).get())
+                .subscribe(new DefaultSubscriber<Boolean>() {
 
                     @Override
                     public void onNext(Boolean result) {

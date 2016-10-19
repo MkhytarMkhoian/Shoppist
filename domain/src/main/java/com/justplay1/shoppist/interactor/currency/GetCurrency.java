@@ -40,8 +40,9 @@ public class GetCurrency extends UseCase<CurrencyModel> {
         this.repository = repository;
     }
 
-    public void setId(String id) {
+    public GetCurrency init(String id) {
         this.id = id;
+        return this;
     }
 
     @Override

@@ -114,13 +114,9 @@ public class MoveListItemsPresenter extends BaseRouterPresenter<MoveListItemsVie
 
     public void onPositiveButtonClick(ListViewModel newList) {
         showLoading();
-        moveToList.setCopy(isCopy);
-        moveToList.setNewParentListId(newList.getId());
         Observable.fromCallable(() -> listItemsModelDataMapper.transform(listItems))
-                .flatMap(listItemModels -> {
-                    moveToList.setData(listItemModels);
-                    return moveToList.get();
-                }).subscribe(new DefaultSubscriber<Boolean>() {
+                .flatMap(listItemModels -> moveToList.init(listItemModels, newList.getId(), isCopy).get())
+                .subscribe(new DefaultSubscriber<Boolean>() {
 
             @Override
             public void onError(Throwable e) {

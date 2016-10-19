@@ -43,8 +43,9 @@ public class GetListItems extends UseCase<List<ListItemModel>> {
         this.repository = repository;
     }
 
-    public void setParentId(String parentId) {
+    public GetListItems init(String parentId) {
         this.parentId = parentId;
+        return this;
     }
 
     @Override

@@ -48,7 +48,7 @@ public class GetListItemsTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         useCase = new GetListItems(mockListItemsRepository, mockThreadExecutor, mockPostExecutionThread);
-        useCase.setParentId(FAKE_ID);
+        useCase.init(FAKE_ID);
     }
 
     @Test

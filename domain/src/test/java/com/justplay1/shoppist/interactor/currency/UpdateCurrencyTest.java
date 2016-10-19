@@ -49,7 +49,7 @@ public class UpdateCurrencyTest {
         useCase = new UpdateCurrency(mockCurrencyRepository, mockThreadExecutor, mockPostExecutionThread);
 
         models = Collections.singletonList(createFakeCurrencyModel());
-        useCase.setData(models);
+        useCase.init(models);
     }
 
     @Test

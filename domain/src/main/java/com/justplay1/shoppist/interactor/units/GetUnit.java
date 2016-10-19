@@ -40,8 +40,9 @@ public class GetUnit extends UseCase<UnitModel> {
         this.repository = repository;
     }
 
-    public void setId(String id) {
+    public GetUnit init(String id) {
         this.id = id;
+        return this;
     }
 
     @Override

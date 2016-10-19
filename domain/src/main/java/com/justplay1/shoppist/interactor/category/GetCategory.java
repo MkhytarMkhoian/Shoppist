@@ -40,8 +40,9 @@ public class GetCategory extends UseCase<CategoryModel> {
         this.repository = repository;
     }
 
-    public void setId(String id) {
+    public GetCategory init(String id) {
         this.id = id;
+        return this;
     }
 
     @Override

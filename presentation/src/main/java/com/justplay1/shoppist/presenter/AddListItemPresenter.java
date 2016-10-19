@@ -355,24 +355,18 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
 
     private void addListItem(ListItemViewModel data, boolean isLongClick) {
         addSubscription(Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
-                .flatMap(item -> {
-                    addListItems.setData(Collections.singletonList(item));
-                    return addListItems.get();
-                }).subscribe(new SaveListItemSubscriber(isLongClick, true)));
+                .flatMap(item -> addListItems.init(Collections.singletonList(item)).get())
+                .subscribe(new SaveListItemSubscriber(isLongClick, true)));
     }
 
     private void updateListItem(ListItemViewModel data, boolean isLongClick) {
         addSubscription(Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
-                .flatMap(item -> {
-                    updateListItems.setData(Collections.singletonList(item));
-                    return updateListItems.get();
-                })
+                .flatMap(item -> updateListItems.init(Collections.singletonList(item)).get())
                 .flatMap(result -> {
                     if (productModel != null) {
                         productModel.setUnit(unitModel);
                         ProductModel product = goodsModelDataMapper.transform(productModel);
-                        updateGoods.setData(Collections.singletonList(product));
-                        return updateGoods.get();
+                        return updateGoods.init(Collections.singletonList(product)).get();
                     } else {
                         return Observable.just(result);
                     }

@@ -95,9 +95,7 @@ public class CurrencyPresenter extends BaseRouterPresenter<CurrencyView, Currenc
 
     public void deleteItems(Collection<CurrencyViewModel> data) {
         addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
-                .flatMap(items -> {
-                    deleteCurrency.setData(items);
-                    return deleteCurrency.get();
-                }).subscribe(new DefaultSubscriber<>()));
+                .flatMap(items -> deleteCurrency.init(items).get())
+                .subscribe(new DefaultSubscriber<>()));
     }
 }

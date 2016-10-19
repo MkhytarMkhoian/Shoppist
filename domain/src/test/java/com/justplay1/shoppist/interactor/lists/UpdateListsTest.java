@@ -15,7 +15,6 @@
  */
 package com.justplay1.shoppist.interactor.lists;
 
-import com.justplay1.shoppist.TestUtil;
 import com.justplay1.shoppist.executor.PostExecutionThread;
 import com.justplay1.shoppist.executor.ThreadExecutor;
 import com.justplay1.shoppist.models.ListModel;
@@ -50,7 +49,7 @@ public class UpdateListsTest {
         useCase = new UpdateLists(mockListRepository, mockThreadExecutor, mockPostExecutionThread);
 
         models = Collections.singletonList(createFakeListModel());
-        useCase.setData(models);
+        useCase.init(models);
     }
 
     @Test

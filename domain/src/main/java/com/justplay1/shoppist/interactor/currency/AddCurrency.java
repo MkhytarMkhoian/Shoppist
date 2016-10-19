@@ -42,12 +42,16 @@ public class AddCurrency extends UseCase<Boolean> {
         this.repository = repository;
     }
 
-    public void setData(Collection<CurrencyModel> data) {
+    public AddCurrency init(Collection<CurrencyModel> data) {
         this.data = data;
+        return this;
     }
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
+        if (this.data == null) {
+            throw new IllegalArgumentException("init(data) not called, or called with null argument.");
+        }
         return Observable.fromCallable(() -> {
             repository.save(data);
             return true;

@@ -50,7 +50,7 @@ public class UpdateCategoryTest {
                 mockPostExecutionThread);
 
         models = Collections.singletonList(createFakeCategoryModel());
-        useCase.setData(models);
+        useCase.init(models);
     }
 
     @Test

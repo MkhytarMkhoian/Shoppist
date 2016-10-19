@@ -84,10 +84,8 @@ public class UnitsPresenter extends BaseRouterPresenter<UnitsView, UnitRouter> {
 
     public void deleteItems(Collection<UnitViewModel> data) {
         addSubscription(Observable.fromCallable(() -> dataMapper.transform(data))
-                .flatMap(items -> {
-                    deleteUnits.setData(items);
-                    return deleteUnits.get();
-                }).subscribe(new DefaultSubscriber<>()));
+                .flatMap(items -> deleteUnits.init(items).get())
+                .subscribe(new DefaultSubscriber<>()));
     }
 
     public void onAddButtonClick() {

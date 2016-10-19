@@ -49,7 +49,7 @@ public class DeleteUnitsTest {
         useCase = new DeleteUnits(mockUnitsRepository, mockThreadExecutor, mockPostExecutionThread);
 
         models = Collections.singletonList(createFakeUnitModel());
-        useCase.setData(models);
+        useCase.init(models);
     }
 
     @Test

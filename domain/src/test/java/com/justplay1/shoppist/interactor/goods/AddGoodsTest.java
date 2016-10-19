@@ -52,7 +52,7 @@ public class AddGoodsTest {
         useCase = new AddGoods(mockGoodsRepository, mockThreadExecutor, mockPostExecutionThread);
 
         models = Collections.singletonList(createFakeProductModel(createFakeUnitModel(), createFakeCategoryModel()));
-        useCase.setData(models);
+        useCase.init(models);
     }
 
     @Test

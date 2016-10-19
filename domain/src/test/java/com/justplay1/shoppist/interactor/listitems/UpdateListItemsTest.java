@@ -52,7 +52,7 @@ public class UpdateListItemsTest {
         useCase = new UpdateListItems(mockListItemsRepository, mockThreadExecutor, mockPostExecutionThread);
 
         models = Collections.singletonList(createFakeListItemModel(createFakeCategoryModel(), createFakeUnitModel(), createFakeCurrencyModel()));
-        useCase.setData(models);
+        useCase.init(models);
     }
 
     @Test

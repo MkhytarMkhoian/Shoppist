@@ -51,7 +51,7 @@ public class AddListItemsTest {
         useCase = new AddListItems(mockListItemsRepository, mockThreadExecutor, mockPostExecutionThread);
 
         models = createFakeListItemModelList(createFakeCategoryModel(), createFakeUnitModel(), createFakeCurrencyModel());
-        useCase.setData(models);
+        useCase.init(models);
     }
 
     @Test
