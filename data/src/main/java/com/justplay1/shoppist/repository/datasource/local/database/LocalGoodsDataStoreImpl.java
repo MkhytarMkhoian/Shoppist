@@ -18,6 +18,7 @@ package com.justplay1.shoppist.repository.datasource.local.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.graphics.Color;
 
 import com.justplay1.shoppist.data.R;
 import com.justplay1.shoppist.entity.CategoryDAO;
@@ -72,8 +73,8 @@ public class LocalGoodsDataStoreImpl extends BaseLocalDataStore<ProductDAO> impl
         for (String item : products) {
             String[] productsName = item.split(" ! ");
 
-            CategoryDAO category = new CategoryDAO(productsName[1]);
-            UnitDAO unit = new UnitDAO(UnitDAO.NO_UNIT_ID);
+            CategoryDAO category = new CategoryDAO(productsName[1], null, Color.DKGRAY, false);
+            UnitDAO unit = new UnitDAO(UnitDAO.NO_UNIT_ID, null, null);
 
             ProductDAO product = new ProductDAO(UUID.nameUUIDFromBytes((System.nanoTime() + "").getBytes()).toString(),
                     productsName[0], category, false, System.currentTimeMillis(), unit);

@@ -23,8 +23,8 @@ public class CategoryModel extends BaseModel {
 
     public static final String NO_CATEGORY_ID = "1";
 
-    private int color;
-    private boolean isCreateByUser;
+    private final int color;
+    private final boolean isCreateByUser;
 
     public CategoryModel(String id, String name, int color, boolean isCreateByUser) {
         super(id, name);

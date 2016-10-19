@@ -21,16 +21,16 @@ package com.justplay1.shoppist.models;
  */
 public class ListItemModel extends BaseModel {
 
-    private String parentListId;
-    private String note;
-    private boolean status;
-    private CategoryModel category;
-    private int priority;
-    private double price;
-    private double quantity;
-    private UnitModel unit;
-    private long timeCreated;
-    private CurrencyModel currency;
+    private final String parentListId;
+    private final String note;
+    private final boolean status;
+    private final CategoryModel category;
+    private final int priority;
+    private final double price;
+    private final double quantity;
+    private final UnitModel unit;
+    private final long timeCreated;
+    private final CurrencyModel currency;
 
     public ListItemModel(String id, String name, String parentListId, String note, boolean status, CategoryModel category,
                          int priority, double price, double quantity, UnitModel unit, long timeCreated,

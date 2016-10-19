@@ -18,7 +18,6 @@ package com.justplay1.shoppist.entity;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.graphics.Color;
 
 import com.justplay1.shoppist.repository.datasource.local.database.DbUtil;
 
@@ -40,12 +39,8 @@ public class CategoryDAO extends BaseDAO {
 
     public static final String WHERE_CATEGORY_ID = COL_ID + " IN(?)";
 
-    private int color = Color.DKGRAY;
-    private boolean isCreateByUser;
-
-    public CategoryDAO(String id) {
-        super(id, null);
-    }
+    private final int color;
+    private final boolean isCreateByUser;
 
     public CategoryDAO(String id, String name, int color, boolean isCreateByUser) {
         super(id, name);

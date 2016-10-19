@@ -38,11 +38,7 @@ public class UnitDAO extends BaseDAO {
 
     public static final String WHERE_STRING = COL_ID + " IN(?)";
 
-    private String shortName;
-
-    public UnitDAO(String id) {
-        super(id, null);
-    }
+    private final String shortName;
 
     public UnitDAO(String id, String name, String shortName) {
         super(id, name);

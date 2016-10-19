@@ -21,8 +21,8 @@ package com.justplay1.shoppist.models;
  */
 public abstract class BaseModel {
 
-    protected String id;
-    protected String name;
+    protected final String id;
+    protected final String name;
 
     public BaseModel(String id, String name) {
         this.id = id;

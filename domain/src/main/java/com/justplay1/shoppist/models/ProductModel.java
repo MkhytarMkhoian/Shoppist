@@ -21,10 +21,10 @@ package com.justplay1.shoppist.models;
  */
 public class ProductModel extends BaseModel {
 
-    private CategoryModel category;
-    private boolean isCreateByUser;
-    private long timeCreated;
-    private UnitModel unit;
+    private final CategoryModel category;
+    private final boolean isCreateByUser;
+    private final long timeCreated;
+    private final UnitModel unit;
 
     public ProductModel(String id, String name, CategoryModel category, boolean isCreateByUser, long timeCreated, UnitModel unit) {
         super(id, name);

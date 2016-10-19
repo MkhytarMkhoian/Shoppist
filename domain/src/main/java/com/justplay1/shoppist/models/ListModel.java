@@ -21,11 +21,11 @@ package com.justplay1.shoppist.models;
  */
 public class ListModel extends BaseModel {
 
-    private int boughtCount;
-    private long timeCreated;
-    private int priority;
-    private int color;
-    private int size;
+    private final int boughtCount;
+    private final long timeCreated;
+    private final int priority;
+    private final int color;
+    private final int size;
 
     public ListModel(String id, String name, int boughtCount, long timeCreated,
                      int priority, int color, int size) {

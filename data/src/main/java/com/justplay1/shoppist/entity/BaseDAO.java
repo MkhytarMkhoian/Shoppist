@@ -21,8 +21,8 @@ package com.justplay1.shoppist.entity;
  */
 public abstract class BaseDAO {
 
-    protected String id;
-    protected String name;
+    protected final String id;
+    protected final String name;
 
     public BaseDAO(String id, String name) {
         this.id = id;

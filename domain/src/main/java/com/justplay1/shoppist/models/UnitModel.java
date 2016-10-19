@@ -23,7 +23,7 @@ public class UnitModel extends BaseModel {
 
     public static final String NO_UNIT_ID = "no_unit";
 
-    private String shortName;
+    private final String shortName;
 
     public UnitModel(String id, String name, String shortName) {
         super(id, name);

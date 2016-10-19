@@ -18,7 +18,6 @@ package com.justplay1.shoppist.entity;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.graphics.Color;
 
 import com.justplay1.shoppist.repository.datasource.local.database.DbUtil;
 
@@ -41,11 +40,11 @@ public class ListDAO extends BaseDAO {
 
     public static final String WHERE_STRING = COL_ID + " IN(?)";
 
-    private int boughtCount;
-    private long timeCreated;
-    private int priority = PriorityDAO.NO_PRIORITY;
-    private int color = Color.DKGRAY;
-    private int size;
+    private final int boughtCount;
+    private final long timeCreated;
+    private final int priority;
+    private final int color;
+    private final int size;
 
     public ListDAO(String id, String name, int boughtCount, long timeCreated,
                    int priority, int color, int size) {

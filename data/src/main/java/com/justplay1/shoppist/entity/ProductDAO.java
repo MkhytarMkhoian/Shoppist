@@ -39,10 +39,10 @@ public class ProductDAO extends BaseDAO {
 
     public static final String WHERE_PRODUCT_ID = COL_ID + " IN(?)";
 
-    private CategoryDAO category;
-    private boolean isCreateByUser;
-    private long timeCreated;
-    private UnitDAO unit;
+    private final CategoryDAO category;
+    private final boolean isCreateByUser;
+    private final long timeCreated;
+    private final UnitDAO unit;
 
     public ProductDAO(String id, String name, CategoryDAO category, boolean isCreateByUser, long timeCreated, UnitDAO unit) {
         super(id, name);

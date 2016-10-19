@@ -45,16 +45,16 @@ public class ListItemDAO extends BaseDAO {
 
     public static final String WHERE_STRING = COL_PARENT_LIST_ID + "=? and " + COL_ID + " IN(?)";
 
-    private String parentListId;
-    private String note;
-    private boolean status = false;
-    private CategoryDAO category;
-    private int priority = PriorityDAO.NO_PRIORITY;
-    private double price;
-    private double quantity = 1;
-    private UnitDAO unit;
-    private long timeCreated;
-    private CurrencyDAO currency;
+    private final String parentListId;
+    private final String note;
+    private final boolean status;
+    private final CategoryDAO category;
+    private final int priority;
+    private final double price;
+    private final double quantity;
+    private final UnitDAO unit;
+    private final long timeCreated;
+    private final CurrencyDAO currency;
 
     public ListItemDAO(String id, String name, String parentListId, String note, boolean status, CategoryDAO category,
                        int priority, double price, double quantity, UnitDAO unit, long timeCreated,
