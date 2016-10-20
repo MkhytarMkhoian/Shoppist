@@ -41,21 +41,13 @@ public class ListModelTest {
     public void listConstructor_HappyCase() {
         ListModel model = createFakeListModel();
 
-        String id = model.getId();
-        String name = model.getName();
-        int color = model.getColor();
-        int boughtCount = model.getBoughtCount();
-        int priority = model.getPriority();
-        int size = model.getSize();
-        long timeCreated = model.getTimeCreated();
-
-        assertThat(id, is(FAKE_ID));
-        assertThat(color, is(FAKE_COLOR));
-        assertThat(name, is(FAKE_NAME));
-        assertThat(boughtCount, is(FAKE_BOUGHT_COUNT));
-        assertThat(priority, is(FAKE_PRIORITY));
-        assertThat(timeCreated, is(FAKE_TIME_CREATED));
-        assertThat(size, is(FAKE_SIZE));
+        assertThat(model.getId(), is(FAKE_ID));
+        assertThat(model.getColor(), is(FAKE_COLOR));
+        assertThat(model.getName(), is(FAKE_NAME));
+        assertThat(model.getBoughtCount(), is(FAKE_BOUGHT_COUNT));
+        assertThat(model.getPriority(), is(FAKE_PRIORITY));
+        assertThat(model.getTimeCreated(), is(FAKE_TIME_CREATED));
+        assertThat(model.getSize(), is(FAKE_SIZE));
     }
 
     @Test

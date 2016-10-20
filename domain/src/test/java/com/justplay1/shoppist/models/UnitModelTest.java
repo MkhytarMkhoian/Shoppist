@@ -37,13 +37,9 @@ public class UnitModelTest {
     public void unitConstructor_HappyCase() {
         UnitModel model = createFakeUnitModel();
 
-        String id = model.getId();
-        String name = model.getName();
-        String shortName = model.getShortName();
-
-        assertThat(id, is(FAKE_ID));
-        assertThat(shortName, is(FAKE_SHORT_NAME));
-        assertThat(name, is(FAKE_NAME));
+        assertThat(model.getId(), is(FAKE_ID));
+        assertThat(model.getShortName(), is(FAKE_SHORT_NAME));
+        assertThat(model.getName(), is(FAKE_NAME));
     }
 
     @Test

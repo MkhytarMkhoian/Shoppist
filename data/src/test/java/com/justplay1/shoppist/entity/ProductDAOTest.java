@@ -34,18 +34,12 @@ public class ProductDAOTest extends ApplicationTestCase {
         CategoryDAO categoryModel = createFakeCategoryDAO();
         ProductDAO model = createFakeProductDAO(createFakeUnitDAO(), createFakeCategoryDAO());
 
-        String id = model.getId();
-        String name = model.getName();
-        boolean isCreateByUser = model.isCreateByUser();
-        CategoryDAO category = model.getCategory();
-        UnitDAO unit = model.getUnit();
+        assertThat(model.getId(), is(FAKE_ID));
+        assertThat(model.getName(), is(FAKE_NAME));
+        assertThat(model.isCreateByUser(), is(FAKE_CREATE_BY_USER));
 
-        assertThat(id, is(FAKE_ID));
-        assertThat(name, is(FAKE_NAME));
-        assertThat(isCreateByUser, is(FAKE_CREATE_BY_USER));
-
-        assertEquals(categoryModel, category);
-        assertEquals(unitModel, unit);
+        assertEquals(categoryModel, model.getCategory());
+        assertEquals(unitModel, model.getUnit());
     }
 
     @Test

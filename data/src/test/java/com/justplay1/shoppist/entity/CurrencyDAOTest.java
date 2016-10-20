@@ -24,11 +24,8 @@ public class CurrencyDAOTest extends ApplicationTestCase {
     public void currencyConstructor_HappyCase() {
         CurrencyDAO model = createFakeCurrencyDAO();
 
-        String id = model.getId();
-        String name = model.getName();
-
-        assertThat(id, is(FAKE_ID));
-        assertThat(name, is(FAKE_NAME));
+        assertThat(model.getId(), is(FAKE_ID));
+        assertThat(model.getName(), is(FAKE_NAME));
     }
 
     @Test

@@ -41,18 +41,12 @@ public class ProductModelTest {
         CategoryModel categoryModel = createFakeCategoryModel();
         ProductModel model = createFakeProductModel(createFakeUnitModel(), createFakeCategoryModel());
 
-        String id = model.getId();
-        String name = model.getName();
-        boolean isCreateByUser = model.isCreateByUser();
-        CategoryModel category = model.getCategory();
-        UnitModel unit = model.getUnit();
+        assertThat(model.getId(), is(FAKE_ID));
+        assertThat(model.getName(), is(FAKE_NAME));
+        assertThat(model.isCreateByUser(), is(FAKE_CREATE_BY_USER));
 
-        assertThat(id, is(FAKE_ID));
-        assertThat(name, is(FAKE_NAME));
-        assertThat(isCreateByUser, is(FAKE_CREATE_BY_USER));
-
-        assertEquals(categoryModel, category);
-        assertEquals(unitModel, unit);
+        assertEquals(categoryModel, model.getCategory());
+        assertEquals(unitModel, model.getUnit());
     }
 
     @Test

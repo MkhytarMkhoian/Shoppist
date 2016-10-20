@@ -42,32 +42,19 @@ public class ListItemDAOTest extends ApplicationTestCase {
         CategoryDAO categoryModel = createFakeCategoryDAO();
         ListItemDAO model = createFakeListItemDAO(categoryModel, unitModel, currencyModel);
 
-        String id = model.getId();
-        String name = model.getName();
-        String note = model.getNote();
-        String parentListId = model.getParentListId();
-        int priority = model.getPriority();
-        boolean status = model.getStatus();
-        long timeCreated = model.getTimeCreated();
-        double price = model.getPrice();
-        double quantity = model.getQuantity();
-        CategoryDAO category = model.getCategory();
-        CurrencyDAO currency = model.getCurrency();
-        UnitDAO unit = model.getUnit();
+        assertThat(model.getId(), is(FAKE_ID));
+        assertThat(model.getNote(), is(FAKE_NOTE));
+        assertThat(model.getName(), is(FAKE_NAME));
+        assertThat(model.getParentListId(), is(FAKE_PARENT_LIST_ID));
+        assertThat(model.getPriority(), is(FAKE_PRIORITY));
+        assertThat(model.getTimeCreated(), is(FAKE_TIME_CREATED));
+        assertThat(model.getStatus(), is(FAKE_STATUS));
+        assertThat(model.getPrice(), is(FAKE_PRICE));
+        assertThat(model.getQuantity(), is(FAKE_QUANTITY));
 
-        assertThat(id, is(FAKE_ID));
-        assertThat(note, is(FAKE_NOTE));
-        assertThat(name, is(FAKE_NAME));
-        assertThat(parentListId, is(FAKE_PARENT_LIST_ID));
-        assertThat(priority, is(FAKE_PRIORITY));
-        assertThat(timeCreated, is(FAKE_TIME_CREATED));
-        assertThat(status, is(FAKE_STATUS));
-        assertThat(price, is(FAKE_PRICE));
-        assertThat(quantity, is(FAKE_QUANTITY));
-
-        assertEquals(categoryModel, category);
-        assertEquals(currencyModel, currency);
-        assertEquals(unitModel, unit);
+        assertEquals(categoryModel, model.getCategory());
+        assertEquals(currencyModel, model.getCurrency());
+        assertEquals(unitModel, model.getUnit());
     }
 
     @Test

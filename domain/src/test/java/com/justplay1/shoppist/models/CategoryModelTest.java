@@ -38,15 +38,10 @@ public class CategoryModelTest {
     public void categoryConstructor_HappyCase() {
         CategoryModel model = createFakeCategoryModel();
 
-        String id = model.getId();
-        String name = model.getName();
-        int color = model.getColor();
-        boolean isCreateByUser = model.isCreateByUser();
-
-        assertThat(id, is(FAKE_ID));
-        assertThat(color, is(FAKE_COLOR));
-        assertThat(name, is(FAKE_NAME));
-        assertThat(isCreateByUser, is(FAKE_CREATE_BY_USER));
+        assertThat(model.getId(), is(FAKE_ID));
+        assertThat(model.getColor(), is(FAKE_COLOR));
+        assertThat(model.getName(), is(FAKE_NAME));
+        assertThat(model.isCreateByUser(), is(FAKE_CREATE_BY_USER));
     }
 
     @Test
