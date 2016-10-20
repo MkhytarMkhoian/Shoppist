@@ -24,27 +24,22 @@ import android.os.Parcelable;
  */
 public class HeaderViewModel extends BaseViewModel {
 
-    @ItemType
     private int itemType;
-    @Priority
     private int priority;
-    private double totalPrice;
     private boolean showExpandIndicator;
 
     public HeaderViewModel() {
         priority = Priority.NO_PRIORITY;
-        totalPrice = 0;
         itemType = ItemType.HEADER_ITEM;
         showExpandIndicator = true;
     }
 
-    @SuppressWarnings("ResourceType")
     public HeaderViewModel(Parcel parcel) {
         this();
+        id = parcel.readString();
         name = parcel.readString();
         itemType = parcel.readInt();
         priority = parcel.readInt();
-        totalPrice = parcel.readDouble();
         showExpandIndicator = parcel.readByte() != 0;
     }
 
@@ -54,14 +49,6 @@ public class HeaderViewModel extends BaseViewModel {
 
     public void setShowExpandIndicator(boolean showExpandIndicator) {
         this.showExpandIndicator = showExpandIndicator;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     @Priority
@@ -103,12 +90,12 @@ public class HeaderViewModel extends BaseViewModel {
         if (o == null || !(o instanceof HeaderViewModel)) return false;
 
         HeaderViewModel item = (HeaderViewModel) o;
-        return item.getName().equals(this.getName());
+        return item.getId().equals(this.getId());
     }
 
     @Override
     public int hashCode() {
-        return 31 * name.hashCode();
+        return id.hashCode();
     }
 
     @Override
@@ -118,10 +105,10 @@ public class HeaderViewModel extends BaseViewModel {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(name);
         dest.writeSerializable(itemType);
         dest.writeSerializable(priority);
-        dest.writeDouble(totalPrice);
         dest.writeByte((byte) (showExpandIndicator ? 1 : 0));
     }
 }

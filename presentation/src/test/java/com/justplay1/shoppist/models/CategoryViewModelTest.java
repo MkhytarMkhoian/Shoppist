@@ -16,11 +16,59 @@
 
 package com.justplay1.shoppist.models;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_COLOR;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_CREATE_BY_USER;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_ID;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_NAME;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeCategoryViewModel;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 public class CategoryViewModelTest {
 
+    @Test
+    public void categoryConstructor_HappyCase() {
+        CategoryViewModel viewModel = createFakeCategoryViewModel();
+
+        assertThat(viewModel.getId(), is(FAKE_ID));
+        assertThat(viewModel.getColor(), is(FAKE_COLOR));
+        assertThat(viewModel.getName(), is(FAKE_NAME));
+        assertThat(viewModel.isCreateByUser(), is(FAKE_CREATE_BY_USER));
+    }
+
+    @Test
+    public void categoryHashCode_HappyCase() {
+        CategoryViewModel viewModel = createFakeCategoryViewModel();
+        int hashCode = viewModel.hashCode();
+
+        assertThat(hashCode, is(FAKE_ID.hashCode()));
+    }
+
+    @Test
+    public void categoryEquals_HappyCase() {
+        CategoryViewModel x = createFakeCategoryViewModel();
+        CategoryViewModel y = createFakeCategoryViewModel();
+        CategoryViewModel z = createFakeCategoryViewModel();
+
+        // reflection rule
+        assertEquals(x, x);
+
+        // symmetry rule
+        assertEquals(x, y);
+        assertEquals(y, x);
+
+        // transitivity rule
+        assertEquals(x, y);
+        assertEquals(y, z);
+        assertEquals(x, z);
+
+        assertNotEquals(x, null);
+    }
 }

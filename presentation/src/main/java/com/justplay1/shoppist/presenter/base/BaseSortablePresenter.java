@@ -84,12 +84,6 @@ public abstract class BaseSortablePresenter<V extends ContextView, T extends Bas
             if (clazz.isAssignableFrom(ListItemViewModel.class)) {
                 header.setName(getString(com.justplay1.shoppist.R.string.goods).toUpperCase(Locale.getDefault()));
                 header.setShowExpandIndicator(false);
-                double totalPrice = 0;
-                for (T item : noDone) {
-                    ListItemViewModel listItem = ((ListItemViewModel) item);
-                    totalPrice = totalPrice + (listItem.getPrice() * listItem.getQuantity());
-                }
-                header.setTotalPrice(ShoppistUtils.roundDouble(totalPrice, 2));
                 header.setItemType(ItemType.CART_HEADER);
                 result.add(0, Pair.create(header, new ArrayList<>()));
             }
@@ -100,12 +94,6 @@ public abstract class BaseSortablePresenter<V extends ContextView, T extends Bas
             if (clazz.isAssignableFrom(ListItemViewModel.class)) {
                 header = new HeaderViewModel();
                 header.setName(getString(com.justplay1.shoppist.R.string.shopping_cart).toUpperCase(Locale.getDefault()));
-                double totalPrice = 0;
-                for (T item : done) {
-                    ListItemViewModel listItem = ((ListItemViewModel) item);
-                    totalPrice = totalPrice + (listItem.getPrice() * listItem.getQuantity());
-                }
-                header.setTotalPrice(ShoppistUtils.roundDouble(totalPrice, 2));
             }
             if (header != null) {
                 header.setItemType(ItemType.CART_HEADER);

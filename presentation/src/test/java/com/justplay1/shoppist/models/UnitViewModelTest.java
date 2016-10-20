@@ -16,11 +16,57 @@
 
 package com.justplay1.shoppist.models;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_ID;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_NAME;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_SHORT_NAME;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeUnitViewModel;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 public class UnitViewModelTest {
 
+    @Test
+    public void unitConstructor_HappyCase() {
+        UnitViewModel model = createFakeUnitViewModel();
+
+        assertThat(model.getId(), is(FAKE_ID));
+        assertThat(model.getShortName(), is(FAKE_SHORT_NAME));
+        assertThat(model.getName(), is(FAKE_NAME));
+    }
+
+    @Test
+    public void unitHashCode_HappyCase() {
+        UnitViewModel model = createFakeUnitViewModel();
+        int hashCode = model.hashCode();
+
+        assertThat(hashCode, is(FAKE_ID.hashCode()));
+    }
+
+    @Test
+    public void unitEquals_HappyCase() {
+        UnitViewModel x = createFakeUnitViewModel();
+        UnitViewModel y = createFakeUnitViewModel();
+        UnitViewModel z = createFakeUnitViewModel();
+
+        // reflection rule
+        assertEquals(x, x);
+
+        // symmetry rule
+        assertEquals(x, y);
+        assertEquals(y, x);
+
+        // transitivity rule
+        assertEquals(x, y);
+        assertEquals(y, z);
+        assertEquals(x, z);
+
+        assertNotEquals(x, null);
+    }
 }

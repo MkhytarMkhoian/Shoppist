@@ -16,6 +16,13 @@
 
 package com.justplay1.shoppist.models;
 
+import org.junit.Test;
+
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_ID;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_NAME;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_PRIORITY;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeHeaderViewModel;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 /**
@@ -23,4 +30,42 @@ import static org.junit.Assert.*;
  */
 public class HeaderViewModelTest {
 
+    @Test
+    public void headerConstructor_HappyCase() {
+        HeaderViewModel viewModel = createFakeHeaderViewModel();
+
+        assertThat(viewModel.getId(), is(FAKE_ID));
+        assertThat(viewModel.getPriority(), is(FAKE_PRIORITY));
+        assertThat(viewModel.getName(), is(FAKE_NAME));
+        assertThat(viewModel.getItemType(), is(ItemType.HEADER_ITEM));
+    }
+
+    @Test
+    public void headerHashCode_HappyCase() {
+        HeaderViewModel viewModel = createFakeHeaderViewModel();
+        int hashCode = viewModel.hashCode();
+
+        assertThat(hashCode, is(FAKE_ID.hashCode()));
+    }
+
+    @Test
+    public void headerEquals_HappyCase() {
+        HeaderViewModel x = createFakeHeaderViewModel();
+        HeaderViewModel y = createFakeHeaderViewModel();
+        HeaderViewModel z = createFakeHeaderViewModel();
+
+        // reflection rule
+        assertEquals(x, x);
+
+        // symmetry rule
+        assertEquals(x, y);
+        assertEquals(y, x);
+
+        // transitivity rule
+        assertEquals(x, y);
+        assertEquals(y, z);
+        assertEquals(x, z);
+
+        assertNotEquals(x, null);
+    }
 }

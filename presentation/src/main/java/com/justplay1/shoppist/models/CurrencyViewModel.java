@@ -60,7 +60,7 @@ public class CurrencyViewModel extends BaseViewModel {
 
     @Override
     public int hashCode() {
-        return 31 * id.hashCode();
+        return id.hashCode();
     }
 
     @Override

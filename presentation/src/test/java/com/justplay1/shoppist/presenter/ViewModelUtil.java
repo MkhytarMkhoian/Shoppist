@@ -20,6 +20,8 @@ import com.justplay1.shoppist.models.CategoryModel;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.CurrencyModel;
 import com.justplay1.shoppist.models.CurrencyViewModel;
+import com.justplay1.shoppist.models.HeaderViewModel;
+import com.justplay1.shoppist.models.ItemType;
 import com.justplay1.shoppist.models.ListItemModel;
 import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.ListModel;
@@ -164,6 +166,16 @@ public class ViewModelUtil {
         viewModel.setUnit(unitViewModel);
         viewModel.setTimeCreated(FAKE_TIME_CREATED);
         viewModel.setCreateByUser(FAKE_CREATE_BY_USER);
+        return viewModel;
+    }
+
+    @SuppressWarnings("WrongConstant")
+    public static HeaderViewModel createFakeHeaderViewModel() {
+        HeaderViewModel viewModel = new HeaderViewModel();
+        viewModel.setId(FAKE_ID);
+        viewModel.setName(FAKE_NAME);
+        viewModel.setPriority(FAKE_PRIORITY);
+        viewModel.setItemType(ItemType.HEADER_ITEM);
         return viewModel;
     }
 }

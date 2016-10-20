@@ -16,11 +16,64 @@
 
 package com.justplay1.shoppist.models;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_CREATE_BY_USER;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_ID;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_NAME;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeCategoryViewModel;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeProductViewModel;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeUnitViewModel;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
 public class ProductViewModelTest {
 
+    @Test
+    public void productConstructor_HappyCase() {
+        UnitViewModel unitModel = createFakeUnitViewModel();
+        CategoryViewModel categoryModel = createFakeCategoryViewModel();
+        ProductViewModel model = createFakeProductViewModel(createFakeCategoryViewModel(), createFakeUnitViewModel());
+
+        assertThat(model.getId(), is(FAKE_ID));
+        assertThat(model.getName(), is(FAKE_NAME));
+        assertThat(model.isCreateByUser(), is(FAKE_CREATE_BY_USER));
+
+        assertEquals(categoryModel, model.getCategory());
+        assertEquals(unitModel, model.getUnit());
+    }
+
+    @Test
+    public void productHashCode_HappyCase() {
+        ProductViewModel model = createFakeProductViewModel(createFakeCategoryViewModel(), createFakeUnitViewModel());
+        int hashCode = model.hashCode();
+
+        assertThat(hashCode, is(FAKE_ID.hashCode()));
+    }
+
+    @Test
+    public void productEquals_HappyCase() {
+        ProductViewModel x = createFakeProductViewModel(createFakeCategoryViewModel(), createFakeUnitViewModel());
+        ProductViewModel y = createFakeProductViewModel(createFakeCategoryViewModel(), createFakeUnitViewModel());
+        ProductViewModel z = createFakeProductViewModel(createFakeCategoryViewModel(), createFakeUnitViewModel());
+
+        // reflection rule
+        assertEquals(x, x);
+
+        // symmetry rule
+        assertEquals(x, y);
+        assertEquals(y, x);
+
+        // transitivity rule
+        assertEquals(x, y);
+        assertEquals(y, z);
+        assertEquals(x, z);
+
+        assertNotEquals(x, null);
+    }
 }

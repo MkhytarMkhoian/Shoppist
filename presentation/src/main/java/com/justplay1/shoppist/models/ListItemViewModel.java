@@ -197,8 +197,7 @@ public class ListItemViewModel extends BaseViewModel {
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        return result + parentListId.hashCode();
+        return id.hashCode();
     }
 
     @Override
