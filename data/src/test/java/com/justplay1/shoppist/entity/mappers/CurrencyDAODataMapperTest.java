@@ -3,6 +3,7 @@ package com.justplay1.shoppist.entity.mappers;
 import com.justplay1.shoppist.entity.CurrencyDAO;
 import com.justplay1.shoppist.models.CurrencyModel;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -23,9 +24,15 @@ import static org.mockito.Mockito.mock;
  */
 public class CurrencyDAODataMapperTest {
 
+    private CurrencyDAODataMapper dataMapper;
+
+    @Before
+    public void setUp() throws Exception {
+        dataMapper = new CurrencyDAODataMapper();
+    }
+
     @Test
     public void transformCurrencyDAO() {
-        CurrencyDAODataMapper dataMapper = new CurrencyDAODataMapper();
         CurrencyDAO dao = createFakeCurrencyDAO();
 
         CurrencyModel model = dataMapper.transformFromDAO(dao);
@@ -37,8 +44,6 @@ public class CurrencyDAODataMapperTest {
 
     @Test
     public void transformCurrencyDAOCollection() {
-        CurrencyDAODataMapper dataMapper = new CurrencyDAODataMapper();
-
         CurrencyDAO mockDAOOne = mock(CurrencyDAO.class);
         CurrencyDAO mockDAOTwo = mock(CurrencyDAO.class);
 
@@ -56,7 +61,6 @@ public class CurrencyDAODataMapperTest {
 
     @Test
     public void transformCurrencyModel() {
-        CurrencyDAODataMapper dataMapper = new CurrencyDAODataMapper();
         CurrencyModel model = createFakeCurrencyModel();
 
         CurrencyDAO dao = dataMapper.transformToDAO(model);
@@ -68,8 +72,6 @@ public class CurrencyDAODataMapperTest {
 
     @Test
     public void transformCurrencyModelCollection() {
-        CurrencyDAODataMapper dataMapper = new CurrencyDAODataMapper();
-
         CurrencyModel mockModelOne = mock(CurrencyModel.class);
         CurrencyModel mockModelTwo = mock(CurrencyModel.class);
 

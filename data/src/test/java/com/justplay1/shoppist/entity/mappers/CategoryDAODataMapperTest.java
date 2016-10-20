@@ -3,6 +3,7 @@ package com.justplay1.shoppist.entity.mappers;
 import com.justplay1.shoppist.entity.CategoryDAO;
 import com.justplay1.shoppist.models.CategoryModel;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -25,9 +26,15 @@ import static org.mockito.Mockito.mock;
  */
 public class CategoryDAODataMapperTest {
 
+    private CategoryDAODataMapper dataMapper;
+
+    @Before
+    public void setUp() throws Exception {
+        dataMapper = new CategoryDAODataMapper();
+    }
+
     @Test
     public void transformCategoryDAO() {
-        CategoryDAODataMapper dataMapper = new CategoryDAODataMapper();
         CategoryDAO dao = createFakeCategoryDAO();
 
         CategoryModel model = dataMapper.transformFromDAO(dao);
@@ -41,8 +48,6 @@ public class CategoryDAODataMapperTest {
 
     @Test
     public void transformCategoryDAOCollection() {
-        CategoryDAODataMapper dataMapper = new CategoryDAODataMapper();
-
         CategoryDAO mockDAOOne = mock(CategoryDAO.class);
         CategoryDAO mockDAOTwo = mock(CategoryDAO.class);
 
@@ -59,7 +64,6 @@ public class CategoryDAODataMapperTest {
 
     @Test
     public void transformCategoryModel() {
-        CategoryDAODataMapper dataMapper = new CategoryDAODataMapper();
         CategoryModel model = createFakeCategoryModel();
 
         CategoryDAO dao = dataMapper.transformToDAO(model);
@@ -73,8 +77,6 @@ public class CategoryDAODataMapperTest {
 
     @Test
     public void transformCategoryModelCollection() {
-        CategoryDAODataMapper dataMapper = new CategoryDAODataMapper();
-
         CategoryModel mockModelOne = mock(CategoryModel.class);
         CategoryModel mockModelTwo = mock(CategoryModel.class);
 

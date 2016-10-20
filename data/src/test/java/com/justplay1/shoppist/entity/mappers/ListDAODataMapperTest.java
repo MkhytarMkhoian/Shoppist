@@ -3,6 +3,7 @@ package com.justplay1.shoppist.entity.mappers;
 import com.justplay1.shoppist.entity.ListDAO;
 import com.justplay1.shoppist.models.ListModel;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -28,9 +29,15 @@ import static org.mockito.Mockito.mock;
  */
 public class ListDAODataMapperTest {
 
+    private  ListDAODataMapper dataMapper;
+
+    @Before
+    public void setUp() throws Exception {
+        dataMapper = new ListDAODataMapper();
+    }
+
     @Test
     public void transformListDAO() {
-        ListDAODataMapper dataMapper = new ListDAODataMapper();
         ListDAO dao = createFakeListDAO();
 
         ListModel model = dataMapper.transformFromDAO(dao);
@@ -47,8 +54,6 @@ public class ListDAODataMapperTest {
 
     @Test
     public void transformListDAOCollection() {
-        ListDAODataMapper dataMapper = new ListDAODataMapper();
-
         ListDAO mockDAOOne = mock(ListDAO.class);
         ListDAO mockDAOTwo = mock(ListDAO.class);
 
@@ -65,7 +70,6 @@ public class ListDAODataMapperTest {
 
     @Test
     public void transformListModel() {
-        ListDAODataMapper dataMapper = new ListDAODataMapper();
         ListModel model = createFakeListModel();
 
         ListDAO dao = dataMapper.transformToDAO(model);
@@ -82,8 +86,6 @@ public class ListDAODataMapperTest {
 
     @Test
     public void transformListModelCollection() {
-        ListDAODataMapper dataMapper = new ListDAODataMapper();
-
         ListModel mockModelOne = mock(ListModel.class);
         ListModel mockModelTwo = mock(ListModel.class);
 

@@ -3,6 +3,7 @@ package com.justplay1.shoppist.entity.mappers;
 import com.justplay1.shoppist.entity.UnitDAO;
 import com.justplay1.shoppist.models.UnitModel;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -24,9 +25,15 @@ import static org.mockito.Mockito.mock;
  */
 public class UnitsDAODataMapperTest {
 
+    private UnitsDAODataMapper dataMapper;
+
+    @Before
+    public void setUp() throws Exception {
+        dataMapper = new UnitsDAODataMapper();
+    }
+
     @Test
     public void transformUnitDAO() {
-        UnitsDAODataMapper dataMapper = new UnitsDAODataMapper();
         UnitDAO dao = createFakeUnitDAO();
 
         UnitModel model = dataMapper.transformFromDAO(dao);
@@ -39,8 +46,6 @@ public class UnitsDAODataMapperTest {
 
     @Test
     public void transformUnitDAOCollection() {
-        UnitsDAODataMapper dataMapper = new UnitsDAODataMapper();
-
         UnitDAO mockDAOOne = mock(UnitDAO.class);
         UnitDAO mockDAOTwo = mock(UnitDAO.class);
 
@@ -57,7 +62,6 @@ public class UnitsDAODataMapperTest {
 
     @Test
     public void transformUnitModel() {
-        UnitsDAODataMapper dataMapper = new UnitsDAODataMapper();
         UnitModel model = createFakeUnitModel();
 
         UnitDAO dao = dataMapper.transformToDAO(model);
@@ -70,8 +74,6 @@ public class UnitsDAODataMapperTest {
 
     @Test
     public void transformUnitModelCollection() {
-        UnitsDAODataMapper dataMapper = new UnitsDAODataMapper();
-
         UnitModel mockModelOne = mock(UnitModel.class);
         UnitModel mockModelTwo = mock(UnitModel.class);
 

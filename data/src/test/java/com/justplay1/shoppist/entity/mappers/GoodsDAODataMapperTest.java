@@ -7,6 +7,7 @@ import com.justplay1.shoppist.models.CategoryModel;
 import com.justplay1.shoppist.models.ProductModel;
 import com.justplay1.shoppist.models.UnitModel;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -33,12 +34,19 @@ import static org.mockito.Mockito.mock;
  */
 public class GoodsDAODataMapperTest {
 
+    private UnitsDAODataMapper unitsDAODataMapper;
+    private CategoryDAODataMapper categoryDAODataMapper;
+    private GoodsDAODataMapper dataMapper;
+
+    @Before
+    public void setUp() throws Exception {
+        unitsDAODataMapper = new UnitsDAODataMapper();
+        categoryDAODataMapper = new CategoryDAODataMapper();
+        dataMapper = new GoodsDAODataMapper(unitsDAODataMapper, categoryDAODataMapper);
+    }
+
     @Test
     public void transformGoodsDAO() {
-        UnitsDAODataMapper unitsDAODataMapper = new UnitsDAODataMapper();
-        CategoryDAODataMapper categoryDAODataMapper = new CategoryDAODataMapper();
-        GoodsDAODataMapper dataMapper = new GoodsDAODataMapper(unitsDAODataMapper, categoryDAODataMapper);
-
         CategoryDAO categoryDAO = createFakeCategoryDAO();
         CategoryModel categoryModel = categoryDAODataMapper.transformFromDAO(categoryDAO);
 
@@ -60,8 +68,6 @@ public class GoodsDAODataMapperTest {
 
     @Test
     public void transformGoodsDAOCollection() {
-        GoodsDAODataMapper dataMapper = new GoodsDAODataMapper(new UnitsDAODataMapper(), new CategoryDAODataMapper());
-
         ProductDAO mockDAOOne = mock(ProductDAO.class);
         ProductDAO mockDAOTwo = mock(ProductDAO.class);
 
@@ -78,10 +84,6 @@ public class GoodsDAODataMapperTest {
 
     @Test
     public void transformGoodsModel() {
-        UnitsDAODataMapper unitsDAODataMapper = new UnitsDAODataMapper();
-        CategoryDAODataMapper categoryDAODataMapper = new CategoryDAODataMapper();
-        GoodsDAODataMapper dataMapper = new GoodsDAODataMapper(unitsDAODataMapper, categoryDAODataMapper);
-
         CategoryModel categoryModel = createFakeCategoryModel();
         CategoryDAO categoryDAO = categoryDAODataMapper.transformToDAO(categoryModel);
 
@@ -103,8 +105,6 @@ public class GoodsDAODataMapperTest {
 
     @Test
     public void transformGoodsModelCollection() {
-        GoodsDAODataMapper dataMapper = new GoodsDAODataMapper(new UnitsDAODataMapper(), new CategoryDAODataMapper());
-
         ProductModel mockModelOne = mock(ProductModel.class);
         ProductModel mockModelTwo = mock(ProductModel.class);
 

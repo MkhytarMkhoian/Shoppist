@@ -9,6 +9,7 @@ import com.justplay1.shoppist.models.CurrencyModel;
 import com.justplay1.shoppist.models.ListItemModel;
 import com.justplay1.shoppist.models.UnitModel;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -42,13 +43,21 @@ import static org.mockito.Mockito.mock;
  */
 public class ListItemsDAODataMapperTest {
 
+    private UnitsDAODataMapper unitsDAODataMapper;
+    private CategoryDAODataMapper categoryDAODataMapper;
+    private CurrencyDAODataMapper currencyDAODataMapper;
+    private ListItemsDAODataMapper dataMapper;
+
+    @Before
+    public void setUp() throws Exception {
+        unitsDAODataMapper = new UnitsDAODataMapper();
+        categoryDAODataMapper = new CategoryDAODataMapper();
+        currencyDAODataMapper = new CurrencyDAODataMapper();
+        dataMapper = new ListItemsDAODataMapper(categoryDAODataMapper, currencyDAODataMapper, unitsDAODataMapper);
+    }
+
     @Test
     public void transformListItemsDAO() {
-        UnitsDAODataMapper unitsDAODataMapper = new UnitsDAODataMapper();
-        CategoryDAODataMapper categoryDAODataMapper = new CategoryDAODataMapper();
-        CurrencyDAODataMapper currencyDAODataMapper = new CurrencyDAODataMapper();
-        ListItemsDAODataMapper dataMapper = new ListItemsDAODataMapper(categoryDAODataMapper, currencyDAODataMapper, unitsDAODataMapper);
-
         CategoryDAO categoryDAO = createFakeCategoryDAO();
         UnitDAO unitDAO = createFakeUnitDAO();
         CurrencyDAO currencyDAO = createFakeCurrencyDAO();
@@ -77,11 +86,6 @@ public class ListItemsDAODataMapperTest {
 
     @Test
     public void transformListItemsDAOCollection() {
-        UnitsDAODataMapper unitsDAODataMapper = new UnitsDAODataMapper();
-        CategoryDAODataMapper categoryDAODataMapper = new CategoryDAODataMapper();
-        CurrencyDAODataMapper currencyDAODataMapper = new CurrencyDAODataMapper();
-        ListItemsDAODataMapper dataMapper = new ListItemsDAODataMapper(categoryDAODataMapper, currencyDAODataMapper, unitsDAODataMapper);
-
         ListItemDAO mockDAOOne = mock(ListItemDAO.class);
         ListItemDAO mockDAOTwo = mock(ListItemDAO.class);
 
@@ -98,11 +102,6 @@ public class ListItemsDAODataMapperTest {
 
     @Test
     public void transformListItemModel() {
-        UnitsDAODataMapper unitsDAODataMapper = new UnitsDAODataMapper();
-        CategoryDAODataMapper categoryDAODataMapper = new CategoryDAODataMapper();
-        CurrencyDAODataMapper currencyDAODataMapper = new CurrencyDAODataMapper();
-        ListItemsDAODataMapper dataMapper = new ListItemsDAODataMapper(categoryDAODataMapper, currencyDAODataMapper, unitsDAODataMapper);
-
         CategoryModel categoryModel = createFakeCategoryModel();
         UnitModel unitModel = createFakeUnitModel();
         CurrencyModel currencyModel = createFakeCurrencyModel();
@@ -132,11 +131,6 @@ public class ListItemsDAODataMapperTest {
 
     @Test
     public void transformListItemModelCollection() {
-        UnitsDAODataMapper unitsDAODataMapper = new UnitsDAODataMapper();
-        CategoryDAODataMapper categoryDAODataMapper = new CategoryDAODataMapper();
-        CurrencyDAODataMapper currencyDAODataMapper = new CurrencyDAODataMapper();
-        ListItemsDAODataMapper dataMapper = new ListItemsDAODataMapper(categoryDAODataMapper, currencyDAODataMapper, unitsDAODataMapper);
-
         ListItemModel mockModelOne = mock(ListItemModel.class);
         ListItemModel mockModelTwo = mock(ListItemModel.class);
 
