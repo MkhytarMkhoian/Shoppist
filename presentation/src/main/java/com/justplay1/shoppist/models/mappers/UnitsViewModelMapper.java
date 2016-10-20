@@ -17,8 +17,8 @@
 package com.justplay1.shoppist.models.mappers;
 
 import com.justplay1.shoppist.di.scope.NonConfigurationScope;
-import com.justplay1.shoppist.models.CategoryModel;
-import com.justplay1.shoppist.models.CategoryViewModel;
+import com.justplay1.shoppist.models.UnitModel;
+import com.justplay1.shoppist.models.UnitViewModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,28 +30,27 @@ import javax.inject.Inject;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class CategoryModelDataMapper {
+public class UnitsViewModelMapper {
 
     @Inject
-    public CategoryModelDataMapper() {
+    public UnitsViewModelMapper() {
     }
 
-    public CategoryViewModel transformToViewModel(CategoryModel model) {
-        CategoryViewModel viewModel = null;
+    public UnitViewModel transformToViewModel(UnitModel model) {
+        UnitViewModel viewModel = null;
         if (model != null) {
-            viewModel = new CategoryViewModel();
+            viewModel = new UnitViewModel();
             viewModel.setId(model.getId());
             viewModel.setName(model.getName());
-            viewModel.setColor(model.getColor());
-            viewModel.setCreateByUser(model.isCreateByUser());
+            viewModel.setShortName(model.getShortName());
         }
         return viewModel;
     }
 
-    public List<CategoryViewModel> transformToViewModel(Collection<CategoryModel> models) {
-        List<CategoryViewModel> viewModels = new ArrayList<>();
-        CategoryViewModel viewModel;
-        for (CategoryModel model : models) {
+    public List<UnitViewModel> transformToViewModel(Collection<UnitModel> models) {
+        List<UnitViewModel> viewModels = new ArrayList<>();
+        UnitViewModel viewModel;
+        for (UnitModel model : models) {
             viewModel = transformToViewModel(model);
             if (viewModel != null) {
                 viewModels.add(viewModel);
@@ -60,21 +59,20 @@ public class CategoryModelDataMapper {
         return viewModels;
     }
 
-    public CategoryModel transform(CategoryViewModel viewModel) {
-        CategoryModel model = null;
+    public UnitModel transform(UnitViewModel viewModel) {
+        UnitModel model = null;
         if (viewModel != null) {
-            model = new CategoryModel(viewModel.getId(),
-                    viewModel.getName(),
-                    viewModel.getColor(),
-                    viewModel.isCreateByUser());
+            model = new UnitModel(model.getId(),
+                    model.getName(),
+                    model.getShortName());
         }
         return model;
     }
 
-    public List<CategoryModel> transform(Collection<CategoryViewModel> viewModels) {
-        List<CategoryModel> models = new ArrayList<>();
-        CategoryModel model;
-        for (CategoryViewModel viewModel : viewModels) {
+    public List<UnitModel> transform(Collection<UnitViewModel> viewModels) {
+        List<UnitModel> models = new ArrayList<>();
+        UnitModel model;
+        for (UnitViewModel viewModel : viewModels) {
             model = transform(viewModel);
             if (model != null) {
                 models.add(model);
@@ -82,4 +80,5 @@ public class CategoryModelDataMapper {
         }
         return models;
     }
+
 }

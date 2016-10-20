@@ -28,8 +28,8 @@ import com.justplay1.shoppist.interactor.lists.GetLists;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.SortType;
-import com.justplay1.shoppist.models.mappers.ListItemsModelDataMapper;
-import com.justplay1.shoppist.models.mappers.ListModelDataMapper;
+import com.justplay1.shoppist.models.mappers.ListItemsViewModelMapper;
+import com.justplay1.shoppist.models.mappers.ListViewModelMapper;
 import com.justplay1.shoppist.navigation.ListRouter;
 import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.presenter.base.BaseSortablePresenter;
@@ -53,8 +53,8 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
 
     private final BehaviorSubject<List<Pair<HeaderViewModel, List<ListViewModel>>>> cache = BehaviorSubject.create();
 
-    private final ListModelDataMapper dataMapper;
-    private final ListItemsModelDataMapper listItemsModelDataMapper;
+    private final ListViewModelMapper dataMapper;
+    private final ListItemsViewModelMapper listItemsViewModelMapper;
     private final GetLists getLists;
     private final DeleteLists deleteLists;
     private final GetListItems getListItems;
@@ -66,13 +66,13 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
                   GetLists getLists,
                   DeleteLists deleteLists,
                   GetListItems getListItems,
-                  ListModelDataMapper listModelDataMapper,
-                  ListItemsModelDataMapper listItemsModelDataMapper) {
+                  ListViewModelMapper listModelDataMapper,
+                  ListItemsViewModelMapper listItemsViewModelMapper) {
         super(preferences);
         this.getLists = getLists;
         this.deleteLists = deleteLists;
         this.dataMapper = listModelDataMapper;
-        this.listItemsModelDataMapper = listItemsModelDataMapper;
+        this.listItemsViewModelMapper = listItemsViewModelMapper;
         this.getListItems = getListItems;
 
         loadData();
@@ -193,7 +193,7 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
         showLoadingDialog();
         addSubscription(Observable.from(data)
                 .flatMap(shoppingList -> getListItems.init(shoppingList.getId()).get()
-                        .map(listItemsModelDataMapper::transformToViewModel)
+                        .map(listItemsViewModelMapper::transformToViewModel)
                         .map(items -> shoppingList.getName() + "\n" + "\n" +
                                 ShoppistUtils.buildShareString(items) + "\n"))
                 .buffer(data.size())

@@ -30,10 +30,10 @@ import javax.inject.Inject;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class ListModelDataMapper {
+public class ListViewModelMapper {
 
     @Inject
-    public ListModelDataMapper() {
+    public ListViewModelMapper() {
     }
 
     @SuppressWarnings("ResourceType")

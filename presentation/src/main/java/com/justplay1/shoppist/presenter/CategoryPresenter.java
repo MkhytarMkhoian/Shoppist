@@ -21,7 +21,7 @@ import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.DeleteCategory;
 import com.justplay1.shoppist.interactor.category.GetCategoryList;
 import com.justplay1.shoppist.models.CategoryViewModel;
-import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
+import com.justplay1.shoppist.models.mappers.CategoryViewModelMapper;
 import com.justplay1.shoppist.navigation.CategoryRouter;
 import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.view.CategoryView;
@@ -42,13 +42,13 @@ public class CategoryPresenter extends BaseRouterPresenter<CategoryView, Categor
 
     private final BehaviorSubject<List<CategoryViewModel>> cache = BehaviorSubject.create();
 
-    private final CategoryModelDataMapper dataMapper;
+    private final CategoryViewModelMapper dataMapper;
     private final GetCategoryList getCategoryList;
     private final DeleteCategory deleteCategory;
 
     @Inject
     CategoryPresenter(GetCategoryList getCategoryList, DeleteCategory deleteCategory,
-                      CategoryModelDataMapper dataMapper) {
+                      CategoryViewModelMapper dataMapper) {
         this.getCategoryList = getCategoryList;
         this.deleteCategory = deleteCategory;
         this.dataMapper = dataMapper;

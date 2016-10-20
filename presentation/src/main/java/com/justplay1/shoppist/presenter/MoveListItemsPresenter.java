@@ -24,8 +24,8 @@ import com.justplay1.shoppist.interactor.listitems.MoveToList;
 import com.justplay1.shoppist.interactor.lists.GetLists;
 import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
-import com.justplay1.shoppist.models.mappers.ListItemsModelDataMapper;
-import com.justplay1.shoppist.models.mappers.ListModelDataMapper;
+import com.justplay1.shoppist.models.mappers.ListItemsViewModelMapper;
+import com.justplay1.shoppist.models.mappers.ListViewModelMapper;
 import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.view.MoveListItemsView;
@@ -47,8 +47,8 @@ public class MoveListItemsPresenter extends BaseRouterPresenter<MoveListItemsVie
 
     private final BehaviorSubject<ArrayList<Map<String, Object>>> cache = BehaviorSubject.create();
 
-    private final ListModelDataMapper dataMapper;
-    private final ListItemsModelDataMapper listItemsModelDataMapper;
+    private final ListViewModelMapper dataMapper;
+    private final ListItemsViewModelMapper listItemsViewModelMapper;
     private final GetLists getLists;
     private final MoveToList moveToList;
 
@@ -57,12 +57,12 @@ public class MoveListItemsPresenter extends BaseRouterPresenter<MoveListItemsVie
     private ArrayList<ListItemViewModel> listItems;
 
     @Inject
-    MoveListItemsPresenter(ListModelDataMapper dataMapper,
-                           ListItemsModelDataMapper listItemsModelDataMapper,
+    MoveListItemsPresenter(ListViewModelMapper dataMapper,
+                           ListItemsViewModelMapper listItemsViewModelMapper,
                            GetLists getLists,
                            MoveToList moveToList) {
         this.dataMapper = dataMapper;
-        this.listItemsModelDataMapper = listItemsModelDataMapper;
+        this.listItemsViewModelMapper = listItemsViewModelMapper;
         this.getLists = getLists;
         this.moveToList = moveToList;
 
@@ -114,7 +114,7 @@ public class MoveListItemsPresenter extends BaseRouterPresenter<MoveListItemsVie
 
     public void onPositiveButtonClick(ListViewModel newList) {
         showLoading();
-        Observable.fromCallable(() -> listItemsModelDataMapper.transform(listItems))
+        Observable.fromCallable(() -> listItemsViewModelMapper.transform(listItems))
                 .flatMap(listItemModels -> moveToList.init(listItemModels, newList.getId(), isCopy).get())
                 .subscribe(new DefaultSubscriber<Boolean>() {
 

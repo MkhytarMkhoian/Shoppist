@@ -23,7 +23,7 @@ import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.units.GetUnitsList;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.UnitViewModel;
-import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
+import com.justplay1.shoppist.models.mappers.UnitsViewModelMapper;
 import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.view.SelectUnitView;
@@ -42,13 +42,13 @@ public class SelectUnitPresenter extends BaseRouterPresenter<SelectUnitView, Rou
 
     private final BehaviorSubject<List<UnitViewModel>> cache = BehaviorSubject.create();
 
-    private final UnitsDataModelMapper dataMapper;
+    private final UnitsViewModelMapper dataMapper;
     private final GetUnitsList getUnitsList;
 
     private UnitViewModel item;
 
     @Inject
-    SelectUnitPresenter(UnitsDataModelMapper dataMapper, GetUnitsList getUnitsList) {
+    SelectUnitPresenter(UnitsViewModelMapper dataMapper, GetUnitsList getUnitsList) {
         this.dataMapper = dataMapper;
         this.getUnitsList = getUnitsList;
 

@@ -21,7 +21,7 @@ import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.units.DeleteUnits;
 import com.justplay1.shoppist.interactor.units.GetUnitsList;
 import com.justplay1.shoppist.models.UnitViewModel;
-import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
+import com.justplay1.shoppist.models.mappers.UnitsViewModelMapper;
 import com.justplay1.shoppist.navigation.UnitRouter;
 import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.view.UnitsView;
@@ -42,15 +42,15 @@ public class UnitsPresenter extends BaseRouterPresenter<UnitsView, UnitRouter> {
 
     private final BehaviorSubject<List<UnitViewModel>> cache = BehaviorSubject.create();
 
-    private final UnitsDataModelMapper dataMapper;
+    private final UnitsViewModelMapper dataMapper;
     private final GetUnitsList getUnitsList;
     private final DeleteUnits deleteUnits;
 
     @Inject
-    UnitsPresenter(UnitsDataModelMapper unitsDataModelMapper,
+    UnitsPresenter(UnitsViewModelMapper unitsViewModelMapper,
                    GetUnitsList getUnitsList,
                    DeleteUnits deleteUnits) {
-        this.dataMapper = unitsDataModelMapper;
+        this.dataMapper = unitsViewModelMapper;
         this.getUnitsList = getUnitsList;
         this.deleteUnits = deleteUnits;
 

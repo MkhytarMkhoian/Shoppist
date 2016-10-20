@@ -34,11 +34,11 @@ import com.justplay1.shoppist.models.Priority;
 import com.justplay1.shoppist.models.ProductModel;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.UnitViewModel;
-import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
-import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
-import com.justplay1.shoppist.models.mappers.GoodsModelDataMapper;
-import com.justplay1.shoppist.models.mappers.ListItemsModelDataMapper;
-import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
+import com.justplay1.shoppist.models.mappers.CategoryViewModelMapper;
+import com.justplay1.shoppist.models.mappers.CurrencyViewModelMapper;
+import com.justplay1.shoppist.models.mappers.GoodsViewModelMapper;
+import com.justplay1.shoppist.models.mappers.ListItemsViewModelMapper;
+import com.justplay1.shoppist.models.mappers.UnitsViewModelMapper;
 import com.justplay1.shoppist.presenter.base.BaseAddElementPresenter;
 import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.utils.ModelUtils;
@@ -67,11 +67,11 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     private final BehaviorSubject<List<UnitViewModel>> unitsCache = BehaviorSubject.create();
     private final BehaviorSubject<Map<String, ProductViewModel>> goodsCache = BehaviorSubject.create();
 
-    private final CategoryModelDataMapper categoryModelDataMapper;
-    private final UnitsDataModelMapper unitsDataModelMapper;
-    private final CurrencyModelDataMapper currencyModelDataMapper;
-    private final GoodsModelDataMapper goodsModelDataMapper;
-    private final ListItemsModelDataMapper listItemsModelDataMapper;
+    private final CategoryViewModelMapper categoryModelDataMapper;
+    private final UnitsViewModelMapper unitsViewModelMapper;
+    private final CurrencyViewModelMapper currencyViewModelMapper;
+    private final GoodsViewModelMapper goodsViewModelMapper;
+    private final ListItemsViewModelMapper listItemsViewModelMapper;
 
     private final AddListItems addListItems;
     private final UpdateListItems updateListItems;
@@ -94,11 +94,11 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     private int priority = Priority.NO_PRIORITY;
 
     @Inject
-    AddListItemPresenter(CategoryModelDataMapper categoryModelDataMapper,
-                         UnitsDataModelMapper unitsDataModelMapper,
-                         CurrencyModelDataMapper currencyModelDataMapper,
-                         GoodsModelDataMapper goodsModelDataMapper,
-                         ListItemsModelDataMapper listItemsModelDataMapper,
+    AddListItemPresenter(CategoryViewModelMapper categoryModelDataMapper,
+                         UnitsViewModelMapper unitsViewModelMapper,
+                         CurrencyViewModelMapper currencyViewModelMapper,
+                         GoodsViewModelMapper goodsViewModelMapper,
+                         ListItemsViewModelMapper listItemsViewModelMapper,
                          AddListItems addListItems,
                          UpdateListItems updateListItems,
                          GetCategoryList getCategoryList,
@@ -107,10 +107,10 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
                          GetUnitsList getUnitsList,
                          UpdateGoods updateGoods) {
         this.categoryModelDataMapper = categoryModelDataMapper;
-        this.unitsDataModelMapper = unitsDataModelMapper;
-        this.currencyModelDataMapper = currencyModelDataMapper;
-        this.goodsModelDataMapper = goodsModelDataMapper;
-        this.listItemsModelDataMapper = listItemsModelDataMapper;
+        this.unitsViewModelMapper = unitsViewModelMapper;
+        this.currencyViewModelMapper = currencyViewModelMapper;
+        this.goodsViewModelMapper = goodsViewModelMapper;
+        this.listItemsViewModelMapper = listItemsViewModelMapper;
         this.addListItems = addListItems;
         this.updateListItems = updateListItems;
         this.getCategoryList = getCategoryList;
@@ -330,19 +330,19 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
 
     private void loadUnits() {
         getUnitsList.get()
-                .map(unitsDataModelMapper::transformToViewModel)
+                .map(unitsViewModelMapper::transformToViewModel)
                 .subscribe(unitsCache);
     }
 
     private void loadCurrency() {
         getCurrencyList.get()
-                .map(currencyModelDataMapper::transformToViewModel)
+                .map(currencyViewModelMapper::transformToViewModel)
                 .subscribe(currencyCache);
     }
 
     private void loadGoods() {
         getGoodsList.get()
-                .map(goodsModelDataMapper::transformToViewModel)
+                .map(goodsViewModelMapper::transformToViewModel)
                 .map(items -> {
                     Map<String, ProductViewModel> result = new HashMap<>();
                     for (ProductViewModel item : items) {
@@ -354,18 +354,18 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
     }
 
     private void addListItem(ListItemViewModel data, boolean isLongClick) {
-        addSubscription(Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
+        addSubscription(Observable.fromCallable(() -> listItemsViewModelMapper.transform(data))
                 .flatMap(item -> addListItems.init(Collections.singletonList(item)).get())
                 .subscribe(new SaveListItemSubscriber(isLongClick, true)));
     }
 
     private void updateListItem(ListItemViewModel data, boolean isLongClick) {
-        addSubscription(Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
+        addSubscription(Observable.fromCallable(() -> listItemsViewModelMapper.transform(data))
                 .flatMap(item -> updateListItems.init(Collections.singletonList(item)).get())
                 .flatMap(result -> {
                     if (productModel != null) {
                         productModel.setUnit(unitModel);
-                        ProductModel product = goodsModelDataMapper.transform(productModel);
+                        ProductModel product = goodsViewModelMapper.transform(productModel);
                         return updateGoods.init(Collections.singletonList(product)).get();
                     } else {
                         return Observable.just(result);

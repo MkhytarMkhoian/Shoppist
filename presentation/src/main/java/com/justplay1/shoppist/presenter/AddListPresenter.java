@@ -25,7 +25,7 @@ import com.justplay1.shoppist.interactor.lists.AddList;
 import com.justplay1.shoppist.interactor.lists.UpdateLists;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.Priority;
-import com.justplay1.shoppist.models.mappers.ListModelDataMapper;
+import com.justplay1.shoppist.models.mappers.ListViewModelMapper;
 import com.justplay1.shoppist.presenter.base.BaseAddElementPresenter;
 import com.justplay1.shoppist.utils.ModelUtils;
 import com.justplay1.shoppist.view.AddListView;
@@ -42,7 +42,7 @@ import rx.Observable;
 @NonConfigurationScope
 public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
 
-    private final ListModelDataMapper dataMapper;
+    private final ListViewModelMapper dataMapper;
     private final AddList addList;
     private final UpdateLists updateLists;
 
@@ -52,7 +52,7 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
     private String name = "";
 
     @Inject
-    AddListPresenter(ListModelDataMapper dataMapper, AddList addList, UpdateLists updateLists) {
+    AddListPresenter(ListViewModelMapper dataMapper, AddList addList, UpdateLists updateLists) {
         this.dataMapper = dataMapper;
         this.addList = addList;
         this.updateLists = updateLists;

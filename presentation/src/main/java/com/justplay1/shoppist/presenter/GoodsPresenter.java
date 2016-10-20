@@ -31,9 +31,9 @@ import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.SortType;
 import com.justplay1.shoppist.models.UnitViewModel;
-import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
-import com.justplay1.shoppist.models.mappers.GoodsModelDataMapper;
-import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
+import com.justplay1.shoppist.models.mappers.CategoryViewModelMapper;
+import com.justplay1.shoppist.models.mappers.GoodsViewModelMapper;
+import com.justplay1.shoppist.models.mappers.UnitsViewModelMapper;
 import com.justplay1.shoppist.navigation.GoodsRouter;
 import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.presenter.base.BaseSortablePresenter;
@@ -57,9 +57,9 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
 
     private final BehaviorSubject<List<Pair<HeaderViewModel, List<ProductViewModel>>>> cache = BehaviorSubject.create();
 
-    private final GoodsModelDataMapper goodsModelDataMapper;
-    private final CategoryModelDataMapper categoryModelDataMapper;
-    private final UnitsDataModelMapper unitsDataModelMapper;
+    private final GoodsViewModelMapper goodsViewModelMapper;
+    private final CategoryViewModelMapper categoryModelDataMapper;
+    private final UnitsViewModelMapper unitsViewModelMapper;
 
     private final GetCategory getCategory;
     private final GetUnit getUnit;
@@ -69,23 +69,23 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
 
     @Inject
     GoodsPresenter(AppPreferences preferences,
-                   GoodsModelDataMapper dataMapper,
+                   GoodsViewModelMapper dataMapper,
                    GetGoodsList getGoodsList,
                    DeleteGoods deleteGoods,
                    UpdateGoods updateGoods,
                    GetCategory getCategory,
                    GetUnit getUnit,
-                   CategoryModelDataMapper categoryModelDataMapper,
-                   UnitsDataModelMapper unitsDataModelMapper) {
+                   CategoryViewModelMapper categoryModelDataMapper,
+                   UnitsViewModelMapper unitsViewModelMapper) {
         super(preferences);
-        this.goodsModelDataMapper = dataMapper;
+        this.goodsViewModelMapper = dataMapper;
         this.getGoodsList = getGoodsList;
         this.deleteGoods = deleteGoods;
         this.updateGoods = updateGoods;
         this.getCategory = getCategory;
         this.getUnit = getUnit;
         this.categoryModelDataMapper = categoryModelDataMapper;
-        this.unitsDataModelMapper = unitsDataModelMapper;
+        this.unitsViewModelMapper = unitsViewModelMapper;
 
         loadData();
     }
@@ -180,13 +180,13 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     @SuppressWarnings("ResourceType")
     private Observable<List<Pair<HeaderViewModel, List<ProductViewModel>>>> loadGoods() {
         return getGoodsList.get()
-                .map(goodsModelDataMapper::transformToViewModel)
+                .map(goodsViewModelMapper::transformToViewModel)
                 .map(goods -> sort(goods, preferences.getSortForGoods()));
     }
 
     private Observable<UnitViewModel> loadDefaultUnit() {
         return getUnit.init(UnitViewModel.NO_UNIT_ID).get()
-                .map(unitsDataModelMapper::transformToViewModel);
+                .map(unitsViewModelMapper::transformToViewModel);
     }
 
     private Observable<CategoryViewModel> loadDefaultCategory() {
@@ -195,7 +195,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     }
 
     public void deleteItems(Collection<ProductViewModel> data) {
-        addSubscription(Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
+        addSubscription(Observable.fromCallable(() -> goodsViewModelMapper.transform(data))
                 .flatMap(goods -> deleteGoods.init(goods).get())
                 .subscribe(new DefaultSubscriber<>()));
     }
@@ -208,7 +208,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
                 }
             }
             return editProducts;
-        }).map(goodsModelDataMapper::transform)
+        }).map(goodsViewModelMapper::transform)
                 .flatMap(data -> updateGoods.init(data).get())
                 .subscribe(new DefaultSubscriber<Boolean>()));
     }
@@ -221,7 +221,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
                 }
             }
             return editProducts;
-        }).map(goodsModelDataMapper::transform)
+        }).map(goodsViewModelMapper::transform)
                 .flatMap(data -> updateGoods.init(data).get())
                 .subscribe(new DefaultSubscriber<Boolean>()));
     }

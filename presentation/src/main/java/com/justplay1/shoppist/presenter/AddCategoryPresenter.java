@@ -24,7 +24,7 @@ import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.AddCategory;
 import com.justplay1.shoppist.interactor.category.UpdateCategory;
 import com.justplay1.shoppist.models.CategoryViewModel;
-import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
+import com.justplay1.shoppist.models.mappers.CategoryViewModelMapper;
 import com.justplay1.shoppist.presenter.base.BaseAddElementPresenter;
 import com.justplay1.shoppist.utils.ModelUtils;
 import com.justplay1.shoppist.view.AddCategoryView;
@@ -41,7 +41,7 @@ import rx.Observable;
 @NonConfigurationScope
 public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryView> {
 
-    private final CategoryModelDataMapper dataMapper;
+    private final CategoryViewModelMapper dataMapper;
     private final AddCategory addCategory;
     private final UpdateCategory updateCategory;
 
@@ -50,7 +50,7 @@ public class AddCategoryPresenter extends BaseAddElementPresenter<AddCategoryVie
     private String name = "";
 
     @Inject
-    AddCategoryPresenter(CategoryModelDataMapper dataMapper, AddCategory addCategory, UpdateCategory updateCategory) {
+    AddCategoryPresenter(CategoryViewModelMapper dataMapper, AddCategory addCategory, UpdateCategory updateCategory) {
         this.addCategory = addCategory;
         this.updateCategory = updateCategory;
         this.dataMapper = dataMapper;

@@ -29,9 +29,9 @@ import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.Priority;
 import com.justplay1.shoppist.models.ProductViewModel;
-import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
-import com.justplay1.shoppist.models.mappers.GoodsModelDataMapper;
-import com.justplay1.shoppist.models.mappers.ListItemsModelDataMapper;
+import com.justplay1.shoppist.models.mappers.CategoryViewModelMapper;
+import com.justplay1.shoppist.models.mappers.GoodsViewModelMapper;
+import com.justplay1.shoppist.models.mappers.ListItemsViewModelMapper;
 import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.utils.Const;
@@ -56,9 +56,9 @@ public class SearchPresenter extends BaseRouterPresenter<SearchView, Router> {
 
     private final BehaviorSubject<Map<String, ProductViewModel>> cache = BehaviorSubject.create();
 
-    private final GoodsModelDataMapper goodsModelDataMapper;
-    private final CategoryModelDataMapper categoryModelDataMapper;
-    private final ListItemsModelDataMapper listItemsModelDataMapper;
+    private final GoodsViewModelMapper goodsViewModelMapper;
+    private final CategoryViewModelMapper categoryModelDataMapper;
+    private final ListItemsViewModelMapper listItemsViewModelMapper;
 
     private final GetCategory getCategory;
     private final GetGoodsList getGoodsList;
@@ -68,18 +68,18 @@ public class SearchPresenter extends BaseRouterPresenter<SearchView, Router> {
     private int contextType;
 
     @Inject
-    SearchPresenter(GoodsModelDataMapper dataMapper,
+    SearchPresenter(GoodsViewModelMapper dataMapper,
                     GetGoodsList getGoodsList,
                     AddListItems addListItems,
                     GetCategory getCategory,
-                    CategoryModelDataMapper categoryModelDataMapper,
-                    ListItemsModelDataMapper listItemsModelDataMapper) {
-        this.goodsModelDataMapper = dataMapper;
+                    CategoryViewModelMapper categoryModelDataMapper,
+                    ListItemsViewModelMapper listItemsViewModelMapper) {
+        this.goodsViewModelMapper = dataMapper;
         this.getGoodsList = getGoodsList;
         this.getCategory = getCategory;
         this.categoryModelDataMapper = categoryModelDataMapper;
         this.addListItems = addListItems;
-        this.listItemsModelDataMapper = listItemsModelDataMapper;
+        this.listItemsViewModelMapper = listItemsViewModelMapper;
 
         loadData();
     }
@@ -119,7 +119,7 @@ public class SearchPresenter extends BaseRouterPresenter<SearchView, Router> {
 
     private Observable<List<ProductViewModel>> loadGoods() {
         return getGoodsList.get()
-                .map(goodsModelDataMapper::transformToViewModel);
+                .map(goodsViewModelMapper::transformToViewModel);
     }
 
     private Observable<CategoryViewModel> loadDefaultCategory() {
@@ -167,7 +167,7 @@ public class SearchPresenter extends BaseRouterPresenter<SearchView, Router> {
         listItem.setCategory(product.getCategory());
         listItem.setPriority(Priority.NO_PRIORITY);
 
-        addSubscription(Observable.fromCallable(() -> listItemsModelDataMapper.transform(listItem))
+        addSubscription(Observable.fromCallable(() -> listItemsViewModelMapper.transform(listItem))
                 .flatMap(item -> addListItems.init(Collections.singletonList(item)).get())
                 .subscribe(new DefaultSubscriber<Boolean>() {
 

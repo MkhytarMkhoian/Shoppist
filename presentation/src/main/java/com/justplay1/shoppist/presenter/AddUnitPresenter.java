@@ -23,7 +23,7 @@ import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.units.AddUnits;
 import com.justplay1.shoppist.interactor.units.UpdateUnits;
 import com.justplay1.shoppist.models.UnitViewModel;
-import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
+import com.justplay1.shoppist.models.mappers.UnitsViewModelMapper;
 import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.utils.ModelUtils;
@@ -42,14 +42,14 @@ import rx.Observable;
 @NonConfigurationScope
 public class AddUnitPresenter extends BaseRouterPresenter<AddUnitView, Router> {
 
-    private final UnitsDataModelMapper dataMapper;
+    private final UnitsViewModelMapper dataMapper;
     private final UpdateUnits updateUnits;
     private final AddUnits addUnits;
 
     private UnitViewModel item;
 
     @Inject
-    AddUnitPresenter(UnitsDataModelMapper dataMapper,
+    AddUnitPresenter(UnitsViewModelMapper dataMapper,
                      UpdateUnits updateUnits,
                      AddUnits addUnits) {
         this.dataMapper = dataMapper;

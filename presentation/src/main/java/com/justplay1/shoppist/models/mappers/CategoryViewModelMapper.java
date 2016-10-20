@@ -17,8 +17,8 @@
 package com.justplay1.shoppist.models.mappers;
 
 import com.justplay1.shoppist.di.scope.NonConfigurationScope;
-import com.justplay1.shoppist.models.CurrencyModel;
-import com.justplay1.shoppist.models.CurrencyViewModel;
+import com.justplay1.shoppist.models.CategoryModel;
+import com.justplay1.shoppist.models.CategoryViewModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,26 +30,28 @@ import javax.inject.Inject;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class CurrencyModelDataMapper {
+public class CategoryViewModelMapper {
 
     @Inject
-    public CurrencyModelDataMapper() {
+    public CategoryViewModelMapper() {
     }
 
-    public CurrencyViewModel transformToViewModel(CurrencyModel model) {
-        CurrencyViewModel viewModel = null;
+    public CategoryViewModel transformToViewModel(CategoryModel model) {
+        CategoryViewModel viewModel = null;
         if (model != null) {
-            viewModel = new CurrencyViewModel();
+            viewModel = new CategoryViewModel();
             viewModel.setId(model.getId());
             viewModel.setName(model.getName());
+            viewModel.setColor(model.getColor());
+            viewModel.setCreateByUser(model.isCreateByUser());
         }
         return viewModel;
     }
 
-    public List<CurrencyViewModel> transformToViewModel(Collection<CurrencyModel> models) {
-        List<CurrencyViewModel> viewModels = new ArrayList<>();
-        CurrencyViewModel viewModel;
-        for (CurrencyModel model : models) {
+    public List<CategoryViewModel> transformToViewModel(Collection<CategoryModel> models) {
+        List<CategoryViewModel> viewModels = new ArrayList<>();
+        CategoryViewModel viewModel;
+        for (CategoryModel model : models) {
             viewModel = transformToViewModel(model);
             if (viewModel != null) {
                 viewModels.add(viewModel);
@@ -58,18 +60,21 @@ public class CurrencyModelDataMapper {
         return viewModels;
     }
 
-    public CurrencyModel transform(CurrencyViewModel viewModel) {
-        CurrencyModel model = null;
+    public CategoryModel transform(CategoryViewModel viewModel) {
+        CategoryModel model = null;
         if (viewModel != null) {
-            model = new CurrencyModel(viewModel.getId(), viewModel.getName());
+            model = new CategoryModel(viewModel.getId(),
+                    viewModel.getName(),
+                    viewModel.getColor(),
+                    viewModel.isCreateByUser());
         }
         return model;
     }
 
-    public List<CurrencyModel> transform(Collection<CurrencyViewModel> viewModels) {
-        List<CurrencyModel> models = new ArrayList<>();
-        CurrencyModel model;
-        for (CurrencyViewModel viewModel : viewModels) {
+    public List<CategoryModel> transform(Collection<CategoryViewModel> viewModels) {
+        List<CategoryModel> models = new ArrayList<>();
+        CategoryModel model;
+        for (CategoryViewModel viewModel : viewModels) {
             model = transform(viewModel);
             if (model != null) {
                 models.add(model);

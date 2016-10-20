@@ -27,9 +27,9 @@ import com.justplay1.shoppist.interactor.units.GetUnitsList;
 import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.UnitViewModel;
-import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
-import com.justplay1.shoppist.models.mappers.GoodsModelDataMapper;
-import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
+import com.justplay1.shoppist.models.mappers.CategoryViewModelMapper;
+import com.justplay1.shoppist.models.mappers.GoodsViewModelMapper;
+import com.justplay1.shoppist.models.mappers.UnitsViewModelMapper;
 import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.utils.Const;
@@ -53,9 +53,9 @@ public class AddGoodsPresenter extends BaseRouterPresenter<AddGoodsView, Router>
     private final BehaviorSubject<List<UnitViewModel>> unitsCache = BehaviorSubject.create();
     private final BehaviorSubject<List<CategoryViewModel>> categoryCache = BehaviorSubject.create();
 
-    private final GoodsModelDataMapper goodsModelDataMapper;
-    private final CategoryModelDataMapper categoryModelDataMapper;
-    private final UnitsDataModelMapper unitsDataModelMapper;
+    private final GoodsViewModelMapper goodsViewModelMapper;
+    private final CategoryViewModelMapper categoryModelDataMapper;
+    private final UnitsViewModelMapper unitsViewModelMapper;
 
     private final UpdateGoods updateGoods;
     private final AddGoods addGoods;
@@ -68,19 +68,19 @@ public class AddGoodsPresenter extends BaseRouterPresenter<AddGoodsView, Router>
     private String name = "";
 
     @Inject
-    AddGoodsPresenter(GoodsModelDataMapper dataMapper,
+    AddGoodsPresenter(GoodsViewModelMapper dataMapper,
                       UpdateGoods updateGoods,
                       AddGoods addGoods,
                       GetUnitsList getUnitsList,
                       GetCategoryList getCategoryList,
-                      CategoryModelDataMapper categoryModelDataMapper,
-                      UnitsDataModelMapper unitsDataModelMapper) {
-        this.goodsModelDataMapper = dataMapper;
+                      CategoryViewModelMapper categoryModelDataMapper,
+                      UnitsViewModelMapper unitsViewModelMapper) {
+        this.goodsViewModelMapper = dataMapper;
         this.updateGoods = updateGoods;
         this.addGoods = addGoods;
         this.getUnitsList = getUnitsList;
         this.getCategoryList = getCategoryList;
-        this.unitsDataModelMapper = unitsDataModelMapper;
+        this.unitsViewModelMapper = unitsViewModelMapper;
         this.categoryModelDataMapper = categoryModelDataMapper;
 
         loadCategories();
@@ -177,7 +177,7 @@ public class AddGoodsPresenter extends BaseRouterPresenter<AddGoodsView, Router>
 
     private void loadUnits() {
         getUnitsList.get()
-                .map(unitsDataModelMapper::transformToViewModel)
+                .map(unitsViewModelMapper::transformToViewModel)
                 .subscribe(unitsCache);
     }
 
@@ -209,14 +209,14 @@ public class AddGoodsPresenter extends BaseRouterPresenter<AddGoodsView, Router>
 
     private void addGoods(ProductViewModel data) {
         showLoading();
-        addSubscription(Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
+        addSubscription(Observable.fromCallable(() -> goodsViewModelMapper.transform(data))
                 .flatMap(item -> addGoods.init(Collections.singletonList(item)).get())
                 .subscribe(new SaveGoodsSubscriber(true)));
     }
 
     private void updateGoods(ProductViewModel data) {
         showLoading();
-        addSubscription(Observable.fromCallable(() -> goodsModelDataMapper.transform(data))
+        addSubscription(Observable.fromCallable(() -> goodsViewModelMapper.transform(data))
                 .flatMap(item -> updateGoods.init(Collections.singletonList(item)).get())
                 .subscribe(new SaveGoodsSubscriber(false)));
     }

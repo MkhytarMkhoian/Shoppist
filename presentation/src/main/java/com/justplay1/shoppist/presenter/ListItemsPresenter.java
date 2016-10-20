@@ -37,10 +37,10 @@ import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.SortType;
 import com.justplay1.shoppist.models.UnitViewModel;
-import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
-import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
-import com.justplay1.shoppist.models.mappers.ListItemsModelDataMapper;
-import com.justplay1.shoppist.models.mappers.UnitsDataModelMapper;
+import com.justplay1.shoppist.models.mappers.CategoryViewModelMapper;
+import com.justplay1.shoppist.models.mappers.CurrencyViewModelMapper;
+import com.justplay1.shoppist.models.mappers.ListItemsViewModelMapper;
+import com.justplay1.shoppist.models.mappers.UnitsViewModelMapper;
 import com.justplay1.shoppist.navigation.ListItemsRouter;
 import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.presenter.base.BaseSortablePresenter;
@@ -67,10 +67,10 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
 
     private final BehaviorSubject<List<Pair<HeaderViewModel, List<ListItemViewModel>>>> cache = BehaviorSubject.create();
 
-    private final CategoryModelDataMapper categoryModelDataMapper;
-    private final UnitsDataModelMapper unitsDataModelMapper;
-    private final CurrencyModelDataMapper currencyModelDataMapper;
-    private final ListItemsModelDataMapper listItemsModelDataMapper;
+    private final CategoryViewModelMapper categoryModelDataMapper;
+    private final UnitsViewModelMapper unitsViewModelMapper;
+    private final CurrencyViewModelMapper currencyViewModelMapper;
+    private final ListItemsViewModelMapper listItemsViewModelMapper;
 
     private final GetCategory getCategory;
     private final GetUnit getUnit;
@@ -84,10 +84,10 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
 
     @Inject
     ListItemsPresenter(AppPreferences preferences,
-                       CategoryModelDataMapper categoryModelDataMapper,
-                       UnitsDataModelMapper unitsDataModelMapper,
-                       CurrencyModelDataMapper currencyModelDataMapper,
-                       ListItemsModelDataMapper listItemsModelDataMapper,
+                       CategoryViewModelMapper categoryModelDataMapper,
+                       UnitsViewModelMapper unitsViewModelMapper,
+                       CurrencyViewModelMapper currencyViewModelMapper,
+                       ListItemsViewModelMapper listItemsViewModelMapper,
                        GetCategory getCategory,
                        GetUnit getUnit,
                        GetCurrency getCurrency,
@@ -96,9 +96,9 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
                        DeleteListItems deleteListItems) {
         super(preferences);
         this.categoryModelDataMapper = categoryModelDataMapper;
-        this.unitsDataModelMapper = unitsDataModelMapper;
-        this.currencyModelDataMapper = currencyModelDataMapper;
-        this.listItemsModelDataMapper = listItemsModelDataMapper;
+        this.unitsViewModelMapper = unitsViewModelMapper;
+        this.currencyViewModelMapper = currencyViewModelMapper;
+        this.listItemsViewModelMapper = listItemsViewModelMapper;
         this.getCategory = getCategory;
         this.getUnit = getUnit;
         this.getCurrency = getCurrency;
@@ -158,7 +158,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     @SuppressWarnings("ResourceType")
     private Observable<List<Pair<HeaderViewModel, List<ListItemViewModel>>>> loadListItems() {
         return getListItems.init(parentList.getId()).get()
-                .map(listItemsModelDataMapper::transformToViewModel)
+                .map(listItemsViewModelMapper::transformToViewModel)
                 .map(listItems -> sort(listItems, preferences.getSortForShoppingListItems()));
     }
 
@@ -202,12 +202,12 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
                     }
                     return Observable.fromCallable(() -> currencyModel);
                 })
-                .map(currencyModelDataMapper::transformToViewModel);
+                .map(currencyViewModelMapper::transformToViewModel);
     }
 
     private Observable<UnitViewModel> loadDefaultUnit() {
         return getUnit.init(UnitViewModel.NO_UNIT_ID).get()
-                .map(unitsDataModelMapper::transformToViewModel);
+                .map(unitsViewModelMapper::transformToViewModel);
     }
 
     private Observable<CategoryViewModel> loadDefaultCategory() {
@@ -219,7 +219,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
         addSubscription(Observable.fromCallable(() -> {
             moveItem.setStatus(!moveItem.getStatus());
             return moveItem;
-        }).map(listItemsModelDataMapper::transform)
+        }).map(listItemsViewModelMapper::transform)
                 .flatMap(listItemViewModel -> updateListItems.init(Collections.singletonList(listItemViewModel)).get())
                 .subscribe(new DefaultSubscriber<>()));
     }
@@ -273,7 +273,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     }
 
     public void deleteItems(Collection<ListItemViewModel> data) {
-        addSubscription(Observable.fromCallable(() -> listItemsModelDataMapper.transform(data))
+        addSubscription(Observable.fromCallable(() -> listItemsViewModelMapper.transform(data))
                 .flatMap(listItemModels -> deleteListItems.init(listItemModels).get())
                 .subscribe(new DefaultSubscriber<>()));
     }
@@ -332,7 +332,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
             }
             return itemsToMove;
         }).filter(itemsToMove -> itemsToMove.size() > 0)
-                .map(listItemsModelDataMapper::transform)
+                .map(listItemsViewModelMapper::transform)
                 .flatMap(listItemViewModels -> updateListItems.init(listItemViewModels).get())
                 .subscribe(new DefaultSubscriber<Boolean>()));
     }

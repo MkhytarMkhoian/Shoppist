@@ -30,14 +30,14 @@ import javax.inject.Inject;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class GoodsModelDataMapper {
+public class GoodsViewModelMapper {
 
-    private final CategoryModelDataMapper categoryModelDataMapper;
-    private final UnitsDataModelMapper unitsDataModelMapper;
+    private final CategoryViewModelMapper categoryModelDataMapper;
+    private final UnitsViewModelMapper unitsViewModelMapper;
 
     @Inject
-    public GoodsModelDataMapper(UnitsDataModelMapper unitsDataMapper, CategoryModelDataMapper categoryDataMapper) {
-        this.unitsDataModelMapper = unitsDataMapper;
+    public GoodsViewModelMapper(UnitsViewModelMapper unitsDataMapper, CategoryViewModelMapper categoryDataMapper) {
+        this.unitsViewModelMapper = unitsDataMapper;
         this.categoryModelDataMapper = categoryDataMapper;
     }
 
@@ -48,7 +48,7 @@ public class GoodsModelDataMapper {
             viewModel.setId(model.getId());
             viewModel.setName(model.getName());
             viewModel.setCategory(categoryModelDataMapper.transformToViewModel(model.getCategory()));
-            viewModel.setUnit(unitsDataModelMapper.transformToViewModel(model.getUnit()));
+            viewModel.setUnit(unitsViewModelMapper.transformToViewModel(model.getUnit()));
             viewModel.setTimeCreated(model.getTimeCreated());
             viewModel.setCreateByUser(model.isCreateByUser());
         }
@@ -75,7 +75,7 @@ public class GoodsModelDataMapper {
                     categoryModelDataMapper.transform(viewModel.getCategory()),
                     viewModel.isCreateByUser(),
                     viewModel.getTimeCreated(),
-                    unitsDataModelMapper.transform(viewModel.getUnit()));
+                    unitsViewModelMapper.transform(viewModel.getUnit()));
         }
         return model;
     }

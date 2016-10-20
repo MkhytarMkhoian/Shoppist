@@ -30,17 +30,17 @@ import javax.inject.Inject;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class ListItemsModelDataMapper {
+public class ListItemsViewModelMapper {
 
-    private final CategoryModelDataMapper categoryModelDataMapper;
-    private final CurrencyModelDataMapper currencyModelDataMapper;
-    private final UnitsDataModelMapper unitsDataModelMapper;
+    private final CategoryViewModelMapper categoryModelDataMapper;
+    private final CurrencyViewModelMapper currencyViewModelMapper;
+    private final UnitsViewModelMapper unitsViewModelMapper;
 
     @Inject
-    public ListItemsModelDataMapper(CategoryModelDataMapper categoryDataMapper, CurrencyModelDataMapper currencyDataMapper, UnitsDataModelMapper unitsDataMapper) {
+    public ListItemsViewModelMapper(CategoryViewModelMapper categoryDataMapper, CurrencyViewModelMapper currencyDataMapper, UnitsViewModelMapper unitsDataMapper) {
         this.categoryModelDataMapper = categoryDataMapper;
-        this.currencyModelDataMapper = currencyDataMapper;
-        this.unitsDataModelMapper = unitsDataMapper;
+        this.currencyViewModelMapper = currencyDataMapper;
+        this.unitsViewModelMapper = unitsDataMapper;
     }
 
     @SuppressWarnings("ResourceType")
@@ -56,8 +56,8 @@ public class ListItemsModelDataMapper {
             viewModel.setPriority(model.getPriority());
             viewModel.setStatus(model.getStatus());
             viewModel.setCategory(categoryModelDataMapper.transformToViewModel(model.getCategory()));
-            viewModel.setCurrency(currencyModelDataMapper.transformToViewModel(model.getCurrency()));
-            viewModel.setUnit(unitsDataModelMapper.transformToViewModel(model.getUnit()));
+            viewModel.setCurrency(currencyViewModelMapper.transformToViewModel(model.getCurrency()));
+            viewModel.setUnit(unitsViewModelMapper.transformToViewModel(model.getUnit()));
             viewModel.setQuantity(model.getQuantity());
             viewModel.setTimeCreated(model.getTimeCreated());
         }
@@ -88,9 +88,9 @@ public class ListItemsModelDataMapper {
                     viewModel.getPriority(),
                     viewModel.getPrice(),
                     viewModel.getQuantity(),
-                    unitsDataModelMapper.transform(viewModel.getUnit()),
+                    unitsViewModelMapper.transform(viewModel.getUnit()),
                     viewModel.getTimeCreated(),
-                    currencyModelDataMapper.transform(viewModel.getCurrency()));
+                    currencyViewModelMapper.transform(viewModel.getCurrency()));
         }
         return model;
     }

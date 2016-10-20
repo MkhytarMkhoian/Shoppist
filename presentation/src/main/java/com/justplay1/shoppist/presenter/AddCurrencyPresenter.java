@@ -23,7 +23,7 @@ import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.currency.AddCurrency;
 import com.justplay1.shoppist.interactor.currency.UpdateCurrency;
 import com.justplay1.shoppist.models.CurrencyViewModel;
-import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
+import com.justplay1.shoppist.models.mappers.CurrencyViewModelMapper;
 import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.utils.ModelUtils;
@@ -41,14 +41,14 @@ import rx.Observable;
 @NonConfigurationScope
 public class AddCurrencyPresenter extends BaseRouterPresenter<AddCurrencyView, Router> {
 
-    private final CurrencyModelDataMapper dataMapper;
+    private final CurrencyViewModelMapper dataMapper;
     private final UpdateCurrency updateCurrency;
     private final AddCurrency addCurrency;
 
     private CurrencyViewModel item;
 
     @Inject
-    AddCurrencyPresenter(CurrencyModelDataMapper dataMapper,
+    AddCurrencyPresenter(CurrencyViewModelMapper dataMapper,
                          UpdateCurrency updateCurrency,
                          AddCurrency addCurrency) {
         this.dataMapper = dataMapper;

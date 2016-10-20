@@ -22,7 +22,7 @@ import com.justplay1.shoppist.di.scope.NonConfigurationScope;
 import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.category.GetCategoryList;
 import com.justplay1.shoppist.models.CategoryViewModel;
-import com.justplay1.shoppist.models.mappers.CategoryModelDataMapper;
+import com.justplay1.shoppist.models.mappers.CategoryViewModelMapper;
 import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.view.SelectCategoryView;
@@ -41,13 +41,13 @@ public class SelectCategoryPresenter extends BaseRouterPresenter<SelectCategoryV
 
     private final BehaviorSubject<List<CategoryViewModel>> cache = BehaviorSubject.create();
 
-    private final CategoryModelDataMapper dataMapper;
+    private final CategoryViewModelMapper dataMapper;
     private final GetCategoryList getCategoryList;
 
     private CategoryViewModel item;
 
     @Inject
-    SelectCategoryPresenter(CategoryModelDataMapper dataMapper, GetCategoryList getCategoryList) {
+    SelectCategoryPresenter(CategoryViewModelMapper dataMapper, GetCategoryList getCategoryList) {
         this.dataMapper = dataMapper;
         this.getCategoryList = getCategoryList;
 

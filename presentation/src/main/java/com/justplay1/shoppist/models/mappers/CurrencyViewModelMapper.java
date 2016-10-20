@@ -17,8 +17,8 @@
 package com.justplay1.shoppist.models.mappers;
 
 import com.justplay1.shoppist.di.scope.NonConfigurationScope;
-import com.justplay1.shoppist.models.UnitModel;
-import com.justplay1.shoppist.models.UnitViewModel;
+import com.justplay1.shoppist.models.CurrencyModel;
+import com.justplay1.shoppist.models.CurrencyViewModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,27 +30,26 @@ import javax.inject.Inject;
  * Created by Mkhytar Mkhoian.
  */
 @NonConfigurationScope
-public class UnitsDataModelMapper {
+public class CurrencyViewModelMapper {
 
     @Inject
-    public UnitsDataModelMapper() {
+    public CurrencyViewModelMapper() {
     }
 
-    public UnitViewModel transformToViewModel(UnitModel model) {
-        UnitViewModel viewModel = null;
+    public CurrencyViewModel transformToViewModel(CurrencyModel model) {
+        CurrencyViewModel viewModel = null;
         if (model != null) {
-            viewModel = new UnitViewModel();
+            viewModel = new CurrencyViewModel();
             viewModel.setId(model.getId());
             viewModel.setName(model.getName());
-            viewModel.setShortName(model.getShortName());
         }
         return viewModel;
     }
 
-    public List<UnitViewModel> transformToViewModel(Collection<UnitModel> models) {
-        List<UnitViewModel> viewModels = new ArrayList<>();
-        UnitViewModel viewModel;
-        for (UnitModel model : models) {
+    public List<CurrencyViewModel> transformToViewModel(Collection<CurrencyModel> models) {
+        List<CurrencyViewModel> viewModels = new ArrayList<>();
+        CurrencyViewModel viewModel;
+        for (CurrencyModel model : models) {
             viewModel = transformToViewModel(model);
             if (viewModel != null) {
                 viewModels.add(viewModel);
@@ -59,20 +58,18 @@ public class UnitsDataModelMapper {
         return viewModels;
     }
 
-    public UnitModel transform(UnitViewModel viewModel) {
-        UnitModel model = null;
+    public CurrencyModel transform(CurrencyViewModel viewModel) {
+        CurrencyModel model = null;
         if (viewModel != null) {
-            model = new UnitModel(model.getId(),
-                    model.getName(),
-                    model.getShortName());
+            model = new CurrencyModel(viewModel.getId(), viewModel.getName());
         }
         return model;
     }
 
-    public List<UnitModel> transform(Collection<UnitViewModel> viewModels) {
-        List<UnitModel> models = new ArrayList<>();
-        UnitModel model;
-        for (UnitViewModel viewModel : viewModels) {
+    public List<CurrencyModel> transform(Collection<CurrencyViewModel> viewModels) {
+        List<CurrencyModel> models = new ArrayList<>();
+        CurrencyModel model;
+        for (CurrencyViewModel viewModel : viewModels) {
             model = transform(viewModel);
             if (model != null) {
                 models.add(model);
@@ -80,5 +77,4 @@ public class UnitsDataModelMapper {
         }
         return models;
     }
-
 }

@@ -21,7 +21,7 @@ import com.justplay1.shoppist.interactor.DefaultSubscriber;
 import com.justplay1.shoppist.interactor.currency.DeleteCurrency;
 import com.justplay1.shoppist.interactor.currency.GetCurrencyList;
 import com.justplay1.shoppist.models.CurrencyViewModel;
-import com.justplay1.shoppist.models.mappers.CurrencyModelDataMapper;
+import com.justplay1.shoppist.models.mappers.CurrencyViewModelMapper;
 import com.justplay1.shoppist.navigation.CurrencyRouter;
 import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
 import com.justplay1.shoppist.view.CurrencyView;
@@ -42,14 +42,14 @@ public class CurrencyPresenter extends BaseRouterPresenter<CurrencyView, Currenc
 
     private final BehaviorSubject<List<CurrencyViewModel>> cache = BehaviorSubject.create();
 
-    private final CurrencyModelDataMapper dataMapper;
+    private final CurrencyViewModelMapper dataMapper;
     private final GetCurrencyList getCurrencyList;
     private final DeleteCurrency deleteCurrency;
 
     @Inject
     CurrencyPresenter(GetCurrencyList getCurrencyList,
                       DeleteCurrency deleteCurrency,
-                      CurrencyModelDataMapper dataMapper) {
+                      CurrencyViewModelMapper dataMapper) {
         this.getCurrencyList = getCurrencyList;
         this.deleteCurrency = deleteCurrency;
         this.dataMapper = dataMapper;
