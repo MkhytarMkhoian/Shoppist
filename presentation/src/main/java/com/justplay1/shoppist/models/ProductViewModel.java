@@ -44,15 +44,6 @@ public class ProductViewModel extends BaseViewModel {
         unit = parcel.readParcelable(ProductViewModel.class.getClassLoader());
     }
 
-    public ProductViewModel(ProductViewModel product) {
-        this();
-        setId(product.getId());
-        setName(product.getName());
-        setCreateByUser(product.isCreateByUser());
-        setCategory(product.getCategory());
-        setUnit(product.getUnit());
-    }
-
     public UnitViewModel getUnit() {
         return unit;
     }

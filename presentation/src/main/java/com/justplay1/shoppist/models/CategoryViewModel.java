@@ -35,14 +35,6 @@ public class CategoryViewModel extends BaseViewModel {
         color = Color.DKGRAY;
     }
 
-    public CategoryViewModel(CategoryViewModel category) {
-        this();
-        setId(category.getId());
-        setName(category.getName());
-        setColor(category.getColor());
-        setCreateByUser(category.isCreateByUser());
-    }
-
     public CategoryViewModel(Parcel parcel) {
         this();
         name = parcel.readString();

@@ -39,18 +39,6 @@ public class ListViewModel extends BaseViewModel {
         color = Color.DKGRAY;
     }
 
-    public ListViewModel(ListViewModel shoppingList) {
-        this();
-        setId(shoppingList.getId());
-        setName(shoppingList.getName());
-        setColor(shoppingList.getColor());
-        setTimeCreated(shoppingList.getTimeCreated());
-        setPriority(shoppingList.getPriority());
-        setSize(shoppingList.getSize());
-        setBoughtCount(shoppingList.getBoughtCount());
-        setPinned(shoppingList.isPinned());
-    }
-
     @SuppressWarnings("ResourceType")
     public ListViewModel(Parcel parcel) {
         this();

@@ -40,23 +40,6 @@ public class ListItemViewModel extends BaseViewModel {
 
     }
 
-    public ListItemViewModel(ListItemViewModel item) {
-        this();
-        setParentListId(item.getParentListId());
-        setId(item.getId());
-        setName(item.getName());
-        setNote(item.getNote());
-        setUnit(item.getUnit());
-        setCurrency(item.getCurrency());
-        setPrice(item.getPrice());
-        setTimeCreated(item.getTimeCreated());
-        setQuantity(item.getQuantity());
-        setStatus(item.getStatus());
-        setPriority(item.getPriority());
-        setCategory(item.getCategory());
-        setPinned(item.isPinned());
-    }
-
     @SuppressWarnings("ResourceType")
     public ListItemViewModel(Parcel parcel) {
         this();
