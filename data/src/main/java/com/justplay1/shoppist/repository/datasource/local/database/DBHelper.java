@@ -52,7 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String COLUMN_ID = "_id";
 
-    private static final String CREATE_PRODUCTS_TABLE = "create table " + ProductDAO.TABLE + "(" +
+    static final String CREATE_PRODUCTS_TABLE = "create table " + ProductDAO.TABLE + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
             ProductDAO.COL_ID + " text, " +
             ProductDAO.COL_NAME + " text, " +
@@ -62,7 +62,7 @@ public class DBHelper extends SQLiteOpenHelper {
             ProductDAO.COL_UNIT_ID + " text DEFAULT " + UnitDAO.NO_UNIT_ID +
             ");";
 
-    private static final String CREATE_CATEGORIES_TABLE = "create table " + CategoryDAO.TABLE + "(" +
+    static final String CREATE_CATEGORIES_TABLE = "create table " + CategoryDAO.TABLE + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
             CategoryDAO.COL_NAME + " text, " +
             CategoryDAO.COL_COLOR + " integer, " +
@@ -70,20 +70,20 @@ public class DBHelper extends SQLiteOpenHelper {
             CategoryDAO.COL_ID + " text " +
             ");";
 
-    private static final String CREATE_UNITS_TABLE = "create table " + UnitDAO.TABLE + "(" +
+    static final String CREATE_UNITS_TABLE = "create table " + UnitDAO.TABLE + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
             UnitDAO.COL_FULL_NAME + " text, " +
             UnitDAO.COL_SHORT_NAME + " text, " +
             UnitDAO.COL_ID + " text " +
             ");";
 
-    private static final String CREATE_CURRENCIES_TABLE = "create table " + CurrencyDAO.TABLE + "(" +
+    static final String CREATE_CURRENCIES_TABLE = "create table " + CurrencyDAO.TABLE + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
             CurrencyDAO.COL_NAME + " text, " +
             CurrencyDAO.COL_ID + " text " +
             ");";
 
-    private static final String CREATE_LIST_ITEMS_TABLE = "create table " + ListItemDAO.TABLE + "(" +
+    static final String CREATE_LIST_ITEMS_TABLE = "create table " + ListItemDAO.TABLE + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
             ListItemDAO.COL_ID + " text, " +
             ListItemDAO.COL_PARENT_LIST_ID + " text, " +
@@ -99,7 +99,7 @@ public class DBHelper extends SQLiteOpenHelper {
             ListItemDAO.COL_TIME_CREATED + " integer " +
             ");";
 
-    private static final String CREATE_LISTS_TABLE = "create table " + ListDAO.TABLE + "(" +
+    static final String CREATE_LISTS_TABLE = "create table " + ListDAO.TABLE + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
             ListDAO.COL_ID + " text, " +
             ListDAO.COL_NAME + " text, " +

@@ -43,7 +43,9 @@ ext {
     assertJVersion = '1.7.1'
     mockitoVersion = '1.9.5'
     dexmakerVersion = '1.0'
-    espressoVersion = '2.0'
+    espressoVersion = '2.2.2'
+    espressoContribVersion = '2.2.1'
+    supportTestVersion = '0.5'
     testingSupportLibVersion = '0.1'
     powermockVersion = '1.6.4'
 
@@ -74,11 +76,25 @@ ext {
     ]
 
     presentationTestDependencies = [
-            mockito          : "org.mockito:mockito-core:${mockitoVersion}",
+            junit                       : "junit:junit:${jUnitVersion}",
+            assertj                     : "org.assertj:assertj-core:${assertJVersion}",
+            mockito                     : "org.mockito:mockito-core:${mockitoVersion}",
+
+            powermockModuleJunit4       : "org.powermock:powermock-module-junit4:${powermockVersion}",
+            powermockModuleJunit4Rule   : "org.powermock:powermock-module-junit4-rule:${powermockVersion}",
+            powermockApiMockito         : "org.powermock:powermock-api-mockito:${powermockVersion}",
+            powermockClassloadingXstream: "org.powermock:powermock-classloading-xstream:${powermockVersion}",
+
             dexmaker         : "com.google.dexmaker:dexmaker:${dexmakerVersion}",
             dexmakerMockito  : "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}",
-            espresso         : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
             testingSupportLib: "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
+
+            espressoCore     : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+            espressoIntents  : "com.android.support.test.espresso:espresso-intents:${espressoVersion}",
+            espressoContrib  : "com.android.support.test.espresso:espresso-contrib:${espressoContribVersion}",
+            supportTestRunner   : "com.android.support.test:runner:${supportTestVersion}",
+            supportTestRules    : "com.android.support.test:rules:${supportTestVersion}",
+
     ]
 
     domainDependencies = [
@@ -116,7 +132,10 @@ ext {
             powermockModuleJunit4       : "org.powermock:powermock-module-junit4:${powermockVersion}",
             powermockModuleJunit4Rule   : "org.powermock:powermock-module-junit4-rule:${powermockVersion}",
             powermockApiMockito         : "org.powermock:powermock-api-mockito:${powermockVersion}",
-            powermockClassloadingXstream: "org.powermock:powermock-classloading-xstream:${powermockVersion}"
+            powermockClassloadingXstream: "org.powermock:powermock-classloading-xstream:${powermockVersion}",
+
+            supportTestRunner   : "com.android.support.test:runner:${supportTestVersion}",
+            supportTestRules    : "com.android.support.test:rules:${supportTestVersion}"
     ]
 
     developmentDependencies = [

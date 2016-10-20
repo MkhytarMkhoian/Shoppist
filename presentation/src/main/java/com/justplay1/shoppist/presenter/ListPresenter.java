@@ -116,7 +116,7 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
     private void loadData() {
         getLists.get()
                 .map(dataMapper::transformToViewModel)
-                .map(listViewModels -> sort(listViewModels, preferences.getSortForLists()))
+                .map(listViewModels -> sort(listViewModels, preferences.getSortForShoppingLists()))
                 .subscribe(cache);
     }
 

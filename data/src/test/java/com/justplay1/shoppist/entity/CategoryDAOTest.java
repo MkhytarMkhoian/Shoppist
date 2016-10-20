@@ -7,11 +7,11 @@ import com.justplay1.shoppist.ApplicationTestCase;
 
 import org.junit.Test;
 
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_COLOR;
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_CREATE_BY_USER;
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_ID;
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_NAME;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeCategoryDAO;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_COLOR;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_CREATE_BY_USER;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_ID;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_NAME;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeCategoryDAO;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

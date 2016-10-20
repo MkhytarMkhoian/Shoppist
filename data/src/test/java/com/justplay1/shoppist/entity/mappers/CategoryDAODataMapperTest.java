@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_COLOR;
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_CREATE_BY_USER;
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_ID;
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_NAME;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeCategoryDAO;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_COLOR;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_CREATE_BY_USER;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_ID;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_NAME;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeCategoryDAO;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeCategoryModel;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

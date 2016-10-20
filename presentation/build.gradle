@@ -125,9 +125,37 @@ dependencies {
         exclude module: 'appcompat-v7'
     }
 
+    testCompile presentationTestDependencies.junit
+    testCompile presentationTestDependencies.assertj
+    testCompile presentationTestDependencies.mockito
+    testCompile presentationTestDependencies.powermockModuleJunit4
+    testCompile presentationTestDependencies.powermockModuleJunit4Rule
+    testCompile presentationTestDependencies.powermockApiMockito
+
     androidTestCompile presentationTestDependencies.mockito
     androidTestCompile presentationTestDependencies.dexmaker
     androidTestCompile presentationTestDependencies.dexmakerMockito
-    androidTestCompile presentationTestDependencies.espresso
-    androidTestCompile presentationTestDependencies.testingSupportLib
+//    androidTestCompile presentationTestDependencies.testingSupportLib
+
+    androidTestCompile(presentationTestDependencies.espressoCore, {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestCompile(presentationTestDependencies.supportTestRunner) {
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+    }
+    androidTestCompile(presentationTestDependencies.supportTestRules) {
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+    }
+    androidTestCompile(presentationTestDependencies.espressoIntents) {
+        exclude module: 'recyclerview-v7'
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+    }
+    androidTestCompile(presentationTestDependencies.espressoContrib) {
+        exclude module: 'recyclerview-v7'
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+    }
 }

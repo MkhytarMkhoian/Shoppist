@@ -43,7 +43,7 @@ public class ListItemDAO extends BaseDAO {
     public static final String COL_TIME_CREATED = "shopping_list_item_time_created";
     public static final String COL_CATEGORY_ID = "shopping_list_item_category_id";
 
-    public static final String WHERE_STRING = COL_PARENT_LIST_ID + "=? and " + COL_ID + " IN(?)";
+    public static final String WHERE_STRING = COL_ID + " IN(?)";
 
     private final String parentListId;
     private final String note;
@@ -131,8 +131,7 @@ public class ListItemDAO extends BaseDAO {
         if (o == null || !(o instanceof ListItemDAO)) return false;
 
         ListItemDAO item = (ListItemDAO) o;
-        return item.getId().equals(this.getId())
-                && (item.getParentListId().equals(this.getParentListId()));
+        return item.getId().equals(this.getId());
     }
 
     @Override

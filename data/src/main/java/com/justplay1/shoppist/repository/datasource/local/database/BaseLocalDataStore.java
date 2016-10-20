@@ -37,7 +37,7 @@ abstract class BaseLocalDataStore<T> {
         BriteDatabase.Transaction transaction = db.newTransaction();
         int result = 0;
         try {
-            result = db.delete(table, null, "");
+            result = db.delete(table, null, null);
             transaction.markSuccessful();
         } finally {
             transaction.end();

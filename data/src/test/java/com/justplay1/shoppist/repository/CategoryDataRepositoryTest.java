@@ -15,9 +15,9 @@ import java.util.List;
 
 import rx.Observable;
 
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_ID;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeCategoryDAO;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_ID;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeCategoryDAO;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeCategoryModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

@@ -78,7 +78,8 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
 
     @Override
     public Observable<ListItemDAO> getItem(String id) {
-        return null;
+        return db.createQuery(ListItemDAO.TABLE, LIST_ITEMS_QUERY(ListItemDAO.WHERE_STRING), id)
+                .mapToOne(ListItemDAO.MAPPER);
     }
 
     @Override
@@ -100,7 +101,7 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
         BriteDatabase.Transaction transaction = db.newTransaction();
         try {
             for (ListItemDAO item : data) {
-                db.delete(ListItemDAO.TABLE, ListItemDAO.WHERE_STRING, item.getParentListId(), item.getId());
+                db.delete(ListItemDAO.TABLE, ListItemDAO.WHERE_STRING, item.getId());
             }
             transaction.markSuccessful();
         } finally {
@@ -114,7 +115,7 @@ public class LocalListItemsDataStoreImpl extends BaseLocalDataStore<ListItemDAO>
         BriteDatabase.Transaction transaction = db.newTransaction();
         try {
             for (ListItemDAO item : data) {
-                db.update(ListItemDAO.TABLE, getValue(item), ListItemDAO.WHERE_STRING, item.getParentListId(), item.getId());
+                db.update(ListItemDAO.TABLE, getValue(item), ListItemDAO.WHERE_STRING, item.getId());
             }
             transaction.markSuccessful();
         } finally {

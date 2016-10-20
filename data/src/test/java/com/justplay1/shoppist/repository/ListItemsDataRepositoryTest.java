@@ -15,15 +15,15 @@ import java.util.List;
 
 import rx.Observable;
 
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_ID;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeCategoryDAO;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeCategoryModel;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeCurrencyDAO;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeCurrencyModel;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeListItemDAO;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeListItemModel;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeUnitDAO;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeUnitModel;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_ID;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeCategoryDAO;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeCurrencyDAO;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeCurrencyModel;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeListItemDAO;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeListItemModel;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeUnitDAO;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeUnitModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

@@ -1,6 +1,5 @@
 package com.justplay1.shoppist.entity.mappers;
 
-import com.justplay1.shoppist.entity.CategoryDAO;
 import com.justplay1.shoppist.entity.CurrencyDAO;
 import com.justplay1.shoppist.models.CurrencyModel;
 
@@ -10,10 +9,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_ID;
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_NAME;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeCurrencyDAO;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeCurrencyModel;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_ID;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_NAME;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeCurrencyDAO;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeCurrencyModel;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

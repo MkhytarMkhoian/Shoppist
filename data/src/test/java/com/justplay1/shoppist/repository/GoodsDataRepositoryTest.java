@@ -15,13 +15,13 @@ import java.util.List;
 
 import rx.Observable;
 
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_ID;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeCategoryDAO;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeCategoryModel;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeProductDAO;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeProductModel;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeUnitDAO;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeUnitModel;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_ID;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeCategoryDAO;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeProductDAO;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeProductModel;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeUnitDAO;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeUnitModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

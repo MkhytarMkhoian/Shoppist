@@ -7,9 +7,9 @@ import com.justplay1.shoppist.ApplicationTestCase;
 
 import org.junit.Test;
 
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_ID;
-import static com.justplay1.shoppist.entity.TestUtil.FAKE_NAME;
-import static com.justplay1.shoppist.entity.TestUtil.createFakeCurrencyDAO;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_ID;
+import static com.justplay1.shoppist.entity.DAOUtil.FAKE_NAME;
+import static com.justplay1.shoppist.entity.DAOUtil.createFakeCurrencyDAO;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

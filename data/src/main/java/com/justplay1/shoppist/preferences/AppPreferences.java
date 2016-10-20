@@ -138,7 +138,7 @@ public class AppPreferences {
         editor.apply();
     }
 
-    public int getSortForLists() {
+    public int getSortForShoppingLists() {
         return sortForShoppingLists;
     }
 

@@ -116,7 +116,7 @@ public class LocalListDataStoreImpl extends BaseLocalDataStore<ListDAO> implemen
         BriteDatabase.Transaction transaction = db.newTransaction();
         try {
             String selection = ListItemDAO.COL_PARENT_LIST_ID + "=?";
-            String[] selectionArgs = new String[]{id, ""};
+            String[] selectionArgs = new String[]{id};
             db.delete(ListItemDAO.TABLE, selection, selectionArgs);
             transaction.markSuccessful();
         } finally {
