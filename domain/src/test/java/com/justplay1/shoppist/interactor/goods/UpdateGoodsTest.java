@@ -28,9 +28,9 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 
-import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
-import static com.justplay1.shoppist.TestUtil.createFakeProductModel;
-import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
+import static com.justplay1.shoppist.ModelUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.ModelUtil.createFakeProductModel;
+import static com.justplay1.shoppist.ModelUtil.createFakeUnitModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;

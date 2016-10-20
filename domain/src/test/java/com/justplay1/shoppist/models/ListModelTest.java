@@ -18,14 +18,14 @@ package com.justplay1.shoppist.models;
 
 import org.junit.Test;
 
-import static com.justplay1.shoppist.TestUtil.FAKE_BOUGHT_COUNT;
-import static com.justplay1.shoppist.TestUtil.FAKE_COLOR;
-import static com.justplay1.shoppist.TestUtil.FAKE_ID;
-import static com.justplay1.shoppist.TestUtil.FAKE_NAME;
-import static com.justplay1.shoppist.TestUtil.FAKE_PRIORITY;
-import static com.justplay1.shoppist.TestUtil.FAKE_SIZE;
-import static com.justplay1.shoppist.TestUtil.FAKE_TIME_CREATED;
-import static com.justplay1.shoppist.TestUtil.createFakeListModel;
+import static com.justplay1.shoppist.ModelUtil.FAKE_BOUGHT_COUNT;
+import static com.justplay1.shoppist.ModelUtil.FAKE_COLOR;
+import static com.justplay1.shoppist.ModelUtil.FAKE_ID;
+import static com.justplay1.shoppist.ModelUtil.FAKE_NAME;
+import static com.justplay1.shoppist.ModelUtil.FAKE_PRIORITY;
+import static com.justplay1.shoppist.ModelUtil.FAKE_SIZE;
+import static com.justplay1.shoppist.ModelUtil.FAKE_TIME_CREATED;
+import static com.justplay1.shoppist.ModelUtil.createFakeListModel;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

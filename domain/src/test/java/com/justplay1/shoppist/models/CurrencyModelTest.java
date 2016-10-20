@@ -18,9 +18,9 @@ package com.justplay1.shoppist.models;
 
 import org.junit.Test;
 
-import static com.justplay1.shoppist.TestUtil.FAKE_ID;
-import static com.justplay1.shoppist.TestUtil.FAKE_NAME;
-import static com.justplay1.shoppist.TestUtil.createFakeCurrencyModel;
+import static com.justplay1.shoppist.ModelUtil.FAKE_ID;
+import static com.justplay1.shoppist.ModelUtil.FAKE_NAME;
+import static com.justplay1.shoppist.ModelUtil.createFakeCurrencyModel;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

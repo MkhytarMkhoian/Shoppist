@@ -26,11 +26,11 @@ import org.mockito.MockitoAnnotations;
 
 import rx.Observable;
 
-import static com.justplay1.shoppist.TestUtil.FAKE_ID;
-import static com.justplay1.shoppist.TestUtil.createFakeListItemModelList;
-import static com.justplay1.shoppist.TestUtil.createFakeCategoryModel;
-import static com.justplay1.shoppist.TestUtil.createFakeCurrencyModel;
-import static com.justplay1.shoppist.TestUtil.createFakeUnitModel;
+import static com.justplay1.shoppist.ModelUtil.FAKE_ID;
+import static com.justplay1.shoppist.ModelUtil.createFakeListItemModelList;
+import static com.justplay1.shoppist.ModelUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.ModelUtil.createFakeCurrencyModel;
+import static com.justplay1.shoppist.ModelUtil.createFakeUnitModel;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
