@@ -17,10 +17,15 @@
 package com.justplay1.shoppist.presenter;
 
 import com.justplay1.shoppist.models.CategoryModel;
+import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.CurrencyModel;
+import com.justplay1.shoppist.models.CurrencyViewModel;
 import com.justplay1.shoppist.models.ListItemModel;
+import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.ListModel;
+import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.ProductModel;
+import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.UnitModel;
 import com.justplay1.shoppist.models.UnitViewModel;
 
@@ -93,11 +98,72 @@ public class ViewModelUtil {
 
     }
 
+    @SuppressWarnings("WrongConstant")
+    public static ListItemViewModel createFakeListItemViewModel(CategoryViewModel categoryViewModel,
+                                                                UnitViewModel unitViewModel,
+                                                                CurrencyViewModel currencyViewModel) {
+        ListItemViewModel viewModel = new ListItemViewModel();
+        viewModel.setId(FAKE_ID);
+        viewModel.setName(FAKE_NAME);
+        viewModel.setParentListId(FAKE_PARENT_LIST_ID);
+        viewModel.setNote(FAKE_NOTE);
+        viewModel.setStatus(FAKE_STATUS);
+        viewModel.setCategory(categoryViewModel);
+        viewModel.setPriority(FAKE_PRIORITY);
+        viewModel.setPrice(FAKE_PRICE);
+        viewModel.setQuantity(FAKE_QUANTITY);
+        viewModel.setUnit(unitViewModel);
+        viewModel.setTimeCreated(FAKE_TIME_CREATED);
+        viewModel.setCurrency(currencyViewModel);
+        return viewModel;
+    }
+
     public static UnitViewModel createFakeUnitViewModel() {
         UnitViewModel viewModel = new UnitViewModel();
         viewModel.setId(FAKE_ID);
         viewModel.setName(FAKE_NAME);
         viewModel.setShortName(FAKE_SHORT_NAME);
+        return viewModel;
+    }
+
+    public static CurrencyViewModel createFakeCurrencyViewModel() {
+        CurrencyViewModel viewModel = new CurrencyViewModel();
+        viewModel.setId(FAKE_ID);
+        viewModel.setName(FAKE_NAME);
+        return viewModel;
+    }
+
+    public static CategoryViewModel createFakeCategoryViewModel() {
+        CategoryViewModel viewModel = new CategoryViewModel();
+        viewModel.setId(FAKE_ID);
+        viewModel.setName(FAKE_NAME);
+        viewModel.setColor(FAKE_COLOR);
+        viewModel.setCreateByUser(FAKE_CREATE_BY_USER);
+        return viewModel;
+    }
+
+    @SuppressWarnings("WrongConstant")
+    public static ListViewModel createFakeListViewModel() {
+        ListViewModel viewModel = new ListViewModel();
+        viewModel.setId(FAKE_ID);
+        viewModel.setName(FAKE_NAME);
+        viewModel.setTimeCreated(FAKE_TIME_CREATED);
+        viewModel.setPriority(FAKE_PRIORITY);
+        viewModel.setBoughtCount(FAKE_BOUGHT_COUNT);
+        viewModel.setColor(FAKE_COLOR);
+        viewModel.setSize(FAKE_SIZE);
+        return viewModel;
+    }
+
+    public static ProductViewModel createFakeProductViewModel(CategoryViewModel categoryViewModel,
+                                                              UnitViewModel unitViewModel) {
+        ProductViewModel viewModel = new ProductViewModel();
+        viewModel.setId(FAKE_ID);
+        viewModel.setName(FAKE_NAME);
+        viewModel.setCategory(categoryViewModel);
+        viewModel.setUnit(unitViewModel);
+        viewModel.setTimeCreated(FAKE_TIME_CREATED);
+        viewModel.setCreateByUser(FAKE_CREATE_BY_USER);
         return viewModel;
     }
 }

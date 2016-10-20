@@ -62,9 +62,9 @@ public class UnitsViewModelMapper {
     public UnitModel transform(UnitViewModel viewModel) {
         UnitModel model = null;
         if (viewModel != null) {
-            model = new UnitModel(model.getId(),
-                    model.getName(),
-                    model.getShortName());
+            model = new UnitModel(viewModel.getId(),
+                    viewModel.getName(),
+                    viewModel.getShortName());
         }
         return model;
     }

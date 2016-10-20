@@ -17,6 +17,7 @@
 package com.justplay1.shoppist.models.mappers;
 
 import com.justplay1.shoppist.models.CategoryModel;
+import com.justplay1.shoppist.models.CategoryViewModel;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,9 +26,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_COLOR;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_CREATE_BY_USER;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_ID;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_NAME;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeCategoryViewModel;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -35,18 +42,18 @@ import static org.mockito.Mockito.mock;
  */
 public class CategoryViewModelMapperTest {
 
+    private CategoryViewModelMapper mapper;
+
     @Before
     public void setUp() throws Exception {
-        CategoryViewModelMapper modelDataMapper = new CategoryViewModelMapper();
-        CategoryDAO dao = createFakeCategoryDAO();
+        mapper = new CategoryViewModelMapper();
     }
 
     @Test
-    public void transformCategoryDAO() {
-        CategoryDAODataMapper dataMapper = new CategoryDAODataMapper();
-        CategoryDAO dao = createFakeCategoryDAO();
+    public void transformCategoryViewModel() {
+        CategoryViewModel viewModel = createFakeCategoryViewModel();
 
-        CategoryModel model = dataMapper.transformFromDAO(dao);
+        CategoryModel model = mapper.transform(viewModel);
 
         assertThat(model, is(instanceOf(CategoryModel.class)));
         assertThat(model.getId(), is(FAKE_ID));
@@ -56,17 +63,15 @@ public class CategoryViewModelMapperTest {
     }
 
     @Test
-    public void transformCategoryDAOCollection() {
-        CategoryDAODataMapper dataMapper = new CategoryDAODataMapper();
+    public void transformCategoryViewModelCollection() {
+        CategoryViewModel mockViewModelOne = mock(CategoryViewModel.class);
+        CategoryViewModel mockViewModelTwo = mock(CategoryViewModel.class);
 
-        CategoryDAO mockDAOOne = mock(CategoryDAO.class);
-        CategoryDAO mockDAOTwo = mock(CategoryDAO.class);
+        List<CategoryViewModel> list = new ArrayList<>(5);
+        list.add(mockViewModelOne);
+        list.add(mockViewModelTwo);
 
-        List<CategoryDAO> list = new ArrayList<>(5);
-        list.add(mockDAOOne);
-        list.add(mockDAOTwo);
-
-        Collection<CategoryModel> collection = dataMapper.transformFromDAO(list);
+        Collection<CategoryModel> collection = mapper.transform(list);
 
         assertThat(collection.toArray()[0], is(instanceOf(CategoryModel.class)));
         assertThat(collection.toArray()[1], is(instanceOf(CategoryModel.class)));
@@ -75,22 +80,19 @@ public class CategoryViewModelMapperTest {
 
     @Test
     public void transformCategoryModel() {
-        CategoryDAODataMapper dataMapper = new CategoryDAODataMapper();
         CategoryModel model = createFakeCategoryModel();
 
-        CategoryDAO dao = dataMapper.transformToDAO(model);
+        CategoryViewModel viewModel = mapper.transformToViewModel(model);
 
-        assertThat(dao, is(instanceOf(CategoryDAO.class)));
-        assertThat(dao.getId(), is(FAKE_ID));
-        assertThat(dao.getName(), is(FAKE_NAME));
-        assertThat(dao.getColor(), is(FAKE_COLOR));
-        assertThat(dao.isCreateByUser(), is(FAKE_CREATE_BY_USER));
+        assertThat(viewModel, is(instanceOf(CategoryViewModel.class)));
+        assertThat(viewModel.getId(), is(FAKE_ID));
+        assertThat(viewModel.getName(), is(FAKE_NAME));
+        assertThat(viewModel.getColor(), is(FAKE_COLOR));
+        assertThat(viewModel.isCreateByUser(), is(FAKE_CREATE_BY_USER));
     }
 
     @Test
     public void transformCategoryModelCollection() {
-        CategoryDAODataMapper dataMapper = new CategoryDAODataMapper();
-
         CategoryModel mockModelOne = mock(CategoryModel.class);
         CategoryModel mockModelTwo = mock(CategoryModel.class);
 
@@ -98,10 +100,10 @@ public class CategoryViewModelMapperTest {
         list.add(mockModelOne);
         list.add(mockModelTwo);
 
-        Collection<CategoryDAO> collection = dataMapper.transformToDAO(list);
+        Collection<CategoryViewModel> collection = mapper.transformToViewModel(list);
 
-        assertThat(collection.toArray()[0], is(instanceOf(CategoryDAO.class)));
-        assertThat(collection.toArray()[1], is(instanceOf(CategoryDAO.class)));
+        assertThat(collection.toArray()[0], is(instanceOf(CategoryViewModel.class)));
+        assertThat(collection.toArray()[1], is(instanceOf(CategoryViewModel.class)));
         assertThat(collection.size(), is(2));
     }
 }
