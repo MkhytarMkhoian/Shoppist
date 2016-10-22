@@ -26,12 +26,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_COLOR;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_CREATE_BY_USER;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_ID;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_NAME;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeCategoryModel;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeCategoryViewModel;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_COLOR;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_CREATE_BY_USER;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_ID;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_NAME;
+import static com.justplay1.shoppist.ViewModelUtil.createFakeCategoryModel;
+import static com.justplay1.shoppist.ViewModelUtil.createFakeCategoryViewModel;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

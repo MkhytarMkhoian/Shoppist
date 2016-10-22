@@ -18,10 +18,10 @@ package com.justplay1.shoppist.models;
 
 import org.junit.Test;
 
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_ID;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_NAME;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_SHORT_NAME;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeUnitViewModel;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_ID;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_NAME;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_SHORT_NAME;
+import static com.justplay1.shoppist.ViewModelUtil.createFakeUnitViewModel;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

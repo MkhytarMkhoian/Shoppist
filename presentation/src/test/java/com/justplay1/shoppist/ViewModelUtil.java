@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.justplay1.shoppist.presenter;
+package com.justplay1.shoppist;
 
 import com.justplay1.shoppist.models.CategoryModel;
 import com.justplay1.shoppist.models.CategoryViewModel;
@@ -40,11 +40,13 @@ import java.util.List;
 
 public class ViewModelUtil {
 
+    public static final String FAKE_CURRENCY_NAME = "111";
+
     public static final String FAKE_ID = "id";
     public static final String FAKE_PARENT_LIST_ID = "parent_list_id";
     public static final String FAKE_NAME = "name";
     public static final double FAKE_PRICE = 5.56;
-    public static final double FAKE_QUANTITY = 2.333;
+    public static final double FAKE_QUANTITY = 2.33;
     public static final String FAKE_NOTE = "note";
     public static final int FAKE_PRIORITY = 2;
     public static final long FAKE_TIME_CREATED = 55555L;
@@ -53,7 +55,7 @@ public class ViewModelUtil {
     public static final int FAKE_COLOR = 22222;
     public static final boolean FAKE_CREATE_BY_USER = true;
 
-    public static final String FAKE_SHORT_NAME = "short_name";
+    public static final String FAKE_SHORT_NAME = "qqq";
 
     public static final int FAKE_BOUGHT_COUNT = 5;
     public static final int FAKE_SIZE = 10;
@@ -131,7 +133,7 @@ public class ViewModelUtil {
     public static CurrencyViewModel createFakeCurrencyViewModel() {
         CurrencyViewModel viewModel = new CurrencyViewModel();
         viewModel.setId(FAKE_ID);
-        viewModel.setName(FAKE_NAME);
+        viewModel.setName(FAKE_CURRENCY_NAME);
         return viewModel;
     }
 

@@ -26,11 +26,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_ID;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_NAME;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_SHORT_NAME;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeUnitModel;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeUnitViewModel;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_ID;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_NAME;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_SHORT_NAME;
+import static com.justplay1.shoppist.ViewModelUtil.createFakeUnitModel;
+import static com.justplay1.shoppist.ViewModelUtil.createFakeUnitViewModel;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

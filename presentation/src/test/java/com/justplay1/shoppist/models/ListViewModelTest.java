@@ -18,14 +18,14 @@ package com.justplay1.shoppist.models;
 
 import org.junit.Test;
 
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_BOUGHT_COUNT;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_COLOR;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_ID;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_NAME;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_PRIORITY;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_SIZE;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_TIME_CREATED;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeListViewModel;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_BOUGHT_COUNT;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_COLOR;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_ID;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_NAME;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_PRIORITY;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_SIZE;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_TIME_CREATED;
+import static com.justplay1.shoppist.ViewModelUtil.createFakeListViewModel;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

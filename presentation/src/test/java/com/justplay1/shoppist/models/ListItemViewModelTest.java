@@ -18,19 +18,19 @@ package com.justplay1.shoppist.models;
 
 import org.junit.Test;
 
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_ID;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_NAME;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_NOTE;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_PARENT_LIST_ID;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_PRICE;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_PRIORITY;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_QUANTITY;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_STATUS;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_TIME_CREATED;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeCategoryViewModel;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeCurrencyViewModel;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeListItemViewModel;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeUnitViewModel;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_ID;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_NAME;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_NOTE;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_PARENT_LIST_ID;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_PRICE;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_PRIORITY;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_QUANTITY;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_STATUS;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_TIME_CREATED;
+import static com.justplay1.shoppist.ViewModelUtil.createFakeCategoryViewModel;
+import static com.justplay1.shoppist.ViewModelUtil.createFakeCurrencyViewModel;
+import static com.justplay1.shoppist.ViewModelUtil.createFakeListItemViewModel;
+import static com.justplay1.shoppist.ViewModelUtil.createFakeUnitViewModel;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 

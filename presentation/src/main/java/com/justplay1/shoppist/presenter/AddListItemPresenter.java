@@ -149,7 +149,7 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
         }
         setName(name);
         selectPriority(priority);
-        setViewNote(String.valueOf(note));
+        setViewNote(note);
         setViewPrice(String.valueOf(price));
         setViewQuantity(String.valueOf(quantity));
 
@@ -455,9 +455,8 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
             BigDecimal decimal = smallNumber.setScale(3, RoundingMode.HALF_UP);
             return decimal.doubleValue();
         } catch (NumberFormatException ignored) {
-
+            return 0;
         }
-        return 0;
     }
 
     private double decrementValue(String valueTxt) {
@@ -469,9 +468,8 @@ public class AddListItemPresenter extends BaseAddElementPresenter<AddListItemVie
             BigDecimal decimal = smallNumber.setScale(3, RoundingMode.HALF_UP);
             return decimal.doubleValue();
         } catch (NumberFormatException ignored) {
-
+            return 0;
         }
-        return 0;
     }
 
     private void selectPriority(@Priority int priority) {

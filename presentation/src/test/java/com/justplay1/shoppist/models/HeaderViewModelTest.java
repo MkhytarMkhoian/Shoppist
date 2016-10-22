@@ -18,10 +18,10 @@ package com.justplay1.shoppist.models;
 
 import org.junit.Test;
 
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_ID;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_NAME;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.FAKE_PRIORITY;
-import static com.justplay1.shoppist.presenter.ViewModelUtil.createFakeHeaderViewModel;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_ID;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_NAME;
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_PRIORITY;
+import static com.justplay1.shoppist.ViewModelUtil.createFakeHeaderViewModel;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 

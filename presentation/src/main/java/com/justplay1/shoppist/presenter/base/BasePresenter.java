@@ -30,7 +30,7 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by Mkhytar Mkhoian.
  */
-abstract class BasePresenter<V extends BaseMvpView> implements Presenter<V> {
+public abstract class BasePresenter<V extends BaseMvpView> implements Presenter<V> {
 
     private WeakReference<V> view;
     private CompositeSubscription subscriptions = new CompositeSubscription();

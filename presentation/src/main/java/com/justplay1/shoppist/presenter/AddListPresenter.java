@@ -206,12 +206,12 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
         }
     }
 
-    protected final class SaveListSubscriber extends DefaultSubscriber<Boolean> {
+    private final class SaveListSubscriber extends DefaultSubscriber<Boolean> {
 
         private boolean isLongClick;
         private boolean isAddAction;
 
-        public SaveListSubscriber(boolean isLongClick, boolean isAddAction) {
+        SaveListSubscriber(boolean isLongClick, boolean isAddAction) {
             this.isLongClick = isLongClick;
             this.isAddAction = isAddAction;
         }
@@ -223,7 +223,6 @@ public class AddListPresenter extends BaseAddElementPresenter<AddListView> {
 
         @Override
         public void onError(Throwable e) {
-//            showError(new DefaultErrorBundle((Exception) e));
         }
 
         @Override
