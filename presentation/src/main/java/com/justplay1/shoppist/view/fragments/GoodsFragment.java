@@ -16,7 +16,6 @@
 
 package com.justplay1.shoppist.view.fragments;
 
-import android.content.Context;
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -205,11 +204,6 @@ public class GoodsFragment extends BaseExpandableListFragment<ProductViewModel, 
     @Override
     public void hideLoading() {
         emptyView.hideProgressBar();
-    }
-
-    @Override
-    public Context context() {
-        return getContext();
     }
 
     public void onExpandAllClick() {

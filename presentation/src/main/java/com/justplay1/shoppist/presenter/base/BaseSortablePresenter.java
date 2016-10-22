@@ -28,9 +28,8 @@ import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.SortType;
 import com.justplay1.shoppist.navigation.Router;
-import com.justplay1.shoppist.preferences.AppPreferences;
 import com.justplay1.shoppist.utils.ShoppistUtils;
-import com.justplay1.shoppist.view.ContextView;
+import com.justplay1.shoppist.view.StringView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,17 +41,11 @@ import java.util.Locale;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public abstract class BaseSortablePresenter<V extends ContextView, T extends BaseViewModel, R extends Router>
+public abstract class BaseSortablePresenter<V extends StringView, T extends BaseViewModel, R extends Router>
         extends BaseRouterPresenter<V, R> {
 
-    protected final AppPreferences preferences;
-
-    public BaseSortablePresenter(AppPreferences preferences) {
-        this.preferences = preferences;
-    }
-
     protected String getString(@StringRes int resId) {
-        return getView().context().getString(resId);
+        return getView().getString(resId);
     }
 
     protected List<Pair<HeaderViewModel, List<T>>> sort(final List<T> data, final @SortType int sortType) {

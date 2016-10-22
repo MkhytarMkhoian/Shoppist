@@ -78,6 +78,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     private final GetListItems getListItems;
     private final UpdateListItems updateListItems;
     private final DeleteListItems deleteListItems;
+    private final AppPreferences preferences;
 
     private Subscription dataBusSubscription;
     private ListViewModel parentList;
@@ -94,7 +95,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
                        GetListItems getListItems,
                        UpdateListItems updateListItems,
                        DeleteListItems deleteListItems) {
-        super(preferences);
+        this.preferences = preferences;
         this.categoryModelDataMapper = categoryModelDataMapper;
         this.unitsViewModelMapper = unitsViewModelMapper;
         this.currencyViewModelMapper = currencyViewModelMapper;
@@ -196,12 +197,6 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
 
     private Observable<CurrencyViewModel> loadDefaultCurrency() {
         return getCurrency.init(CurrencyViewModel.NO_CURRENCY_ID).get()
-                .flatMap(currencyModel -> {
-                    if (currencyModel == null) {
-                        return getCurrency.init(CurrencyViewModel.NO_CURRENCY_ID).get();
-                    }
-                    return Observable.fromCallable(() -> currencyModel);
-                })
                 .map(currencyViewModelMapper::transformToViewModel);
     }
 
@@ -333,7 +328,7 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
             return itemsToMove;
         }).filter(itemsToMove -> itemsToMove.size() > 0)
                 .map(listItemsViewModelMapper::transform)
-                .flatMap(listItemViewModels -> updateListItems.init(listItemViewModels).get())
+                .flatMap(models -> updateListItems.init(models).get())
                 .subscribe(new DefaultSubscriber<Boolean>()));
     }
 

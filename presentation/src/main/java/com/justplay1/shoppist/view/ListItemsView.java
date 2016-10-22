@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public interface ListItemsView extends LoadDataView, ContextView {
+public interface ListItemsView extends LoadDataView, StringView {
 
     void showData(List<Pair<HeaderViewModel, List<ListItemViewModel>>> data);
 

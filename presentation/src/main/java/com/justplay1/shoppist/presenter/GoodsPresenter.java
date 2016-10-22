@@ -66,6 +66,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     private final GetGoodsList getGoodsList;
     private final DeleteGoods deleteGoods;
     private final UpdateGoods updateGoods;
+    private final AppPreferences preferences;
 
     @Inject
     GoodsPresenter(AppPreferences preferences,
@@ -77,7 +78,7 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
                    GetUnit getUnit,
                    CategoryViewModelMapper categoryModelDataMapper,
                    UnitsViewModelMapper unitsViewModelMapper) {
-        super(preferences);
+        this.preferences = preferences;
         this.goodsViewModelMapper = dataMapper;
         this.getGoodsList = getGoodsList;
         this.deleteGoods = deleteGoods;

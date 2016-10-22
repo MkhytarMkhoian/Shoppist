@@ -16,14 +16,10 @@
 
 package com.justplay1.shoppist.view.fragments;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.justplay1.shoppist.R;
@@ -73,7 +69,7 @@ public class ListFragment extends BaseEDSListFragment<ListViewModel, ListAdapter
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (uiBusSubscription != null){
+        if (uiBusSubscription != null) {
             uiBusSubscription.unsubscribe();
         }
         presenter.detachView();
@@ -151,20 +147,10 @@ public class ListFragment extends BaseEDSListFragment<ListViewModel, ListAdapter
     }
 
     @Override
-    public Context context() {
-        return getContext();
-    }
-
-    @Override
     public void showData(List<Pair<HeaderViewModel, List<ListViewModel>>> data) {
         adapter.setData(data);
         adapter.notifyDataSetChanged();
         onExpandAllClick();
-    }
-
-    @Override
-    public void showMessageDialog() {
-        showMessageDialog(getContext());
     }
 
     @Override
@@ -218,24 +204,5 @@ public class ListFragment extends BaseEDSListFragment<ListViewModel, ListAdapter
 
     public boolean isCheckAllButtonEnable() {
         return !adapter.isAllItemsChecked();
-    }
-
-    private void showMessageDialog(final Context context) {
-        DialogInterface.OnClickListener listener = (dialog, which) -> {
-            switch (which) {
-                case Dialog.BUTTON_POSITIVE:
-                    preferences.setMessageDialog(false);
-                    dialog.dismiss();
-            }
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setCancelable(false);
-        builder.setTitle(getString(R.string.important));
-        builder.setMessage(getString(R.string.important_m));
-        builder.setPositiveButton(R.string.ok, listener);
-        dialog = builder.create();
-        dialog.show();
-        dialog.getButton(Dialog.BUTTON_POSITIVE).setTextColor(preferences.getColorPrimary());
     }
 }

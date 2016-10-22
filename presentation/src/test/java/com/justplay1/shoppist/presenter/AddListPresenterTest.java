@@ -41,7 +41,9 @@ import rx.Observable;
 
 import static com.justplay1.shoppist.ViewModelUtil.FAKE_NAME;
 import static com.justplay1.shoppist.ViewModelUtil.createFakeListViewModel;
+import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.anyCollectionOf;
+import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -74,9 +76,12 @@ public class AddListPresenterTest {
         presenter = new AddListPresenter(dataMapper, addList, updateLists);
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @Test
+    public void detachView_HappyCase() throws Exception {
+        presenter.attachView(mockView);
         presenter.detachView();
+
+        assertEquals(presenter.getView(), isNull());
     }
 
     @Test

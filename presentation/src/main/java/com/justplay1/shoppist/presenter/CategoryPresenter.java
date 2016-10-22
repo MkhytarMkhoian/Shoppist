@@ -69,7 +69,6 @@ public class CategoryPresenter extends BaseRouterPresenter<CategoryView, Categor
 
             @Override
             public void onStart() {
-                super.onStart();
                 showLoading();
             }
 

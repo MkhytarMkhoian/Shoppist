@@ -17,7 +17,6 @@
 package com.justplay1.shoppist.view.fragments;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -136,11 +135,6 @@ public class ListItemsFragment extends BaseEDSListFragment<ListItemViewModel, Li
         adapter.setData(data);
         adapter.notifyDataSetChanged();
         onExpandAll();
-    }
-
-    @Override
-    public Context context() {
-        return getContext();
     }
 
     @Override

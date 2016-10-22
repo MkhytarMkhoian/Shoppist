@@ -101,7 +101,6 @@ public class SelectUnitDialogFragment extends BaseSelectItemDialogFragment<UnitV
     public void showUnitDialog(final UnitViewModel editUnit) {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         AddUnitsDialogFragment dialog = AddUnitsDialogFragment.newInstance(editUnit);
-        dialog.setCompleteListener(isUpdate -> presenter.loadUnits());
         dialog.show(fm, AddUnitsDialogFragment.class.getName());
     }
 

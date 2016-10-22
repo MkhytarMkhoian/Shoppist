@@ -16,12 +16,9 @@
 
 package com.justplay1.shoppist.view;
 
-import android.content.Context;
+import android.support.annotation.StringRes;
 
-public interface ContextView extends BaseMvpView {
+public interface StringView extends BaseMvpView {
 
-    /**
-     * Get a {@link Context}.
-     */
-    Context context();
+    String getString(@StringRes int resId);
 }

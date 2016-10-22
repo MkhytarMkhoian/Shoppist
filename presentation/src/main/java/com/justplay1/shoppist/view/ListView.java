@@ -26,11 +26,9 @@ import java.util.List;
 /**
  * Created by Mkhytar Mkhoian.
  */
-public interface ListView extends LoadDataView, ContextView{
+public interface ListView extends LoadDataView, StringView {
 
     void showData(List<Pair<HeaderViewModel, List<ListViewModel>>> data);
-
-    void showMessageDialog();
 
     void share(String share);
 

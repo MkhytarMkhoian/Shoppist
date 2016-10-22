@@ -58,6 +58,7 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
     private final GetLists getLists;
     private final DeleteLists deleteLists;
     private final GetListItems getListItems;
+    private final AppPreferences preferences;
 
     private Subscription dataBusSubscription;
 
@@ -68,7 +69,7 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
                   GetListItems getListItems,
                   ListViewModelMapper listModelDataMapper,
                   ListItemsViewModelMapper listItemsViewModelMapper) {
-        super(preferences);
+        this.preferences = preferences;
         this.getLists = getLists;
         this.deleteLists = deleteLists;
         this.dataMapper = listModelDataMapper;
@@ -81,9 +82,6 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
     @Override
     public void attachView(ListView view) {
         super.attachView(view);
-        if (preferences.isNeedShowMessageDialog()) {
-            showRateDialog();
-        }
 
         DataEventBus.instanceOf().filteredObservable(ListsDataUpdatedEvent.class);
         dataBusSubscription = DataEventBus.instanceOf().observable().subscribe(new DefaultSubscriber<Object>() {
@@ -118,12 +116,6 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
                 .map(dataMapper::transformToViewModel)
                 .map(listViewModels -> sort(listViewModels, preferences.getSortForShoppingLists()))
                 .subscribe(cache);
-    }
-
-    private void showRateDialog() {
-        if (isViewAttached()) {
-            getView().showMessageDialog();
-        }
     }
 
     private void showLoading() {

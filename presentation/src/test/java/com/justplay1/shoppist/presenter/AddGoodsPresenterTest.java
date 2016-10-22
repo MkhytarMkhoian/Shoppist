@@ -34,7 +34,6 @@ import com.justplay1.shoppist.models.mappers.UnitsViewModelMapper;
 import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.AddGoodsView;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,8 +53,10 @@ import static com.justplay1.shoppist.ViewModelUtil.createFakeCategoryViewModel;
 import static com.justplay1.shoppist.ViewModelUtil.createFakeProductViewModel;
 import static com.justplay1.shoppist.ViewModelUtil.createFakeUnitModel;
 import static com.justplay1.shoppist.ViewModelUtil.createFakeUnitViewModel;
+import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.anyCollectionOf;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
@@ -98,7 +99,6 @@ public class AddGoodsPresenterTest {
 
         fakeCategoryViewModel = createFakeCategoryViewModel();
         fakeUnitViewModel = createFakeUnitViewModel();
-
         fakeProductViewModel = createFakeProductViewModel(fakeCategoryViewModel, fakeUnitViewModel);
 
         when(getCategoryList.get()).thenReturn(Observable.just(Collections.singletonList(fakeCategoryModel)));
@@ -116,9 +116,12 @@ public class AddGoodsPresenterTest {
         verify(getUnitsList).get();
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @Test
+    public void detachView_HappyCase() throws Exception {
+        presenter.attachView(mockView);
         presenter.detachView();
+
+        assertEquals(presenter.getView(), isNull());
     }
 
     @Test

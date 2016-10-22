@@ -97,7 +97,7 @@ public class SelectUnitPresenter extends BaseRouterPresenter<SelectUnitView, Rou
         showUnitDialog(editUnit);
     }
 
-    public void loadUnits() {
+    private void loadUnits() {
         getUnitsList.get()
                 .map(dataMapper::transformToViewModel)
                 .subscribe(cache);

@@ -44,7 +44,6 @@ import com.justplay1.shoppist.models.mappers.UnitsViewModelMapper;
 import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.AddListItemView;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,8 +70,10 @@ import static com.justplay1.shoppist.ViewModelUtil.createFakeProductModel;
 import static com.justplay1.shoppist.ViewModelUtil.createFakeProductViewModel;
 import static com.justplay1.shoppist.ViewModelUtil.createFakeUnitModel;
 import static com.justplay1.shoppist.ViewModelUtil.createFakeUnitViewModel;
+import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.anyCollectionOf;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -94,22 +95,10 @@ public class AddListItemPresenterTest {
 
     private AddListItems addListItems;
     private UpdateListItems updateListItems;
-    private GetCategoryList getCategoryList;
-    private GetCurrencyList getCurrencyList;
-    private GetGoodsList getGoodsList;
-    private GetUnitsList getUnitsList;
     private UpdateGoods updateGoods;
 
     private AddListItemPresenter presenter;
 
-    private CategoryModel fakeCategoryModel;
-    private UnitModel fakeUnitModel;
-    private CurrencyModel fakeCurrencyModel;
-    private ProductModel fakeProductModel;
-
-    private CategoryViewModel fakeCategoryViewModel;
-    private UnitViewModel fakeUnitViewModel;
-    private CurrencyViewModel fakeCurrencyViewModel;
     private ProductViewModel fakeProductViewModel;
     private ListItemViewModel fakeListItemViewModel;
 
@@ -120,12 +109,12 @@ public class AddListItemPresenterTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         updateListItems = PowerMockito.mock(UpdateListItems.class);
-        getCurrencyList = PowerMockito.mock(GetCurrencyList.class);
-        getGoodsList = PowerMockito.mock(GetGoodsList.class);
+        GetCurrencyList getCurrencyList = PowerMockito.mock(GetCurrencyList.class);
+        GetGoodsList getGoodsList = PowerMockito.mock(GetGoodsList.class);
         updateGoods = PowerMockito.mock(UpdateGoods.class);
         addListItems = PowerMockito.mock(AddListItems.class);
-        getUnitsList = PowerMockito.mock(GetUnitsList.class);
-        getCategoryList = PowerMockito.mock(GetCategoryList.class);
+        GetUnitsList getUnitsList = PowerMockito.mock(GetUnitsList.class);
+        GetCategoryList getCategoryList = PowerMockito.mock(GetCategoryList.class);
 
         CategoryViewModelMapper categoryMapper = new CategoryViewModelMapper();
         UnitsViewModelMapper unitsMapper = new UnitsViewModelMapper();
@@ -133,14 +122,14 @@ public class AddListItemPresenterTest {
         GoodsViewModelMapper goodsMapper = new GoodsViewModelMapper(unitsMapper, categoryMapper);
         ListItemsViewModelMapper listItemsMapper = new ListItemsViewModelMapper(categoryMapper, currencyMapper, unitsMapper);
 
-        fakeCategoryModel = createFakeCategoryModel();
-        fakeUnitModel = createFakeUnitModel();
-        fakeCurrencyModel = createFakeCurrencyModel();
-        fakeProductModel = createFakeProductModel(fakeUnitModel, fakeCategoryModel);
+        CategoryModel fakeCategoryModel = createFakeCategoryModel();
+        UnitModel fakeUnitModel = createFakeUnitModel();
+        CurrencyModel fakeCurrencyModel = createFakeCurrencyModel();
+        ProductModel fakeProductModel = createFakeProductModel(fakeUnitModel, fakeCategoryModel);
 
-        fakeCategoryViewModel = createFakeCategoryViewModel();
-        fakeUnitViewModel = createFakeUnitViewModel();
-        fakeCurrencyViewModel = createFakeCurrencyViewModel();
+        CategoryViewModel fakeCategoryViewModel = createFakeCategoryViewModel();
+        UnitViewModel fakeUnitViewModel = createFakeUnitViewModel();
+        CurrencyViewModel fakeCurrencyViewModel = createFakeCurrencyViewModel();
         fakeProductViewModel = createFakeProductViewModel(fakeCategoryViewModel, fakeUnitViewModel);
         fakeListItemViewModel = createFakeListItemViewModel(fakeCategoryViewModel, fakeUnitViewModel, fakeCurrencyViewModel);
 
@@ -168,9 +157,12 @@ public class AddListItemPresenterTest {
         verify(getGoodsList).get();
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @Test
+    public void detachView_HappyCase() throws Exception {
+        presenter.attachView(mockView);
         presenter.detachView();
+
+        assertEquals(presenter.getView(), isNull());
     }
 
     @Test

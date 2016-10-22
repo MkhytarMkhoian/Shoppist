@@ -158,9 +158,4 @@
     <string name="add_button_click_action">Add Button Click Action</string>
     <string name="quick_mode">Quick mode</string>
     <string name="standart_mode">Standart mode</string>
-    <string name="important_m">Unfortunately from this moment synchronization is no longer available, and some functionality too.
-        Now I do not have time to develop the project, because he did not bring any income, and time for him, I spent a lot.
-        Perhaps you should choose another application. Please do not put a bad score. Please accept my apologies and good luck!:)
-        \n\n P.S. Now app is open source and now it is an example of the implementation of a shopping list.</string>
-    <string name="important">Important !!!</string>
 </resources>

@@ -18,17 +18,15 @@ package com.justplay1.shoppist.view;
 
 import android.support.v4.util.Pair;
 
-import com.justplay1.shoppist.models.CategoryViewModel;
 import com.justplay1.shoppist.models.HeaderViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
-import com.justplay1.shoppist.models.UnitViewModel;
 
 import java.util.List;
 
 /**
  * Created by Mkhytar Mkhoian.
  */
-public interface GoodsView extends LoadDataView, ContextView {
+public interface GoodsView extends LoadDataView, StringView {
 
     void showData(List<Pair<HeaderViewModel, List<ProductViewModel>>> data);
 
