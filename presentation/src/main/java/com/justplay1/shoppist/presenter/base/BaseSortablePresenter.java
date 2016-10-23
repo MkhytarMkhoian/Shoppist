@@ -28,6 +28,7 @@ import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.models.ProductViewModel;
 import com.justplay1.shoppist.models.SortType;
 import com.justplay1.shoppist.navigation.Router;
+import com.justplay1.shoppist.utils.ModelUtils;
 import com.justplay1.shoppist.utils.ShoppistUtils;
 import com.justplay1.shoppist.view.StringView;
 
@@ -75,6 +76,7 @@ public abstract class BaseSortablePresenter<V extends StringView, T extends Base
         if (noDone.size() > 0) {
             HeaderViewModel header = new HeaderViewModel();
             if (clazz.isAssignableFrom(ListItemViewModel.class)) {
+                header.setId(ModelUtils.generateId());
                 header.setName(getString(com.justplay1.shoppist.R.string.goods).toUpperCase(Locale.getDefault()));
                 header.setShowExpandIndicator(false);
                 header.setItemType(ItemType.CART_HEADER);
@@ -86,6 +88,7 @@ public abstract class BaseSortablePresenter<V extends StringView, T extends Base
             HeaderViewModel header = null;
             if (clazz.isAssignableFrom(ListItemViewModel.class)) {
                 header = new HeaderViewModel();
+                header.setId(ModelUtils.generateId());
                 header.setName(getString(com.justplay1.shoppist.R.string.shopping_cart).toUpperCase(Locale.getDefault()));
             }
             if (header != null) {
@@ -153,6 +156,7 @@ public abstract class BaseSortablePresenter<V extends StringView, T extends Base
                 HeaderViewModel header = new HeaderViewModel();
                 SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
                 String headerTitle = format.format(itemTime.getTime());
+                header.setId(ModelUtils.generateId());
                 header.setName(headerTitle);
                 header.setItemType(ItemType.HEADER_ITEM);
 
@@ -181,6 +185,7 @@ public abstract class BaseSortablePresenter<V extends StringView, T extends Base
             if (!headerName.equals(firstCharacter)) {
                 headerName = firstCharacter;
                 HeaderViewModel header = new HeaderViewModel();
+                header.setId(ModelUtils.generateId());
                 header.setName(headerName);
                 header.setItemType(ItemType.HEADER_ITEM);
 
@@ -222,6 +227,7 @@ public abstract class BaseSortablePresenter<V extends StringView, T extends Base
             if (priority != p) {
                 priority = p;
                 HeaderViewModel header = new HeaderViewModel();
+                header.setId(ModelUtils.generateId());
                 switch (priority) {
                     case 0:
                         header.setName(noPriority);
@@ -265,6 +271,7 @@ public abstract class BaseSortablePresenter<V extends StringView, T extends Base
             if (!headerName.equals(name)) {
                 headerName = name;
                 HeaderViewModel header = new HeaderViewModel();
+                header.setId(ModelUtils.generateId());
                 header.setName(headerName);
                 header.setItemType(ItemType.HEADER_ITEM);
 
