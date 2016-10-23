@@ -18,6 +18,7 @@ package com.justplay1.shoppist.models;
 
 import org.junit.Test;
 
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_CURRENCY_NAME;
 import static com.justplay1.shoppist.ViewModelUtil.FAKE_ID;
 import static com.justplay1.shoppist.ViewModelUtil.FAKE_NAME;
 import static com.justplay1.shoppist.ViewModelUtil.createFakeCurrencyViewModel;
@@ -36,7 +37,7 @@ public class CurrencyViewModelTest {
         CurrencyViewModel viewModel = createFakeCurrencyViewModel();
 
         assertThat(viewModel.getId(), is(FAKE_ID));
-        assertThat(viewModel.getName(), is(FAKE_NAME));
+        assertThat(viewModel.getName(), is(FAKE_CURRENCY_NAME));
     }
 
     @Test

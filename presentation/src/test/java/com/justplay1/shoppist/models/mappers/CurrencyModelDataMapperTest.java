@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.justplay1.shoppist.ViewModelUtil.FAKE_CURRENCY_NAME;
 import static com.justplay1.shoppist.ViewModelUtil.FAKE_ID;
 import static com.justplay1.shoppist.ViewModelUtil.FAKE_NAME;
 import static com.justplay1.shoppist.ViewModelUtil.createFakeCurrencyModel;
@@ -55,7 +56,7 @@ public class CurrencyModelDataMapperTest {
 
         assertThat(model, is(instanceOf(CurrencyModel.class)));
         assertThat(model.getId(), is(FAKE_ID));
-        assertThat(model.getName(), is(FAKE_NAME));
+        assertThat(model.getName(), is(FAKE_CURRENCY_NAME));
     }
 
     @Test

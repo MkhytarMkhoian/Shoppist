@@ -143,18 +143,24 @@ public class ListPresenter extends BaseSortablePresenter<ListView, ListViewModel
     }
 
     public void sortByName(final List<ListViewModel> data) {
-        preferences.setSortForShoppingLists(SortType.SORT_BY_NAME);
-        showData(sort(data, SortType.SORT_BY_NAME));
+        if (preferences.getSortForShoppingLists() != SortType.SORT_BY_NAME) {
+            preferences.setSortForShoppingLists(SortType.SORT_BY_NAME);
+            showData(sort(data, SortType.SORT_BY_NAME));
+        }
     }
 
     public void sortByPriority(final List<ListViewModel> data) {
-        preferences.setSortForShoppingLists(SortType.SORT_BY_PRIORITY);
-        showData(sort(data, SortType.SORT_BY_PRIORITY));
+        if (preferences.getSortForShoppingLists() != SortType.SORT_BY_PRIORITY) {
+            preferences.setSortForShoppingLists(SortType.SORT_BY_PRIORITY);
+            showData(sort(data, SortType.SORT_BY_PRIORITY));
+        }
     }
 
     public void sortByTimeCreated(final List<ListViewModel> data) {
-        preferences.setSortForShoppingLists(SortType.SORT_BY_TIME_CREATED);
-        showData(sort(data, SortType.SORT_BY_TIME_CREATED));
+        if (preferences.getSortForShoppingLists() != SortType.SORT_BY_TIME_CREATED) {
+            preferences.setSortForShoppingLists(SortType.SORT_BY_TIME_CREATED);
+            showData(sort(data, SortType.SORT_BY_TIME_CREATED));
+        }
     }
 
     public void onAddButtonClick() {

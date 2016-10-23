@@ -59,6 +59,7 @@ import static com.justplay1.shoppist.ViewModelUtil.createFakeUnitModel;
 import static com.justplay1.shoppist.ViewModelUtil.createFakeUnitViewModel;
 import static org.mockito.Matchers.anyCollectionOf;
 import static org.mockito.Matchers.anyList;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -174,17 +175,36 @@ public class GoodsPresenterTest {
     @Test
     public void onSortByNameClick_HappyCase() throws Exception {
         List<ProductViewModel> data = Collections.singletonList(fakeProductViewModel);
+        when(mockPreferences.getSortForGoods()).thenReturn(SortType.SORT_BY_CATEGORIES);
 
         presenter.attachView(mockView);
         presenter.onSortByNameClick(data);
 
+        verify(mockPreferences, times(2)).getSortForGoods();
         verify(mockPreferences).setSortForGoods(SortType.SORT_BY_NAME);
         verify(mockView).showData(anyList());
     }
 
     @Test
+    public void onSortByNameClick_ClickTwoTime_HappyCase() throws Exception {
+        List<ProductViewModel> data = Collections.singletonList(fakeProductViewModel);
+        when(mockPreferences.getSortForGoods()).thenReturn(SortType.SORT_BY_CATEGORIES);
+
+        presenter.attachView(mockView);
+        presenter.onSortByNameClick(data);
+
+        when(mockPreferences.getSortForGoods()).thenReturn(SortType.SORT_BY_NAME);
+        presenter.onSortByNameClick(data);
+
+        verify(mockPreferences, times(3)).getSortForGoods();
+        verify(mockPreferences, times(1)).setSortForGoods(SortType.SORT_BY_NAME);
+        verify(mockView, times(1)).showData(anyList());
+    }
+
+    @Test
     public void onSortByTimeCreatedClick_HappyCase() throws Exception {
         List<ProductViewModel> data = Collections.singletonList(fakeProductViewModel);
+        when(mockPreferences.getSortForGoods()).thenReturn(SortType.SORT_BY_CATEGORIES);
 
         presenter.attachView(mockView);
         presenter.onSortByTimeCreatedClick(data);
@@ -194,14 +214,47 @@ public class GoodsPresenterTest {
     }
 
     @Test
+    public void onSortByTimeCreatedClick_ClickTwoTime_HappyCase() throws Exception {
+        List<ProductViewModel> data = Collections.singletonList(fakeProductViewModel);
+        when(mockPreferences.getSortForGoods()).thenReturn(SortType.SORT_BY_CATEGORIES);
+
+        presenter.attachView(mockView);
+        presenter.onSortByTimeCreatedClick(data);
+
+        when(mockPreferences.getSortForGoods()).thenReturn(SortType.SORT_BY_TIME_CREATED);
+        presenter.onSortByTimeCreatedClick(data);
+
+        verify(mockPreferences, times(3)).getSortForGoods();
+        verify(mockPreferences, times(1)).setSortForGoods(SortType.SORT_BY_TIME_CREATED);
+        verify(mockView, times(1)).showData(anyList());
+    }
+
+    @Test
     public void onSortByCategoryClick_HappyCase() throws Exception {
         List<ProductViewModel> data = Collections.singletonList(fakeProductViewModel);
+        when(mockPreferences.getSortForGoods()).thenReturn(SortType.SORT_BY_NAME);
 
         presenter.attachView(mockView);
         presenter.onSortByCategoryClick(data);
 
         verify(mockPreferences).setSortForGoods(SortType.SORT_BY_CATEGORIES);
         verify(mockView).showData(anyList());
+    }
+
+    @Test
+    public void onSortByCategoryClick_ClickTwoTime_HappyCase() throws Exception {
+        List<ProductViewModel> data = Collections.singletonList(fakeProductViewModel);
+        when(mockPreferences.getSortForGoods()).thenReturn(SortType.SORT_BY_NAME);
+
+        presenter.attachView(mockView);
+        presenter.onSortByCategoryClick(data);
+
+        when(mockPreferences.getSortForGoods()).thenReturn(SortType.SORT_BY_CATEGORIES);
+        presenter.onSortByCategoryClick(data);
+
+        verify(mockPreferences, times(3)).getSortForGoods();
+        verify(mockPreferences, times(1)).setSortForGoods(SortType.SORT_BY_CATEGORIES);
+        verify(mockView, times(1)).showData(anyList());
     }
 
     @Test

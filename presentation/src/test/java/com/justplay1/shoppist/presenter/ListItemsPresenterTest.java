@@ -70,6 +70,7 @@ import static org.mockito.Matchers.anyCollectionOf;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -315,12 +316,29 @@ public class ListItemsPresenterTest {
     @Test
     public void onSortByNameClick_HappyCase() throws Exception {
         List<ListItemViewModel> data = Collections.singletonList(fakeListItemViewModel);
+        when(mockPreferences.getSortForShoppingListItems()).thenReturn(SortType.SORT_BY_CATEGORIES);
 
         presenter.attachView(mockView);
         presenter.onSortByNameClick(data);
 
         verify(mockPreferences).setSortForShoppingListItems(SortType.SORT_BY_NAME);
         verify(mockView).showData(anyList());
+    }
+
+    @Test
+    public void onSortByNameClick_ClickTwoTime_HappyCase() throws Exception {
+        List<ListItemViewModel> data = Collections.singletonList(fakeListItemViewModel);
+        when(mockPreferences.getSortForShoppingListItems()).thenReturn(SortType.SORT_BY_CATEGORIES);
+
+        presenter.attachView(mockView);
+        presenter.onSortByNameClick(data);
+
+        when(mockPreferences.getSortForShoppingListItems()).thenReturn(SortType.SORT_BY_NAME);
+        presenter.onSortByNameClick(data);
+
+        verify(mockPreferences, times(2)).getSortForShoppingListItems();
+        verify(mockPreferences, times(1)).setSortForShoppingListItems(SortType.SORT_BY_NAME);
+        verify(mockView, times(1)).showData(anyList());
     }
 
     @Test
@@ -335,14 +353,47 @@ public class ListItemsPresenterTest {
     }
 
     @Test
+    public void onSortByPriorityClick_ClickTwoTime_HappyCase() throws Exception {
+        List<ListItemViewModel> data = Collections.singletonList(fakeListItemViewModel);
+        when(mockPreferences.getSortForShoppingListItems()).thenReturn(SortType.SORT_BY_CATEGORIES);
+
+        presenter.attachView(mockView);
+        presenter.onSortByPriorityClick(data);
+
+        when(mockPreferences.getSortForShoppingListItems()).thenReturn(SortType.SORT_BY_PRIORITY);
+        presenter.onSortByPriorityClick(data);
+
+        verify(mockPreferences, times(2)).getSortForShoppingListItems();
+        verify(mockPreferences, times(1)).setSortForShoppingListItems(SortType.SORT_BY_PRIORITY);
+        verify(mockView, times(1)).showData(anyList());
+    }
+
+    @Test
     public void onSortByCategoryClick_HappyCase() throws Exception {
         List<ListItemViewModel> data = Collections.singletonList(fakeListItemViewModel);
+        when(mockPreferences.getSortForShoppingListItems()).thenReturn(SortType.SORT_BY_NAME);
 
         presenter.attachView(mockView);
         presenter.onSortByCategoryClick(data);
 
         verify(mockPreferences).setSortForShoppingListItems(SortType.SORT_BY_CATEGORIES);
         verify(mockView).showData(anyList());
+    }
+
+    @Test
+    public void onSortByCategoryClick_ClickTwoTime_HappyCase() throws Exception {
+        List<ListItemViewModel> data = Collections.singletonList(fakeListItemViewModel);
+        when(mockPreferences.getSortForShoppingListItems()).thenReturn(SortType.SORT_BY_NAME);
+
+        presenter.attachView(mockView);
+        presenter.onSortByCategoryClick(data);
+
+        when(mockPreferences.getSortForShoppingListItems()).thenReturn(SortType.SORT_BY_CATEGORIES);
+        presenter.onSortByCategoryClick(data);
+
+        verify(mockPreferences, times(2)).getSortForShoppingListItems();
+        verify(mockPreferences, times(1)).setSortForShoppingListItems(SortType.SORT_BY_CATEGORIES);
+        verify(mockView, times(1)).showData(anyList());
     }
 
     @Test
@@ -354,6 +405,22 @@ public class ListItemsPresenterTest {
 
         verify(mockPreferences).setSortForShoppingListItems(SortType.SORT_BY_TIME_CREATED);
         verify(mockView).showData(anyList());
+    }
+
+    @Test
+    public void onSortByTimeCreatedClick_ClickTwoTime_HappyCase() throws Exception {
+        List<ListItemViewModel> data = Collections.singletonList(fakeListItemViewModel);
+        when(mockPreferences.getSortForShoppingListItems()).thenReturn(SortType.SORT_BY_CATEGORIES);
+
+        presenter.attachView(mockView);
+        presenter.onSortByTimeCreatedClick(data);
+
+        when(mockPreferences.getSortForShoppingListItems()).thenReturn(SortType.SORT_BY_TIME_CREATED);
+        presenter.onSortByTimeCreatedClick(data);
+
+        verify(mockPreferences, times(2)).getSortForShoppingListItems();
+        verify(mockPreferences, times(1)).setSortForShoppingListItems(SortType.SORT_BY_TIME_CREATED);
+        verify(mockView, times(1)).showData(anyList());
     }
 
     private ListViewModel callOnCreateInPresenter() {

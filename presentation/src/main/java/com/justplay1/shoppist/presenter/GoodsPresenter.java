@@ -133,18 +133,24 @@ public class GoodsPresenter extends BaseSortablePresenter<GoodsView, ProductView
     }
 
     public void onSortByNameClick(final List<ProductViewModel> data) {
-        preferences.setSortForGoods(SortType.SORT_BY_NAME);
-        showData(sort(data, SortType.SORT_BY_NAME));
+        if (preferences.getSortForGoods() != SortType.SORT_BY_NAME){
+            preferences.setSortForGoods(SortType.SORT_BY_NAME);
+            showData(sort(data, SortType.SORT_BY_NAME));
+        }
     }
 
     public void onSortByTimeCreatedClick(final List<ProductViewModel> data) {
-        preferences.setSortForGoods(SortType.SORT_BY_TIME_CREATED);
-        showData(sort(data, SortType.SORT_BY_TIME_CREATED));
+        if (preferences.getSortForGoods() != SortType.SORT_BY_TIME_CREATED){
+            preferences.setSortForGoods(SortType.SORT_BY_TIME_CREATED);
+            showData(sort(data, SortType.SORT_BY_TIME_CREATED));
+        }
     }
 
     public void onSortByCategoryClick(final List<ProductViewModel> data) {
-        preferences.setSortForGoods(SortType.SORT_BY_CATEGORIES);
-        showData(sort(data, SortType.SORT_BY_CATEGORIES));
+        if (preferences.getSortForGoods() != SortType.SORT_BY_CATEGORIES){
+            preferences.setSortForGoods(SortType.SORT_BY_CATEGORIES);
+            showData(sort(data, SortType.SORT_BY_CATEGORIES));
+        }
     }
 
     public void onSearchClick() {

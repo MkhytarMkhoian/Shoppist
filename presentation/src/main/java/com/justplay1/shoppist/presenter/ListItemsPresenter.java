@@ -290,23 +290,31 @@ public class ListItemsPresenter extends BaseSortablePresenter<ListItemsView, Lis
     }
 
     public void onSortByNameClick(List<ListItemViewModel> data) {
-        preferences.setSortForShoppingListItems(SortType.SORT_BY_NAME);
-        showData(sort(data, SortType.SORT_BY_NAME));
+        if (preferences.getSortForShoppingListItems() != SortType.SORT_BY_NAME) {
+            preferences.setSortForShoppingListItems(SortType.SORT_BY_NAME);
+            showData(sort(data, SortType.SORT_BY_NAME));
+        }
     }
 
     public void onSortByPriorityClick(List<ListItemViewModel> data) {
-        preferences.setSortForShoppingListItems(SortType.SORT_BY_PRIORITY);
-        showData(sort(data, SortType.SORT_BY_PRIORITY));
+        if (preferences.getSortForShoppingListItems() != SortType.SORT_BY_PRIORITY) {
+            preferences.setSortForShoppingListItems(SortType.SORT_BY_PRIORITY);
+            showData(sort(data, SortType.SORT_BY_PRIORITY));
+        }
     }
 
     public void onSortByCategoryClick(List<ListItemViewModel> data) {
-        preferences.setSortForShoppingListItems(SortType.SORT_BY_CATEGORIES);
-        showData(sort(data, SortType.SORT_BY_CATEGORIES));
+        if (preferences.getSortForShoppingListItems() != SortType.SORT_BY_CATEGORIES) {
+            preferences.setSortForShoppingListItems(SortType.SORT_BY_CATEGORIES);
+            showData(sort(data, SortType.SORT_BY_CATEGORIES));
+        }
     }
 
     public void onSortByTimeCreatedClick(List<ListItemViewModel> data) {
-        preferences.setSortForShoppingListItems(SortType.SORT_BY_TIME_CREATED);
-        showData(sort(data, SortType.SORT_BY_TIME_CREATED));
+        if (preferences.getSortForShoppingListItems() != SortType.SORT_BY_TIME_CREATED) {
+            preferences.setSortForShoppingListItems(SortType.SORT_BY_TIME_CREATED);
+            showData(sort(data, SortType.SORT_BY_TIME_CREATED));
+        }
     }
 
     private void strikeOut(List<ListItemViewModel> items, boolean toShoppingCart) {
