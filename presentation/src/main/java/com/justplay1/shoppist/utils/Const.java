@@ -27,7 +27,7 @@ public interface Const {
     String SETTING_ID = "setting_id";
     String SELECTED_COLOR = "selectedColor";
     String NAME = "name";
-
+    String IS_COPY = "isCopy";
 
     int CONTEXT_QUICK_ADD_GOODS_TO_LIST = 222;
     int CONTEXT_QUICK_SEARCH_IN_GOODS_LIST = 333;

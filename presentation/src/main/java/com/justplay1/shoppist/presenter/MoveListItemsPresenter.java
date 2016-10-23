@@ -28,6 +28,7 @@ import com.justplay1.shoppist.models.mappers.ListItemsViewModelMapper;
 import com.justplay1.shoppist.models.mappers.ListViewModelMapper;
 import com.justplay1.shoppist.navigation.Router;
 import com.justplay1.shoppist.presenter.base.BaseRouterPresenter;
+import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.MoveListItemsView;
 
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class MoveListItemsPresenter extends BaseRouterPresenter<MoveListItemsVie
     public void onCreate(Bundle arguments, Bundle savedInstanceState) {
         currentList = arguments.getParcelable(ListViewModel.class.getName());
         listItems = arguments.getParcelableArrayList(ListItemViewModel.class.getName());
-        isCopy = arguments.getBoolean("isCopy");
+        isCopy = arguments.getBoolean(Const.IS_COPY);
     }
 
     @Override

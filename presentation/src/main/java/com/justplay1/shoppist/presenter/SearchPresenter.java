@@ -104,7 +104,7 @@ public class SearchPresenter extends BaseRouterPresenter<SearchView, Router> {
         }));
     }
 
-    public void loadData() {
+    private void loadData() {
         Observable.zip(loadDefaultCategory(), loadGoods(), (categoryViewModel, goods) -> {
             Map<String, ProductViewModel> data = new HashMap<>(goods.size());
             for (ProductViewModel product : goods) {

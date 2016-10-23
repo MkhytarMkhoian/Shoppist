@@ -30,6 +30,7 @@ import com.justplay1.shoppist.di.components.MoveListItemsComponent;
 import com.justplay1.shoppist.models.ListItemViewModel;
 import com.justplay1.shoppist.models.ListViewModel;
 import com.justplay1.shoppist.presenter.MoveListItemsPresenter;
+import com.justplay1.shoppist.utils.Const;
 import com.justplay1.shoppist.view.MoveListItemsView;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class MoveListItemsDialogFragment extends BaseDialogFragment implements M
         Bundle args = new Bundle();
         args.putParcelableArrayList(ListItemViewModel.class.getName(), new ArrayList<>(items));
         args.putParcelable(ListViewModel.class.getName(), current);
-        args.putBoolean("isCopy", isCopy);
+        args.putBoolean(Const.IS_COPY, isCopy);
         MoveListItemsDialogFragment fragment = new MoveListItemsDialogFragment();
         fragment.setArguments(args);
         return fragment;

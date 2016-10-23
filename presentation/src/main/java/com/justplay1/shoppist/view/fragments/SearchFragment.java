@@ -296,7 +296,6 @@ public class SearchFragment extends BaseFragment
 
     private void showEditGoodsDialog(AddGoodsDialogFragment dialog) {
         FragmentManager fm = getFragmentManager();
-        dialog.setCompleteListener(isUpdate -> presenter.loadData());
         dialog.show(fm, AddUnitsDialogFragment.class.getName());
     }
 
