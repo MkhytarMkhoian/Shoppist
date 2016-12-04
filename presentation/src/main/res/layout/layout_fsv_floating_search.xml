@@ -36,7 +36,7 @@
 
         <view
             android:id="@+id/fsv.suggestions.list"
-            class="com.justplay1.shoppist.view.component.search.FloatingSearchView$RecyclerView"
+            class="com.justplay1.shoppist.features.search.widget.FloatingSearchView$RecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never" />

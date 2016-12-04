@@ -20,7 +20,7 @@ import com.justplay1.shoppist.di.modules.CategoryModule;
 import com.justplay1.shoppist.di.modules.GoodsModule;
 import com.justplay1.shoppist.di.modules.ListItemsModule;
 import com.justplay1.shoppist.di.scope.NonConfigurationScope;
-import com.justplay1.shoppist.view.fragments.SearchFragment;
+import com.justplay1.shoppist.features.search.SearchFragment;
 
 import dagger.Component;
 

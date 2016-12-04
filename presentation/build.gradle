@@ -28,6 +28,16 @@ android {
         testApplicationId globalConfiguration.getAt("testApplicationId")
     }
 
+    sourceSets {
+        test {
+            java.srcDirs += "$projectDir/src/testShared"
+        }
+
+        androidTest {
+            java.srcDirs += "$projectDir/src/testShared"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -38,6 +48,8 @@ android {
             versionNameSuffix '-DEBUG'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            testCoverageEnabled = true
         }
     }
     compileOptions {
@@ -135,7 +147,6 @@ dependencies {
     androidTestCompile presentationTestDependencies.mockito
     androidTestCompile presentationTestDependencies.dexmaker
     androidTestCompile presentationTestDependencies.dexmakerMockito
-//    androidTestCompile presentationTestDependencies.testingSupportLib
 
     androidTestCompile(presentationTestDependencies.espressoCore, {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -154,8 +165,9 @@ dependencies {
         exclude module: 'support-v4'
     }
     androidTestCompile(presentationTestDependencies.espressoContrib) {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-annotations'
         exclude module: 'recyclerview-v7'
-        exclude module: 'support-annotations'
-        exclude module: 'support-v4'
     }
 }

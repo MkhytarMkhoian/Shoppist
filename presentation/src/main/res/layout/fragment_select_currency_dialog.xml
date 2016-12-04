@@ -19,7 +19,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.justplay1.shoppist.view.component.spinner.CurrencySpinnerView
+    <com.justplay1.shoppist.shared.widget.spinner.CurrencySpinnerView
         android:id="@+id/custom_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

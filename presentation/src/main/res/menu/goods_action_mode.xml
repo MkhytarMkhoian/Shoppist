@@ -24,7 +24,7 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_menu"
+        android:id="@+id/action_mode_menu"
         android:title="@null"
         android:icon="@drawable/ic_menu_white"
         app:showAsAction="always">

@@ -36,7 +36,7 @@
             android:layout_gravity="center"
             android:gravity="center" />
 
-        <com.justplay1.shoppist.view.component.themedialog.ColorPickerPalette
+        <com.justplay1.shoppist.features.settings.widget.themedialog.ColorPickerPalette
             android:id="@+id/color_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

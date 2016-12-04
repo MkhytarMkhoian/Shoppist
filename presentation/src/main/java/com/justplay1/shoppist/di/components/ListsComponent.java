@@ -18,8 +18,8 @@ package com.justplay1.shoppist.di.components;
 
 import com.justplay1.shoppist.di.modules.ListsModule;
 import com.justplay1.shoppist.di.scope.NonConfigurationScope;
-import com.justplay1.shoppist.view.fragments.AddListFragment;
-import com.justplay1.shoppist.view.fragments.ListFragment;
+import com.justplay1.shoppist.features.lists.add.AddListFragment;
+import com.justplay1.shoppist.features.lists.ListFragment;
 
 import dagger.Component;
 

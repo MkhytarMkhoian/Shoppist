@@ -18,13 +18,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.justplay1.shoppist.view.component.recyclerview.ShoppistRecyclerView
+    <com.justplay1.shoppist.shared.widget.recyclerview.ShoppistRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
 
-    <com.justplay1.shoppist.view.component.EmptyView
+    <com.justplay1.shoppist.shared.widget.EmptyView
         android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -19,7 +19,7 @@ package com.justplay1.shoppist.di.components;
 import com.justplay1.shoppist.di.modules.ListItemsModule;
 import com.justplay1.shoppist.di.modules.ListsModule;
 import com.justplay1.shoppist.di.scope.NonConfigurationScope;
-import com.justplay1.shoppist.view.fragments.dialog.MoveListItemsDialogFragment;
+import com.justplay1.shoppist.features.lists.items.move.MoveListItemsDialogFragment;
 
 import dagger.Component;
 

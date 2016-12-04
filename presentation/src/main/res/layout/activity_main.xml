@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/menu_fragment"
-        android:name="com.justplay1.shoppist.view.fragments.MenuFragment"
+        android:name="com.justplay1.shoppist.features.menu.MenuFragment"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start" />

@@ -20,7 +20,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.justplay1.shoppist.view.component.spinner.CategorySpinnerView
+    <com.justplay1.shoppist.shared.widget.spinner.CategorySpinnerView
         android:id="@+id/custom_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

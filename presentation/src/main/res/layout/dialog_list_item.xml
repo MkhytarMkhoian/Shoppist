@@ -15,7 +15,7 @@
   ~   limitations under the License.
   -->
 
-<com.justplay1.shoppist.view.component.ColorCheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.justplay1.shoppist.shared.widget.ColorCheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeightSmall"

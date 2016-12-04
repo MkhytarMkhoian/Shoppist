@@ -18,9 +18,9 @@ package com.justplay1.shoppist.di.components;
 
 import com.justplay1.shoppist.di.modules.CategoryModule;
 import com.justplay1.shoppist.di.scope.NonConfigurationScope;
-import com.justplay1.shoppist.view.fragments.AddCategoryFragment;
-import com.justplay1.shoppist.view.fragments.CategoryFragment;
-import com.justplay1.shoppist.view.fragments.dialog.SelectCategoryDialogFragment;
+import com.justplay1.shoppist.features.category.add.AddCategoryFragment;
+import com.justplay1.shoppist.features.category.CategoryFragment;
+import com.justplay1.shoppist.features.category.select.SelectCategoryDialogFragment;
 
 import dagger.Component;
 

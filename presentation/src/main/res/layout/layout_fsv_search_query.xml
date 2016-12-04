@@ -32,7 +32,7 @@
 
     <view
         android:id="@+id/fsv.search.text"
-        class="com.justplay1.shoppist.view.component.search.FloatingSearchView$LogoEditText"
+        class="com.justplay1.shoppist.features.search.widget.FloatingSearchView$LogoEditText"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

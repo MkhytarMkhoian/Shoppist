@@ -30,7 +30,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/text_color_black" />
 
-    <com.justplay1.shoppist.view.component.ProgressBarCircularIndeterminate
+    <com.justplay1.shoppist.shared.widget.ProgressBarCircularIndeterminate
         android:id="@+id/progress_bar"
         android:layout_width="60dp"
         android:layout_height="60dp"

@@ -25,7 +25,7 @@
         android:theme="@style/ShoppingList.AppTheme">
 
         <activity
-            android:name=".view.activities.MainActivity"
+            android:name=".features.lists.MainActivity"
             android:theme="@style/TranslucentStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -34,39 +34,39 @@
         </activity>
 
         <activity
-            android:name=".view.activities.SearchActivity"
+            android:name=".features.search.SearchActivity"
             android:label="@string/search"
             android:theme="@style/ShoppingList.noAnimTheme"/>
 
         <activity
-            android:name=".view.activities.CurrencyActivity"
+            android:name=".features.currency.CurrencyActivity"
             android:label="@string/currency">
         </activity>
 
         <activity
-            android:name=".view.activities.UnitsActivity"
+            android:name=".features.units.UnitsActivity"
             android:label="@string/units">
         </activity>
 
         <activity
-            android:name=".view.activities.SettingsActivity"
-            android:label="@string/title_activity_settings"/>
+            android:name=".features.settings.SettingsActivity"
+            android:label="@string/settings"/>
 
         <activity
-            android:name=".view.activities.CategoriesActivity"
+            android:name=".features.category.CategoriesActivity"
             android:label="@string/title_activity_category">
         </activity>
 
         <activity
-            android:name=".view.activities.ListItemActivity"
+            android:name=".features.lists.items.ListItemActivity"
             android:launchMode="singleTop"/>
 
         <activity
-            android:name=".view.activities.AddElementActivity"
+            android:name=".shared.base.activities.AddElementActivity"
             android:label="@string/title_activity_add_list"/>
 
         <activity
-            android:name=".view.activities.GoodsActivity"
+            android:name=".features.goods.GoodsActivity"
             android:label="@string/goods">
         </activity>
     </application>

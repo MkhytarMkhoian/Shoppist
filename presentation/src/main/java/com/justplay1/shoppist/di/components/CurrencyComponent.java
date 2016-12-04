@@ -18,9 +18,9 @@ package com.justplay1.shoppist.di.components;
 
 import com.justplay1.shoppist.di.modules.CurrencyModule;
 import com.justplay1.shoppist.di.scope.NonConfigurationScope;
-import com.justplay1.shoppist.view.fragments.CurrencyFragment;
-import com.justplay1.shoppist.view.fragments.dialog.AddCurrencyDialogFragment;
-import com.justplay1.shoppist.view.fragments.settings.ListsSettingFragment;
+import com.justplay1.shoppist.features.currency.CurrencyFragment;
+import com.justplay1.shoppist.features.currency.add.AddCurrencyDialogFragment;
+import com.justplay1.shoppist.features.settings.ListsSettingFragment;
 
 import dagger.Component;
 

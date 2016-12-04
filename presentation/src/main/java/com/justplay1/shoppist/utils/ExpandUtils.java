@@ -17,7 +17,7 @@
 package com.justplay1.shoppist.utils;
 
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
-import com.justplay1.shoppist.view.component.recyclerview.holders.BaseHeaderHolder;
+import com.justplay1.shoppist.shared.widget.recyclerview.holders.BaseHeaderHolder;
 
 /**
  * Created by Mkhytar Mkhoian.

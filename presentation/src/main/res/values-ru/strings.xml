@@ -16,7 +16,7 @@
 
 <resources>
 
-    <string name="title_activity_settings">Настройки</string>
+    <string name="settings">Настройки</string>
     <string name="close">Закрить</string>
     <string name="open">Открить</string>
     <string name="title_activity_shopping_lists">Списки покупок</string>

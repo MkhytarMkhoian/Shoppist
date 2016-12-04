@@ -62,7 +62,7 @@
                 android:title="@string/collapse_all" />
             <item
                 android:id="@+id/action_settings"
-                android:title="@string/title_activity_settings" />
+                android:title="@string/settings" />
         </menu>
     </item>
 </menu>

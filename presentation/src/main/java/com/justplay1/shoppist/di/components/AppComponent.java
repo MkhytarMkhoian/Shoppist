@@ -34,11 +34,11 @@ import com.justplay1.shoppist.repository.GoodsRepository;
 import com.justplay1.shoppist.repository.ListItemsRepository;
 import com.justplay1.shoppist.repository.ListRepository;
 import com.justplay1.shoppist.repository.UnitsRepository;
-import com.justplay1.shoppist.view.activities.BaseActivity;
-import com.justplay1.shoppist.view.fragments.BaseFragment;
-import com.justplay1.shoppist.view.fragments.dialog.BaseDialogFragment;
-import com.justplay1.shoppist.view.fragments.settings.BaseSettingFragment;
+import com.justplay1.shoppist.features.settings.BaseSettingFragment;
 
+import com.justplay1.shoppist.shared.base.activities.BaseActivity;
+import com.justplay1.shoppist.shared.base.fragments.BaseFragment;
+import com.justplay1.shoppist.shared.base.fragments.dialog.BaseDialogFragment;
 import javax.inject.Singleton;
 
 import dagger.Component;

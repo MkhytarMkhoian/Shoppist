@@ -85,15 +85,15 @@ ext {
             powermockApiMockito         : "org.powermock:powermock-api-mockito:${powermockVersion}",
             powermockClassloadingXstream: "org.powermock:powermock-classloading-xstream:${powermockVersion}",
 
-            dexmaker         : "com.google.dexmaker:dexmaker:${dexmakerVersion}",
-            dexmakerMockito  : "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}",
-            testingSupportLib: "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
+            dexmaker                    : "com.google.dexmaker:dexmaker:${dexmakerVersion}",
+            dexmakerMockito             : "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}",
+            testingSupportLib           : "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
 
-            espressoCore     : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
-            espressoIntents  : "com.android.support.test.espresso:espresso-intents:${espressoVersion}",
-            espressoContrib  : "com.android.support.test.espresso:espresso-contrib:${espressoContribVersion}",
-            supportTestRunner   : "com.android.support.test:runner:${supportTestVersion}",
-            supportTestRules    : "com.android.support.test:rules:${supportTestVersion}",
+            espressoCore                : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+            espressoIntents             : "com.android.support.test.espresso:espresso-intents:${espressoVersion}",
+            espressoContrib             : "com.android.support.test.espresso:espresso-contrib:${espressoContribVersion}",
+            supportTestRunner           : "com.android.support.test:runner:${supportTestVersion}",
+            supportTestRules            : "com.android.support.test:rules:${supportTestVersion}",
 
     ]
 
@@ -133,9 +133,6 @@ ext {
             powermockModuleJunit4Rule   : "org.powermock:powermock-module-junit4-rule:${powermockVersion}",
             powermockApiMockito         : "org.powermock:powermock-api-mockito:${powermockVersion}",
             powermockClassloadingXstream: "org.powermock:powermock-classloading-xstream:${powermockVersion}",
-
-            supportTestRunner   : "com.android.support.test:runner:${supportTestVersion}",
-            supportTestRules    : "com.android.support.test:rules:${supportTestVersion}"
     ]
 
     developmentDependencies = [

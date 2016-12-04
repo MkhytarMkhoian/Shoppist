@@ -40,7 +40,7 @@ public abstract class UseCase<T> {
                 .observeOn(postExecutionThread.getScheduler());
     }
 
-    public final Observable<T> get() {
+    public Observable<T> get() {
         return buildUseCaseObservable().compose(applySchedulers());
     }
 }

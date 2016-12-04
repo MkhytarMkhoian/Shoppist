@@ -21,7 +21,7 @@
     android:background="@drawable/list_view_selector"
     android:orientation="horizontal">
 
-    <com.justplay1.shoppist.view.component.animboxes.SelectBoxView
+    <com.justplay1.shoppist.shared.widget.animboxes.SelectBoxView
         android:id="@+id/select_box"
         android:layout_width="40dp"
         android:layout_height="40dp"

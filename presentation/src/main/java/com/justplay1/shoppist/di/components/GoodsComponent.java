@@ -18,8 +18,8 @@ package com.justplay1.shoppist.di.components;
 
 import com.justplay1.shoppist.di.modules.GoodsModule;
 import com.justplay1.shoppist.di.scope.NonConfigurationScope;
-import com.justplay1.shoppist.view.fragments.GoodsFragment;
-import com.justplay1.shoppist.view.fragments.dialog.AddGoodsDialogFragment;
+import com.justplay1.shoppist.features.goods.GoodsFragment;
+import com.justplay1.shoppist.features.goods.add.AddGoodsDialogFragment;
 
 import dagger.Component;
 

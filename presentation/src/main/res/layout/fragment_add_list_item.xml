@@ -67,7 +67,7 @@
                 app:layout_row="0"
                 app:layout_rowSpan="1" />
 
-            <com.justplay1.shoppist.view.component.spinner.CategorySpinnerView
+            <com.justplay1.shoppist.shared.widget.spinner.CategorySpinnerView
                 android:id="@+id/category_spinner_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
                 app:layout_row="0"
                 app:layout_rowSpan="1" />
 
-            <com.justplay1.shoppist.view.component.spinner.UnitsSpinnerView
+            <com.justplay1.shoppist.shared.widget.spinner.UnitsSpinnerView
                 android:id="@+id/units_spinner_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -223,7 +223,7 @@
                 app:layout_row="0"
                 app:layout_rowSpan="1" />
 
-            <com.justplay1.shoppist.view.component.spinner.CurrencySpinnerView
+            <com.justplay1.shoppist.shared.widget.spinner.CurrencySpinnerView
                 android:id="@+id/currency_spinner_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

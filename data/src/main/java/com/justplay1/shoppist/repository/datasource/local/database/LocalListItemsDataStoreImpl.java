@@ -18,8 +18,8 @@ package com.justplay1.shoppist.repository.datasource.local.database;
 
 import android.content.ContentValues;
 
-import com.justplay1.shoppist.bus.DataEventBus;
-import com.justplay1.shoppist.bus.ListsDataUpdatedEvent;
+import com.justplay1.shoppist.eventbus.DataEventBus;
+import com.justplay1.shoppist.eventbus.ListsDataUpdatedEvent;
 import com.justplay1.shoppist.entity.CategoryDAO;
 import com.justplay1.shoppist.entity.CurrencyDAO;
 import com.justplay1.shoppist.entity.ListItemDAO;
